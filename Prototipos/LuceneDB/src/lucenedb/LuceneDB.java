@@ -74,7 +74,7 @@ public class LuceneDB {
             
             //busqueda
             int hitsPerPage = 10;
-            String querystr = "amox" + "*";
+            String querystr = "a" + "*";
             Query q = new QueryParser(Version.LUCENE_40, "desc", analyzer).parse(querystr);
             IndexReader reader = DirectoryReader.open(index);
             IndexSearcher searcher = new IndexSearcher(reader);

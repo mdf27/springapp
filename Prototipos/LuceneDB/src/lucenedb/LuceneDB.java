@@ -73,7 +73,7 @@ public class LuceneDB {
             writer.close();
             
             //busqueda
-            int hitsPerPage = 10;
+            int hitsPerPage = 100000;
             String querystr = "a" + "*";
             Query q = new QueryParser(Version.LUCENE_40, "desc", analyzer).parse(querystr);
             IndexReader reader = DirectoryReader.open(index);
@@ -89,9 +89,10 @@ public class LuceneDB {
                 for(int i=0;i<hits.length;++i) {
                     int docId = hits[i].doc;
                     Document d = searcher.doc(docId);
-                    System.out.println (d.get("desc"));
+                    System.out.println (""+i+1+". "+d.get("desc"));
                 }
             }
+            reader.close();
         }catch (Exception e){
            e.printStackTrace();
         } 

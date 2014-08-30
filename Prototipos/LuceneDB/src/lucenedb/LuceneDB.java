@@ -73,6 +73,7 @@ public class LuceneDB {
             writer.close();
             
             //busqueda
+            long ini = System.nanoTime();
             int hitsPerPage = 100000;
             String querystr = "a" + "*";
             Query q = new QueryParser(Version.LUCENE_40, "desc", analyzer).parse(querystr);
@@ -81,7 +82,7 @@ public class LuceneDB {
             TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, true);
             searcher.search(q, collector);
             ScoreDoc[] hits = collector.topDocs().scoreDocs;
-            
+            System.out.println((System.nanoTime() - ini)/1000000 + "ms");
             //mostrar resultados
             if (hits.length==0)
                 System.out.println ("Sin resultados");
@@ -89,7 +90,7 @@ public class LuceneDB {
                 for(int i=0;i<hits.length;++i) {
                     int docId = hits[i].doc;
                     Document d = searcher.doc(docId);
-                    System.out.println (""+i+1+". "+d.get("desc"));
+                   // System.out.println (""+i+1+". "+d.get("desc"));
                 }
             }
             reader.close();

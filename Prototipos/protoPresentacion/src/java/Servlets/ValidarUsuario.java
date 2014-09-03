@@ -31,8 +31,7 @@ public class ValidarUsuario extends HttpServlet {
             out.println(pasUser);
             out.println("</body>");
             out.println("</html>");
-            response.sendRedirect("../../../../web/inicio.jsp");
-            
+            response.sendRedirect("inicio.jsp");         
         } finally {
             out.close();
         }

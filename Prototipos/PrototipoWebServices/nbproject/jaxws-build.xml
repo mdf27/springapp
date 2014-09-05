@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+        *** GENERATED FROM jax-ws.xml - DO NOT EDIT !                             ***
+        *** TO MODIFY wsimport options USE Web Service node -> Edit WS Attributes ***
+        *** TO CHANGE TARGETS GENERATED TO jaxws-build.xml COPY THOSE             ***
+        *** TARGETS TO ../build.xml AND MODIFY THAT FILE INSTEAD                  ***
+
+        --><project xmlns:xalan="http://xml.apache.org/xslt" xmlns:webproject2="http://www.netbeans.org/ns/web-project/2" xmlns:jaxws="http://www.netbeans.org/ns/jax-ws/1">
+    <!--
+                ===================
+                JAX-WS WSGEN SECTION
+                ===================
+            -->
+    <!--
+                ===================
+                JAX-WS WSIMPORT SECTION
+                ===================
+            -->
+    <target name="wsimport-init" depends="init">
+        <fail if="${wsimport.bad.version}" message="WsImport ant task defined in the classpath ${j2ee.platform.wsimport.classpath} has a serious bug. See http://wiki.netbeans.org/MetroIssue for details."/>
+        <mkdir dir="${build.generated.sources.dir}/jax-ws"/>
+        <property name="j2ee.platform.wsimport.classpath" value="${libs.jaxws21.classpath}"/>
+        <taskdef name="wsimport" classname="com.sun.tools.ws.ant.WsImport">
+            <classpath path="${java.home}/../lib/tools.jar:${j2ee.platform.wsimport.classpath}:${javac.classpath}"/>
+        </taskdef>
+        <condition property="conf-dir" value="${conf.dir}/" else="">
+            <isset property="conf.dir"/>
+        </condition>
+    </target>
+    <target name="wsimport-client-ws_consulta_stock" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/ws_consulta_stock"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/ws_consulta_stock" destdir="${build.generated.dir}/jax-wsCache/ws_consulta_stock" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/ws_consulta_stock/wsdl/dev.dusa.com.uy/ws_consulta_stock.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://dev.dusa.com.uy/ws_consulta_stock?wsdl" xnocompile="true" xendorsed="true">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/ws_consulta_stock/wsdl/dev.dusa.com.uy/ws_consulta_stock.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/ws_consulta_stock"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/ws_consulta_stock">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-ws_consulta_stock" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/uy/com/dusa/ws"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/ws_consulta_stock"/>
+    </target>
+    <target name="wsimport-client-ws_consulta_comprobantes" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/ws_consulta_comprobantes"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/ws_consulta_comprobantes" destdir="${build.generated.dir}/jax-wsCache/ws_consulta_comprobantes" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/ws_consulta_comprobantes/wsdl/dev.dusa.com.uy/ws_consulta_comprobantes.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://dev.dusa.com.uy/ws_consulta_comprobantes?wsdl" xnocompile="true" xendorsed="true">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/ws_consulta_comprobantes/wsdl/dev.dusa.com.uy/ws_consulta_comprobantes.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/ws_consulta_comprobantes"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/ws_consulta_comprobantes">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-ws_consulta_comprobantes" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/uy/com/dusa/ws"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/ws_consulta_comprobantes"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-ws_consulta_stock, wsimport-client-ws_consulta_comprobantes"/>
+</project>

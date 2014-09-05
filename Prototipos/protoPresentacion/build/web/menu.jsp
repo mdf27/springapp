@@ -1,5 +1,5 @@
       
-    <link href="CSS/bootstrap.css" rel="stylesheet">
+     <link href="CSS/bootstrap.css" rel="stylesheet">
      <link href="CSS/bootstrap-responsive.css" rel="stylesheet">
     
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -44,4 +44,7 @@
      
         <script src="Librerias/jquery.js"></script>
         <script src="Librerias/bootstrap/bootstrap-dropdown.js"></script>
+        
+        
+        
     

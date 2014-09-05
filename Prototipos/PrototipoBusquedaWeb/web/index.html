@@ -1,29 +1,26 @@
 <html>
-<head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">.
-    <script type="text/javascript" language="javascript" src="js/knockout-3.0.0.js"></script>
-    <script type="text/javascript" language="javascript" src="js/jquery-1.11.1.min.js"></script>
-    <link rel="stylesheet" href="css/style.css" />         
-    <link rel="stylesheet" href="css/search_box.css" />         
-    <link rel="stylesheet" href="css/pagButton.css" />   
-</head>
-<body>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <script type="text/javascript" language="javascript" src="js/knockout-3.0.0.js"></script>
+        <script type="text/javascript" language="javascript" src="js/jquery-1.11.1.min.js"></script>
+        <link rel="stylesheet" href="css/style.css" />         
+        <link rel="stylesheet" href="css/search_box.css" />         
+        <link rel="stylesheet" href="css/pagButton.css" />   
+    </head>
+    <body>
         <center>    
             <div class="CSSTableGenerator" >                
                 <form id="search">
                 <input type="text" data-bind="value: filtro, valueUpdate: 'afterkeydown', event: { keyup: actualizarLista}">
-                </form>
-                <!--<p data-bind="text: cantidad"></p>-->
-                
+                </form>               
                 <div class="pager">   
                     <button class="botonPag" href="#" data-bind="click: previous, visible: hasPrevious" >&lt;</button>                    
                     <span class="pages" data-bind="text: $root.pageNumber,visible: hasNext"></span>               
                     <button class="botonPag" href="#" data-bind="click: next, visible: hasNext" style="margin-left: 6px;">&gt;</button>
-                    <!--button class="botonPag" href="#" data-bind="click: sortByName">Ordenar</button-->
-                    
                     <p></p>
                     <div>
-                        <label data-bind="visible: hasNext">Orden: </label><select data-bind="options: optionValues, value: selectedOptionValue,visible: hayResultado, event: { change: selectionChanged }">"></select>
+                        <label data-bind="visible: hasNext">Orden: </label><select data-bind="options: optionValues, value: selectedOptionValue,visible: hayResultado, event: { change: selectionChanged }"></select>
+                        <label style = "font-size:14px;	font-family:Arial">Filtros: </label><select data-bind="options: optionValueFiltros, value: selectedOptionValueFiltro"></select>
                     </div>
                     <p></p>
                 </div>
@@ -45,10 +42,6 @@
                     </tbody>
                 </table>
             </div>
-            <!--div>
-                <button class="botonPag" href="#" data-bind="checked: checkBox, visible: seleccion" style="margin-left: 6px;">Agregar</button>
-                
-            </div-->
         </center>
 
         <script type="text/javascript">
@@ -65,19 +58,33 @@
                     self.actualizarLista = function (d){
                         self.timerID = window.clearTimeout(self.timerID);
                         self.timerID = window.setTimeout(function(){
-                        if (self.filtro() && self.filtro().length >2){
-                            $.ajax({
-                                url: "Busqueda?filtro="+vm.filtro(),
-                                type: "GET",
-                                dataType: 'json',
-                                success: self.cargarLista
-                                });
-                        }else{
-                            self.lista.removeAll();
+                            if (self.filtro() && self.filtro().length >2){
+                                var buscar;
+                                if(self.selectedOptionValueFiltro()=="Código"){
+                                    buscar="nro"
+                                }else if(self.selectedOptionValueFiltro()=="Laboratorio"){
+                                    buscar="lab"
+                                }else if(self.selectedOptionValueFiltro()=="Droga"){
+                                    buscar="Droga"
+                                }else  if(self.selectedOptionValueFiltro()=="Presentacion"){
+                                    buscar="presentacion"
+                                }else  if(self.selectedOptionValueFiltro()=="Todo"){
+                                    buscar="all"
+                                }else{
+                                    buscar="desc"
+                                }
+                                $.ajax({
+                                    url: "Busqueda?buscar="+vm.filtro()+"&filtro="+buscar,
+                                    type: "GET",
+                                    dataType: 'json',
+                                    success: self.cargarLista
+                                    });
+                            }else{
+                                self.lista.removeAll();
+                            }
                         }
-                    }
-                        , 500);
-                        return true;
+                    , 200);
+                    return true;
                     };
                     self.cargarLista = function(d){
                         self.lista.removeAll();
@@ -162,6 +169,12 @@
                             });
                         };                            
                     };//evento ordenar 
+                                      
+                    
+                    //filtros
+                    self.optionValueFiltros = ["","Código", "Laboratorio","Droga","Presentación","Todo"],
+                    self.selectedOptionValueFiltro= ko.observable(""),                            
+                    this.selectedChoiceFiltro = ko.observable();                    
                 };    
             var vm = new ViewModel();
             ko.applyBindings(vm);

@@ -96,8 +96,18 @@ public class Busqueda extends HttpServlet {
             
             //busqueda
             int hitsPerPage = 50;
-            String querystr = request.getParameter("filtro") + "*";
-            Query q = new QueryParser(Version.LUCENE_40, "desc", analyzer).parse(querystr);
+            
+            String querystr;// = request.getParameter("filtro") + "*";
+            String texto_buscar= request.getParameter("buscar");
+            String filtro = request.getParameter("filtro");
+            
+            if (filtro.equals("all"))
+                querystr = "nro: "+ texto_buscar + "* OR lab: "+ texto_buscar + "* OR desc: " + texto_buscar +"*";
+            else
+                querystr = filtro+ ": " + texto_buscar + "*";
+            //querystr+= texto_buscar + "* AND : ";
+            
+            Query q = new QueryParser(Version.LUCENE_40,"", analyzer).parse(querystr);
             IndexReader reader = DirectoryReader.open(index);
             IndexSearcher searcher = new IndexSearcher(reader);
             TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, true);

@@ -19,7 +19,7 @@
         <div id = "leftColuma">  
                 <div id = "tituloLeftMenu">Facturación</div>
                 <ul id="leftMenu">
-                    <li><a href="realizarFacturacion.jsp"><i class="icon-plus"></i>Realizar factura</a></li>
+                    <li><a href="realizarFacturacion"><i class="icon-plus"></i>Realizar factura</a></li>
                     <li><a href="#"><i class="icon-plus"></i>Crear nota de crédito</a></li>
                     <li><a href="#"><i class="icon-search"></i>Facturas</a></li>
                     <li class="divider"></li>

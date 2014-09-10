@@ -14,8 +14,7 @@
         
         <div id="contenedor">
             
-            <div id = "leftColuma">  
-            </div>
+            <div id = "leftColuma"></div>
 
             <!-- /container -->
             <div id ="contenedorPrincipal" align="center">

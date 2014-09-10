@@ -87,8 +87,6 @@ public class ObtenerOfertas extends HttpServlet {
             }
             out.println("</body>");
             out.println("</html>");
-            out.println("</body>");
-            out.println("</html>");
         }
     }
 

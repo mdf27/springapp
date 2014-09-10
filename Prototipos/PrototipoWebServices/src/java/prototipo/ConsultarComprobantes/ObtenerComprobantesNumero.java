@@ -48,9 +48,28 @@ public class ObtenerComprobantesNumero extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Comprobantes</title>");            
+            out.println("<title>Comprobantes</title>");  
+            out.println("<script type=\"text/javascript\">\n" +
+    "            function infoComprobante(tipo,serie,numero){\n" +
+    "                var xmlhttp=new XMLHttpRequest();\n" +
+    "                xmlhttp.open(\"POST\",\"VerInfoComprobante\",true);// va una ruta ahi pa q atiendan la request\n" +
+    "                xmlhttp.setRequestHeader(\"Content-type\",\"application/x-www-form-urlencoded\");\n" +
+
+    "                var parametro='tipoCFE='+tipo+'&serieCFE='+serie+'&numeroCFE='+numero;  " +                    
+
+    "                xmlhttp.send(parametro);\n" +
+    "                \n" +
+    "               xmlhttp.onreadystatechange=function()\n" +
+    "                {\n" +
+    "                if (xmlhttp.readyState===4 && xmlhttp.status===200){\n" +
+    "                    document.getElementById(\"infoComprobante\").innerHTML=xmlhttp.responseText;\n" +
+    "                }//if\n" +
+    "                };            \n" +
+    "            }  // del onlick\n" +
+    "        </script> ");
             out.println("</head>");
             out.println("<body>");  
+            out.println("<div id=\"infoComprobante\"> \n \n </div>");
             out.println("<h1>Lista de Comprobantes</h1>");
             
             WSConsultaComprobantesService servicio = new WSConsultaComprobantesService();
@@ -89,12 +108,17 @@ public class ObtenerComprobantesNumero extends HttpServlet {
                  "    </thead>\n" +
                  "    <tbody>\n");  
 
+                int tipo;
+                String serie;
+                
                 while(it.hasNext()){
                     comprobante = (DataComprobante) it.next();
-
-                    out.println("<tr>\n" +
+                    tipo = comprobante.getTipo();
+                    serie = comprobante.getSerie(); 
+                    int numero = comprobante.getNumero();
+                    out.println("<tr> onclick=\"infoComprobante('" + tipo + "','" + serie + "','" + numero + "')\"\n" +
                     "<td>"+ comprobante.getCantidadLineas() + "</td>\n" +                      
-                    "<td>"+ comprobante.getSerie() +"</td>\n" +
+                    "<td>"+ serie +"</td>\n" +
                     //"<td>"+ comprobante.getDetalle() +"</td>\n" +
                     "<td>"+ comprobante.getFechaComprobante() +"</td>\n" +
                     "<td>"+ comprobante.getFechaEmision() +"</td>\n" +
@@ -109,9 +133,9 @@ public class ObtenerComprobantesNumero extends HttpServlet {
                     "<td>"+ comprobante.getMontoTotalAPagar() +"</td>\n" +          
                     "<td>"+ comprobante.getMontoTributoIvaBasico() +"</td>\n" +
                     "<td>"+ comprobante.getMontoTributoIvaMinimo() +"</td>\n" +       
-                    "<td>"+ comprobante.getNumero()+"</td>\n" +          
+                    "<td>"+ numero +"</td>\n" +          
                     "<td>"+ comprobante.getOrdenDeCompra() +"</td>\n" +
-                    "<td>"+ comprobante.getTipo() +"</td>\n" +          
+                    "<td>"+ tipo +"</td>\n" +          
                     "<td>"+ comprobante.getTotalIvaBasico() +"</td>\n" +
                     "<td>"+ comprobante.getTotalIvaMinimo() +"</td>\n" +  
                     //"<td>"+ comprobante.getVencimientos() +"</td>\n" +  

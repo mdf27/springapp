@@ -9,15 +9,15 @@
      
      <script type="text/javascript">
         $(document).ready(function() {
-          
-          $('#facturacion').on('click', function() {
-              if (!($('#leftColuma').text()=== "")){
-                $('#leftColuma').fadeOut(600);
-              }
+          $('#facturacion').on('click', function() { 
               $('#leftColuma').html('<div id = "tituloLeftMenu">Facturacion</div> <ul id="leftMenu"> <li><a href="realizarFacturacion.html"><i class="icon-plus"></i>Realizar factura</a></li><li><a href="#"><i class="icon-plus"></i>Crear nota de crédito</a></li> <li><a href="#"><i class="icon-search"></i>Facturas</a></li> <li class="divider"></li> <li><a href="#"><i class="icon-inbox"></i>Cerrar caja</a></li></ul>');
-              $('#leftColuma').fadeIn(600);
-           });
-                   
+          });
+          
+          $('#stock').on('click', function() {      
+              $('#leftColuma').html('<div id = "tituloLeftMenu">Productos</div><ul id="leftMenu"><li><a href="#"><i class="icon-search"></i>Productos</a></li><li><a href="#"><i class="icon-plus"></i>Alta producto</a></li><li><a href="#"><i class="icon-search"></i>Descuntos</a></li> <li><a href="#"><i class="icon-plus"></i>Alta descuento</a></li><li><a href="#"><i class="icon-search"></i>Proveedores</a></li><li><a href="#"><i class="icon-plus"></i>Alta proveedor</a></li><li><a href="#"><i class="icon-refresh"></i>Actualizar base de datos</a></li></ul>');
+          });
+          
+        
         });
      </script>  
      
@@ -32,7 +32,7 @@
                         <ul class="nav">                                      
                             <li><a href="inicio.html" style="color:#FFF">Principal</a></li>                                                                            
                             <li><a href="#" id="facturacion" style="color:#FFF">Facturación</a></li> 
-                            <li><a href="#" style="color:#FFF">Stock</a></li> 
+                            <li><a href="#" id="stock" style="color:#FFF">Stock</a></li> 
 
                             <li><a href="#" style="color:#FFF">Compras</a></li> 
                             <li><a href="#" style="color:#FFF">Clientes</a></li>   

@@ -14,7 +14,7 @@
         
         <div id="contenedor">
             
-            <div id = "leftColuma"></div>
+            <div id = "leftColuma"> <jsp:include page="include/menuPrincipal.jsp"/>  </div>
 
             <!-- /container -->
             <div id ="contenedorPrincipal" align="center">

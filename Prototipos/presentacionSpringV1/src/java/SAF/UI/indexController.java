@@ -1,4 +1,6 @@
-package org.paquetes.controller;
+
+
+package SAF.UI;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,11 +9,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
-public class loginController {
-    @RequestMapping(value = "inicio")
+public class indexController {
+    @RequestMapping(value = "index")
     public ModelAndView redireccion(){
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("inicio");
+        mv.setViewName("index");
         return (mv);
     }
     

@@ -26,11 +26,10 @@
                 </div>
                 <table>
                     <thead>
-                        <tr><th>Selección</th><th>Código</th><th>Laboratorio</th><th>Descripción</th><th>Proveedor</th><th>Precio de Venta</th><th>Descuentos</th><th>Precio de Oferta</th></tr>
+                        <tr><th>Código</th><th>Laboratorio</th><th>Descripción</th><th>Proveedor</th><th>Precio de Venta</th><th>Descuentos</th><th>Precio de Oferta</th></tr>
                     </thead>
                     <tbody data-bind="foreach: paginated">
-                        <tr>
-                            <td><center><input type="radio" name="miCheck"></center></td>
+                        <tr data-bind="css: { 'btn-info': $parent.selectedResult() == $data }">                            
                             <td><center><p data-bind="text: nro"></p></center></td>
                             <td><center><p data-bind="text: lab"></p></center></td>
                             <td><p data-bind="text: descripcion"></p></td>
@@ -130,14 +129,7 @@
                         var first = self.pageNumber() * self.rowPerPage;
                         return self.lista.slice(first, first + self.rowPerPage);
                     });
-                    //checkbox
-                    self.choosenItem=ko.observable(false);
-                    
-                    /*self.check =
-                    this.seleccion = function(){
-                        
-                    }*/
-        
+                            
                     //ordenar
                     self.optionValues = ["Nombre descendente","Nombre ascendente", "Precio descendente", "Precio ascendente","Laboratorio descendente","Laboratorio ascendente"],
                     self.selectedOptionValue= ko.observable("Nombre descendente"),                            
@@ -175,9 +167,36 @@
                     self.optionValueFiltros = ["","Código", "Laboratorio","Droga","Presentación","Todo"],
                     self.selectedOptionValueFiltro= ko.observable(""),                            
                     this.selectedChoiceFiltro = ko.observable();                    
+            
+                    //teclado
+                    self.selectResult = function (item) {
+                        self.selectedResult(item);
+                    };
+                    self.selectedResult = ko.observable();
+                    
+                    
+                    self.selectPrevious = function () {
+                        var index = self.lista().indexOf(self.selectedResult()) - 1;
+                        if (index < 0) index = 0;
+                        self.selectedResult(self.lista()[index]);
+                    };
+
+                    self.selectNext = function () {
+                        var index = self.lista().indexOf(self.selectedResult()) + 1;
+                        if (index >= self.lista().length) index = self.lista().length - 1;
+                        self.selectedResult(self.lista()[index]);
+                    };
                 };    
             var vm = new ViewModel();
             ko.applyBindings(vm);
+            
+            $(window).keyup(function (evt) {
+                if (evt.keyCode == 38) {
+                    vm.selectPrevious();
+                } else if (evt.keyCode == 40) {
+                    vm.selectNext();
+                }
+            }); 
         </script>
 </body>
 </html>

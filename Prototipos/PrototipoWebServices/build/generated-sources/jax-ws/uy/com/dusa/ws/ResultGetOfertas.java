@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="laboratorios" type="{http://ws.dusa.com.uy/}dataOferta" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="ofertas" type="{http://ws.dusa.com.uy/}dataOferta" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="mensaje" type="{http://ws.dusa.com.uy/}mensajeError" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -31,28 +31,28 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "resultGetOfertas", propOrder = {
-    "laboratorios",
+    "ofertas",
     "mensaje"
 })
 public class ResultGetOfertas {
 
     @XmlElement(nillable = true)
-    protected List<DataOferta> laboratorios;
+    protected List<DataOferta> ofertas;
     protected MensajeError mensaje;
 
     /**
-     * Gets the value of the laboratorios property.
+     * Gets the value of the ofertas property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the laboratorios property.
+     * This is why there is not a <CODE>set</CODE> method for the ofertas property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getLaboratorios().add(newItem);
+     *    getOfertas().add(newItem);
      * </pre>
      * 
      * 
@@ -62,11 +62,11 @@ public class ResultGetOfertas {
      * 
      * 
      */
-    public List<DataOferta> getLaboratorios() {
-        if (laboratorios == null) {
-            laboratorios = new ArrayList<DataOferta>();
+    public List<DataOferta> getOfertas() {
+        if (ofertas == null) {
+            ofertas = new ArrayList<DataOferta>();
         }
-        return this.laboratorios;
+        return this.ofertas;
     }
 
     /**

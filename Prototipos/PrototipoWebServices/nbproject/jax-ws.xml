@@ -68,5 +68,38 @@
         </wsimport-option>
       </wsimport-options>
     </client>
+    <client name="ws_pedidos">
+      <wsdl-url>http://dev.dusa.com.uy/ws_pedidos?wsdl</wsdl-url>
+      <local-wsdl-file>dev.dusa.com.uy/ws_pedidos.wsdl</local-wsdl-file>
+      <package-name>uy.com.dusa.ws</package-name>
+      <catalog-file>catalog.xml</catalog-file>
+      <use-dispatch>true</use-dispatch>
+      <wsimport-options>
+        <wsimport-option>
+          <wsimport-option-name>extension</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>verbose</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>fork</wsimport-option-name>
+          <wsimport-option-value>false</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>wsdlLocation</wsimport-option-name>
+          <wsimport-option-value>http://dev.dusa.com.uy/ws_pedidos?wsdl</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>xnocompile</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>xendorsed</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+      </wsimport-options>
+    </client>
   </clients>
 </jax-ws>

@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="return" type="{http://ws.dusa.com.uy/}dataInfoProducto" minOccurs="0"/>
+ *         &lt;element name="return" type="{http://ws.dusa.com.uy/}resultGetStock" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -33,17 +33,17 @@ import javax.xml.bind.annotation.XmlType;
 public class GetStockResponse {
 
     @XmlElement(name = "return")
-    protected DataInfoProducto _return;
+    protected ResultGetStock _return;
 
     /**
      * Obtiene el valor de la propiedad return.
      * 
      * @return
      *     possible object is
-     *     {@link DataInfoProducto }
+     *     {@link ResultGetStock }
      *     
      */
-    public DataInfoProducto getReturn() {
+    public ResultGetStock getReturn() {
         return _return;
     }
 
@@ -52,10 +52,10 @@ public class GetStockResponse {
      * 
      * @param value
      *     allowed object is
-     *     {@link DataInfoProducto }
+     *     {@link ResultGetStock }
      *     
      */
-    public void setReturn(DataInfoProducto value) {
+    public void setReturn(ResultGetStock value) {
         this._return = value;
     }
 

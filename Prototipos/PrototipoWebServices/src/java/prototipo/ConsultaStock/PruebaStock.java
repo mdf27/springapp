@@ -59,63 +59,75 @@ public class PruebaStock extends HttpServlet {
             XMLGregorianCalendar xgcal = DatatypeFactory.newInstance().newXMLGregorianCalendar(gcal);
             try {
                 ResultGetStockUpdates stock = consultaStock.getStockUpdates("PIS2014","uvM4-N39C-Jt01-mc9E-e95b", xgcal);
-                List <DataInfoProducto> productos =  stock.getLaboratorios();
-                Iterator it = productos.iterator();
-                DataInfoProducto producto;  
-                   
-                out.println("<table border=\"2\">\n" +
-                 "    <thead>\n" +
-                 "        <tr>\n" +
-                 "            <th>Clave1</th>\n" +
-                 "            <th>Clave2</th>\n" +
-                 "            <th>Clave3</th>\n" +
-                 "            <th>Cod.Barra</th>\n" +
-                 "            <th>Desc</th>\n" +
-                 "            <th>IdLab</th>\n" +
-                 "            <th>TipoIVA</th>\n" +
-                 "            <th>Fecha Actualizacion</th>\n" +
-                 "            <th>habilitado</th>\n" +
-                 "            <th>IdPresentNoritel</th>\n" +
-                 "            <th>IdProdNoritel</th>\n" +
-                 "            <th>NumArticulo</th>\n" +    
-                 "            <th>PorcDescOferta</th>\n" +
-                 "            <th>PrecOferta</th>\n" +
-                 "            <th>PrecPublico</th>\n" +
-                 "            <th>PrecVenta</th>\n" +     
-                 "        </tr>\n" +
-                 "    </thead>\n" +
-                 "    <tbody>\n");  
+                List <DataInfoProducto> productos =  stock.getProductos();
+                if (productos.isEmpty()) {
+                    out.println("<h1>Lista de productos vacía</h1>");
+                } else { 
                 
-                while(it.hasNext()){
-                    producto = (DataInfoProducto) it.next();
-                    
-                    out.println("<tr>\n" +
-                    "<td>"+ producto.getClave1() + "</td>\n" +                      
-                    "<td>"+ producto.getClave2() +"</td>\n" +
-                    "<td>"+ producto.getClave3() +"</td>\n" +
-                    "<td>"+ producto.getCodigoBarra() +"</td>\n" +
-                    "<td>"+ producto.getDescripcion() +"</td>\n" +
-                    "<td>"+ producto.getIdLaboratorio() +"</td>\n" +
-                    "<td>"+ producto.getTipoIVA() + "</td>\n" +                      
-                    "<td>"+ producto.getFechaActualizacion() +"</td>\n" +
-                    "<td>"+ producto.getHabilitado() +"</td>\n" +
-                    "<td>"+ producto.getIdPresentacionNoritel() +"</td>\n" +
-                    "<td>"+ producto.getIdProductoNoritel() +"</td>\n" +
-                    "<td>"+ producto.getNumeroArticulo() +"</td>\n" +          
-                    "<td>"+ producto.getPorcentajeDescuentoOferta() +"</td>\n" +
-                    "<td>"+ producto.getPrecioOferta() +"</td>\n" +          
-                    "<td>"+ producto.getPrecioPublico() +"</td>\n" +
-                    "<td>"+ producto.getPrecioVenta() +"</td>\n" +
-                    "</tr>\n");             
-                }
-                //"<td>"+ producto.getPreciosRecetas() +"</td>\n" +
-               // "<td>"+ producto.getOfertas() +"</td>\n" +
-                                   
-                                   
-                out.println("</tbody>\n" +
-                "</table>");
-                out.println("<br/>");
-             
+                    Iterator it = productos.iterator();
+                    DataInfoProducto producto;  
+
+                    out.println("<table border=\"2\">\n" +
+                     "    <thead>\n" +
+                     "        <tr>\n" +
+                     "            <th>Clave1</th>\n" +
+                     "            <th>Clave2</th>\n" +
+                     "            <th>Clave3</th>\n" +
+                     "            <th>Tiene Cod.Barra?</th>\n" +      
+                     "            <th>Cod.Barra</th>\n" +
+                     "            <th>Desc</th>\n" +
+                     "            <th>IdLab</th>\n" +
+                     "            <th>IdLineaLab</th>\n" +
+                     "            <th>IdCodigoLab</th>\n" +
+                     "            <th>TipoIVA</th>\n" +
+                     "            <th>Fecha Ultimo Precio</th>\n" +       
+                     "            <th>Fecha Ultima Actualizacion</th>\n" +
+                     "            <th>habilitado</th>\n" +
+                     "            <th>IdPresentNoritel</th>\n" +
+                     "            <th>IdProdNoritel</th>\n" +
+                     "            <th>NumArticulo</th>\n" +    
+                     "            <th>PorcDescOferta</th>\n" +
+                     "            <th>PrecOferta</th>\n" +
+                     "            <th>PrecPublico</th>\n" +
+                     "            <th>PrecVenta</th>\n" +     
+                     "        </tr>\n" +
+                     "    </thead>\n" +
+                     "    <tbody>\n");  
+
+                    while(it.hasNext()){
+                        producto = (DataInfoProducto) it.next();
+
+                        out.println("<tr>\n" +
+                        "<td>"+ producto.getClave1() + "</td>\n" +                      
+                        "<td>"+ producto.getClave2() +"</td>\n" +
+                        "<td>"+ producto.getClave3() +"</td>\n" +
+                        "<td>"+ producto.isHasCodigoBarra() +"</td>\n" +
+                        "<td>"+ producto.getCodigoBarra() +"</td>\n" +
+                        "<td>"+ producto.getDescripcion() +"</td>\n" +
+                        "<td>"+ producto.getIdLaboratorio() +"</td>\n" +
+                        "<td>"+ producto.getIdLineaLaboratorio() +"</td>\n" +
+                        "<td>"+ producto.getCodigoLaboratorio() +"</td>\n" +
+                        "<td>"+ producto.getTipoIVA() + "</td>\n" +    
+                        "<td>"+ producto.getFechaUlitmoPrecio()+"</td>\n" +
+                        "<td>"+ producto.getFechaUltimaActualizacion() +"</td>\n" +
+                        "<td>"+ producto.getHabilitado() +"</td>\n" +
+                        "<td>"+ producto.getIdPresentacionNoritel() +"</td>\n" +
+                        "<td>"+ producto.getIdProductoNoritel() +"</td>\n" +
+                        "<td>"+ producto.getNumeroArticulo() +"</td>\n" +          
+                        "<td>"+ producto.getPorcentajeDescuentoOferta() +"</td>\n" +
+                        "<td>"+ producto.getPrecioOferta() +"</td>\n" +          
+                        "<td>"+ producto.getPrecioPublico() +"</td>\n" +
+                        "<td>"+ producto.getPrecioVenta() +"</td>\n" +
+                        "</tr>\n");             
+                    } 
+                    //"<td>"+ producto.getPreciosRecetas() +"</td>\n" +
+                   // "<td>"+ producto.getOfertas() +"</td>\n" +
+
+
+                    out.println("</tbody>\n" +
+                    "</table>");
+                    out.println("<br/>");
+                } // cierra if lista vacia
             } catch (Exception e) {
                 out.println("<h1>ERROR: " + e.getMessage() + "</h1>");
             }

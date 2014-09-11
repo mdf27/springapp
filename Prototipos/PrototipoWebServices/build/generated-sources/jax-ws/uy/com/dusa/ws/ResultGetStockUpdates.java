@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="laboratorios" type="{http://ws.dusa.com.uy/}dataInfoProducto" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="productos" type="{http://ws.dusa.com.uy/}dataInfoProducto" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="mensaje" type="{http://ws.dusa.com.uy/}mensajeError" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -31,28 +31,28 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "resultGetStockUpdates", propOrder = {
-    "laboratorios",
+    "productos",
     "mensaje"
 })
 public class ResultGetStockUpdates {
 
     @XmlElement(nillable = true)
-    protected List<DataInfoProducto> laboratorios;
+    protected List<DataInfoProducto> productos;
     protected MensajeError mensaje;
 
     /**
-     * Gets the value of the laboratorios property.
+     * Gets the value of the productos property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the laboratorios property.
+     * This is why there is not a <CODE>set</CODE> method for the productos property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getLaboratorios().add(newItem);
+     *    getProductos().add(newItem);
      * </pre>
      * 
      * 
@@ -62,11 +62,11 @@ public class ResultGetStockUpdates {
      * 
      * 
      */
-    public List<DataInfoProducto> getLaboratorios() {
-        if (laboratorios == null) {
-            laboratorios = new ArrayList<DataInfoProducto>();
+    public List<DataInfoProducto> getProductos() {
+        if (productos == null) {
+            productos = new ArrayList<DataInfoProducto>();
         }
-        return this.laboratorios;
+        return this.productos;
     }
 
     /**

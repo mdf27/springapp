@@ -14,11 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import uy.com.dusa.ws.DataInfoProducto;
-import uy.com.dusa.ws.DataOferta;
-import uy.com.dusa.ws.DataPreciosReceta;
-import uy.com.dusa.ws.WSConsultaStock;
-import uy.com.dusa.ws.WSConsultaStockService;
+import uy.com.dusa.ws.*;
 
 /**
  *
@@ -53,16 +49,20 @@ public class VerInfoProducto extends HttpServlet {
             WSConsultaStock consultaStock = servicio.getWSConsultaStockPort();
             
             try {
-                DataInfoProducto producto = consultaStock.getStock("PIS2014","uvM4-N39C-Jt01-mc9E-e95b", 77);
-                out.println("<ul>");
+                ResultGetStock prod = consultaStock.getStock("PIS2014","uvM4-N39C-Jt01-mc9E-e95b", 77);
+                DataInfoProducto producto = prod.getProducto(); 
+                out.println("<ul>");  
                        out.println("<li>Clave 1: " + producto.getClave1() + "</li><br/>");
                        out.println("<li>Clave 2: " + producto.getClave2() + "</li><br/>");
                        out.println("<li>Clave 3: " + producto.getClave3() + "</li><br/>");
                        out.println("<li>Codigo de Barras: " + producto.getCodigoBarra() + "</li><br/>");
                        out.println("<li>Descripcion: " + producto.getDescripcion() + "</li><br/>");
                        out.println("<li>IdLaboratorio: " + producto.getIdLaboratorio() + "</li><br/>");
+                       out.println("<li>IdLineaLaboratorio: " + producto.getIdLineaLaboratorio()+ "</li><br/>");
+                       out.println("<li>CodigoLaboratorio: " + producto.getCodigoLaboratorio() + "</li><br/>");
                        out.println("<li>Tipo IVA: " + producto.getTipoIVA() + "</li><br/>");
-                       out.println("<li>Fecha Actualizacion: " + producto.getFechaActualizacion() + "</li><br/>");
+                       out.println("<li>Fecha Ultimo Precio: " + producto.getFechaUltimaActualizacion() + "</li><br/>");
+                       out.println("<li>Fecha Ultima Actualizacion: " + producto.getFechaUltimaActualizacion() + "</li><br/>");
                        out.println("<li>Habilitado: " + producto.getHabilitado() + "</li><br/>");
                        out.println("<li>IdPresentacionNoritel: " + producto.getIdPresentacionNoritel() + "</li><br/>");
                        out.println("<li>IdProductoNoritel: " + producto.getIdProductoNoritel() + "</li><br/>");                 

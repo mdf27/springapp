@@ -1,6 +1,7 @@
 
 package uy.com.dusa.ws;
 
+import java.math.BigDecimal;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSchemaType;
@@ -22,7 +23,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="cantidadVenta" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="descripcion" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="cantidadBonificado" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="porcentajeBonificado" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="porcentajeBonificado" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *         &lt;element name="fechaFin" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -47,7 +48,7 @@ public class DataOferta {
     protected int cantidadVenta;
     protected String descripcion;
     protected int cantidadBonificado;
-    protected int porcentajeBonificado;
+    protected BigDecimal porcentajeBonificado;
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar fechaFin;
 
@@ -126,16 +127,24 @@ public class DataOferta {
     /**
      * Obtiene el valor de la propiedad porcentajeBonificado.
      * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
      */
-    public int getPorcentajeBonificado() {
+    public BigDecimal getPorcentajeBonificado() {
         return porcentajeBonificado;
     }
 
     /**
      * Define el valor de la propiedad porcentajeBonificado.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
      */
-    public void setPorcentajeBonificado(int value) {
+    public void setPorcentajeBonificado(BigDecimal value) {
         this.porcentajeBonificado = value;
     }
 

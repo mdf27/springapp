@@ -103,7 +103,8 @@ public class crearPdf extends HttpServlet {
                 celda.addElement(parrafo);
                 tabla.addCell(celda);
 
-                DataLaboratorio laboratorio = consultaStock.getLaboratorio("PIS2014","uvM4-N39C-Jt01-mc9E-e95b", idLaboratorio);
+                ResultGetLaboratorio lab = consultaStock.getLaboratorio("PIS2014","uvM4-N39C-Jt01-mc9E-e95b", idLaboratorio);
+                DataLaboratorio laboratorio = lab.getLaboratorio();
                 List<DataLineaLaboratorio> lineasLab = laboratorio.getLineas();
                 DataLineaLaboratorio linea;
                 Iterator it = lineasLab.iterator();

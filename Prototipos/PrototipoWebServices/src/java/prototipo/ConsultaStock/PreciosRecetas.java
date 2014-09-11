@@ -49,7 +49,7 @@ public class PreciosRecetas extends HttpServlet {
             WSConsultaStock consultaStock = servicio.getWSConsultaStockPort();
             try {
                 ResultGetPreciosRecetas ObtenerPreciosRecetas = consultaStock.getPreciosRecetas("PIS2014","uvM4-N39C-Jt01-mc9E-e95b");
-                List <DataPreciosReceta> listaPreciosReceta = ObtenerPreciosRecetas.getLaboratorios();
+                List <DataPreciosReceta> listaPreciosReceta = ObtenerPreciosRecetas.getPreciosRecetas();
                 Iterator it = listaPreciosReceta.iterator();
                 DataPreciosReceta preciosReceta;
 

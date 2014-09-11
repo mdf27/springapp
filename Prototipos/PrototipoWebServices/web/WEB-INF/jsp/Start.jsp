@@ -35,16 +35,16 @@
             <br/>
             
             <form action="PruebaStock" method="POST">
-            <input type="submit" value="Ver Stock (NO Funciona!)" name="botonStock" onclick="submit();"/>
+            <input type="submit" value="Ver Stock (Lista Vacia!)" name="botonStock" onclick="submit();"/>
             </form>
             <br/>
             
-            <form action="VerInfoProducto" method="POST">
-            <input type="submit" value="Ver Informacion Producto 77 (NO Funciona!)" name="botonInfoProd77" onclick="submit();"/>
+            <form action="TiposIva" method="POST">
+            <input type="submit" value="Ver Tipos Iva" name="botonTiposIva" onclick="submit();"/>
             </form>
             <br/>
             
-            <h2> Consulta Stock: </h2>
+            <h2> Consulta Comprobantes: </h2>
             
             <form action="ObtenerComprobantesFecha" method="POST">
             <input type="submit" value="Obtener Comprobantes desde 4/9/2013 (NO Funciona!)" name="botonComprobantesFecha" onclick="submit();"/>
@@ -52,7 +52,14 @@
             <br/>
             
             <form action="ObtenerComprobantesNumero" method="POST">
-            <input type="submit" value="Obtener Comprobantes desde 0 null 0 (NO Funciona!)" name="botonComprobantesnumero" onclick="submit();"/>
+            <input type="submit" value="Obtener Comprobantes desde 0 null 0 (NO Funciona!)" name="botonComprobantesNumero" onclick="submit();"/>
+            </form>
+            <br/>
+            
+            <h2> Pedidos: </h2>
+            
+            <form action="RealizarPedido" method="POST">
+            <input type="submit" value="En Construccion" name="botonRealizarPedido" onclick="submit();"/>
             </form>
             <br/>
             

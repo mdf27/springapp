@@ -58,5 +58,21 @@
         <delete dir="${build.generated.sources.dir}/jax-ws/uy/com/dusa/ws"/>
         <delete dir="${build.generated.dir}/jax-wsCache/ws_consulta_comprobantes"/>
     </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-ws_consulta_stock, wsimport-client-ws_consulta_comprobantes"/>
+    <target name="wsimport-client-ws_pedidos" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/ws_pedidos"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/ws_pedidos" destdir="${build.generated.dir}/jax-wsCache/ws_pedidos" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/ws_pedidos/wsdl/dev.dusa.com.uy/ws_pedidos.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://dev.dusa.com.uy/ws_pedidos?wsdl" xnocompile="true" xendorsed="true">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/ws_pedidos/wsdl/dev.dusa.com.uy/ws_pedidos.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/ws_pedidos"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/ws_pedidos">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-ws_pedidos" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/uy/com/dusa/ws"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/ws_pedidos"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-ws_consulta_stock, wsimport-client-ws_consulta_comprobantes, wsimport-client-ws_pedidos"/>
 </project>

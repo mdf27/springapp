@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="codigoPostal" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="localidad" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="departamento" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="aceptaRecetas" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="telefonos" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="lineas" type="{http://ws.dusa.com.uy/}dataLineaLaboratorio" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
@@ -47,6 +48,7 @@ import javax.xml.bind.annotation.XmlType;
     "codigoPostal",
     "localidad",
     "departamento",
+    "aceptaRecetas",
     "telefonos",
     "lineas"
 })
@@ -60,6 +62,7 @@ public class DataLaboratorio {
     protected String codigoPostal;
     protected String localidad;
     protected String departamento;
+    protected boolean aceptaRecetas;
     @XmlElement(nillable = true)
     protected List<String> telefonos;
     @XmlElement(nillable = true)
@@ -255,6 +258,22 @@ public class DataLaboratorio {
      */
     public void setDepartamento(String value) {
         this.departamento = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad aceptaRecetas.
+     * 
+     */
+    public boolean isAceptaRecetas() {
+        return aceptaRecetas;
+    }
+
+    /**
+     * Define el valor de la propiedad aceptaRecetas.
+     * 
+     */
+    public void setAceptaRecetas(boolean value) {
+        this.aceptaRecetas = value;
     }
 
     /**

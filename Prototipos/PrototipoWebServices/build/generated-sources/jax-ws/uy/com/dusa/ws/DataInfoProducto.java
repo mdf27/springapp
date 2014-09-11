@@ -24,6 +24,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *       &lt;sequence>
  *         &lt;element name="numeroArticulo" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="idLaboratorio" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="idLineaLaboratorio" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="clave1" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="clave2" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="clave3" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -36,7 +37,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="porcentajeDescuentoOferta" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *         &lt;element name="hasCodigoBarra" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="codigoBarra" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="fechaActualizacion" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
+ *         &lt;element name="codigoLaboratorio" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="fechaUlitmoPrecio" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
+ *         &lt;element name="fechaUltimaActualizacion" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="ofertas" type="{http://ws.dusa.com.uy/}dataOferta" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="preciosRecetas" type="{http://ws.dusa.com.uy/}dataPreciosReceta" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="idProductoNoritel" type="{http://www.w3.org/2001/XMLSchema}int"/>
@@ -53,6 +56,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @XmlType(name = "dataInfoProducto", propOrder = {
     "numeroArticulo",
     "idLaboratorio",
+    "idLineaLaboratorio",
     "clave1",
     "clave2",
     "clave3",
@@ -65,7 +69,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "porcentajeDescuentoOferta",
     "hasCodigoBarra",
     "codigoBarra",
-    "fechaActualizacion",
+    "codigoLaboratorio",
+    "fechaUlitmoPrecio",
+    "fechaUltimaActualizacion",
     "ofertas",
     "preciosRecetas",
     "idProductoNoritel",
@@ -75,6 +81,7 @@ public class DataInfoProducto {
 
     protected int numeroArticulo;
     protected String idLaboratorio;
+    protected String idLineaLaboratorio;
     protected String clave1;
     protected String clave2;
     protected String clave3;
@@ -88,8 +95,11 @@ public class DataInfoProducto {
     protected BigDecimal porcentajeDescuentoOferta;
     protected boolean hasCodigoBarra;
     protected String codigoBarra;
+    protected String codigoLaboratorio;
     @XmlSchemaType(name = "dateTime")
-    protected XMLGregorianCalendar fechaActualizacion;
+    protected XMLGregorianCalendar fechaUlitmoPrecio;
+    @XmlSchemaType(name = "dateTime")
+    protected XMLGregorianCalendar fechaUltimaActualizacion;
     @XmlElement(nillable = true)
     protected List<DataOferta> ofertas;
     @XmlElement(nillable = true)
@@ -135,6 +145,30 @@ public class DataInfoProducto {
      */
     public void setIdLaboratorio(String value) {
         this.idLaboratorio = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad idLineaLaboratorio.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getIdLineaLaboratorio() {
+        return idLineaLaboratorio;
+    }
+
+    /**
+     * Define el valor de la propiedad idLineaLaboratorio.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setIdLineaLaboratorio(String value) {
+        this.idLineaLaboratorio = value;
     }
 
     /**
@@ -410,27 +444,75 @@ public class DataInfoProducto {
     }
 
     /**
-     * Obtiene el valor de la propiedad fechaActualizacion.
+     * Obtiene el valor de la propiedad codigoLaboratorio.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCodigoLaboratorio() {
+        return codigoLaboratorio;
+    }
+
+    /**
+     * Define el valor de la propiedad codigoLaboratorio.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCodigoLaboratorio(String value) {
+        this.codigoLaboratorio = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad fechaUlitmoPrecio.
      * 
      * @return
      *     possible object is
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public XMLGregorianCalendar getFechaActualizacion() {
-        return fechaActualizacion;
+    public XMLGregorianCalendar getFechaUlitmoPrecio() {
+        return fechaUlitmoPrecio;
     }
 
     /**
-     * Define el valor de la propiedad fechaActualizacion.
+     * Define el valor de la propiedad fechaUlitmoPrecio.
      * 
      * @param value
      *     allowed object is
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setFechaActualizacion(XMLGregorianCalendar value) {
-        this.fechaActualizacion = value;
+    public void setFechaUlitmoPrecio(XMLGregorianCalendar value) {
+        this.fechaUlitmoPrecio = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad fechaUltimaActualizacion.
+     * 
+     * @return
+     *     possible object is
+     *     {@link XMLGregorianCalendar }
+     *     
+     */
+    public XMLGregorianCalendar getFechaUltimaActualizacion() {
+        return fechaUltimaActualizacion;
+    }
+
+    /**
+     * Define el valor de la propiedad fechaUltimaActualizacion.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link XMLGregorianCalendar }
+     *     
+     */
+    public void setFechaUltimaActualizacion(XMLGregorianCalendar value) {
+        this.fechaUltimaActualizacion = value;
     }
 
     /**

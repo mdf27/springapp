@@ -49,7 +49,7 @@ public class ObtenerOfertas extends HttpServlet {
             WSConsultaStock consultaStock = servicio.getWSConsultaStockPort();
             try {
                 ResultGetOfertas obtenerOfertas = consultaStock.getOfertas("PIS2014","uvM4-N39C-Jt01-mc9E-e95b");
-                List<DataOferta> ofertas = obtenerOfertas.getLaboratorios();
+                List<DataOferta> ofertas = obtenerOfertas.getOfertas();
                 Iterator it = ofertas.iterator();
                 DataOferta oferta;
 

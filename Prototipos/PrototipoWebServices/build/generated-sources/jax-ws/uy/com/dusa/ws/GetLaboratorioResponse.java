@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="return" type="{http://ws.dusa.com.uy/}dataLaboratorio" minOccurs="0"/>
+ *         &lt;element name="return" type="{http://ws.dusa.com.uy/}resultGetLaboratorio" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -33,17 +33,17 @@ import javax.xml.bind.annotation.XmlType;
 public class GetLaboratorioResponse {
 
     @XmlElement(name = "return")
-    protected DataLaboratorio _return;
+    protected ResultGetLaboratorio _return;
 
     /**
      * Obtiene el valor de la propiedad return.
      * 
      * @return
      *     possible object is
-     *     {@link DataLaboratorio }
+     *     {@link ResultGetLaboratorio }
      *     
      */
-    public DataLaboratorio getReturn() {
+    public ResultGetLaboratorio getReturn() {
         return _return;
     }
 
@@ -52,10 +52,10 @@ public class GetLaboratorioResponse {
      * 
      * @param value
      *     allowed object is
-     *     {@link DataLaboratorio }
+     *     {@link ResultGetLaboratorio }
      *     
      */
-    public void setReturn(DataLaboratorio value) {
+    public void setReturn(ResultGetLaboratorio value) {
         this._return = value;
     }
 

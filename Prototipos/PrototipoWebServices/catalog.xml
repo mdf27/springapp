@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
-    <system systemId="http://dev.dusa.com.uy/ws_consulta_stock?wsdl" uri="src/conf/xml-resources/web-service-references/ws_consulta_stock/wsdl/dev.dusa.com.uy/ws_consulta_stock.wsdl"/>
-    <system systemId="http://dev.dusa.com.uy:80/dusa-online-ws-2.2-SNAPSHOT/ws_consulta_stock?xsd=1" uri="src/conf/xml-resources/web-service-references/ws_consulta_stock/wsdl/dev.dusa.com.uy_80/dusa-online-ws-2.2-SNAPSHOT/ws_consulta_stock.xsd_1.xsd"/>
     <system systemId="http://dev.dusa.com.uy/ws_consulta_comprobantes?wsdl" uri="src/conf/xml-resources/web-service-references/ws_consulta_comprobantes/wsdl/dev.dusa.com.uy/ws_consulta_comprobantes.wsdl"/>
     <system systemId="http://dev.dusa.com.uy:80/dusa-online-ws-2.2-SNAPSHOT/ws_consulta_comprobantes?xsd=1" uri="src/conf/xml-resources/web-service-references/ws_consulta_comprobantes/wsdl/dev.dusa.com.uy_80/dusa-online-ws-2.2-SNAPSHOT/ws_consulta_comprobantes.xsd_1.xsd"/>
+    <system systemId="http://dev.dusa.com.uy/ws_consulta_stock?wsdl" uri="src/conf/xml-resources/web-service-references/ws_consulta_stock/wsdl/dev.dusa.com.uy/ws_consulta_stock.wsdl"/>
+    <system systemId="http://dev.dusa.com.uy:80/dusa-online-ws-2.2-SNAPSHOT/ws_consulta_stock?xsd=1" uri="src/conf/xml-resources/web-service-references/ws_consulta_stock/wsdl/dev.dusa.com.uy_80/dusa-online-ws-2.2-SNAPSHOT/ws_consulta_stock.xsd_1.xsd"/>
+    <system systemId="http://dev.dusa.com.uy/ws_pedidos?wsdl" uri="src/conf/xml-resources/web-service-references/ws_pedidos/wsdl/dev.dusa.com.uy/ws_pedidos.wsdl"/>
+    <system systemId="http://dev.dusa.com.uy:80/dusa-online-ws-2.2-SNAPSHOT/ws_pedidos?xsd=1" uri="src/conf/xml-resources/web-service-references/ws_pedidos/wsdl/dev.dusa.com.uy_80/dusa-online-ws-2.2-SNAPSHOT/ws_pedidos.xsd_1.xsd"/>
 </catalog>

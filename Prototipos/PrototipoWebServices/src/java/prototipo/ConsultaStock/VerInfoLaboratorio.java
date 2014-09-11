@@ -45,20 +45,21 @@ public class VerInfoLaboratorio extends HttpServlet {
                 WSConsultaStockService servicio = new WSConsultaStockService();
                 WSConsultaStock consultaStock = servicio.getWSConsultaStockPort();
                 try{ 
-                    DataLaboratorio laboratorio = consultaStock.getLaboratorio("PIS2014","uvM4-N39C-Jt01-mc9E-e95b", idLaboratorio);
+                    ResultGetLaboratorio laboratorio = consultaStock.getLaboratorio("PIS2014","uvM4-N39C-Jt01-mc9E-e95b", idLaboratorio);
 
-                    List<DataLineaLaboratorio> lineasLab = laboratorio.getLineas();
-                    List <String> telefonos = laboratorio.getTelefonos();
+                    DataLaboratorio lab = laboratorio.getLaboratorio();
+                    List<DataLineaLaboratorio> lineasLab = lab.getLineas();
+                    List <String> telefonos = lab.getTelefonos();
 
                     out.println("<ul>");
-                        out.println("<li>Codigo Postal: " + laboratorio.getCodigoPostal() + "</li><br/>");
-                        out.println("<li>Departamento: " + laboratorio.getDepartamento() + "</li><br/>");
-                        out.println("<li>Direccion: " + laboratorio.getDireccion() + "</li><br/>");
-                        out.println("<li>IdLaboratorio: " + laboratorio.getIdLaboratorio() + "</li><br/>");
-                        out.println("<li>Localidad: " + laboratorio.getLocalidad() + "</li><br/>");
-                        out.println("<li>Nombre: " + laboratorio.getNombre() + "</li><br/>");
-                        out.println("<li>Razon Social: " + laboratorio.getRazonSocial() + "</li><br/>");
-                        out.println("<li>RUC: " + laboratorio.getRuc() + "</li><br/>");
+                        out.println("<li>Codigo Postal: " + lab.getCodigoPostal() + "</li><br/>");
+                        out.println("<li>Departamento: " + lab.getDepartamento() + "</li><br/>");
+                        out.println("<li>Direccion: " + lab.getDireccion() + "</li><br/>");
+                        out.println("<li>IdLaboratorio: " + lab.getIdLaboratorio() + "</li><br/>");
+                        out.println("<li>Localidad: " + lab.getLocalidad() + "</li><br/>");
+                        out.println("<li>Nombre: " + lab.getNombre() + "</li><br/>");
+                        out.println("<li>Razon Social: " + lab.getRazonSocial() + "</li><br/>");
+                        out.println("<li>RUC: " + lab.getRuc() + "</li><br/>");
                     out.println("</ul>");
 
                     out.println("<br/>");

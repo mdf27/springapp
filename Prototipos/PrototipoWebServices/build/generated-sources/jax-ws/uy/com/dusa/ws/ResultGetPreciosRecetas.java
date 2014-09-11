@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="laboratorios" type="{http://ws.dusa.com.uy/}dataPreciosReceta" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="preciosRecetas" type="{http://ws.dusa.com.uy/}dataPreciosReceta" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="mensaje" type="{http://ws.dusa.com.uy/}mensajeError" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -31,28 +31,28 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "resultGetPreciosRecetas", propOrder = {
-    "laboratorios",
+    "preciosRecetas",
     "mensaje"
 })
 public class ResultGetPreciosRecetas {
 
     @XmlElement(nillable = true)
-    protected List<DataPreciosReceta> laboratorios;
+    protected List<DataPreciosReceta> preciosRecetas;
     protected MensajeError mensaje;
 
     /**
-     * Gets the value of the laboratorios property.
+     * Gets the value of the preciosRecetas property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the laboratorios property.
+     * This is why there is not a <CODE>set</CODE> method for the preciosRecetas property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getLaboratorios().add(newItem);
+     *    getPreciosRecetas().add(newItem);
      * </pre>
      * 
      * 
@@ -62,11 +62,11 @@ public class ResultGetPreciosRecetas {
      * 
      * 
      */
-    public List<DataPreciosReceta> getLaboratorios() {
-        if (laboratorios == null) {
-            laboratorios = new ArrayList<DataPreciosReceta>();
+    public List<DataPreciosReceta> getPreciosRecetas() {
+        if (preciosRecetas == null) {
+            preciosRecetas = new ArrayList<DataPreciosReceta>();
         }
-        return this.laboratorios;
+        return this.preciosRecetas;
     }
 
     /**

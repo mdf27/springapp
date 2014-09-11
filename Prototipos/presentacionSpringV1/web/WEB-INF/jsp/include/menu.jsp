@@ -49,7 +49,10 @@
                         
                     </div><!--/.nav-collapse -->
                     <div id = "buscador"> 
-
+                        <form action="·" method="post" >
+                            <input type="search" placeholder="buscar..." name="busqueda" >
+                            <input  value="Ir" type="submit" class="btn btn-default">         
+                        </form>
                     </div>
                 </div>
             </div>

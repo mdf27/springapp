@@ -8,11 +8,14 @@ package prototipo.Pedidos;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Iterator;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import uy.com.dusa.ws.*;
 
 /**
  *
@@ -35,13 +38,30 @@ public class RealizarPedido extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet RealizarPedido</title>");            
+            out.println("<title>ObtenerOfertas</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet RealizarPedido at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Pedido Realizado</h1>");
+            
+            WSPedidosService servicio = new WSPedidosService();
+            WSPedidos pedidos = servicio.getWSPedidosPort();
+            try {
+                DataPedidoSimple pedidoSimple = new DataPedidoSimple();
+                pedidoSimple.setFormaDePago(PedidoFormaDePago.CONTADO);
+                ResultRealizarPedido mensaje = pedidos.realizarPedidoSimple("PIS2014","uvM4-N39C-Jt01-mc9E-e95b", pedidoSimple);
+                out.println("<h1>" + mensaje.getMensaje()+ "</h1>");
+                
+                pedidoSimple = new DataPedidoSimple();
+                pedidoSimple.setFormaDePago(PedidoFormaDePago.CREDITO);
+                mensaje = pedidos.realizarPedidoSimple("PIS2014","uvM4-N39C-Jt01-mc9E-e95b", pedidoSimple);
+                out.println("<h1>" + mensaje + "</h1>");
+            } catch (Exception e) {
+                out.println("<h1>ERROR: " + e.getMessage() + "</h1>");
+            }
             out.println("</body>");
             out.println("</html>");
         }

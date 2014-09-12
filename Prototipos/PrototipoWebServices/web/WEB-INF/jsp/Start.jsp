@@ -25,12 +25,12 @@
             <br/>
 
             <form action="ObtenerOfertas" method="POST">
-            <input type="submit" value="Listar Ofertas (NO Funciona!)" name="botonOfertas" onclick="submit();"/>
+            <input type="submit" value="Listar Ofertas" name="botonOfertas" onclick="submit();"/>
             </form>
             <br/>
 
             <form action="PreciosRecetas" method="POST">
-            <input type="submit" value="Precios Recetas (NO Funciona!)" name="botonOfertas" onclick="submit();"/>
+            <input type="submit" value="Precios Recetas (TimeOut)" name="botonOfertas" onclick="submit();"/>
             </form>
             <br/>
             
@@ -40,26 +40,31 @@
             <br/>
             
             <form action="TiposIva" method="POST">
-            <input type="submit" value="Ver Tipos Iva" name="botonTiposIva" onclick="submit();"/>
+            <input type="submit" value="Ver Tipos IVA" name="botonTiposIva" onclick="submit();"/>
+            </form>
+            <br/>
+            
+            <form action="PruebaPDF" method="POST">
+            <input type="submit" value="PruebaPDF" name="botonPruebaPDF" onclick="submit();"/>
             </form>
             <br/>
             
             <h2> Consulta Comprobantes: </h2>
             
             <form action="ObtenerComprobantesFecha" method="POST">
-            <input type="submit" value="Obtener Comprobantes desde 4/9/2013 (NO Funciona!)" name="botonComprobantesFecha" onclick="submit();"/>
+            <input type="submit" value="Obtener Comprobantes desde 4/9/2013 (Not Supported Yet)" name="botonComprobantesFecha" onclick="submit();"/>
             </form>
             <br/>
             
             <form action="ObtenerComprobantesNumero" method="POST">
-            <input type="submit" value="Obtener Comprobantes desde 0 null 0 (NO Funciona!)" name="botonComprobantesNumero" onclick="submit();"/>
+            <input type="submit" value="Obtener Comprobantes desde 0 null 0 (Not Supported Yet)" name="botonComprobantesNumero" onclick="submit();"/>
             </form>
             <br/>
             
             <h2> Pedidos: </h2>
             
             <form action="RealizarPedido" method="POST">
-            <input type="submit" value="En Construccion" name="botonRealizarPedido" onclick="submit();"/>
+            <input type="submit" value="Realizar Pedido (Not Supported Yet)" name="botonRealizarPedido" onclick="submit();"/>
             </form>
             <br/>
             

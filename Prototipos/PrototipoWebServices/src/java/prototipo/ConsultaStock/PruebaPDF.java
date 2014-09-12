@@ -6,39 +6,38 @@
 
 package prototipo.ConsultaStock;
 
-import com.itextpdf.text.*;
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import java.awt.Desktop;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.net.MalformedURLException;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import uy.com.dusa.ws.*;
+import uy.com.dusa.ws.DataLaboratorio;
+import uy.com.dusa.ws.DataLineaLaboratorio;
+import uy.com.dusa.ws.ResultGetLaboratorio;
+import uy.com.dusa.ws.WSConsultaStock;
+import uy.com.dusa.ws.WSConsultaStockService;
 
 /**
  *
  * @author Usuario
  */
-public class crearPdf extends HttpServlet {
+@WebServlet(name = "PruebaPDF", urlPatterns = {"/PruebaPDF"})
+public class PruebaPDF extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -50,29 +49,15 @@ public class crearPdf extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, Exception {        
-        
-       // response.setContentType("application/pdf-download");
-        PrintWriter out = response.getWriter();
-        
-        if(request.getParameter("id") == null) {
-            out.println("<h1>ERROR: Parametro idLaboratorio Nulo</h1>");
-        } else {
+            throws ServletException, IOException {
+        response.setContentType("application/pdf");
+
             String idLaboratorio = request.getParameter("id");
 
-            //response.setHeader("Content-disposition", "attachment; filename= informacionOrdenCompra " + id + ".pdf");
-            try{ 
+             try{ 
                 WSConsultaStockService servicio = new WSConsultaStockService();
                 WSConsultaStock consultaStock = servicio.getWSConsultaStockPort();
-                
-                /* TODO output your page here. You may use following sample code. */
-                //String path = request.getServletContext().getRealPath("/"); 
-                //File f = new File(path+"/pdf/"+"infoOrdenCompra"+id);
-                //ByteArrayInputStream inputStream;
-                //OutputStream outputStream = new ByteArrayOutputStream();
-                
-                 File f = new File("C:/Users/Usuario/Desktop/FING/20142/PIS/Prototipos/PrototipoWebServices/pdf/"+"infoLaboratorio"+idLaboratorio);
-
+               
                 PdfPTable tabla = new PdfPTable(3);
 
                 PdfPCell celda;
@@ -108,7 +93,8 @@ public class crearPdf extends HttpServlet {
                 celda.addElement(parrafo);
                 tabla.addCell(celda);
 
-                ResultGetLaboratorio lab = consultaStock.getLaboratorio("PIS2014","uvM4-N39C-Jt01-mc9E-e95b", idLaboratorio);
+               ResultGetLaboratorio lab = consultaStock.getLaboratorio("PIS2014","uvM4-N39C-Jt01-mc9E-e95b", "ROE");
+               
                 DataLaboratorio laboratorio = lab.getLaboratorio();
                 List<DataLineaLaboratorio> lineasLab = laboratorio.getLineas();
                 DataLineaLaboratorio linea;
@@ -156,8 +142,6 @@ public class crearPdf extends HttpServlet {
                 celda.addElement(parrafo);
                 tablaTels.addCell(celda);
 
-    //            tablaEst.addCell(new Paragraph("Estado",FontFactory.getFont("Sans",12,Font.BOLD)));
-    //            tablaEst.addCell(new Paragraph("Fecha",FontFactory.getFont("Sans",12,Font.BOLD)));
                 List <String> telefonos = laboratorio.getTelefonos();
                 it = telefonos.iterator();
                 String telefono;
@@ -181,29 +165,35 @@ public class crearPdf extends HttpServlet {
                 float[] columnWidths2 = {0.5f};
                 tablaTels.setWidths(columnWidths2);
 
-                createPdfTextTable(tabla, tablaTels, laboratorio, "Información del laboratorio "+idLaboratorio , f, idLaboratorio,response);    
-                //createPDFText("Hola mi nombre es Manuela Viola y pruebo PDF",f, id);
+                createPdfTextTable(tabla, tablaTels, laboratorio, "Información del laboratorio ROE" ,"ROE",response);    
             } catch (Exception e) {
-                out.println("<h1>ERROR: " + e.getMessage() + "</h1>");
             }  
-        } // cierra if de parametro nulo
+       // } // cierra if de parametro nulo
     }
     
-     public void createPdfTextTable(PdfPTable tabla, PdfPTable tablaTels, DataLaboratorio laboratorio, String titulo, File Destino, String idLaboratorio, HttpServletResponse response) throws MalformedURLException {
-
+     //public void createPdfTextTable(PdfPTable tabla, PdfPTable tablaTels, DataLaboratorio laboratorio, String titulo, File Destino, String idLaboratorio, HttpServletResponse response) throws MalformedURLException {
+     public void createPdfTextTable(PdfPTable tabla, PdfPTable tablaTels, DataLaboratorio laboratorio, String titulo,String idLaboratorio, HttpServletResponse response) {
         /*Declaramos documento como un objeto Document
          Asignamos el tamaño de hoja y los margenes */
-        Document documento = new Document(PageSize.A4, 80, 80, 75, 75);
-
+        //Document documento = new Document(PageSize.A4, 80, 80, 75, 75);
+        Document documento = new Document();
         //writer es declarado como el método utilizado para escribir en el archivo
-        PdfWriter writer = null;
+        //PdfWriter writer = null;
 
-        try {
+        /*try {
             //Obtenemos la instancia del archivo a utilizar
            writer = PdfWriter.getInstance(documento, new FileOutputStream(Destino + ".pdf"));
           // writer = PdfWriter.getInstance(documento, response.getOutputStream());
         } catch (Exception ex) {
             ex.getMessage();
+        }*/
+        
+        //Document document = new Document();
+        try{
+            PdfWriter.getInstance(documento, response.getOutputStream());
+            documento.open();
+        }catch(Exception e){
+            e.printStackTrace();
         }
 
         //Agregamos un titulo al archivo
@@ -213,7 +203,7 @@ public class crearPdf extends HttpServlet {
         documento.addAuthor("PIS 2014");
 
         //Abrimos el documento para edición
-        documento.open();
+       // documento.open();
 
         //Declaramos un texto como Paragraph
         //Le podemos dar formado como alineación, tamaño y color a la fuente.
@@ -313,24 +303,23 @@ public class crearPdf extends HttpServlet {
             documento.add(new Paragraph(" "));
 
             documento.add(tablaTels);
-            
+            documento.close();
             
         } catch (DocumentException ex) {
             ex.getMessage();
         }
 
-        documento.close(); //Cerramos el documento
-        writer.close(); //Cerramos writer
+       // documento.close(); //Cerramos el documento
+        //writer.close(); //Cerramos writer
 
-        try {
+       /* try {
             File path;
             path = new File(Destino + ".pdf");
             Desktop.getDesktop().open(path);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        }
+        }*/
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -343,11 +332,7 @@ public class crearPdf extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(crearPdf.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -361,11 +346,7 @@ public class crearPdf extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(crearPdf.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

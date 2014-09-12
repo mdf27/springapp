@@ -88,7 +88,7 @@ public class ObtenerLaboratorios extends HttpServlet {
         "                var parametro='id='+id; \n" +
         "                xmlhttp.send(parametro); \n" +
         "            }\n" +
-        "        </script> ");
+        "        </script> "); 
 
                     out.println("</head>");
                     out.println("<body>");
@@ -128,6 +128,7 @@ public class ObtenerLaboratorios extends HttpServlet {
                         ruc = laboratorio.getRuc();
 
                         out.println("<tr onclick=\"verInfoLab('" + idLab + "')\">\n" +
+                        //out.println("<tr>\n" +
                         "<td>"+ idLab +"</td>\n" +                      
                         "<td>"+ nombreLab +"</td>\n" +
                         "<td>"+ codigoPostal +"</td>\n" +

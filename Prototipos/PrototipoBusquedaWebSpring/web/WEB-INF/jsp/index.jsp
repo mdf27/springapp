@@ -101,7 +101,7 @@
                     
                     //paginado
                     self.pageNumber = ko.observable(0);
-                    self.rowPerPage = 5;
+                    self.rowPerPage = 8;
                     self.indicePaginado=0;
                     self.topePaginado=self.rowPerPage;
                     self.totalPages = ko.computed(function(){

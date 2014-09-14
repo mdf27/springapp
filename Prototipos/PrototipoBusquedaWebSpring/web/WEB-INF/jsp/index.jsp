@@ -20,7 +20,7 @@
                     <p></p>
                     <div>
                         <label data-bind="visible: hasNext">Orden: </label><select data-bind="options: optionValues, value: selectedOptionValue,visible: hayResultado, event: { change: selectionChanged }"></select>
-                        <label style = "font-size:14px;	font-family:Arial">Filtros: </label><select data-bind="options: optionValueFiltros, value: selectedOptionValueFiltro"></select>
+                        <label style = "font-size:14px;	font-family:Arial">Filtros: </label><select data-bind="options: optionValueFiltros, value: selectedOptionValueFiltro, event: { change: filtroSelectionChanged }"></select>
                     </div>
                     <p></p>
                 </div>
@@ -29,7 +29,7 @@
                         <tr><th>Código</th><th>Laboratorio</th><th>Descripción</th><th>Proveedor</th><th>Precio de Venta</th><th>Descuentos</th><th>Precio de Oferta</th></tr>
                     </thead>
                     <tbody data-bind="foreach: paginated">
-                        <tr data-bind="css: { 'btn-info': $parent.selectedResult() == $data}, click: $parent.selectResult">                            
+                        <tr data-bind="css: { 'btn-info': (($parent.selectedResult() == $data)&&($root.mostrar))}, click: $parent.selectResult">                            
                             <td><center><p data-bind="text: nro"></p></center></td>
                             <td><center><p data-bind="text: lab"></p></center></td>
                             <td><p data-bind="text: descripcion"></p></td>
@@ -40,7 +40,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <div  data-bind="if: $root.selectedResult, visible: hasNext">
+                <div  data-bind="if: $root.selectedResult, visible: (hasNext &&($root.mostrar))">
                     <p style="font-weight: bold; text-decoration: underline">INFORMACIÓN DEL PRODUCTO</p>
                     <p>Nombre: <span data-bind="text: $root.selectedResult().descripcion"></span></p>
                     <p>Laboratorio: <span data-bind="text: $root.selectedResult().lab"></span></p>                    
@@ -52,7 +52,7 @@
         <script type="text/javascript">
             function ViewModel(){
                     var self = this;
-
+                    self.mostrar=ko.observable(false);
                     self.lista = ko.observableArray();
                     self.filtro = ko.observable();
                     self.cantidad = ko.computed(function(){
@@ -60,10 +60,8 @@
                     });
                    
                     self.timerID;
-                    self.actualizarLista = function (d){
-                        self.timerID = window.clearTimeout(self.timerID);
-                        self.timerID = window.setTimeout(function(){
-                            if (self.filtro() && self.filtro().length >2){
+                    self.buscar= ko.computed(function(){
+                        if (self.filtro() && self.filtro().length >2){
                                 var buscar;
                                 if(self.selectedOptionValueFiltro()=="Código"){
                                     buscar="nro"
@@ -81,28 +79,34 @@
                                 $.ajax({
                                     url: "busqueda.htm",
                                     data : "buscar=" + vm.filtro() + "&filtro="+buscar,
-                                    type: "GET",
                                     dataType: 'json',
                                     success: self.cargarLista
-                                    });
+                                    });                                
                             }else{
                                 self.lista.removeAll();
                             }
+                    });
+                    
+                    self.actualizarLista = function (d){
+                        self.timerID = window.clearTimeout(self.timerID);
+                        self.timerID = window.setTimeout(function(){
+                            self.buscar;                        
                         }
-                    , 200);
-                    return true;
+                        , 200);
+                        return true;
                     };
+                    
                     self.cargarLista = function(d){
                         self.lista.removeAll();
                         for(var i=0; i<d.length; i++){
                             self.lista.push(d[i]);
-                        }
+                        }                        
                     };
                     
                     //paginado
                     self.pageNumber = ko.observable(0);
-                    self.rowPerPage = 8;
-                    self.indicePaginado=0;
+                    self.rowPerPage = 5;
+                    self.indicePaginado=ko.observable(-1);
                     self.topePaginado=self.rowPerPage;
                     self.totalPages = ko.computed(function(){
                         var div = Math.floor(self.lista().length / self.rowPerPage) ;    
@@ -121,21 +125,23 @@
                     self.next = function() {
                         if(self.pageNumber() < self.totalPages()) {
                             self.pageNumber(self.pageNumber() + 1);
-                            self.indicePaginado+=self.rowPerPage-1;
+                            self.indicePaginado(self.topePaginado+self.rowPerPage);
                             if (self.indicePaginado<0)
                                 self.indicePaginado=0;
-                            self.topePaginado+=self.rowPerPage;
-                            self.selectedResult(self.lista()[self.indicePaginado]);
-                            self.indicePaginado++;
+                            self.topePaginado+=self.rowPerPage;                            
+                            self.mostrar(false);
+                            //self.selectedResult(self.lista()[self.indicePaginado]);
+                            //self.indicePaginado++;                            
                         }
                     };
 	
                     self.previous = function() {
                         if(self.pageNumber() !== 0) {
                             self.pageNumber(self.pageNumber() - 1);
-                            self.indicePaginado-=self.rowPerPage-1;
+                            self.indicePaginado(self.topePaginado-2*self.rowPerPage-1);
                             self.topePaginado-=self.rowPerPage;
-                            self.selectedResult(self.lista()[self.indicePaginado-1]);
+                            //self.selectedResult(self.lista()[self.indicePaginado-1]);
+                            self.mostrar(false);
                         }
                     };                   
                     
@@ -148,11 +154,9 @@
                         return self.lista.slice(first, first + self.rowPerPage);
                     });
                             
-                    //ordenar
-                    self.optionValues = ["Nombre descendente","Nombre ascendente", "Precio descendente", "Precio ascendente","Laboratorio descendente","Laboratorio ascendente"],
+                    //ordenar                    
                     self.selectedOptionValue= ko.observable("Nombre descendente"),                            
-                    this.selectedChoice = ko.observable();
-                    self.selectionChanged= function(event) {
+                    self.ordenar = ko.computed(function(){
                         if(self.selectedOptionValue()=="Nombre descendente"){
                             self.lista.sort(function(a, b) {
                                 return a.descripcion > b.descripcion ? -1 : 1;
@@ -177,9 +181,18 @@
                             self.lista.sort(function(a, b) {
                                 return a.lab < b.lab ? -1 : 1;
                             });
-                        };                            
+                        };   
+                    });
+                    
+                    self.optionValues = ["Nombre descendente","Nombre ascendente", "Precio descendente", "Precio ascendente","Laboratorio descendente","Laboratorio ascendente"],
+                    self.selectedChoice = ko.observable();
+                    self.selectionChanged= function(event) {
+                        self.ordenar;
                     };//evento ordenar 
-                                      
+                    
+                    self.filtroSelectionChanged= function(event) {
+                        self.buscar;
+                    };//evento buscar con filtro 
                     
                     //filtros
                     self.optionValueFiltros = ["","Código", "Laboratorio","Droga","Presentación","Todo"],
@@ -188,12 +201,14 @@
             
                     //teclado
                     self.selectResult = function (item) {
-                        self.selectedResult(item)
+                        self.selectedResult(item);
+                        self.mostrar(true);
+                        self.indicePaginado(self.lista().indexOf(self.selectedResult()));
                     };
                     self.selectedResult = ko.observable();                                       
                     
                     self.selectPrevious = function () {
-                        var index = self.lista().indexOf(self.selectedResult()) - 1;
+                        var index = self.indicePaginado()-1;
                         if (index < 0) 
                             index = self.topePaginado-1;
                         else if (index<(self.topePaginado-self.rowPerPage)){
@@ -204,11 +219,14 @@
                                 index = self.topePaginado-1;//self.rowPerPage;
                         }                       
                         self.selectedResult(self.lista()[index]);
+                        self.indicePaginado(index);
+                        self.mostrar(true);
                         
                     };
                     
-                    self.selectNext = function () {                        
-                        var index = self.lista().indexOf(self.selectedResult()) + 1;
+                    
+                    self.selectNext = function () {                                           
+                        var index = self.indicePaginado()+1;
                         if (index>=self.topePaginado){
                             index = (self.topePaginado-self.rowPerPage);
                             if (index<0)
@@ -217,7 +235,8 @@
                         else if (index >= self.lista().length) 
                             index = (self.topePaginado-self.rowPerPage);                       
                         self.selectedResult(self.lista()[index]);
-                        
+                        self.indicePaginado(index);
+                        self.mostrar(true);
                     };
                                       
                     //seleccion del elemento ENTER

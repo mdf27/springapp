@@ -55,12 +55,9 @@
                     self.mostrar=ko.observable(false);
                     self.lista = ko.observableArray();
                     self.filtro = ko.observable();
-                    self.cantidad = ko.computed(function(){
-                        return self.lista().length;
-                    });
-                   
+                  
                     self.timerID;
-                    self.buscar= ko.computed(function(){
+                    self.buscar= function(){
                         if (self.filtro() && self.filtro().length >2){
                                 var buscar;
                                 if(self.selectedOptionValueFiltro()=="Código"){
@@ -85,12 +82,42 @@
                             }else{
                                 self.lista.removeAll();
                             }
-                    });
+                    };
+                    
+                    //ordenar
+                    self.selectedOptionValue= ko.observable("Nombre descendente"),  
+                    self.ordenar = function(){
+                        if(self.selectedOptionValue()=="Nombre descendente"){
+                            self.lista.sort(function(a, b) {
+                                return a.descripcion > b.descripcion ? -1 : 1;
+                            });
+                        }else if(self.selectedOptionValue()=="Nombre ascendente"){
+                            self.lista.sort(function(a, b) {
+                                return a.descripcion < b.descripcion ? -1 : 1;
+                            });
+                        }else if(self.selectedOptionValue()=="Precio descendente"){
+                            self.lista.sort(function(a, b) {
+                                return a.precio > b.precio ? -1 : 1;
+                            });
+                        }else if(self.selectedOptionValue()=="Precio ascendente"){
+                            self.lista.sort(function(a, b) {
+                                return a.precio < b.precio ? -1 : 1;
+                            });
+                        }else if(self.selectedOptionValue()=="Laboratorio descendente"){
+                            self.lista.sort(function(a, b) {
+                                return a.lab > b.lab ? -1 : 1;
+                            });
+                        }else if(self.selectedOptionValue()=="Laboratorio ascendente"){
+                            self.lista.sort(function(a, b) {
+                                return a.lab < b.lab ? -1 : 1;
+                            });
+                        };   
+                    };
                     
                     self.actualizarLista = function (d){
                         self.timerID = window.clearTimeout(self.timerID);
                         self.timerID = window.setTimeout(function(){
-                            self.buscar;                        
+                            self.buscar();  
                         }
                         , 200);
                         return true;
@@ -99,8 +126,9 @@
                     self.cargarLista = function(d){
                         self.lista.removeAll();
                         for(var i=0; i<d.length; i++){
-                            self.lista.push(d[i]);
-                        }                        
+                            self.lista.push(d[i]);                            
+                        }
+                        self.ordenar();                        
                     };
                     
                     //paginado
@@ -155,49 +183,20 @@
                     });
                             
                     //ordenar                    
-                    self.selectedOptionValue= ko.observable("Nombre descendente"),                            
-                    self.ordenar = ko.computed(function(){
-                        if(self.selectedOptionValue()=="Nombre descendente"){
-                            self.lista.sort(function(a, b) {
-                                return a.descripcion > b.descripcion ? -1 : 1;
-                            });
-                        }else if(self.selectedOptionValue()=="Nombre ascendente"){
-                            self.lista.sort(function(a, b) {
-                                return a.descripcion < b.descripcion ? -1 : 1;
-                            });
-                        }else if(self.selectedOptionValue()=="Precio descendente"){
-                            self.lista.sort(function(a, b) {
-                                return a.precio > b.precio ? -1 : 1;
-                            });
-                        }else if(self.selectedOptionValue()=="Precio ascendente"){
-                            self.lista.sort(function(a, b) {
-                                return a.precio < b.precio ? -1 : 1;
-                            });
-                        }else if(self.selectedOptionValue()=="Laboratorio descendente"){
-                            self.lista.sort(function(a, b) {
-                                return a.lab > b.lab ? -1 : 1;
-                            });
-                        }else if(self.selectedOptionValue()=="Laboratorio ascendente"){
-                            self.lista.sort(function(a, b) {
-                                return a.lab < b.lab ? -1 : 1;
-                            });
-                        };   
-                    });
-                    
                     self.optionValues = ["Nombre descendente","Nombre ascendente", "Precio descendente", "Precio ascendente","Laboratorio descendente","Laboratorio ascendente"],
-                    self.selectedChoice = ko.observable();
+                    //self.selectedChoice = ko.observable();
                     self.selectionChanged= function(event) {
-                        self.ordenar;
+                        self.ordenar();
                     };//evento ordenar 
                     
                     self.filtroSelectionChanged= function(event) {
-                        self.buscar;
+                        self.buscar();
+                        self.mostrar(false);
                     };//evento buscar con filtro 
                     
                     //filtros
                     self.optionValueFiltros = ["","Código", "Laboratorio","Droga","Presentación","Todo"],
-                    self.selectedOptionValueFiltro= ko.observable(""),                            
-                    this.selectedChoiceFiltro = ko.observable();                    
+                    self.selectedOptionValueFiltro= ko.observable(""),                                                       
             
                     //teclado
                     self.selectResult = function (item) {

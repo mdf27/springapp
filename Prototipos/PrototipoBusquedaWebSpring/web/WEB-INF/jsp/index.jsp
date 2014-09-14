@@ -15,7 +15,7 @@
                 </form>               
                 <div class="pager">   
                     <button class="botonPag" href="#" data-bind="click: previous, visible: hasPrevious" >&lt;</button>                    
-                    <span class="pages" data-bind="text: $root.pageNumber,visible: hasNext"></span>               
+                    <span class="pages" data-bind="text: $root.paginado() ,visible: lista().length >0"></span>               
                     <button class="botonPag" href="#" data-bind="click: next, visible: hasNext" style="margin-left: 6px;">&gt;</button>
                     <p></p>
                     <div>
@@ -132,7 +132,7 @@
                     };
                     
                     //paginado
-                    self.pageNumber = ko.observable(0);
+                    self.pageNumber = ko.observable(1);
                     self.rowPerPage = 5;
                     self.indicePaginado=ko.observable(-1);
                     self.topePaginado=self.rowPerPage;
@@ -142,12 +142,16 @@
                         return div - 1;
                     });
                     
+                    self.paginado = ko.computed(function(){
+                       return (self.pageNumber() + " de " + self.totalPages()); 
+                    });                    
+                    
                     self.hasPrevious = ko.computed(function() {
-                    	return self.pageNumber() !== 0;
+                    	return self.pageNumber() !== 1;
                     });
                     
                     self.hasNext = ko.computed(function() {
-                        return (self.totalPages()>0)&&(self.pageNumber() !== self.totalPages);
+                        return (self.totalPages()>1)&&(self.pageNumber() !== self.totalPages());
                     });
                     
                     self.next = function() {

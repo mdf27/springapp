@@ -1,9 +1,17 @@
-mysql -h localhost -u root -p 
+CONSOLA
 
-create database prueba_lucene
+1) abrir consola en modo administrador.
 
-use prueba_lucene 
+2) ir a la carpeta bin de MySQL
 
+3) ejecutar: mysql -h localhost -u root -p 
+Si les pide contraseña en mi caso es vacía.
+
+4) ejecutar: create database prueba_lucene
+
+5) ejecutar: use prueba_lucene 
+
+6) ejecutar:
 create table `productos` (
 `nro_articulo` bigint(10) default '0',
 `lab` char(10) default null,
@@ -24,6 +32,11 @@ create table `productos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
+7) El archivo stock que les dio el cliente está en formato xls, guardarlo en formato csv
+
+8) guardar el archivo stock.csv en la carpeta mysql>data>prueba_lucene
+
+9) ejecutar:
 LOAD DATA INFILE 'stock.csv'
 INTO TABLE productos
 FIELDS TERMINATED BY ','

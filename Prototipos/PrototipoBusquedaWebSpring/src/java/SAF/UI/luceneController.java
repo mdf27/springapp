@@ -37,7 +37,7 @@ public class luceneController {
     @RequestMapping(value = "busqueda.htm",method = RequestMethod.GET)  
     
     public @ResponseBody String buscar (@RequestParam(value="buscar") String texto_buscar, @RequestParam(value="filtro") String filtro) throws ClassNotFoundException, SQLException, IOException, ParseException{
-        String sql = "select NRO_ARTICULO, LAB, DESCRIPCION, PRECIO, PRECIO_OFERTA, T_IVA FROM productos;";  
+        String sql = "select NRO_ARTICULO, LAB, DESCRIPCION, PRECIO_VENTA, PRECIO_OFERTA, T_IVA FROM productos;";  
         LuceneSingleton ls = LuceneSingleton.getInstance(sql);
         Directory index = ls.getIndiceProductosLucene();
         StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_40); 
@@ -45,10 +45,12 @@ public class luceneController {
         //busqueda
         int hitsPerPage = 50;
         String querystr;
-        if (filtro.equals("all"))
+        /*if (texto_buscar.matches("[\\\\w]*\\s*[\\\\w]*"))
+            texto_buscar= "\"" + texto_buscar + "\"";*/
+        if (filtro.equals("all"))                
             querystr = "nro: "+ texto_buscar + "* OR lab: "+ texto_buscar + "* OR desc: " + texto_buscar +"*";
         else
-            querystr = filtro+ ": " + texto_buscar + "*";            
+            querystr = filtro+ ":" + texto_buscar + "*";            
 
         Query q = new QueryParser(Version.LUCENE_40,"", analyzer).parse(querystr);
         IndexReader reader = DirectoryReader.open(index);

@@ -48,7 +48,7 @@ public class LuceneSingleton{
             d.add(new org.apache.lucene.document.TextField ("lab", rt.getString("LAB"), Field.Store.YES));
             d.add(new org.apache.lucene.document.TextField ("desc", rt.getString("DESCRIPCION"), Field.Store.YES));
             d.add(new org.apache.lucene.document.TextField ("proveedor", "Juan Perez", Field.Store.YES));
-            d.add(new org.apache.lucene.document.TextField ("precio", rt.getString("PRECIO"), Field.Store.YES));
+            d.add(new org.apache.lucene.document.TextField ("precio", rt.getString("PRECIO_VENTA"), Field.Store.YES));
             d.add(new org.apache.lucene.document.TextField ("descuento", rt.getString("T_IVA"), Field.Store.YES));
             d.add(new org.apache.lucene.document.TextField ("precio_oferta", rt.getString("PRECIO_OFERTA"), Field.Store.YES));
             writer.addDocument(d);

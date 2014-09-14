@@ -7,7 +7,7 @@ CONSOLA
 3) ejecutar: mysql -h localhost -u root -p 
 Si les pide contraseña en mi caso es vacía.
 
-4) ejecutar: create database prueba_lucene
+4) ejecutar: create database prueba_lucene;
 
 5) ejecutar: use prueba_lucene 
 
@@ -41,4 +41,4 @@ LOAD DATA INFILE 'stock.csv'
 INTO TABLE productos
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-(nro_articulo,lab,lin,clave1,clave2,clave3,descripcion,complemento_des,viene_barra,codigo_barra,porc_contado,porc_oferta, t_iva);
+(nro_articulo,lab,lin,clave1,clave2,clave3,descripcion,complemento_des,viene_barra,codigo_barra,porc_contado,porc_oferta,habilitado,precio_venta,precio_oferta,t_iva);

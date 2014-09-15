@@ -1,8 +1,3 @@
-<%-- 
-    Document   : listarLaboratorios
-    Created on : 14-sep-2014, 15:49:36
-    Author     : Usuario
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -13,7 +8,12 @@
         <title>Listar Laboratorios</title>
     </head>
     <body>
-        <h1>Lista de Laboratorios</h1>
+        
+        <div id="infoLaboratorio">
+            
+        </div>
+        
+        <h1>Lista de Laboratorios</h1>       
         
         <table border="2">
             <thead>
@@ -32,7 +32,7 @@
             <tbody>
                 <c:forEach items="${laboratorios}" var="lab">
                     <tr>
-                        <td><c:out value="${lab.getIdLaboratorio()}"/></td>
+                        <td><a href="verLaboratorio.html?id=${lab.getIdLaboratorio()}"><c:out value="${lab.getIdLaboratorio()}"/></a></td> 
                         <td><c:out value="${lab.getNombre()}"/></td>
                         <td><c:out value="${lab.getCodigoPostal()}"/></td>
                         <td><c:out value="${lab.getDepartamento()}"/></td>
@@ -45,5 +45,6 @@
                 </c:forEach>
             </tbody>
         </table>
+        
     </body>
 </html>

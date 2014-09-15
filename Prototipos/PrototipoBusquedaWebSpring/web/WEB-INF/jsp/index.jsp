@@ -48,13 +48,17 @@
                 </div>
             </div>
         </center>
-
         <script type="text/javascript">
             function ViewModel(){
                     var self = this;
                     self.mostrar=ko.observable(false);
                     self.lista = ko.observableArray();
                     self.filtro = ko.observable();
+                    
+                    //paginado
+                    self.pageNumber = ko.observable(1);
+                    self.rowPerPage = 5;
+                    self.indicePaginado=ko.observable(-1);
                   
                     self.timerID;
                     self.buscar= function(){
@@ -81,8 +85,10 @@
                                     });                                
                             }else{
                                 self.lista.removeAll();
+                                self.pageNumber(1);
                             }
                     };
+                    
                     
                     //ordenar
                     self.selectedOptionValue= ko.observable("Nombre descendente"),  
@@ -124,7 +130,7 @@
                     };
                     
                     self.cargarLista = function(d){
-                        self.lista.removeAll();
+                        self.lista.removeAll();                        
                         for(var i=0; i<d.length; i++){
                             self.lista.push(d[i]);                            
                         }
@@ -132,14 +138,15 @@
                     };
                     
                     //paginado
-                    self.pageNumber = ko.observable(1);
-                    self.rowPerPage = 5;
-                    self.indicePaginado=ko.observable(-1);
                     self.topePaginado=self.rowPerPage;
                     self.totalPages = ko.computed(function(){
                         var div = Math.floor(self.lista().length / self.rowPerPage) ;    
                         div += self.lista().length % self.rowPerPage > 0 ? 1 : 0;
-                        return div - 1;
+                        if (div!==0)
+                            div-=1;
+                        else
+                            div+=1;
+                        return div;
                     });
                     
                     self.paginado = ko.computed(function(){
@@ -147,7 +154,7 @@
                     });                    
                     
                     self.hasPrevious = ko.computed(function() {
-                    	return self.pageNumber() !== 1;
+                    	return (self.pageNumber() !== 1);
                     });
                     
                     self.hasNext = ko.computed(function() {
@@ -182,7 +189,7 @@
                     });                    
                     
                     self.paginated = ko.computed(function() {
-                        var first = self.pageNumber() * self.rowPerPage;
+                        var first = (self.pageNumber()-1) * self.rowPerPage;
                         return self.lista.slice(first, first + self.rowPerPage);
                     });
                             
@@ -250,8 +257,10 @@
             $(window).keyup(function (evt) {
                 if (evt.keyCode == 38) { //arriba
                     vm.selectPrevious();
+                    vm.mostrar(true);
                 } else if (evt.keyCode == 40) { //abajo
                     vm.selectNext();
+                    vm.mostrar(true);
                 } else if (evt.keyCode == 13){ //enter
                     
                 }

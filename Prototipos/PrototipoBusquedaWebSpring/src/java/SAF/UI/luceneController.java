@@ -45,13 +45,25 @@ public class luceneController {
         //busqueda
         int hitsPerPage = 50;
         String querystr;
-        /*if (texto_buscar.matches("[\\\\w]*\\s*[\\\\w]*"))
-            texto_buscar= "\"" + texto_buscar + "\"";*/
-        if (filtro.equals("all"))                
-            querystr = "nro: "+ texto_buscar + "* OR lab: "+ texto_buscar + "* OR desc: " + texto_buscar +"*";
-        else
-            querystr = filtro+ ":" + texto_buscar + "*";            
-
+        boolean espacios=false;
+        if (texto_buscar.indexOf(" ")>0){
+            //texto_buscar.replace(" ", " AND ");
+            texto_buscar = "\"" + texto_buscar + "\"";
+            System.out.println(texto_buscar);
+            espacios=true;
+        }
+        
+        if (filtro.equals("all")){
+            if (espacios)
+                querystr = querystr = "nro: "+ texto_buscar + " OR lab: "+ texto_buscar + " OR desc: " + texto_buscar;
+            else
+                querystr = "nro: "+ texto_buscar + "* OR lab: "+ texto_buscar + "* OR desc: " + texto_buscar +"*";
+        }else{
+            if (espacios)
+                querystr = filtro+ ": " + texto_buscar;//+ " *";
+            else
+                querystr = filtro+ ":" + texto_buscar + "*";            
+        }
         Query q = new QueryParser(Version.LUCENE_40,"", analyzer).parse(querystr);
         IndexReader reader = DirectoryReader.open(index);
         IndexSearcher searcher = new IndexSearcher(reader);

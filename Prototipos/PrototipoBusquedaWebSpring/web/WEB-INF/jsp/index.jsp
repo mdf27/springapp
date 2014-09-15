@@ -86,12 +86,13 @@
                             }else{
                                 self.lista.removeAll();
                                 self.pageNumber(1);
+                                self.totalPages();
                             }
                     };
                     
                     
                     //ordenar
-                    self.selectedOptionValue= ko.observable("Nombre descendente"),  
+                    self.selectedOptionValue= ko.observable("Nombre ascendente"),  
                     self.ordenar = function(){
                         if(self.selectedOptionValue()=="Nombre descendente"){
                             self.lista.sort(function(a, b) {
@@ -150,7 +151,11 @@
                     });
                     
                     self.paginado = ko.computed(function(){
-                       return (self.pageNumber() + " de " + self.totalPages()); 
+                        self.mostrar(false);
+                        if (self.totalPages()!==0)
+                            return (self.pageNumber() + " de " + self.totalPages()); 
+                        else
+                            return (self.pageNumber() + " de 1");
                     });                    
                     
                     self.hasPrevious = ko.computed(function() {

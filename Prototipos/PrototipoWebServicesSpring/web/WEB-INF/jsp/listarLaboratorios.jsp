@@ -8,11 +8,6 @@
         <title>Listar Laboratorios</title>
     </head>
     <body>
-        
-        <div id="infoLaboratorio">
-            
-        </div>
-        
         <h1>Lista de Laboratorios</h1>       
         
         <table border="2">
@@ -40,7 +35,7 @@
                         <td><c:out value="${lab.getLocalidad()}"/></td>
                         <td><c:out value="${lab.getRazonSocial()}"/></td>
                         <td><c:out value="${lab.getRuc()}"/></td>
-                        <td><c:out value="${lab.getIdLaboratorio()}"/></td>
+                        <td><a href="verPDF.html?id=${lab.getIdLaboratorio()}"><c:out value="${lab.getIdLaboratorio()}"/></a></td>
                     </tr>
                 </c:forEach>
             </tbody>

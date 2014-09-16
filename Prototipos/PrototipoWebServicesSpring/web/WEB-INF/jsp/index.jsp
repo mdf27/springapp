@@ -14,7 +14,13 @@
             
             <h2> Consulta Stock: </h2>
             
-            <jsp:include page="include/formListarLaboratorios.jsp"/>
+                <a href="listarLaboratorios.html">Listar Laboratorios</a>
+                <br/>
+                <br/>
+                <a href="listarOfertas.html">Listar Ofertas</a>
+                <br/>
+                <br/>
+
         
            <!-- <form action="ObtenerLaboratorios" method="POST">
             <input type="submit" value="Listar Laboratorios" name="botonLaboratorios" onclick="submit();"/>

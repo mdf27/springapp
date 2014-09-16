@@ -10,16 +10,16 @@
     <body>
         <h1>Información del Laboratorio <c:out value="${laboratorio.getIdLaboratorio()}"/></h1>       
         
-        <b>Id:</b> <c:out value="${laboratorio.getIdLaboratorio()}"/> <br/> <br/>
-        <b>Nombre: </b> <c:out value="${laboratorio.getNombre()}"/> <br/> <br/>
-        <b>Código Postal: </b><c:out value="${laboratorio.getCodigoPostal()}"/> <br/> <br/>
-        <b>Departamento: </b> <c:out value="${laboratorio.getDepartamento()}"/> <br/> <br/>
-        <b>Dirección: </b> <c:out value="${laboratorio.getDireccion()}"/> <br/> <br/>
-        <b>Localidad: </b> <c:out value="${laboratorio.getLocalidad()}"/> <br/> <br/>
-        <b>Razón Social: </b> <c:out value="${laboratorio.getRazonSocial()}"/> <br/> <br/>
-        <b>RUC: </b> <c:out value="${laboratorio.getRuc()}"/> <br/> 
+        <big><b>Id:</b></big> <c:out value="${laboratorio.getIdLaboratorio()}"/> <br/> <br/>
+        <big><b>Nombre: </b></big> <c:out value="${laboratorio.getNombre()}"/> <br/> <br/>
+        <big><b>Código Postal: </b></big><c:out value="${laboratorio.getCodigoPostal()}"/> <br/> <br/>
+        <big><b>Departamento: </b></big> <c:out value="${laboratorio.getDepartamento()}"/> <br/> <br/>
+        <big><b>Dirección: </b></big> <c:out value="${laboratorio.getDireccion()}"/> <br/> <br/>
+        <big><b>Localidad: </b></big> <c:out value="${laboratorio.getLocalidad()}"/> <br/> <br/>
+        <big><b>Razón Social: </b></big> <c:out value="${laboratorio.getRazonSocial()}"/> <br/> <br/>
+        <big><b>RUC: </b></big> <c:out value="${laboratorio.getRuc()}"/> <br/> 
         
-        <h3> Líneas del Laboratorio</h3>
+        <h2> Líneas del Laboratorio</h2>
         
         <table border="2">
             <thead>
@@ -40,7 +40,7 @@
             </tbody>
         </table>
         
-        <h3> Teléfonos del Laboratorio</h3>
+        <h2> Teléfonos del Laboratorio</h2>
         
         <table border="2">
             <thead>

@@ -1,21 +1,19 @@
+package SAF.UI.Seguridad;
 
-
-package org.paquetes.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 
-
 @Controller
-public class indexController {
-    @RequestMapping(value = "index")
+public class realizarFacturaController { //implements Controller{
+
+    @RequestMapping(value = "realizarFacturacion")
     public ModelAndView redireccion(){
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("index");
+        mv.setViewName("realizarFacturacion");
         return (mv);
     }
-    
     
 }

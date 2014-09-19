@@ -3,18 +3,47 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Facturacion</title>
-        <link href="CSS/contenedorPrincipal.css" rel="stylesheet">
-    </head>
-    <body>
+        <title>Facturación</title>
+        <link href="CSS/contenedorPrincipal.css" rel="stylesheet">    
+        
         <!-- /menu -->
         <jsp:include page="include/menu.jsp"/>   
+    </head>
+    <body>
+
+        
         <div id="contenedor">
 
             <div id = "leftColuma">  
                 <jsp:include page="include/menuFacturacion.jsp"/>  
             </div>
 
+            <script type="text/javascript">
+            function getAway() {
+                // Replace current site with another benign site
+                window.location.replace('index.html');
+            }
+
+            $(function() {
+
+                $("#get-away").on("click", function(e) {
+                    getAway();
+                });
+
+                $("#get-away a").on("click", function(e) {
+                    // allow the (?) link to work
+                    e.stopPropagation();
+                });
+
+                $(document).keyup(function(e) {
+                    if (e.keyCode == 27) { // escape key
+                        getAway();
+                    }
+                });
+
+            });
+        </script>
+        
             <div align="center" id ="contenedorPrincipal">
                 <table width="90%">
                     <tr>
@@ -72,3 +101,4 @@
 
     </body>
 </html>
+

@@ -1,4 +1,4 @@
-package SAF.UI.Stock;
+package SAF.Datos.Stock;
 
 import SAF.VO.Stock.ProductoVO;
 import SAF.VO.Stock.StockVO;

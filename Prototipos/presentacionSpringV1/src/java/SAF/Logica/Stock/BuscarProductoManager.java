@@ -6,7 +6,7 @@
 package SAF.Logica.Stock;
 
 import SAF.Datos.Stock.BuscarProductoDAO;
-import SAF.UI.Stock.LuceneDAO;
+import SAF.Datos.Stock.LuceneDAO;
 import SAF.VO.Stock.ProductoVO;
 import SAF.VO.Stock.StockVO;
 import java.io.IOException;

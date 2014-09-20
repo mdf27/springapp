@@ -14,16 +14,16 @@ import java.text.DecimalFormatSymbols;
  * @author majo
  */
 public class OfertaDescuentoVO {
-    int idTipoOfertaDescuento;
-    int idProducto;
-    String descripcion;
-    int cantBonif;
-    DecimalFormat porcentBonif;
-    DecimalFormat montoBonif;
-    int cantMin;
-    DecimalFormat montoMin;
-    boolean habilitado;
-    BigInteger idTransaccion;
+    private int idTipoOfertaDescuento;
+    private int idProducto;
+    private String descripcion;
+    private int cantBonif;
+    private DecimalFormat porcentBonif;
+    private DecimalFormat montoBonif;
+    private int cantMin;
+    private DecimalFormat montoMin;
+    private boolean habilitado;
+    private BigInteger idTransaccion;
 
     public OfertaDescuentoVO() {
         DecimalFormatSymbols simbolos = new DecimalFormatSymbols();

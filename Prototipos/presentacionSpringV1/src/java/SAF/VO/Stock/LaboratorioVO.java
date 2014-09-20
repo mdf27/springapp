@@ -13,13 +13,13 @@ import java.math.BigInteger;
  */
 public class LaboratorioVO {
 
-    String nombre;
-    String direccion;
-    String departamento;
-    String localidad;
-    String telefono;
-    String observaciones;
-    BigInteger idTransaccion;
+    private String nombre;
+    private String direccion;
+    private String departamento;
+    private String localidad;
+    private String telefono;
+    private String observaciones;
+    private BigInteger idTransaccion;
     
     public LaboratorioVO() {
     }

@@ -13,8 +13,8 @@ import java.text.DecimalFormatSymbols;
  * @author majo
  */
 public class TipoIvaVO {
-    String descripcion;
-    DecimalFormat porcentaje;
+    private String descripcion;
+    private DecimalFormat porcentaje;
 
     public TipoIvaVO() {
         DecimalFormatSymbols simbolos = new DecimalFormatSymbols();

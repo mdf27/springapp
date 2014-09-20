@@ -12,9 +12,9 @@ import java.math.BigInteger;
  * @author majo
  */
 public class CodigoProductoVO {
-    int idProducto;
-    String codigo;
-    BigInteger idTransaccion;
+    private int idProducto;
+    private String codigo;
+    private BigInteger idTransaccion;
 
     public CodigoProductoVO() {
     }

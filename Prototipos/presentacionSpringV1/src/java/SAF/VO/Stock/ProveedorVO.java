@@ -13,14 +13,14 @@ import java.util.Date;
  * @author majo
  */
 public class ProveedorVO {
-    String documento;
-    String nombre;
-    String telefono;
-    String email;
-    String web;
-    boolean habilitado;
-    Date fcreacion;
-    BigInteger idTransacción;
+    private String documento;
+    private String nombre;
+    private String telefono;
+    private String email;
+    private String web;
+    private boolean habilitado;
+    private Date fcreacion;
+    private BigInteger idTransacción;
 
     public ProveedorVO() {
     }

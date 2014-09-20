@@ -12,8 +12,8 @@ import java.math.BigInteger;
  * @author majo
  */
 public class TipoOfertaDescuentoVO {
-    String descripcion;
-    BigInteger idTransaccion;
+    private String descripcion;
+    private BigInteger idTransaccion;
 
     public TipoOfertaDescuentoVO() {
     }

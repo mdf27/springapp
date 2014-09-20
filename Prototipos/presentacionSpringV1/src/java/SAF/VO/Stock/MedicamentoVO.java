@@ -12,10 +12,10 @@ import java.math.BigInteger;
  * @author majo
  */
 public class MedicamentoVO {
-    int idPresentacion;
-    int idLaboratorio;
-    boolean requiereReceta;
-    BigInteger idTransaccion;
+    private int idPresentacion;
+    private int idLaboratorio;
+    private boolean requiereReceta;
+    private BigInteger idTransaccion;
 
     public MedicamentoVO() {
     }

@@ -14,12 +14,12 @@ import java.text.DecimalFormatSymbols;
  * @author majo
  */
 public class ProductoVO {
-    String descripcion;
-    DecimalFormat precioCompra;
-    DecimalFormat precioVenta;
-    int idTipoIva;
-    boolean habilitado;
-    BigInteger idTransaccion;
+    private String descripcion;
+    private DecimalFormat precioCompra;
+    private DecimalFormat precioVenta;
+    private int idTipoIva;
+    private boolean habilitado;
+    private BigInteger idTransaccion;
 
     public ProductoVO() {
         DecimalFormatSymbols simbolos = new DecimalFormatSymbols();

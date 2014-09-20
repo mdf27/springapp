@@ -10,6 +10,7 @@ package SAF.UI.Stock;
  *
  * @author majo
  */
+import SAF.Logica.Stock.BuscarProductoManager;
 import java.io.IOException;
 import java.sql.SQLException;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -24,7 +25,9 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.util.Version;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,75 +36,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
-public class luceneController {    
-    @RequestMapping(value = "busqueda.htm",method = RequestMethod.GET)  
+public class luceneController {       
+    @Autowired
+    private BuscarProductoManager bpm;
     
+    @RequestMapping(value = "busqueda.htm",method = RequestMethod.GET)  
+                  
     public @ResponseBody String buscar (@RequestParam(value="buscar") String texto_buscar, @RequestParam(value="filtro") String filtro) throws ClassNotFoundException, SQLException, IOException, ParseException{
-        
-        LuceneSingleton ls = LuceneSingleton.getInstance();
-        Directory index = ls.getIndiceProductosLucene();
-        StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_40); 
-        
-        //busqueda
-        int hitsPerPage = 50;
-        String querystr;
-        boolean espacios=false;
-        if (texto_buscar.indexOf(" ")>0){            
-            texto_buscar = "\"" + texto_buscar + "\"";         
-            espacios=true;
-        }
-        
-        if (filtro.equals("all")){
-            if (espacios)
-                querystr = querystr = "nro: "+ texto_buscar + " OR lab: "+ texto_buscar + " OR desc: " + texto_buscar;
-            else
-                querystr = "nro: "+ texto_buscar + "* OR lab: "+ texto_buscar + "* OR desc: " + texto_buscar +"*";
-        }else{
-            if (espacios)
-                querystr = filtro+ ": " + texto_buscar;//+ " *";
-            else
-                querystr = filtro+ ":" + texto_buscar + "*";            
-        }
-        Query q = new QueryParser(Version.LUCENE_40,"", analyzer).parse(querystr);
-        IndexReader reader = DirectoryReader.open(index);
-        IndexSearcher searcher = new IndexSearcher(reader);
-        TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, true);
-        searcher.search(q, collector);
-        ScoreDoc[] hits = collector.topDocs().scoreDocs;
-
-        //mostrar resultados
-        String salida="";
-        if (hits.length>0){                
-            int docId = hits[0].doc;
-            Document d = searcher.doc(docId);
-            String desc = "\"descripcion\":\""+d.get("descripcion")+"\",";
-            String precioVenta = "\"precioVenta\":"+d.get("precioVenta")+",";
-            String precioCompra = "\"precioCompra\":\""+d.get("precioCompra")+"\"";
-            String habilitado;
-            if (d.get("habilitado").equals("true"))
-                habilitado ="\"habilitado\":\""+"Disponible"+"\"";
-            else
-                habilitado ="\"habilitado\":\""+"No Disponible"+"\"";
-            String cantidad = "\"cantidad\":\""+d.get("cantidad")+"\"";
-            salida+="{"+desc+precioVenta+precioCompra+habilitado+cantidad+"}";
-            for(int i=1;i<hits.length;i++) {
-                docId = hits[i].doc;
-                d = searcher.doc(docId);
-                desc = "\"descripcion\":\""+d.get("descripcion")+"\",";
-                precioVenta = "\"precioVenta\":"+d.get("precioVenta")+",";
-                precioCompra = "\"precioCompra\":\""+d.get("precioCompra")+"\"";
-                if (d.get("habilitado").equals("true"))
-                    habilitado ="\"habilitado\":\""+"Disponible"+"\"";
-                else
-                    habilitado ="\"habilitado\":\""+"No Disponible"+"\"";
-                cantidad = "\"cantidad\":\""+d.get("cantidad")+"\"";
-                salida+="{"+desc+precioVenta+precioCompra+habilitado+cantidad+"}";
-            }
-        }
-        reader.close();
-
-        salida="["+salida+"]";
-        
-        return salida;        
+        return bpm.buscarProducto(texto_buscar, filtro);
     }
 }

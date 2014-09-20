@@ -19,7 +19,7 @@
     
     <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
-        <property name="url" value="jdbc:mysql://localhost:3306/prueba_lucene"></property>
+        <property name="url" value="jdbc:mysql://localhost:3306/safdb"></property>
         <property name="username" value="root"></property>
         <property name="password" value=""></property>
     </bean>
@@ -27,4 +27,7 @@
     <tx:annotation-driven proxy-target-class="true" transaction-manager="transactionManager"/>
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" autowire="byType"/>
     
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
 </beans>

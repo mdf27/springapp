@@ -1,6 +1,5 @@
 package SAF.UI.Stock;
 
-import SAF.Logica.Stock.BuscarProductoManager;
 import SAF.VO.Stock.ProductoVO;
 import SAF.VO.Stock.StockVO;
 import java.io.IOException;
@@ -34,8 +33,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class LuceneDAO{
-    @Autowired
-    private BuscarProductoManager bpm;
         
     private static LuceneDAO instance;
     private static Directory indiceProductosLucene = new RAMDirectory();  
@@ -44,16 +41,11 @@ public class LuceneDAO{
         return indiceProductosLucene;
     }
     
-    private void  crearIndiceProductosLuecene () throws ClassNotFoundException, SQLException, IOException, ParseException{       
+    private void  crearIndiceProductosLuecene (List<ProductoVO> productos,List<StockVO> stock ) throws ClassNotFoundException, SQLException, IOException, ParseException{       
         //Lucene
         StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_40);            
         IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_40, analyzer);            
-        IndexWriter writer = new IndexWriter(indiceProductosLucene, config);
-        
-        //Manejador
-        List<ProductoVO> productos = bpm.buscarProductos();
-        List<StockVO> stock = bpm.buscarProductoStock();
-        
+        IndexWriter writer = new IndexWriter(indiceProductosLucene, config);        
         //formateador
         DecimalFormat formateador = new DecimalFormat("#####.##");
         int i=0;
@@ -84,16 +76,16 @@ public class LuceneDAO{
         return instance;
     };
     
-    public static void cargarProductos() throws ClassNotFoundException, SQLException, IOException, ParseException{
+    public static void cargarProductos(List<ProductoVO> productos,List<StockVO> stock ) throws ClassNotFoundException, SQLException, IOException, ParseException{
         LuceneDAO bs = new LuceneDAO();
         bs.indiceProductosLucene =  new RAMDirectory();  
-        bs.crearIndiceProductosLuecene();
+        bs.crearIndiceProductosLuecene(productos,stock );
         instance = bs;
     }
     
-    public void actualizarIndiceProductosLucene (String consultaSQL)
+    public void actualizarIndiceProductosLucene (List<ProductoVO> productos,List<StockVO> stock )
             throws ClassNotFoundException, SQLException, IOException, ParseException{
-        crearIndiceProductosLuecene();
+        crearIndiceProductosLuecene(productos,stock);
     }    
     
     public static String buscarProducto(String texto_buscar, String filtro, Directory index) throws IOException, ParseException{

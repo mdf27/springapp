@@ -22,9 +22,6 @@ import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.stereotype.Service;
 
 /**
@@ -35,13 +32,14 @@ import org.springframework.stereotype.Service;
 public class LuceneDAO{
         
     private static LuceneDAO instance;
-    private static Directory indiceProductosLucene = new RAMDirectory();  
     
-    public static Directory getIndiceProductosLucene(){
+    private Directory indiceProductosLucene = null; //new RAMDirectory();  
+    
+    public Directory getIndiceProductosLucene(){
         return indiceProductosLucene;
     }
     
-    private void  crearIndiceProductosLuecene (List<ProductoVO> productos,List<StockVO> stock ) throws ClassNotFoundException, SQLException, IOException, ParseException{       
+    private void crearIndiceProductosLuecene (List<ProductoVO> productos,List<StockVO> stock ) throws ClassNotFoundException, SQLException, IOException, ParseException{       
         //Lucene
         StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_40);            
         IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_40, analyzer);            
@@ -67,20 +65,20 @@ public class LuceneDAO{
           
     public static LuceneDAO getInstance() 
             throws ClassNotFoundException, SQLException, IOException, ParseException{
-       /* if(instance == null){
+       if(instance == null){
             LuceneDAO bs = new LuceneDAO();
-            bs.indiceProductosLucene =  new RAMDirectory();  
-            bs.crearIndiceProductosLuecene();
             instance = bs;
-        }*/
+        }
         return instance;
     };
     
-    public static void cargarProductos(List<ProductoVO> productos,List<StockVO> stock ) throws ClassNotFoundException, SQLException, IOException, ParseException{
-        LuceneDAO bs = new LuceneDAO();
-        bs.indiceProductosLucene =  new RAMDirectory();  
-        bs.crearIndiceProductosLuecene(productos,stock );
-        instance = bs;
+    public boolean indiceCargado(){
+        return (indiceProductosLucene==null);
+    }
+    
+    public void cargarProductos(List<ProductoVO> productos,List<StockVO> stock ) throws ClassNotFoundException, SQLException, IOException, ParseException{  
+        indiceProductosLucene =  new RAMDirectory();  
+        crearIndiceProductosLuecene(productos,stock );        
     }
     
     public void actualizarIndiceProductosLucene (List<ProductoVO> productos,List<StockVO> stock )
@@ -88,7 +86,7 @@ public class LuceneDAO{
         crearIndiceProductosLuecene(productos,stock);
     }    
     
-    public static String buscarProducto(String texto_buscar, String filtro, Directory index) throws IOException, ParseException{
+    public String buscarProducto(String texto_buscar, String filtro) throws IOException, ParseException{
         StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_40); 
         
         //busqueda
@@ -113,7 +111,7 @@ public class LuceneDAO{
         }
         Query q = new QueryParser(Version.LUCENE_40,"", analyzer).parse(querystr);
         
-        IndexReader reader = DirectoryReader.open(index);
+        IndexReader reader = DirectoryReader.open(indiceProductosLucene);
         IndexSearcher searcher = new IndexSearcher(reader);
         TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, true);
         searcher.search(q, collector);

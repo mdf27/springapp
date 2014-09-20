@@ -43,11 +43,12 @@ public class BuscarProductoManager {
     
     @Transactional(rollbackFor=Exception.class)
     public String buscarProducto(String texto_buscar, String filtro) throws ClassNotFoundException, ParseException, SQLException, IOException{
-        if (LuceneDAO.getInstance()==null)//indiceCargado?
-            LuceneDAO.cargarProductos(buscarProductos(),buscarProductoStock());
+        LuceneDAO ldao = LuceneDAO.getInstance();
+        if (!ldao.indiceCargado()){//indiceCargado?
+            ldao.cargarProductos(buscarProductos(),buscarProductoStock());
+        }          
     
-        Directory index = LuceneDAO.getIndiceProductosLucene();
-        String salida = LuceneDAO.buscarProducto(texto_buscar, filtro, index);
+        String salida = ldao.buscarProducto(texto_buscar, filtro);
         return salida;
     }
 }

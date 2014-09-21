@@ -80,9 +80,9 @@
                 if (self.filtro() && self.filtro().length >2){
                         var buscar;
                         if(self.selectedOptionValueFiltro()=="Código:"){
-                            buscar="nro"
+                            buscar="numero"
                         }else if(self.selectedOptionValueFiltro()=="Laboratorio:"){
-                            buscar="lab"
+                            buscar="laboratorio"
                         }else if(self.selectedOptionValueFiltro()=="Droga:"){
                             buscar="Droga"
                         }else  if(self.selectedOptionValueFiltro()=="Presentacion:"){
@@ -90,7 +90,7 @@
                         }else  if(self.selectedOptionValueFiltro()=="Todo:"){
                             buscar="all"
                         }else{
-                            buscar="desc"
+                            buscar="descripcion"
                         }
                         $.ajax({
                             url: "busqueda.htm",

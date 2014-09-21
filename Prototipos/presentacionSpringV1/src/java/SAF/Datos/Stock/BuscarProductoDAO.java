@@ -8,7 +8,9 @@ package SAF.Datos.Stock;
 import SAF.Datos.Abstract.AbstractDAO;
 import SAF.VO.Stock.ProductoVO;
 import SAF.VO.Stock.StockVO;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,18 +27,28 @@ public class BuscarProductoDAO extends AbstractDAO{
         String sql = "select p.idProducto, p.descripcion, p.precioCompra, p.precioVenta, p.habilitado\n" +
                      "from producto p\n";   
 
-        //return getJdbcTemplate().query(sql,new ProductoRowMapper());
-        
+        /*DecimalFormat formateador = new DecimalFormat("#####.##");        
+        DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
+        simbolos.setDecimalSeparator('.');
+        DecimalFormat precioCompraD = new DecimalFormat("#####.##",simbolos);        
+        DecimalFormat precioVentaD = new DecimalFormat("#####.##",simbolos);*/
+                
         List<ProductoVO> productos = new ArrayList<>();
         
 	List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
 	for (Map row : rows) {
 		ProductoVO producto = new ProductoVO();
 		producto.setDescripcion((String)(row.get("descripcion")));
-		producto.setPrecioCompra((DecimalFormat)row.get("precioCompra"));
-		producto.setPrecioVenta((DecimalFormat)row.get("precioVenta"));
+                
+                BigDecimal bd = (BigDecimal)row.get("precioCompra");
+		producto.setPrecioCompra(bd.doubleValue());
+                
+                bd = (BigDecimal)row.get("precioVenta");         
+		producto.setPrecioVenta(bd.doubleValue());
+                
                 producto.setHabilitado((boolean)row.get("habilitado"));
-		productos.add(producto);
+		
+                productos.add(producto);
 	}
 
 	return productos;

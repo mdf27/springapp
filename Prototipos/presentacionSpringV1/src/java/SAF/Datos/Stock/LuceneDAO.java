@@ -38,7 +38,7 @@ public class LuceneDAO extends AbstractDAO{
     private Directory indiceProductosLucene = null; //new RAMDirectory();  
     
     public Directory getIndiceProductosLucene(){
-        return indiceProductosLucene;
+        return this.indiceProductosLucene;
     }
     
     private void crearIndiceProductosLuecene (List<ProductoVO> productos,List<StockVO> stock ) throws ClassNotFoundException, SQLException, IOException, ParseException{       
@@ -52,8 +52,9 @@ public class LuceneDAO extends AbstractDAO{
         for (ProductoVO rt : productos) {
             Document d = new Document();
             d.add(new org.apache.lucene.document.TextField ("descripcion", rt.getDescripcion(), Field.Store.YES));
-            d.add(new org.apache.lucene.document.TextField ("precioVenta", formateador.format(rt.getPrecioVenta()), Field.Store.YES));
-            d.add(new org.apache.lucene.document.TextField ("precioCompra", formateador.format(rt.getPrecioCompra()), Field.Store.YES));
+           // String result = formateador.format(rt.getPrecioVenta());
+            d.add(new org.apache.lucene.document.TextField ("precioVenta", ""+rt.getPrecioVenta(), Field.Store.YES));
+            d.add(new org.apache.lucene.document.TextField ("precioCompra", ""+rt.getPrecioCompra(), Field.Store.YES));
             if(rt.isHabilitado())
                 d.add(new org.apache.lucene.document.TextField ("habilitado", "true", Field.Store.YES));
             else
@@ -75,7 +76,7 @@ public class LuceneDAO extends AbstractDAO{
     };
     
     public boolean indiceCargado(){
-        return (indiceProductosLucene==null);
+        return (indiceProductosLucene!=null);
     }
     
     public void cargarProductos(List<ProductoVO> productos,List<StockVO> stock ) throws ClassNotFoundException, SQLException, IOException, ParseException{  
@@ -102,9 +103,9 @@ public class LuceneDAO extends AbstractDAO{
         
         if (filtro.equals("all")){
             if (espacios)
-                querystr = querystr = "nro: "+ texto_buscar + " OR lab: "+ texto_buscar + " OR desc: " + texto_buscar;
+                querystr = querystr = "numero: "+ texto_buscar + " OR laboratorio: "+ texto_buscar + " OR descripcion: " + texto_buscar;
             else
-                querystr = "nro: "+ texto_buscar + "* OR lab: "+ texto_buscar + "* OR desc: " + texto_buscar +"*";
+                querystr = "numero: "+ texto_buscar + "* OR laboratorio: "+ texto_buscar + "* OR descripcion: " + texto_buscar +"*";
         }else{
             if (espacios)
                 querystr = filtro+ ": " + texto_buscar;//+ " *";
@@ -113,7 +114,7 @@ public class LuceneDAO extends AbstractDAO{
         }
         Query q = new QueryParser(Version.LUCENE_40,"", analyzer).parse(querystr);
         
-        IndexReader reader = DirectoryReader.open(indiceProductosLucene);
+        IndexReader reader = DirectoryReader.open(this.getIndiceProductosLucene());
         IndexSearcher searcher = new IndexSearcher(reader);
         TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, true);
         searcher.search(q, collector);
@@ -126,12 +127,12 @@ public class LuceneDAO extends AbstractDAO{
             Document d = searcher.doc(docId);
             String desc = "\"descripcion\":\""+d.get("descripcion")+"\",";
             String precioVenta = "\"precioVenta\":"+d.get("precioVenta")+",";
-            String precioCompra = "\"precioCompra\":\""+d.get("precioCompra")+"\"";
+            String precioCompra = "\"precioCompra\":"+d.get("precioCompra")+",";
             String habilitado;
             if (d.get("habilitado").equals("true"))
-                habilitado ="\"habilitado\":\""+"Disponible"+"\"";
+                habilitado ="\"habilitado\":\""+"Disponible"+"\",";
             else
-                habilitado ="\"habilitado\":\""+"No Disponible"+"\"";
+                habilitado ="\"habilitado\":\""+"No Disponible"+"\",";
             String cantidad = "\"cantidad\":\""+d.get("cantidad")+"\"";
             salida+="{"+desc+precioVenta+precioCompra+habilitado+cantidad+"}";
             for(int i=1;i<hits.length;i++) {
@@ -139,13 +140,13 @@ public class LuceneDAO extends AbstractDAO{
                 d = searcher.doc(docId);
                 desc = "\"descripcion\":\""+d.get("descripcion")+"\",";
                 precioVenta = "\"precioVenta\":"+d.get("precioVenta")+",";
-                precioCompra = "\"precioCompra\":\""+d.get("precioCompra")+"\"";
+                precioCompra = "\"precioCompra\":"+d.get("precioCompra")+",";
                 if (d.get("habilitado").equals("true"))
-                    habilitado ="\"habilitado\":\""+"Disponible"+"\"";
+                    habilitado ="\"habilitado\":\""+"Disponible"+"\",";
                 else
-                    habilitado ="\"habilitado\":\""+"No Disponible"+"\"";
+                    habilitado ="\"habilitado\":\""+"No Disponible"+"\",";
                 cantidad = "\"cantidad\":\""+d.get("cantidad")+"\"";
-                salida+="{"+desc+precioVenta+precioCompra+habilitado+cantidad+"}";
+                salida+=",{"+desc+precioVenta+precioCompra+habilitado+cantidad+"}";
             }
         }
         reader.close();

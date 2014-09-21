@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public class TransaccionDAO extends AbstractDAO{
 
-    @Transactional()
+    @Transactional(rollbackFor=Exception.class)
     public long getIDTransaccion(int idUsuario) {
         //Genero sentencia SQL
         String sql = "INSERT INTO Transaccion (idUsuario,fecha) VALUES = (?,CURRENT_DATE)";

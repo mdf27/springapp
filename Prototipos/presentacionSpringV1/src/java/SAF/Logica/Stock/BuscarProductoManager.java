@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import org.apache.lucene.queryparser.classic.ParseException;
-import org.apache.lucene.store.Directory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,30 +24,25 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class BuscarProductoManager {
     @Autowired
-    private BuscarProductoDAO bdDao1;
-    @Autowired
-    private BuscarProductoDAO bdDao2;
-    @Autowired
     private BuscarProductoDAO buscarDao;
     
-    @Transactional(rollbackFor=Exception.class)
     public List<ProductoVO> buscarProductos(){
-        return bdDao1.obtenerProductosBusqueda();
+        return buscarDao.obtenerProductosBusqueda();
     }
     
-    @Transactional(rollbackFor=Exception.class)
     public List<StockVO> buscarProductoStock(){
-        return bdDao2.obtenerStockBusqueda();
+        return buscarDao.obtenerStockBusqueda();
     }
     
     @Transactional(rollbackFor=Exception.class)
     public String buscarProducto(String texto_buscar, String filtro) throws ClassNotFoundException, ParseException, SQLException, IOException{
         LuceneDAO ldao = LuceneDAO.getInstance();
-        if (!ldao.indiceCargado()){//indiceCargado?
+        if (ldao.indiceCargado()){//indiceCargado?
             ldao.cargarProductos(buscarProductos(),buscarProductoStock());
         }          
     
         String salida = ldao.buscarProducto(texto_buscar, filtro);
         return salida;
     }
+    
 }

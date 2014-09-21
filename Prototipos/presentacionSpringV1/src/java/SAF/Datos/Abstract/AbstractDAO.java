@@ -18,8 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 public abstract class AbstractDAO extends JdbcDaoSupport{
     
     @Autowired()
-    public void setData(DataSource ds) {
-        this.setDataSource(ds);
+    public void setData(DataSource dataSource) {
+        this.setDataSource(dataSource);
     }
     
     @Transactional

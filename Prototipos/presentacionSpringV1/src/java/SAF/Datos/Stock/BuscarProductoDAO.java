@@ -9,23 +9,26 @@ import SAF.Datos.Abstract.AbstractDAO;
 import SAF.VO.Stock.ProductoVO;
 import SAF.VO.Stock.StockVO;
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author majo
  */
+@Repository
 public class BuscarProductoDAO extends AbstractDAO{
     
     public List<ProductoVO> obtenerProductosBusqueda() {
         String sql = "select p.idProducto, p.descripcion, p.precioCompra, p.precioVenta, p.habilitado\n" +
                      "from producto p\n";   
 
-        List<ProductoVO> productos = new ArrayList<ProductoVO>();
-      
+        //return getJdbcTemplate().query(sql,new ProductoRowMapper());
+        
+        List<ProductoVO> productos = new ArrayList<>();
+        
 	List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
 	for (Map row : rows) {
 		ProductoVO producto = new ProductoVO();
@@ -35,8 +38,8 @@ public class BuscarProductoDAO extends AbstractDAO{
                 producto.setHabilitado((boolean)row.get("habilitado"));
 		productos.add(producto);
 	}
-        return productos;
-	
+
+	return productos;
     }
     
     public List<StockVO> obtenerStockBusqueda() {
@@ -54,6 +57,7 @@ public class BuscarProductoDAO extends AbstractDAO{
             stock.add(sk);
         }
         return stock;
+        //return getJdbcTemplate().query(sql,new StockRowMapper());
     }        
 }    
 

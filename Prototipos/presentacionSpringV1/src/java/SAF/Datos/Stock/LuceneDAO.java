@@ -1,5 +1,5 @@
 package SAF.Datos.Stock;
-
+import SAF.Datos.Abstract.AbstractDAO;
 import SAF.VO.Stock.ProductoVO;
 import SAF.VO.Stock.StockVO;
 import java.io.IOException;
@@ -22,6 +22,7 @@ import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 /**
@@ -29,7 +30,8 @@ import org.springframework.stereotype.Service;
  * @author majo
  */
 @Service
-public class LuceneDAO{
+@Repository
+public class LuceneDAO extends AbstractDAO{
         
     private static LuceneDAO instance;
     
@@ -151,5 +153,4 @@ public class LuceneDAO{
         salida="["+salida+"]";
         return salida;
     }
-    
 }

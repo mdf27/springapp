@@ -1,4 +1,4 @@
-package SAF.VO.Stock;
+package SAF.VO.Facturacion;
 
 import java.text.DecimalFormat;
 import java.util.Date;

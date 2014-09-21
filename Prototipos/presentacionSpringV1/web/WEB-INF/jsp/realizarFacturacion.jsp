@@ -1,6 +1,9 @@
 
+<%@page import="SAF.Datos.Facturacion.TipoFacturaDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+
+ 
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -11,7 +14,14 @@
         <jsp:include page="include/menu.jsp"/>   
     </head>
     <body>
+<% TipoFacturaDAO fd = new TipoFacturaDAO(); 
+            short aux = 101;
+            fd.insertarTipoFactura(aux, "Factura");
+            aux = 102;
+            fd.insertarTipoFactura(aux, "Nota de crédito");
+            
 
+%>
         
         <div id="contenedor">
 
@@ -20,6 +30,7 @@
             </div>
 
             <script type="text/javascript">
+                
             function getAway() {
                 // Replace current site with another benign site
                 window.location.replace('index.html');

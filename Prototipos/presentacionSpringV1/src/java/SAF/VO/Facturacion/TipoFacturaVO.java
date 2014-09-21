@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package SAF.VO.Stock;
+package SAF.VO.Facturacion;
 
 /**
  *

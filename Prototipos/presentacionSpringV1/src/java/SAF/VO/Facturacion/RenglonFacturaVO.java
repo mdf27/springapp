@@ -3,8 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package SAF.VO.Stock;
+package SAF.VO.Facturacion;
 
 import java.math.BigInteger;
 import java.text.DecimalFormat;
@@ -14,13 +13,15 @@ import java.text.DecimalFormat;
  * @author Fernanda
  */
 public class RenglonFacturaVO {
-    
+
     private short idTipoFactura;
     private int idFactura;
     private int idProducto;
     private DecimalFormat precioProducto;
     private DecimalFormat precioVtaReal;
-    /**el desc es de descuento ;)**/
+    /**
+     * el desc es de descuento ;)*
+     */
     private String descDescripcion;
     private int descCantBonif;
     private DecimalFormat descPorcentBonif;
@@ -109,7 +110,5 @@ public class RenglonFacturaVO {
     public void setIdTransaccion(BigInteger idTransaccion) {
         this.idTransaccion = idTransaccion;
     }
-    
-    
-    
+
 }

@@ -37,7 +37,7 @@ public class BuscarProductoManager {
     @Transactional(rollbackFor=Exception.class)
     public String buscarProducto(String texto_buscar, String filtro) throws ClassNotFoundException, ParseException, SQLException, IOException{
         LuceneDAO ldao = LuceneDAO.getInstance();
-        if (ldao.indiceCargado()){//indiceCargado?
+        if (!ldao.indiceCargado()){//indiceCargado?
             ldao.cargarProductos(buscarProductos(),buscarProductoStock());
         }          
     

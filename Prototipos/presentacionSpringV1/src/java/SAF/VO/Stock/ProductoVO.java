@@ -6,8 +6,6 @@
 package SAF.VO.Stock;
 
 import java.math.BigInteger;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 
 /**
  *
@@ -15,17 +13,14 @@ import java.text.DecimalFormatSymbols;
  */
 public class ProductoVO {
     private String descripcion;
-    private DecimalFormat precioCompra;
-    private DecimalFormat precioVenta;
+    private double precioCompra;
+    private double precioVenta;
     private int idTipoIva;
     private boolean habilitado;
     private BigInteger idTransaccion;
 
     public ProductoVO() {
-        DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
-        simbolos.setDecimalSeparator('.');
-        precioCompra = new DecimalFormat("#####.##",simbolos);
-        precioVenta = new DecimalFormat("#####.##",simbolos);        
+     
     }
 
     public String getDescripcion() {
@@ -36,19 +31,19 @@ public class ProductoVO {
         this.descripcion = descripcion;
     }
 
-    public DecimalFormat getPrecioCompra() {
+    public double getPrecioCompra() {
         return precioCompra;
     }
 
-    public void setPrecioCompra(DecimalFormat precioCompra) {
+    public void setPrecioCompra(double precioCompra) {
         this.precioCompra = precioCompra;
     }
 
-    public DecimalFormat getPrecioVenta() {
+    public double getPrecioVenta() {
         return precioVenta;
     }
 
-    public void setPrecioVenta(DecimalFormat precioVenta) {
+    public void setPrecioVenta(double precioVenta) {
         this.precioVenta = precioVenta;
     }
 

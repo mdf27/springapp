@@ -23,30 +23,15 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class BuscarProductoManager {
-
-
-    
-    @Autowired
-    private BuscarProductoDAO bdDao1;
-    @Autowired
-    private BuscarProductoDAO bdDao2;
     @Autowired
     private BuscarProductoDAO buscarDao;
     
-    public BuscarProductoManager() {
-        bdDao1 = new BuscarProductoDAO();
-        bdDao2 = new BuscarProductoDAO();
-        buscarDao = new BuscarProductoDAO();
-    }
-    
-    @Transactional(rollbackFor=Exception.class)
     public List<ProductoVO> buscarProductos(){
-        return bdDao1.obtenerProductosBusqueda();
+        return buscarDao.obtenerProductosBusqueda();
     }
     
-    @Transactional(rollbackFor=Exception.class)
     public List<StockVO> buscarProductoStock(){
-        return bdDao2.obtenerStockBusqueda();
+        return buscarDao.obtenerStockBusqueda();
     }
     
     @Transactional(rollbackFor=Exception.class)

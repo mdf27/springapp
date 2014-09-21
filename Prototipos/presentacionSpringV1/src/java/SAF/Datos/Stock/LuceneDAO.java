@@ -22,6 +22,7 @@ import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 /**
@@ -29,6 +30,7 @@ import org.springframework.stereotype.Service;
  * @author majo
  */
 @Service
+@Repository
 public class LuceneDAO extends AbstractDAO{
         
     private static LuceneDAO instance;
@@ -151,5 +153,4 @@ public class LuceneDAO extends AbstractDAO{
         salida="["+salida+"]";
         return salida;
     }
-    
 }

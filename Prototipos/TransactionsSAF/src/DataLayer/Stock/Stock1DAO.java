@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 public class Stock1DAO extends AbstractDAO {
 
     public void altaProducto() {
-        String sql = "INSERT INTO productos VALUES (?,?)";
+        String sql = "INSERT INTO producto (idTipoIVA, descripcion)  VALUES (?,?)";
 
         Object[] parametros = new Object[]{1, "Aspirina"};
 

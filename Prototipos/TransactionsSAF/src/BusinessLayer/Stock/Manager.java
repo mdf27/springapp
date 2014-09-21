@@ -26,6 +26,6 @@ public class Manager {
     @Transactional()
     public void test(){
         dao1.altaProducto();
-        dao2.altaProveedor();
+        //dao2.altaProveedor();
     }
 }

@@ -1,5 +1,5 @@
 package SAF.Datos.Stock;
-
+import SAF.Datos.Abstract.AbstractDAO;
 import SAF.VO.Stock.ProductoVO;
 import SAF.VO.Stock.StockVO;
 import java.io.IOException;
@@ -29,7 +29,7 @@ import org.springframework.stereotype.Service;
  * @author majo
  */
 @Service
-public class LuceneDAO{
+public class LuceneDAO extends AbstractDAO{
         
     private static LuceneDAO instance;
     

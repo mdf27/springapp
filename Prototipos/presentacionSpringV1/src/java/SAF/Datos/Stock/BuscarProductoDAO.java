@@ -9,15 +9,16 @@ import SAF.Datos.Abstract.AbstractDAO;
 import SAF.VO.Stock.ProductoVO;
 import SAF.VO.Stock.StockVO;
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author majo
  */
+@Repository
 public class BuscarProductoDAO extends AbstractDAO{
     
     public List<ProductoVO> obtenerProductosBusqueda() {

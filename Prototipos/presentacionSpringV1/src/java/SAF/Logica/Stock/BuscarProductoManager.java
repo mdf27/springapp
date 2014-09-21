@@ -23,12 +23,21 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class BuscarProductoManager {
+
+
+    
     @Autowired
     private BuscarProductoDAO bdDao1;
     @Autowired
     private BuscarProductoDAO bdDao2;
     @Autowired
     private BuscarProductoDAO buscarDao;
+    
+    public BuscarProductoManager() {
+        bdDao1 = new BuscarProductoDAO();
+        bdDao2 = new BuscarProductoDAO();
+        buscarDao = new BuscarProductoDAO();
+    }
     
     @Transactional(rollbackFor=Exception.class)
     public List<ProductoVO> buscarProductos(){
@@ -43,11 +52,12 @@ public class BuscarProductoManager {
     @Transactional(rollbackFor=Exception.class)
     public String buscarProducto(String texto_buscar, String filtro) throws ClassNotFoundException, ParseException, SQLException, IOException{
         LuceneDAO ldao = LuceneDAO.getInstance();
-        if (!ldao.indiceCargado()){//indiceCargado?
+        if (ldao.indiceCargado()){//indiceCargado?
             ldao.cargarProductos(buscarProductos(),buscarProductoStock());
         }          
     
         String salida = ldao.buscarProducto(texto_buscar, filtro);
         return salida;
     }
+    
 }

@@ -7,6 +7,7 @@
 package SAF.Datos.Seguridad;
 
 import SAF.Datos.Abstract.AbstractDAO;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -17,8 +18,19 @@ import org.springframework.stereotype.Repository;
 public class LoginDAO extends AbstractDAO{
     
     public boolean validarUsuario(int codigo){
-        if (codigo == 1)
-            return true;
-        return false;
-    }
+        
+        //Genero sentencia SQL
+        String sql = "select nombre from usuario where codigo=?";  
+        try{
+                String nombre = (String)getJdbcTemplate().queryForObject(
+                sql, new Object[] { codigo }, String.class);          
+            return !nombre.isEmpty();
+            
+        }catch (EmptyResultDataAccessException e) {
+		return false;
+	}    
+       
+
+        }
 }
+ 

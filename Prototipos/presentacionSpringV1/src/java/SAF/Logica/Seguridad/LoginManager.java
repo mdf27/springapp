@@ -7,7 +7,9 @@
 package SAF.Logica.Seguridad;
 
 import SAF.Datos.Seguridad.LoginDAO;
+import SAF.Datos.Seguridad.UsuarioDAO;
 import SAF.Logica.Abstract.AbstractManejador;
+import SAF.VO.Seguridad.UsuarioVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,13 +17,25 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Guillermo
  */
-public class LoginManejador extends AbstractManejador{
+public class LoginManager extends AbstractManejador{
     
     @Autowired
     private LoginDAO loginDAO;
+    @Autowired
+    private UsuarioDAO usuarioDAO;
     
     @Transactional(rollbackFor = Exception.class)
     public boolean login(int codigo){
         return loginDAO.validarUsuario(codigo);
+    }
+    
+    /**
+     *
+     * @param codigo
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public UsuarioVO getUsuario(int codigo){
+        return usuarioDAO.devolverUsuario(codigo);
     }
 }

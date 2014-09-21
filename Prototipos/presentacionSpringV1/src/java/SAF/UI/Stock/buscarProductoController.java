@@ -15,10 +15,10 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class buscarProductoController {
-    @RequestMapping(value = "buscarProducto")
+    @RequestMapping(value = "buscarVerProducto")
     public ModelAndView redireccion(){
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("buscarProducto");
+        mv.setViewName("buscarVerProducto");
         return (mv);
     }
 }

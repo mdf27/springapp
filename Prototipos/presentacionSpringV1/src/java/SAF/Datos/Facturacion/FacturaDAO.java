@@ -17,11 +17,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class FacturaDAO extends AbstractDAO {
 
-    public void insertarFactura(short idTipoFactura, int idFactura, int idCliente, String RUT, String razonSocial, Date fecha, DecimalFormat descuento, DecimalFormat montoNetoTotal, DecimalFormat montoNetoGravIva,
+    public void insertarFactura(short idTipoFactura, int idCliente, String RUT, String razonSocial, Date fecha, DecimalFormat descuento, DecimalFormat montoNetoTotal, DecimalFormat montoNetoGravIva,
             DecimalFormat montoNetoGravIvaMin, DecimalFormat montoTotal, DecimalFormat montoTotalAPagar, DecimalFormat idTransaccion) {
 
         //Genero sentencia SQL
-        String sql = "INSERT INTO Factura (idTipoFactura, idCliente, RUT, razonSocial, fecha, descuento, montoNetoTotal, montoNetoGravIva,"
+        String sql = "INSERT INTO Factura (idTipoFactura,  idCliente, RUT, razonSocial, fecha, descuento, montoNetoTotal, montoNetoGravIva,"
                 + " montoNetoGravIvaMin, montoTotal, montoTotalAPagar, idTransaccion) VALUES = (" + idTipoFactura + "," + idCliente + "," + RUT + "," + razonSocial + ","
                 + fecha + "," + descuento + "," + montoNetoTotal + "," + montoNetoGravIva + "," + montoNetoGravIvaMin + "," + montoTotal + ","
                 + montoTotalAPagar + "," + idTransaccion + ")";

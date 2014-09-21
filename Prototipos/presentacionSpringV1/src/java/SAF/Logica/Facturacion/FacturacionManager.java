@@ -27,10 +27,10 @@ public class FacturacionManager extends AbstractManejador{
     private TipoFacturaDAO tipoFacturaDAO;
     
     @Transactional(rollbackFor = Exception.class)
-    public void ingresarFactura(short idTipoFactura, int idFactura, int idCliente, String RUT, String razonSocial, Date fecha, DecimalFormat descuento, DecimalFormat montoNetoTotal, DecimalFormat montoNetoGravIva,
+    public void ingresarFactura(short idTipoFactura, int idCliente, String RUT, String razonSocial, Date fecha, DecimalFormat descuento, DecimalFormat montoNetoTotal, DecimalFormat montoNetoGravIva,
             DecimalFormat montoNetoGravIvaMin, DecimalFormat montoTotal, DecimalFormat montoTotalAPagar, DecimalFormat idTransaccion){
         
-        facturaDAO.insertarFactura (idTipoFactura, idFactura, idCliente, RUT, razonSocial, fecha, descuento, montoNetoTotal, montoNetoGravIva,
+        facturaDAO.insertarFactura (idTipoFactura, idCliente, RUT, razonSocial, fecha, descuento, montoNetoTotal, montoNetoGravIva,
             montoNetoGravIvaMin, montoTotal, montoTotalAPagar, idTransaccion);
         
         

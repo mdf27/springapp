@@ -72,10 +72,10 @@ public class UsuarioDAOTest {
     @Test
     public void devolverRol(){
         System.out.println("devolverRol");
-        int codigo = 1;
+        int codigo = 0;
         PerfilVO result = usuarioDao.devolverRol(codigo);
         assertNull(result);
-        codigo = 0;
+        codigo = 1;
         PerfilVO expResult = new PerfilVO();
         expResult.setDescripcion("Administrador");
         result = usuarioDao.devolverRol(codigo);        

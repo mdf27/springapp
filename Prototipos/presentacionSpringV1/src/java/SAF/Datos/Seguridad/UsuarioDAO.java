@@ -8,8 +8,6 @@ package SAF.Datos.Seguridad;
 import SAF.Datos.Abstract.AbstractDAO;
 import SAF.VO.Seguridad.PerfilVO;
 import SAF.VO.Seguridad.UsuarioVO;
-import java.util.List;
-import java.util.Map;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
@@ -35,13 +33,15 @@ public class UsuarioDAO extends AbstractDAO{
 		return null;
 	}   
     }
-    public PerfilVO devolverRol(int idUsuario){
-        String sql = "select p.idPerfil,p.descripcion from perfilusuario pu , perfil p\n"+
-                "where idUsuario = ?\n"+
-                "and pu.idPerfil = p.idPerfil";
+    public PerfilVO devolverRol(int codigo){
+        String sql = "select p.idPerfil,p.descripcion from\n"+
+                "perfilUsuario pu , perfil p where\n" +
+                "pu.idPerfil = p.idperfil and idUsuario in\n" +
+                "(select idUsuario from usuario where codigo = ?)";
+
         try{
                 PerfilVO perfil = (PerfilVO)getJdbcTemplate().queryForObject(
-                sql, new Object[] { idUsuario }, new BeanPropertyRowMapper(PerfilVO.class));          
+                sql, new Object[] { codigo }, new BeanPropertyRowMapper(PerfilVO.class));          
             return perfil;
             
         }catch (EmptyResultDataAccessException e) {

@@ -43,6 +43,5 @@ public class BuscarProductoManager {
     
         String salida = ldao.buscarProducto(texto_buscar, filtro);
         return salida;
-    }
-    
+    }    
 }

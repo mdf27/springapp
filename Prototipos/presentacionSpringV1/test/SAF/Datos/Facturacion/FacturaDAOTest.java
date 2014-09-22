@@ -6,12 +6,10 @@
 
 package SAF.Datos.Facturacion;
 
+import SAF.VO.Facturacion.FacturaVO;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -26,19 +24,35 @@ public class FacturaDAOTest {
         System.out.println("insertarFactura");
         short idTipoFactura = 101;
         int idCliente = 0;
-        String RUT = "";
-        String razonSocial = "";
+        String RUT = "rut";
+        String razonSocial = "raxon social";
         Date fecha = new Date();
-        DecimalFormat descuento =  null;
-        DecimalFormat montoNetoTotal = null;
-        DecimalFormat montoNetoGravIva = null;
-        DecimalFormat montoNetoGravIvaMin = null;
-        DecimalFormat montoTotal = null;
-        DecimalFormat montoTotalAPagar = null;
-        DecimalFormat idTransaccion = null;
+        DecimalFormat descuento =  new DecimalFormat("000,00");
+        DecimalFormat montoNetoTotal = new DecimalFormat("100,00");
+        DecimalFormat montoNetoGravIva = new DecimalFormat("50,00");
+        DecimalFormat montoNetoGravIvaMin = new DecimalFormat("25,00");
+        DecimalFormat montoTotal = new DecimalFormat("10,00");
+        DecimalFormat montoTotalAPagar = new DecimalFormat("000,00");
+        DecimalFormat idTransaccion = new DecimalFormat("000,00");
         FacturaDAO instance = new FacturaDAO();
+        FacturaVO factura = new FacturaVO();
+        factura.setDescuento(descuento);
+        factura.setFecha(fecha);
+        factura.setIdCliente(idCliente);
+        factura.setIdFactura(1);
+        factura.setIdTipoFactura(idTipoFactura);
         instance.insertarFactura(idTipoFactura, idCliente, RUT, razonSocial, fecha, descuento, montoNetoTotal, montoNetoGravIva, montoNetoGravIvaMin, montoTotal, montoTotalAPagar, idTransaccion);
-        // TODO review the generated test code and remove the default call to fail.
+        
+        ArrayList<FacturaVO> facturas =instance.getFacturas((short)101);
+        assertEquals(1,facturas.size());
+        
+        for (FacturaVO fac : facturas){
+            
+            assertEquals(fac,factura);
+        }
+        
+        
+        
         fail("The test case is a prototype.");
     }
     

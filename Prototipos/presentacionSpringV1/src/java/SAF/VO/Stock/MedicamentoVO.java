@@ -14,6 +14,7 @@ import java.math.BigInteger;
 public class MedicamentoVO {
     private int idPresentacion;
     private int idLaboratorio;
+    private int idProducto;
     private boolean requiereReceta;
     private BigInteger idTransaccion;
 
@@ -36,6 +37,15 @@ public class MedicamentoVO {
         this.idLaboratorio = idLaboratorio;
     }
 
+    
+    public int getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(int idProducto) {
+        this.idProducto = idProducto;
+    }
+    
     public boolean isRequiereReceta() {
         return requiereReceta;
     }

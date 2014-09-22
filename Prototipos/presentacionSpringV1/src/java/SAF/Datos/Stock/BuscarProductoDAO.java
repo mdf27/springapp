@@ -6,7 +6,10 @@
 package SAF.Datos.Stock;
 
 import SAF.Datos.Abstract.AbstractDAO;
+import SAF.VO.Stock.LaboratorioVO;
+import SAF.VO.Stock.MedicamentoVO;
 import SAF.VO.Stock.ProductoVO;
+import SAF.VO.Stock.ProveedorVO;
 import SAF.VO.Stock.StockVO;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -71,5 +74,56 @@ public class BuscarProductoDAO extends AbstractDAO{
         return stock;
         //return getJdbcTemplate().query(sql,new StockRowMapper());
     }        
+    
+    public List<LaboratorioVO> obtenerLaboratorios() {
+        String sql = "select p.idProducto, l.nombre, l.idLaboratorio\n" +
+                     "from producto p, laboratorio l, medicamento m\n" +
+                     "where m.idProducto=p.idProducto and m.idLaboratorio=l.idLaboratorio"; 
+
+        List<LaboratorioVO> laboratorios = new ArrayList<LaboratorioVO>();
+        
+	List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);        
+	for (Map row : rows) {
+            LaboratorioVO lab = new LaboratorioVO();
+            lab.setNombre((String)row.get("nombre"));
+            lab.setIdLaboratorio((int)row.get("idLaboratorio"));
+            laboratorios.add(lab);
+        }
+        return laboratorios;
+    }        
+    
+    public List<MedicamentoVO> obtenerMedicamentos(){
+        String sql = "select p.idProducto, l.idLaboratorio, m.requiereReceta\n" +
+                     "from producto p, laboratorio l, medicamento m\n" +
+                     "where m.idProducto=p.idProducto and m.idLaboratorio=l.idLaboratorio"; 
+
+        List<MedicamentoVO> medicamentos = new ArrayList<MedicamentoVO>();
+        
+	List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);        
+	for (Map row : rows) {
+            MedicamentoVO m = new MedicamentoVO();
+            m.setIdProducto((int)row.get("idProducto"));
+            m.setIdLaboratorio((int)row.get("idLaboratorio"));
+            m.setRequiereReceta((boolean)row.get("requireReceta"));
+            medicamentos.add(m);
+        }
+        return medicamentos;
+    }
+    
+    public List<ProveedorVO> obtenerProveedores(){ //ver
+        String sql = "select p.idProducto, prov.nombre\n" +
+                     "from producto p, proveedor prov\n" +
+                     "where exists (select * from productoproveedor pv where p.idProducto=pv.idProducto and prov.idProveedor=pv.idProveedor)"; 
+
+        List<ProveedorVO> proveedores = new ArrayList<ProveedorVO>();
+        
+	List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);        
+	for (Map row : rows) {
+            ProveedorVO p = new ProveedorVO();
+            p.setNombre((String)row.get("nombre"));
+            proveedores.add(p);
+        }
+        return proveedores;
+    }
 }    
 

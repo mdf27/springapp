@@ -12,7 +12,7 @@ import java.math.BigInteger;
  * @author majo
  */
 public class LaboratorioVO {
-
+    private int idLaboratorio;
     private String nombre;
     private String direccion;
     private String departamento;
@@ -22,6 +22,14 @@ public class LaboratorioVO {
     private BigInteger idTransaccion;
     
     public LaboratorioVO() {
+    }
+    
+    public int getIdLaboratorio() {
+        return idLaboratorio;
+    }
+
+    public void setIdLaboratorio(int idLaboratorio) {
+        this.idLaboratorio = idLaboratorio;
     }
 
     public String getNombre() {

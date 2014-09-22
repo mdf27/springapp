@@ -5,6 +5,9 @@
  */
 package SAF.VO.Stock;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  *
  * @author majo
@@ -13,10 +16,14 @@ public class DatosCompletosMedicamentoVO {
     private int idProducto;
     private boolean requiereReceta;
     private String nombreLaboratorio;
-    private String nombreDroga;
-    private String accionTerapeutica;
-
+    private List<String> nombreDroga;
+    private List<String> accionTerapeutica;
+    private List<String> presentacion;
+    
     public DatosCompletosMedicamentoVO() {
+        nombreDroga= new LinkedList<>();
+        accionTerapeutica= new LinkedList<>();
+        presentacion= new LinkedList<>();
     }
 
     public int getIdProducto() {
@@ -43,19 +50,28 @@ public class DatosCompletosMedicamentoVO {
         this.nombreLaboratorio = nombreLaboratorio;
     }
 
-    public String getNombreDroga() {
+    public List<String> getNombreDroga() {
         return nombreDroga;
     }
 
     public void setNombreDroga(String nombreDroga) {
-        this.nombreDroga = nombreDroga;
+        this.nombreDroga.add(nombreDroga);
     }
 
-    public String getAccionTerapeutica() {
+    public List<String> getAccionTerapeutica() {
         return accionTerapeutica;
     }
 
     public void setAccionTerapeutica(String accionTerapeutica) {
-        this.accionTerapeutica = accionTerapeutica;
+        this.accionTerapeutica.add(accionTerapeutica);
     }   
+
+    public List<String> getPresentacion() {
+        return presentacion;
+    }
+
+    public void setPresentacion(String presentacion) {
+        this.presentacion.add(presentacion);
+    }
+    
 }

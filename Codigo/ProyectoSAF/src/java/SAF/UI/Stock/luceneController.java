@@ -27,7 +27,7 @@ public class luceneController {
     private FacadeStock bpm;
 
     @RequestMapping(value = "busqueda.htm",method = RequestMethod.GET)      
-    public @ResponseBody String buscar (@RequestParam(value="buscar") String texto_buscar, @RequestParam(value="filtro") String filtro) throws ClassNotFoundException, SQLException, IOException, ParseException{
+    public @ResponseBody String buscar (@RequestParam(value="buscar") String texto_buscar, @RequestParam(value="filtro") String filtro) throws ClassNotFoundException, SQLException, IOException, ParseException, java.text.ParseException{
         return bpm.buscarProducto(texto_buscar, filtro);
     }
 }

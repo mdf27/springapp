@@ -10,18 +10,18 @@ import java.io.IOException;
 import java.sql.SQLException;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author majo
  */
-@Controller
+@Service
 public class FacadeStock {
     @Autowired
     BuscarProductoManager bpm;
     
-    public String buscarProducto(String texto_buscar, String filtro) throws ClassNotFoundException, ParseException, SQLException, IOException{
+    public String buscarProducto(String texto_buscar, String filtro) throws ClassNotFoundException, ParseException, SQLException, IOException, java.text.ParseException{
         return bpm.buscarProducto(texto_buscar, filtro);
     }
 }

@@ -6,6 +6,8 @@
 package SAF.VO.Stock;
 
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -18,11 +20,15 @@ public class DatosCompletosProductoVO {
     private double precioVenta;
     private boolean habilitado;
     private int cantidadStock;
-    private Date vencimientoStock;
-    private String codigoBarras;
+    private List<Date> vencimientoStock;
+    private List<String> codigoBarras;
+    
     private String tipoIVA;
+    private String proveedor;
 
     public DatosCompletosProductoVO() {
+        vencimientoStock = new LinkedList<>();
+        codigoBarras= new LinkedList<>();
     }
 
     public int getIdProducto() {
@@ -73,20 +79,20 @@ public class DatosCompletosProductoVO {
         this.cantidadStock = cantidadStock;
     }
 
-    public Date getVencimientoStock() {
+    public List<Date> getVencimientoStock() {
         return vencimientoStock;
     }
 
     public void setVencimientoStock(Date vencimientoStock) {
-        this.vencimientoStock = vencimientoStock;
+        this.vencimientoStock.add(vencimientoStock);
     }
 
-    public String getCodigoBarras() {
+    public List<String> getCodigoBarras() {
         return codigoBarras;
     }
 
     public void setCodigoBarras(String codigoBarras) {
-        this.codigoBarras = codigoBarras;
+        this.codigoBarras.add(codigoBarras);
     }
 
     public String getTipoIVA() {
@@ -96,6 +102,13 @@ public class DatosCompletosProductoVO {
     public void setTipoIVA(String tipoIVA) {
         this.tipoIVA = tipoIVA;
     }
-    
+
+    public String getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(String proveedor) {
+        this.proveedor = proveedor;
+    }
     
 }

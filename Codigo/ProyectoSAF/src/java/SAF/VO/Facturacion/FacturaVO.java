@@ -1,7 +1,9 @@
 package SAF.VO.Facturacion;
 
-import java.text.DecimalFormat;
-import java.util.Date;
+
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.Map;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -19,17 +21,38 @@ public class FacturaVO {
     private int idCliente;
     private String RUT;
     private String razonSocial;
-    private Date fecha;
-    private DecimalFormat descuento;
-    private DecimalFormat montoNetoTotal;
-    private DecimalFormat montoNetoGravIva;
-    private DecimalFormat montoNetoGravIvaMin;
-    private DecimalFormat montoTotal;
-    private DecimalFormat montoTotalAPagar;
-    private DecimalFormat idTransaccion;
+    private Timestamp fecha;
+    private double descuento;
+    private double montoNetoTotal;
+    private double montoNetoGravIva;
+    private double montoNetoGravIvaMin;
+    private double montoTotal;
+    private double montoTotalAPagar;
+    private double idTransaccion;
 
     public FacturaVO() {
     }
+    
+    public FacturaVO(Map<String,Object> query){
+        
+        idTipoFactura = ((Integer)query.get("idTipoFactura")).shortValue();
+        idFactura = (int) query.get("idFactura");
+        idCliente = (int) query.get("idCliente");
+        RUT = (String) query.get("RUT");
+        razonSocial = (String) query.get("RazonSocial");
+        fecha = (Timestamp) query.get("fecha");
+        descuento = ((BigDecimal) query.get("descuento")).doubleValue();
+        montoNetoTotal = ((BigDecimal) query.get("montoNetoTotal")).doubleValue();
+        montoNetoGravIva = ((BigDecimal) query.get("montoNetoGralIva")).doubleValue();
+        montoNetoGravIvaMin = ((BigDecimal) query.get("montoNetoGralIvaMin")).doubleValue();
+        montoTotal = ((BigDecimal) query.get("montoTotal")).doubleValue();
+        montoTotalAPagar = ((BigDecimal) query.get("montoTotalAPagar")).doubleValue();
+        idTransaccion = ((Long) query.get("idTransaccion")).doubleValue();
+        
+        
+        
+    }
+    
 
     public short getIdTipoFactura() {
         return idTipoFactura;
@@ -71,67 +94,67 @@ public class FacturaVO {
         this.razonSocial = razonSocial;
     }
 
-    public Date getFecha() {
+    public Timestamp getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(Timestamp fecha) {
         this.fecha = fecha;
     }
 
-    public DecimalFormat getDescuento() {
+    public double getDescuento() {
         return descuento;
     }
 
-    public void setDescuento(DecimalFormat descuento) {
+    public void setDescuento(double descuento) {
         this.descuento = descuento;
     }
 
-    public DecimalFormat getMontoNetoTotal() {
+    public double getMontoNetoTotal() {
         return montoNetoTotal;
     }
 
-    public void setMontoNetoTotal(DecimalFormat montoNetoTotal) {
+    public void setMontoNetoTotal(double montoNetoTotal) {
         this.montoNetoTotal = montoNetoTotal;
     }
 
-    public DecimalFormat getMontoNetoGravIva() {
+    public double getMontoNetoGravIva() {
         return montoNetoGravIva;
     }
 
-    public void setMontoNetoGravIva(DecimalFormat montoNetoGravIva) {
+    public void setMontoNetoGravIva(double montoNetoGravIva) {
         this.montoNetoGravIva = montoNetoGravIva;
     }
 
-    public DecimalFormat getMontoNetoGravIvaMin() {
+    public double getMontoNetoGravIvaMin() {
         return montoNetoGravIvaMin;
     }
 
-    public void setMontoNetoGravIvaMin(DecimalFormat montoNetoGravIvaMin) {
+    public void setMontoNetoGravIvaMin(double montoNetoGravIvaMin) {
         this.montoNetoGravIvaMin = montoNetoGravIvaMin;
     }
 
-    public DecimalFormat getMontoTotal() {
+    public double getMontoTotal() {
         return montoTotal;
     }
 
-    public void setMontoTotal(DecimalFormat montoTotal) {
+    public void setMontoTotal(double montoTotal) {
         this.montoTotal = montoTotal;
     }
 
-    public DecimalFormat getMontoTotalAPagar() {
+    public double getMontoTotalAPagar() {
         return montoTotalAPagar;
     }
 
-    public void setMontoTotalAPagar(DecimalFormat montoTotalAPagar) {
+    public void setMontoTotalAPagar(double montoTotalAPagar) {
         this.montoTotalAPagar = montoTotalAPagar;
     }
 
-    public DecimalFormat getIdTransaccion() {
+    public double getIdTransaccion() {
         return idTransaccion;
     }
 
-    public void setIdTransaccion(DecimalFormat idTransaccion) {
+    public void setIdTransaccion(double idTransaccion) {
         this.idTransaccion = idTransaccion;
     }
     

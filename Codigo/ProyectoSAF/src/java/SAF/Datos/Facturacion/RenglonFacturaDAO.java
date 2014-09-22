@@ -22,9 +22,11 @@ public class RenglonFacturaDAO extends AbstractDAO {
             DecimalFormat precioVtaReal, String descDescripcion, int descCantBonif, DecimalFormat descPorcentBonif, DecimalFormat descMontoBonif, BigInteger idTransaccion) {
 
         //Genero sentencia SQL
-        String sql = "INSERT INTO RenglonFactura VALUES = (" + idTipoFactura + "," + idFactura + "," + idProducto + "," + precioProducto + ","
-                + precioVtaReal + "," + descDescripcion + "," + descCantBonif + "," + descPorcentBonif + "," + descMontoBonif + "," + idTransaccion + ")";
+        String sql = "INSERT INTO RenglonFactura VALUES(? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        this.getJdbcTemplate().update(sql);
+        Object[] parametros ={idTipoFactura, idFactura, idProducto, precioProducto,
+            precioVtaReal, descDescripcion, descCantBonif, descPorcentBonif, descMontoBonif, idTransaccion};
+        
+        this.getJdbcTemplate().update(sql, parametros);
     }
 }

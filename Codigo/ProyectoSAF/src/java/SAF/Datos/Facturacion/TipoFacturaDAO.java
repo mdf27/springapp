@@ -20,13 +20,12 @@ public class TipoFacturaDAO extends AbstractDAO {
     public void insertarTipoFactura(short idTipoFactura, String descripcion) {
 
         //Genero sentencia SQL
-        String sql = "INSERT INTO TipoFactura VALUES = (?)";
+        String sql = "INSERT INTO TipoFactura VALUES(?,?)";
 
         //Genero lista de parametros
         Object[] parametros = new Object[]{idTipoFactura, descripcion};
         //Ejecuto sentencia con parametros
         this.getJdbcTemplate().update(sql, parametros);
-        //Devuelvo id de transaccion creada
-        this.getJdbcTemplate().update(sql);
+
     }
 }

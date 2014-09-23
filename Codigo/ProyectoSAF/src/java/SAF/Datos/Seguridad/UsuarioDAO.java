@@ -6,7 +6,6 @@
 package SAF.Datos.Seguridad;
 
 import SAF.Datos.Abstract.AbstractDAO;
-import SAF.VO.Seguridad.FuncionalidadPerfilVO;
 import SAF.VO.Seguridad.FuncionalidadVO;
 import SAF.VO.Seguridad.PerfilVO;
 import SAF.VO.Seguridad.UsuarioVO;
@@ -54,12 +53,13 @@ public class UsuarioDAO extends AbstractDAO{
 	}
     }
     public List<FuncionalidadVO> devolverFuncionalidad(PerfilVO id){
-        String sql = "SELECT * FROM funcionalidad WHERE/n" +
-                "idFuncionalidad in (SELECT idFuncionalidad/n" +
+        String sql = "SELECT * FROM funcionalidad WHERE\n" +
+                "idFuncionalidad in (SELECT idFuncionalidad\n" +
                 "FROM funcionalidadperfil WHERE idPerfil = ?)";
+        Object[] parametros = new Object[]{id.getIdPerfil()};
         List<FuncionalidadVO> funcionalidades = new ArrayList<>();
         
-        List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);   
+        List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql,parametros);   
         for (Map row : rows) {
                 FuncionalidadVO funcionalidad = new FuncionalidadVO();
                 funcionalidad.setIdFuncionalidad((int)(row.get("idFuncionalidad")));

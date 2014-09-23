@@ -9,8 +9,10 @@ package SAF.Logica.Seguridad;
 import SAF.Datos.Seguridad.LoginDAO;
 import SAF.Datos.Seguridad.UsuarioDAO;
 import SAF.Logica.Abstract.AbstractManejador;
+import SAF.VO.Seguridad.FuncionalidadVO;
 import SAF.VO.Seguridad.PerfilVO;
 import SAF.VO.Seguridad.UsuarioVO;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,6 +45,11 @@ public class LoginManager extends AbstractManejador{
     @Transactional(rollbackFor = Exception.class)
     public PerfilVO getRol(int codigo){
         return usuarioDAO.devolverRol(codigo);  
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public List<FuncionalidadVO> getfuncionalidad(int codigo){
+        PerfilVO p = usuarioDAO.devolverRol(codigo);
+        return usuarioDAO.devolverFuncionalidad(p);  
     }
     
 }

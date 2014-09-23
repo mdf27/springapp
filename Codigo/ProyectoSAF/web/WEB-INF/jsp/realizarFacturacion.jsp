@@ -8,12 +8,15 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Facturación</title>
-        <link href="CSS/contenedorPrincipal.css" rel="stylesheet">    
+        <link href="CSS/contenedorPrincipal.css" rel="stylesheet">
+         <script type="text/javascript" language="javascript" src="Librerias/buscarProducto/knockout-3.0.0.js"></script>
+        <script type="text/javascript" language="javascript" src="Librerias/buscarProducto/jquery-1.11.1.min.js"></script>
         
         <!-- /menu -->
         <jsp:include page="include/menu.jsp"/>   
     </head>
     <body>
+ <%-- 
 <% TipoFacturaDAO fd = new TipoFacturaDAO(); 
             short aux = 101;
             fd.insertarTipoFactura(aux, "Factura");
@@ -22,6 +25,7 @@
             
 
 %>
+  --%>
         
         <div id="contenedor">
 
@@ -56,57 +60,153 @@
             });
         </script>
         
-            <div align="center" id ="contenedorPrincipal">
-                <table width="90%">
+       
+        <div id ="contenedorPrincipal" align="center" data-bind="visible: $root.buscarProd"> <jsp:include page="include/buscarProductoFactura.jsp"/>  </div>
+        <div id ="contenedorPrincipal" align="center" data-bind="visible: $root.realizandoFactura">
+                <div id="rF">
+                
+                <table width="100%">
                     <tr>
-                        <td>
-                            <!--Primera Linea-->
-                            <table class="table table-bordered">
-                                <tr class="well">
-                                    <td>
-                                        <div class="row-fluid"> 
-                                            <div class="span6">
-                                                <div class="row-fluid">
-                                                    <i class="icon-user"></i><strong>Vendedor: </strong> <br>
-                                                </div>
-                                            </div>
+	<td>
+		<!--Primera Linea-->
+		<table>
+			<%-- Fila 1 --%>
+			<tr>
+				
+                                
+                                <td>
+                                   <i class="icon-user"></i>&nbsp<strong>Cajero: </strong> 
+                                </td>
+                                <td>
+                                   <i class="icon-calendar"></i>&nbsp <strong>Fecha: </strong>
+                                </td>
+				
+			</tr>
+                        <tr>
+                            <td><br><i class="icon-user"></i>&nbsp<strong> Vendedor &nbsp &nbsp</strong><select data-bind="options: $root.vendedores, value: vendedor, optionsText: 'nombreVendedor'"></select></td>
+                        </tr>
+			<%-- Fila 2 --%>
+			<%--
+			<tr>
+				<td>
+					<div class="row-fluid">
+						<form name="form2" action="" method="post">
+							<strong class="textoLugarMedio" >Cliente</strong>
+							<input type="text" autofocus list="browsers" name="buscar" autocomplete="off" class="input-medium" required>
+							<datalist id="browsers">
+							</datalist>
+						</form>
+						
+					</div>
+				</td>  
+				<td>
+					<input type="submit" value="Nuevo cliente" />
+				</td>
+			</tr>
+                        --%>
+			<%-- Fila 3 --%>
+			<%--
+			<tr >
+			<table>
+				<tbody>
+					<tr>                                       
+						<td> <strong>RUT </strong><input type="checkbox" name="RUT" value="ON" /> </td>
+						<td> <strong>Razón social</strong><input type="text" name="rSocial" value="" /></td>
+						<td> <strong>RUT</strong> <input type="text" name="rut" value="" /></td>
+					
+					</tr>
+				</tbody>
+			</table>
+			</tr>
+                        --%>
+			<%-- Fila 4 --%>
+			<tr>
+                        
+                            <td>
+                                <div >
+                                    <form name="form2" action="" method="post">
+                                        <br><br><i class="icon-barcode"></i>&nbsp<strong> Producto &nbsp &nbsp</strong><input type="text" autofocus list="browsers" name="buscar" autocomplete="off" class="input-xlarge" required 
+                                                                                     data-bind="value: textoProducto, valueUpdate: 'input', executeOnEnter: buscarProducto" 
+                                                                                     placeholder="Ingrese nombre o codigo del producto"/>
+                                    </form>
+                                </div> 
+                            </td>
+                            <td> 
+                                <button class="btn btn-primary" data-bind="click: buscarProducto">Buscar el puto producto</button> <br>
+                            </td>
+			   
+			</tr>
+			<%-- Fila 5 --%>
+			<tr>
+				
+				<%-- Tabla productos--%>
+				<td width="70%">
+                                    <br>
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>Cantidad</th>
+								<th>Nombre</th>
+								<th>Precio</th>
+								<th>Descuento</th>
+								<th>Receta</th>
+								<th>Precio venta</th>
+								<th>Subtotal</th>
+							</tr>
+						</thead>
+                                                
+                                                    <tbody>
+							<tr>
+								<td>2</td>
+								<td>Aspirina</td>
+								<td>$20</td>
+								<td>10%</td>
+								<td>...</td>
+								<td>$18</td>
+								<td>$36</td>
+							</tr>
+							<tr>
+								<td>4</td>
+								<td> Jarabe</td>
+								<td>$80</td>
+								<td>0%</td>
+								<td>...</td>
+								<td>$80</td>
+								<td>$320</td>
+							</tr>
+                                                    </tbody>
+                                                
+					</table>
+				</td>
+						
+				<%--Total--%>
+				<td>
+                                    <table>
+                                        <tbody>
+                                            <tr height="60%">
+                                                <td>
+                                                    <h3>&nbsp TOTAL </h3>
+                                                    <h4>&nbsp $168.75</h4>
+                                                </td>
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
 
-                                            <div class="span6">
-                                                <i class="icon-calendar"></i> <strong>Fecha: </strong> 
-                                            </div>
-                                            <!--
-                                            <div class="span6">
-                                                <form name="form2" action="" method="post">
-                                                    <strong>Codigo o Nombre del Producto</strong><br>
-                                                    <input type="text" autofocus list="browsers" name="buscar" autocomplete="off" class="input-xxlarge" required>
-                                                    <datalist id="browsers">
-                                                    </datalist>
-                                                </form>
-                                            </div>
-                                            -->
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr >
-                                    <td>
-                                        <div class="span6">
-                                            <form name="form2" action="" method="post">
-                                                <strong class="textoLugarMedio" >Cliente</strong>
-                                                <input type="text" autofocus list="browsers" name="buscar" autocomplete="off" class="input-medium" required>
-                                                <datalist id="browsers">
-                                                </datalist>
-                                            </form>
-                                        </div>
-                                    </td>   
-                                </tr>
+					
+				</td>
+			
 
-                            </table>
-                            <!--Fin Primera Linea-->
+			</tr>
+
+		</table>
+		<!--Fin Primera Linea-->
 
 
-                        </td>
-                    </tr>
-                </table>  
+	 </td>
+</tr>
+                </table> 
+            </div>
             </div>
         </div>
 
@@ -114,7 +214,20 @@
     </body>
     
         <script type="text/javascript">
-        
+    // Para enter en buscar producto.
+    ko.bindingHandlers.executeOnEnter = {
+    init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+        var allBindings = allBindingsAccessor();
+        $(element).keypress(function (event) {
+            var keyCode = (event.which ? event.which : event.keyCode);
+            if (keyCode === 13) {
+                allBindings.executeOnEnter.call(viewModel);
+                return false;
+            }
+            return true;
+        });
+    }
+}; 
     function ViewModel(){
             var self = this;
             self.lista = ko.observableArray();
@@ -273,15 +386,44 @@
             self.optionValueFiltros = ["Nombre:","Código:", "Laboratorio:","Droga:","Presentación:","Todo:"],
             self.selectedOptionValueFiltro= ko.observable("Nombre:")                                                       
     
-            //mostrar info producto
-            self.mostrarBuscar=ko.observable(true);
-            self.mostrarVer=ko.observable(false);
+            // Traer del controlador.
+            self.vendedores = [
+                { nombreVendedor: "Juan"},
+                { nombreVendedor: "Jose"},
+                { nombreVendedor: "Pedro"},
+                { nombreVendedor: "Armando"},
+                { nombreVendedor: "Adelfa"},
+                { nombreVendedor: "Daniel"}
+                
+            ];   
+            
+            self.vendedor = ko.observable();
+            //mostrar facturacion
+            self.textoProducto = ko.observable();
+            self.realizandoFactura=ko.observable(true);
+            self.buscarProd=ko.observable(false);
             self.selectedResult = ko.observable();
             self.selectResult = function (item) {
                 self.selectedResult(item);
                 self.mostrarVer(true);
                 self.mostrarBuscar(false);
             };
+            self.buscarProducto = function (item) {
+                var facturando = self.realizandoFactura();
+                var buscando = self.buscarProd();
+                self.realizandoFactura(!facturando);
+                self.buscarProd(!buscando);
+                var prod = self.textoProducto()
+                self.filtro(prod.toString());
+            };
+            
+            self.test = function(data , event){
+
+                if (event.which == 13) {
+                //call method here
+                alert('Enter Key Pressed!');
+                }   
+            }
             
         };    
     var vm = new ViewModel();

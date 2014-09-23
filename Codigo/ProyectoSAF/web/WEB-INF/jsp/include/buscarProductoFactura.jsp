@@ -61,4 +61,5 @@
             </tr>
         </tbody>
     </table>
+    <button data-bind="click: buscarProducto">Aceptar</button> <br>
 </div>

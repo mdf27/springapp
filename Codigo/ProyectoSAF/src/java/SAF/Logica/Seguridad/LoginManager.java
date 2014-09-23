@@ -44,4 +44,5 @@ public class LoginManager extends AbstractManejador{
     public PerfilVO getRol(int codigo){
         return usuarioDAO.devolverRol(codigo);  
     }
+    
 }

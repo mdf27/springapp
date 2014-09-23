@@ -6,8 +6,13 @@
 package SAF.Datos.Seguridad;
 
 import SAF.Datos.Abstract.AbstractDAO;
+import SAF.VO.Seguridad.FuncionalidadPerfilVO;
+import SAF.VO.Seguridad.FuncionalidadVO;
 import SAF.VO.Seguridad.PerfilVO;
 import SAF.VO.Seguridad.UsuarioVO;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
@@ -48,5 +53,23 @@ public class UsuarioDAO extends AbstractDAO{
 		return null;
 	}
     }
+    public List<FuncionalidadVO> devolverFuncionalidad(PerfilVO id){
+        String sql = "SELECT * FROM funcionalidad WHERE/n" +
+                "idFuncionalidad in (SELECT idFuncionalidad/n" +
+                "FROM funcionalidadperfil WHERE idPerfil = ?)";
+        List<FuncionalidadVO> funcionalidades = new ArrayList<>();
+        
+        List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);   
+        for (Map row : rows) {
+                FuncionalidadVO funcionalidad = new FuncionalidadVO();
+                funcionalidad.setIdFuncionalidad((int)(row.get("idFuncionalidad")));
+                funcionalidad.setDescripcion((String)(row.get("descripcion")));
+                funcionalidad.setCodigo((String)(row.get("codigo")));
+                funcionalidades.add(funcionalidad);
+        }
+        return funcionalidades;
+
+    }
+    
 
 }

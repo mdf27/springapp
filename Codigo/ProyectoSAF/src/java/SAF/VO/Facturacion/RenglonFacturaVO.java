@@ -6,7 +6,6 @@
 package SAF.VO.Facturacion;
 
 import java.math.BigInteger;
-import java.text.DecimalFormat;
 
 /**
  *
@@ -17,15 +16,15 @@ public class RenglonFacturaVO {
     private short idTipoFactura;
     private int idFactura;
     private int idProducto;
-    private DecimalFormat precioProducto;
-    private DecimalFormat precioVtaReal;
+    private double precioProducto;
+    private double precioVtaReal;
     /**
      * el desc es de descuento ;)*
      */
     private String descDescripcion;
     private int descCantBonif;
-    private DecimalFormat descPorcentBonif;
-    private DecimalFormat descMontoBonif;
+    private double descPorcentBonif;
+    private double descMontoBonif;
     private BigInteger idTransaccion;
     private int idRenglonFactura;
     private int cantidad;
@@ -82,19 +81,19 @@ public class RenglonFacturaVO {
         this.idProducto = idProducto;
     }
 
-    public DecimalFormat getPrecioProducto() {
+    public double getPrecioProducto() {
         return precioProducto;
     }
 
-    public void setPrecioProducto(DecimalFormat precioProducto) {
+    public void setPrecioProducto(double precioProducto) {
         this.precioProducto = precioProducto;
     }
 
-    public DecimalFormat getPrecioVtaReal() {
+    public double getPrecioVtaReal() {
         return precioVtaReal;
     }
 
-    public void setPrecioVtaReal(DecimalFormat precioVtaReal) {
+    public void setPrecioVtaReal(double precioVtaReal) {
         this.precioVtaReal = precioVtaReal;
     }
 
@@ -114,19 +113,19 @@ public class RenglonFacturaVO {
         this.descCantBonif = descCantBonif;
     }
 
-    public DecimalFormat getDescPorcentBonif() {
+    public double getDescPorcentBonif() {
         return descPorcentBonif;
     }
 
-    public void setDescPorcentBonif(DecimalFormat descPorcentBonif) {
+    public void setDescPorcentBonif(double descPorcentBonif) {
         this.descPorcentBonif = descPorcentBonif;
     }
 
-    public DecimalFormat getDescMontoBonif() {
+    public double getDescMontoBonif() {
         return descMontoBonif;
     }
 
-    public void setDescMontoBonif(DecimalFormat descMontoBonif) {
+    public void setDescMontoBonif(double descMontoBonif) {
         this.descMontoBonif = descMontoBonif;
     }
 

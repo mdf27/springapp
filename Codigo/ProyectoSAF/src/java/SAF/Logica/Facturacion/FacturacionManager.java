@@ -11,13 +11,17 @@ import SAF.Datos.Facturacion.RenglonFacturaDAO;
 import SAF.Datos.Facturacion.TipoFacturaDAO;
 import SAF.Logica.Abstract.AbstractManejador;
 import SAF.VO.Facturacion.FacturaVO;
+import SAF.VO.Facturacion.RenglonFacturaVO;
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Fernanda
  */
+@Service
 public class FacturacionManager extends AbstractManejador{
     
     @Autowired
@@ -26,11 +30,19 @@ public class FacturacionManager extends AbstractManejador{
     private TipoFacturaDAO tipoFacturaDAO;
     
     @Transactional(rollbackFor = Exception.class)
-    public void ingresarFactura(FacturaVO factura){
+    public int ingresarFactura(FacturaVO factura){
         
-        facturaDAO.insertarFactura(factura);
+        int idFactura = facturaDAO.insertarFactura(factura);
         
+        ArrayList<RenglonFacturaVO> renglones = factura.getRenglones();
         
+        for(RenglonFacturaVO renglon : renglones){
+            
+            renglon.setIdFactura(idFactura);
+            renglonFacturaDAO.insertarRenglonFactura(renglon);
+        }
+ 
+        return idFactura;
     
     }
 }

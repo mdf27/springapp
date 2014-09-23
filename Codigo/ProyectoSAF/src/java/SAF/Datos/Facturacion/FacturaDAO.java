@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -19,7 +20,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class FacturaDAO extends AbstractDAO {
 
-    public void insertarFactura(FacturaVO factura) {
+    @Transactional(rollbackFor = Exception.class)
+    public int insertarFactura(FacturaVO factura) {
 
         //Genero sentencia SQL
         String sql = "INSERT INTO Factura (idTipoFactura,  idCliente, RUT, razonSocial, fecha, descuento, montoNetoTotal, montoNetoGralIva,"
@@ -29,6 +31,8 @@ public class FacturaDAO extends AbstractDAO {
             factura.getMontoTotalAPagar(), factura.getIdTransaccion()};
 
         getJdbcTemplate().update(sql, parametros);
+        
+        return (int)super.getLastID();
     }
 
     public FacturaVO getFactura(int idFactura, short idTipoFactura) {

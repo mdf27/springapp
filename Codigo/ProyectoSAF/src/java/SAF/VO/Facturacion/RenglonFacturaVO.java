@@ -27,6 +27,33 @@ public class RenglonFacturaVO {
     private DecimalFormat descPorcentBonif;
     private DecimalFormat descMontoBonif;
     private BigInteger idTransaccion;
+    private int idRenglonFactura;
+    private int cantidad;
+    private boolean conReceta;
+
+    public int getIdRenglonFactura() {
+        return idRenglonFactura;
+    }
+
+    public void setIdRenglonFactura(int idRenglonFactura) {
+        this.idRenglonFactura = idRenglonFactura;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public boolean isConReceta() {
+        return conReceta;
+    }
+
+    public void setConReceta(boolean conReceta) {
+        this.conReceta = conReceta;
+    }
 
     public RenglonFacturaVO() {
     }

@@ -12,12 +12,12 @@ import java.math.BigInteger;
  * @author majo
  */
 public class ProductoVO {
-    private String descripcion;
-    private double precioCompra;
-    private double precioVenta;
-    private int idTipoIva;
-    private boolean habilitado;
-    private BigInteger idTransaccion;
+    public String descripcion;
+    public double precioCompra;
+    public double precioVenta;
+    public int idTipoIva;
+    public boolean habilitado;
+    public BigInteger idTransaccion;
 
     public ProductoVO() {
      

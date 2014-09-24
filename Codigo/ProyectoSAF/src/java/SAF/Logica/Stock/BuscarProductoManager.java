@@ -7,10 +7,10 @@ package SAF.Logica.Stock;
 
 import SAF.Datos.Stock.BuscarProductoDAO;
 import SAF.Datos.Stock.LuceneDAO;
+import SAF.VO.Stock.DatosCompletosMedProdVO;
 import SAF.VO.Stock.DatosCompletosMedicamentoVO;
 import SAF.VO.Stock.DatosCompletosProductoVO;
 import SAF.VO.Stock.ProductoVO;
-import SAF.VO.Stock.StockVO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -33,22 +33,18 @@ public class BuscarProductoManager {
         return buscarDao.obtenerDatosCompletosProducto();
     }
     
-    public List<StockVO> buscarProductoStock(){
-        return buscarDao.obtenerStockBusqueda();
-    }
-    
     public Map <Integer,DatosCompletosMedicamentoVO> buscarMedicamentos(){
         return buscarDao.obtenerDatosCompletosMedicamento();
     }
     
     @Transactional(rollbackFor=Exception.class)
-    public String buscarProducto(String texto_buscar, String filtro) throws ClassNotFoundException, ParseException, SQLException, IOException, java.text.ParseException{
+    public List<DatosCompletosMedProdVO> buscarProducto(String texto_buscar, String filtro) throws ClassNotFoundException, ParseException, SQLException, IOException, java.text.ParseException{
         LuceneDAO ldao = LuceneDAO.getInstance();
         if (!ldao.indiceCargado()){//indiceCargado?
             ldao.cargarProductos(buscarProductos(),buscarMedicamentos());
         }          
     
-        String salida = ldao.buscarProducto(texto_buscar, filtro);
+        List<DatosCompletosMedProdVO> salida = ldao.buscarProducto(texto_buscar, filtro);
         return salida;
     }    
 }

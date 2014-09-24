@@ -3,11 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/majo/Desktop/PIS/repositorio/Codigo/ProyectoSAF/src/java/SAF/VO/Stock/DatosCompletosMedicamentoVO.java</file>
-            <file>file:/C:/Users/majo/Desktop/PIS/repositorio/Codigo/ProyectoSAF/src/java/SAF/VO/Stock/DatosCompletosProductoVO.java</file>
-            <file>file:/C:/Users/majo/Desktop/PIS/repositorio/Codigo/ProyectoSAF/src/java/SAF/Datos/Stock/BuscarProductoDAO.java</file>
-            <file>file:/C:/Users/majo/Desktop/PIS/repositorio/Codigo/ProyectoSAF/web/WEB-INF/jsp/include/verProducto.jsp</file>
+            <file>file:/C:/Users/majo/Desktop/PIS/repositorio/Codigo/ProyectoSAF/src/java/SAF/UI/Stock/luceneController.java</file>
             <file>file:/C:/Users/majo/Desktop/PIS/repositorio/Codigo/ProyectoSAF/src/java/SAF/Datos/Stock/LuceneDAO.java</file>
+            <file>file:/C:/Users/majo/Desktop/PIS/repositorio/Codigo/ProyectoSAF/web/Librerias/buscarProducto/buscarKO.js</file>
+            <file>file:/C:/Users/majo/Desktop/PIS/repositorio/Codigo/ProyectoSAF/src/java/SAF/UI/Stock/buscarProductoController.java</file>
+            <file>file:/C:/Users/majo/Desktop/PIS/repositorio/Codigo/ProyectoSAF/web/WEB-INF/jsp/include/menu.jsp</file>
+            <file>file:/C:/Users/majo/Desktop/PIS/repositorio/Codigo/ProyectoSAF/web/WEB-INF/jsp/buscarVerProducto.jsp</file>
         </group>
     </open-files>
 </project-private>

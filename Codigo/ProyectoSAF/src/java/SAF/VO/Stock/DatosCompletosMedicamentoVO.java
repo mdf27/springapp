@@ -14,15 +14,15 @@ import java.util.List;
  */
 public class DatosCompletosMedicamentoVO {
     private int idProducto;
-    private boolean requiereReceta;
-    private String nombreLaboratorio;
-    private List<String> nombreDroga;
-    private List<String> accionTerapeutica;
+    private boolean receta;
+    private String laboratorios;
+    private List<String> drogas;
+    private List<String> accion;
     private List<String> presentacion;
     
     public DatosCompletosMedicamentoVO() {
-        nombreDroga= new LinkedList<>();
-        accionTerapeutica= new LinkedList<>();
+        drogas= new LinkedList<>();
+        accion= new LinkedList<>();
         presentacion= new LinkedList<>();
     }
 
@@ -35,35 +35,35 @@ public class DatosCompletosMedicamentoVO {
     }
 
     public boolean isRequiereReceta() {
-        return requiereReceta;
+        return receta;
     }
 
-    public void setRequiereReceta(boolean requiereReceta) {
-        this.requiereReceta = requiereReceta;
+    public void setRequiereReceta(boolean receta) {
+        this.receta = receta;
     }
 
     public String getNombreLaboratorio() {
-        return nombreLaboratorio;
+        return laboratorios;
     }
 
-    public void setNombreLaboratorio(String nombreLaboratorio) {
-        this.nombreLaboratorio = nombreLaboratorio;
+    public void setNombreLaboratorio(String laboratorios) {
+        this.laboratorios = laboratorios;
     }
 
     public List<String> getNombreDroga() {
-        return nombreDroga;
+        return drogas;
     }
 
-    public void setNombreDroga(String nombreDroga) {
-        this.nombreDroga.add(nombreDroga);
+    public void setNombreDroga(String drogas) {
+        this.drogas.add(drogas);
     }
 
     public List<String> getAccionTerapeutica() {
-        return accionTerapeutica;
+        return accion;
     }
 
-    public void setAccionTerapeutica(String accionTerapeutica) {
-        this.accionTerapeutica.add(accionTerapeutica);
+    public void setAccionTerapeutica(String accion) {
+        this.accion.add(accion);
     }   
 
     public List<String> getPresentacion() {

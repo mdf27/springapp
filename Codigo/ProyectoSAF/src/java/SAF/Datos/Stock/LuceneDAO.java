@@ -1,14 +1,15 @@
 package SAF.Datos.Stock;
 import SAF.Datos.Abstract.AbstractDAO;
+import SAF.VO.Stock.DatosCompletosMedProdVO;
 import SAF.VO.Stock.DatosCompletosMedicamentoVO;
 import SAF.VO.Stock.DatosCompletosProductoVO;
 import SAF.VO.Stock.ProductoVO;
-import SAF.VO.Stock.StockVO;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -68,12 +69,13 @@ public class LuceneDAO extends AbstractDAO{
         List<Date> vencimientos = p.getVencimientoStock();
         ListIterator it = vencimientos.listIterator();
         int size= vencimientos.size();
+        SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
         while (it.hasNext()){
             Date date = (Date)it.next();
             if (size!=1)
-                resultado+= date.toString() +",";
+                resultado+= formateador.format(date) +",";
             else
-                resultado+= date.toString();
+                resultado+= formateador.format(date);
             size--;
         }
         return resultado;
@@ -136,6 +138,7 @@ public class LuceneDAO extends AbstractDAO{
         while(it.hasNext()){
             DatosCompletosProductoVO rt = (DatosCompletosProductoVO)productos.get(it.next());
             Document d = new Document();
+            d.add(new org.apache.lucene.document.TextField ("idProducto", ""+rt.getIdProducto(), Field.Store.YES));
             d.add(new org.apache.lucene.document.TextField ("descripcion", rt.getDescripcion(), Field.Store.YES));
    
             d.add(new org.apache.lucene.document.TextField ("precioVenta", ""+rt.getPrecioVenta(), Field.Store.YES));
@@ -191,7 +194,7 @@ public class LuceneDAO extends AbstractDAO{
         crearIndiceProductosLuecene(productos,medicamentos);
     }    
     
-    public String buscarProducto(String texto_buscar, String filtro) throws IOException, ParseException{
+    public List<DatosCompletosMedProdVO> buscarProducto(String texto_buscar, String filtro) throws IOException, ParseException, java.text.ParseException{
         StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_40); 
         
         //busqueda
@@ -221,64 +224,62 @@ public class LuceneDAO extends AbstractDAO{
         TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, true);
         searcher.search(q, collector);
         ScoreDoc[] hits = collector.topDocs().scoreDocs;
-
+        DatosCompletosMedProdVO productoMedicamento=null;
+        List<DatosCompletosMedProdVO> productos=null;
         //mostrar resultados
-        String salida="";
         if (hits.length>0){                
-            int docId = hits[0].doc;
-            Document d = searcher.doc(docId);
-            String desc = "\"descripcion\":\""+d.get("descripcion")+"\",";
-            String precioVenta = "\"precioVenta\":"+d.get("precioVenta")+",";
-            String precioCompra = "\"precioCompra\":"+d.get("precioCompra")+",";
-            String habilitado;
-            if (d.get("habilitado").equals("true"))
-                habilitado ="\"habilitado\":\""+"Disponible"+"\",";
-            else
-                habilitado ="\"habilitado\":\""+"No Disponible"+"\",";
-            String cantidad = "\"cantidad\":\""+d.get("cantidad")+"\",";
-            String vencimientos = "\"vencimientos\":\""+d.get("vencimientos")+"\",";
-            String codigos = "\"codigos\":\""+d.get("codigos")+"\",";
-            String proveedor = "\"proveedor\":\""+d.get("proveedor")+"\",";
-            String tipoIva = "\"tipoiva\":\""+d.get("tipoIva")+"\",";
-            String receta =  "\"receta\":\"";
-            if (d.get("requiereReceta").equals("Si"))
-                receta+="Si\",";
-            else
-                receta+="No\",";
-            String drogas =  "\"drogas\":\""+d.get("drogas")+"\",";
-            String laboratorio =  "\"laboratorio\":\""+d.get("laboratorio")+"\",";
-            String accion =  "\"accion\":\""+d.get("accion")+"\",";
-            String presentacion=  "\"presentacion\":\""+d.get("presentacion")+"\"";
-            salida+="{"+desc+precioVenta+precioCompra+habilitado+cantidad+vencimientos+codigos+proveedor+
-                        tipoIva+receta+drogas+laboratorio+accion+presentacion+"}";
-            for(int i=1;i<hits.length;i++) {
-                docId = hits[i].doc;
-                d = searcher.doc(docId);
-                desc = "\"descripcion\":\""+d.get("descripcion")+"\",";
-                precioVenta = "\"precioVenta\":"+d.get("precioVenta")+",";
-                precioCompra = "\"precioCompra\":"+d.get("precioCompra")+",";
+            productos = new LinkedList<>();
+            for(int i=0;i<hits.length;i++) {
+                int docId = hits[0].doc;
+                Document d = searcher.doc(docId);
+                int idProducto = Integer.valueOf(d.get("idProducto"));
+                String desc = d.get("descripcion");
+                double descuento = 10;
+                double precioVenta = Double.valueOf(d.get("precioVenta"));
+                precioVenta -= precioVenta*(descuento/100);
+                double precioCompra = Double.valueOf(d.get("precioCompra"));
+                String habilitado;
                 if (d.get("habilitado").equals("true"))
-                    habilitado ="\"habilitado\":\""+"Disponible"+"\",";
+                    habilitado ="Disponible";
                 else
-                    habilitado ="\"habilitado\":\""+"No Disponible"+"\",";
-                cantidad = "\"cantidad\":\""+d.get("cantidad")+"\",";
-                vencimientos = "\"vencimientos\":\""+d.get("vencimientos")+"\",";
-                codigos = "\"codigos\":\""+d.get("codigos")+"\",";
-                proveedor = "\"proveedor\":\""+d.get("proveedor")+"\",";
-                tipoIva = "\"tipoiva\":\""+d.get("tipoIva")+"\",";
-                receta =  "\"receta\":\"";
-                receta+="No\",";
-                drogas =  "\"drogas\":\""+d.get("drogas")+"\",";
-                laboratorio =  "\"laboratorio\":\""+d.get("laboratorio")+"\",";
-                accion =  "\"accion\":\""+d.get("accion")+"\",";
-                presentacion=  "\"presentacion\":\""+d.get("presentacion")+"\"";
-                salida+=",{"+desc+precioVenta+precioCompra+habilitado+cantidad+vencimientos+codigos+proveedor+
-                        tipoIva+receta+drogas+laboratorio+accion+presentacion+"}";
+                    habilitado ="No Disponible";
+                int cantidad =Integer.valueOf(d.get("cantidad"));
+                String vencimientos = d.get("vencimientos");
+                String codigos = d.get("codigos");
+                String proveedor =d.get("proveedor");
+                String tipoIva = d.get("tipoIva");
+                String receta="";
+                if (d.get("requiereReceta").equals("Si"))
+                    receta+="Si";
+                else
+                    receta+="No";
+                String drogas =  d.get("drogas");
+                String laboratorio =  d.get("laboratorio");
+                String accion = d.get("accion");
+                String presentacion=  d.get("presentacion");
+                productoMedicamento = new DatosCompletosMedProdVO();
+                productoMedicamento.setDescripcion(desc);
+                productoMedicamento.setAccion(accion);
+                productoMedicamento.setCantidad(cantidad);
+                productoMedicamento.setCodigos(codigos);
+                productoMedicamento.setHabilitado(habilitado);
+                productoMedicamento.setIdProducto(idProducto);
+                productoMedicamento.setDrogas(drogas);
+                productoMedicamento.setLaboratorio(laboratorio);
+                productoMedicamento.setPrecioCompra(precioCompra);
+                productoMedicamento.setPrecioVenta(precioVenta);
+                productoMedicamento.setPresentacion(presentacion);
+                productoMedicamento.setProveedor(proveedor);
+                productoMedicamento.setReceta(receta);
+                productoMedicamento.setTipoIVA(tipoIva);
+                productoMedicamento.setVencimientos(vencimientos);
+                productoMedicamento.setDescuento(descuento);
+                productos.add(productoMedicamento);
             }
+            
         }
         reader.close();
 
-        salida="["+salida+"]";
-        return salida;
+        return productos;
     }
 }

@@ -23,8 +23,9 @@
    $(document).ready(function() {
      $('#buscar').on('click', function() { 
           var str = $('#search').val();
-          var domain = "buscarVerProducto.htm";
-          var url = domain+"?buscar=" + str;
+          var domain = "buscarPOST";
+          type: post;
+          var url = domain;//+"?buscar=" + str;
           location.href = url;
      });
    });

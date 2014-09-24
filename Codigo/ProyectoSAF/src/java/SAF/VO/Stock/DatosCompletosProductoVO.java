@@ -19,16 +19,16 @@ public class DatosCompletosProductoVO {
     private double precioCompra;
     private double precioVenta;
     private boolean habilitado;
-    private int cantidadStock;
-    private List<Date> vencimientoStock;
-    private List<String> codigoBarras;
+    private int cantidad;
+    private List<Date> vencimientos;
+    private List<String> codigos;
     
     private String tipoIVA;
     private String proveedor;
 
     public DatosCompletosProductoVO() {
-        vencimientoStock = new LinkedList<>();
-        codigoBarras= new LinkedList<>();
+        vencimientos = new LinkedList<>();
+        codigos= new LinkedList<>();
     }
 
     public int getIdProducto() {
@@ -72,27 +72,27 @@ public class DatosCompletosProductoVO {
     }
 
     public int getCantidadStock() {
-        return cantidadStock;
+        return cantidad;
     }
 
-    public void setCantidadStock(int cantidadStock) {
-        this.cantidadStock = cantidadStock;
+    public void setCantidadStock(int cantidad) {
+        this.cantidad = cantidad;
     }
 
     public List<Date> getVencimientoStock() {
-        return vencimientoStock;
+        return vencimientos;
     }
 
-    public void setVencimientoStock(Date vencimientoStock) {
-        this.vencimientoStock.add(vencimientoStock);
+    public void setVencimientoStock(Date vencimientos) {
+        this.vencimientos.add(vencimientos);
     }
 
     public List<String> getCodigoBarras() {
-        return codigoBarras;
+        return codigos;
     }
 
-    public void setCodigoBarras(String codigoBarras) {
-        this.codigoBarras.add(codigoBarras);
+    public void setCodigoBarras(String codigos) {
+        this.codigos.add(codigos);
     }
 
     public String getTipoIVA() {

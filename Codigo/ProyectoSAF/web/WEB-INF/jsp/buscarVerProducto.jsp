@@ -61,7 +61,8 @@
 
                         </div><!--/.nav-collapse -->
                         <div id="contenedor">
-                            <%String buscar= request.getParameter("buscar").toString();%> 
+                            <%String buscar= request.getSession().getAttribute("search").toString();
+                                %> 
                            <div id ="contenedorPrincipal" align="center" data-bind="visible: $root.mostrarBuscar"> <jsp:include page="include/buscarProducto.jsp"/>  </div>
                            <div id ="contenedorPrincipal" align="center" data-bind="if: $root.selectedResult,visible: $root.mostrarVer"> <jsp:include page="include/verProducto.jsp"/>  </div>
                         </div>

@@ -3,10 +3,7 @@ function ViewModel(){
 		self.lista = ko.observableArray();
                 var scriptPram = document.getElementById('buscarScript');
                 var lala = scriptPram.getAttribute('data-buscar');
-		self.filtro = ko.observable(lala);
-
-
-		
+		self.filtro = ko.observable(lala);		
 		//paginado
 		self.pageNumber = ko.observable(1);
 		self.rowPerPage = 5;
@@ -182,7 +179,6 @@ function ViewModel(){
                 if (lala!=null){
                     self.buscar();
                     lala=null;
-                    
                 }		
 	};    
 var vm = new ViewModel();

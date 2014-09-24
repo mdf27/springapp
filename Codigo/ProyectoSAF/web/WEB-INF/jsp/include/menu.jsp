@@ -20,13 +20,15 @@
    });
 </script>  
 <script type="text/javascript">
-   $(document).ready(function() {
-     $('#buscar').on('click', function() { 
-          var str = $('#search').val();
-          var domain = "buscarVerProducto.htm";
-          var url = domain+"?buscar=" + str;
-          location.href = url;
-     });
+    $(document).ready(function() {
+        $('#buscar').on('click', function() { 
+            var str = $('#search').val();
+            $.post("search.htm",{ search: str}, function(){
+                var url = "buscarVerProducto.htm";
+                location.href = url;
+            });
+        });
+    });
    });
 </script>
 
@@ -59,7 +61,7 @@
                <div id = "buscador"> 
                    <form action="·" method="post" >
                        <input id="search" type="search" placeholder="buscar producto..." name="busqueda" >
-                       <input  id="buscar" value="Ir" class="btn btn-default">         
+                       <input class="btn btn-default"  id="buscar" value="Ir" size="10">         
                    </form>
                </div>
            </div>

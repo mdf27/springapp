@@ -5,8 +5,20 @@
  */
 package SAF.UI.Stock;
 
+import SAF.Facade.Stock.FacadeStock;
+import SAF.VO.Stock.DatosCompletosMedProdVO;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -20,5 +32,19 @@ public class buscarProductoController {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("buscarVerProducto");
         return (mv);
+    }
+    
+    @Autowired
+    private FacadeStock bpm;
+
+    @RequestMapping(value = "busqueda.json",method = RequestMethod.GET)      
+    public @ResponseBody List<DatosCompletosMedProdVO> buscarProducto (@RequestParam(value="buscar") String texto_buscar, @RequestParam(value="filtro") String filtro) throws ClassNotFoundException, SQLException, IOException, ParseException, java.text.ParseException{
+        return bpm.buscarProducto(texto_buscar, filtro);
+    }
+    
+    @RequestMapping(value ="search.htm",method = RequestMethod.POST)      
+    public @ResponseBody void setProductoBuscar (HttpServletRequest request) throws ServletException {
+        String buscar= (String) request.getParameter("search");
+        request.getSession().setAttribute("search", buscar); 
     }
 }

@@ -16,8 +16,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
  * @author Juanes
  */
 
-public class LoginDAOTest {
-    
+public class LoginDAOTest {    
     private LoginDAO loginDao;    
     private ApplicationContext context;
     

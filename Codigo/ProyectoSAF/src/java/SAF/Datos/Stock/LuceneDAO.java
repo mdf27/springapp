@@ -3,7 +3,6 @@ import SAF.Datos.Abstract.AbstractDAO;
 import SAF.VO.Stock.DatosCompletosMedProdVO;
 import SAF.VO.Stock.DatosCompletosMedicamentoVO;
 import SAF.VO.Stock.DatosCompletosProductoVO;
-import SAF.VO.Stock.ProductoVO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;

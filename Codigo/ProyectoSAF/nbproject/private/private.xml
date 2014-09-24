@@ -3,13 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/majo/Desktop/PIS/REPOSITORIO/pis-2014/Codigo/ProyectoSAF/web/WEB-INF/jsp/inicio.jsp</file>
-            <file>file:/C:/Users/majo/Desktop/PIS/REPOSITORIO/pis-2014/Codigo/ProyectoSAF/web/WEB-INF/jsp/include/menu.jsp</file>
-            <file>file:/C:/Users/majo/Desktop/PIS/REPOSITORIO/pis-2014/Codigo/ProyectoSAF/web/WEB-INF/jsp/include/menuPrincipal.jsp</file>
-            <file>file:/C:/Users/majo/Desktop/PIS/REPOSITORIO/pis-2014/Codigo/ProyectoSAF/web/WEB-INF/jsp/include/menuProductos.jsp</file>
-            <file>file:/C:/Users/majo/Desktop/PIS/REPOSITORIO/pis-2014/Codigo/ProyectoSAF/web/WEB-INF/jsp/include/buscarProducto.jsp</file>
-            <file>file:/C:/Users/majo/Desktop/PIS/REPOSITORIO/pis-2014/Codigo/ProyectoSAF/web/WEB-INF/jsp/buscarVerProducto.jsp</file>
-            <file>file:/C:/Users/majo/Desktop/PIS/REPOSITORIO/pis-2014/Codigo/ProyectoSAF/web/WEB-INF/jsp/include/login.jsp</file>
+            <file>file:/C:/Users/majo/Desktop/PIS/REPOSITORIO/pis-2014/Codigo/ProyectoSAF/src/java/SAF/Datos/Stock/LuceneDAO.java</file>
+            <file>file:/C:/Users/majo/Desktop/PIS/REPOSITORIO/pis-2014/Codigo/ProyectoSAF/test/SAF/Datos/Stock/LuceneDAOTest.java</file>
         </group>
     </open-files>
 </project-private>

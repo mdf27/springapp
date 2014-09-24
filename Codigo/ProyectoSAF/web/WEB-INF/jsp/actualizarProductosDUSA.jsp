@@ -14,7 +14,5 @@
     <body>
         <h1>Productos Actualizados con EXITO!</h1>
         <h3>Despues se cambia por lista de cosas cambiadas, etc.</h3>
-        
-        <p>PD: no crean que en verdad hay cosas actualizadas con exito ;) todavia no se conecta con la logica jaja</p>
     </body>
 </html>

@@ -6,8 +6,6 @@
 package SAF.VO.Stock;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.sql.Timestamp;
 import java.util.Map;
 
 /**
@@ -24,6 +22,10 @@ public class ProductoVO {
     private boolean habilitado;
     private long idTransaccion;
 
+    // este se borra despues, es solo mientras no soluciono tema IVA
+    private String tipoIva;
+    ////////////////////////////////////////////////
+    
     public ProductoVO() {
      
     }
@@ -35,7 +37,20 @@ public class ProductoVO {
         descripcion = (String) query.get("descripcion");
         precioCompra = ((BigDecimal) query.get("precioCompra")).doubleValue();
         precioVenta = ((BigDecimal) query.get("precioVenta")).doubleValue();
+        habilitado = (boolean) query.get("habilitado");
     }
+    
+    /// esto se borra despues //////////////////////
+    
+    public String getTipoIva() {
+        return tipoIva;
+    }
+
+    public void setTipoIva(String tipoIva) {
+        this.tipoIva = tipoIva;
+    }
+
+    //////////////////////////////////////////////
     
     public int getIdProducto() {
         return idProducto;

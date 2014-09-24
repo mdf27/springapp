@@ -9,6 +9,7 @@ import SAF.Logica.Stock.BuscarProductoManager;
 import SAF.Logica.Stock.ModificarProductoManager;
 import SAF.VO.Stock.DataInfoProductoVO;
 import SAF.VO.Stock.DatosCompletosMedProdVO;
+import SAF.VO.Stock.ProductoVO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -32,7 +33,10 @@ public class FacadeStock {
         return bpm.buscarProducto(texto_buscar, filtro);
     }
     
-//    public void actualizarProductosDUSA(List<DataInfoProductoVO> productos) {
-//        mpm.actualizarProductosDUSA(productos);
-//    }    
+    @Autowired
+    ModificarProductoManager mpm;
+    
+    public List<ProductoVO> actualizarProductosDUSA() {
+        return mpm.actualizarProductosDUSA();
+    }     
 }

@@ -5,24 +5,55 @@
  */
 package SAF.VO.Stock;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.Timestamp;
+import java.util.Map;
 
 /**
  *
  * @author majo
  */
 public class ProductoVO {
+<<<<<<< HEAD
     public String descripcion;
     public double precioCompra;
     public double precioVenta;
     public int idTipoIva;
     public boolean habilitado;
     public BigInteger idTransaccion;
+=======
+
+    private int idProducto;
+    private String descripcion;
+    private double precioCompra;
+    private double precioVenta;
+    private int idTipoIva;
+    private boolean habilitado;
+    private long idTransaccion;
+>>>>>>> 63cb351baa2d31bd88135006a9cc942906cd89a1
 
     public ProductoVO() {
      
     }
+    
+    public ProductoVO(Map<String,Object> query){
 
+        idProducto = (int) query.get("idProducto");
+        idTipoIva = (int) query.get("idTipoIVA");
+        descripcion = (String) query.get("descripcion");
+        precioCompra = ((BigDecimal) query.get("precioCompra")).doubleValue();
+        precioVenta = ((BigDecimal) query.get("precioVenta")).doubleValue();
+    }
+    
+    public int getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(int idProducto) {
+        this.idProducto = idProducto;
+    }
+    
     public String getDescripcion() {
         return descripcion;
     }
@@ -63,11 +94,11 @@ public class ProductoVO {
         this.habilitado = habilitado;
     }
 
-    public BigInteger getIdTransaccion() {
+    public double getIdTransaccion() {
         return idTransaccion;
     }
 
-    public void setIdTransaccion(BigInteger idTransaccion) {
+    public void setIdTransaccion(long idTransaccion) {
         this.idTransaccion = idTransaccion;
     }
     

@@ -54,9 +54,9 @@
                 <td><li data-bind="click: $parent.selectResult"><a><p align="left" data-bind="text: descripcion"></p></a></li></td>
                 <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: habilitado"></p></td>
                 <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: cantidad"></p></td>
+                <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: precioLista"></p></td>
+                <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: descuento + '%'"></p></td>
                 <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: precioVenta"></p></td>
-                <td><p style="color: #d43f3a; font-weight: bold" align="center" >0</p></td>
-                <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: precioCompra"></p></td>
                 
             </tr>
         </tbody>
@@ -65,4 +65,5 @@
     
     Receta <input type="checkbox" data-bind="checked: conReceta" />
     Cantidad <input data-bind="value: cantProd" />
+    Descuento (%) <input data-bind="value: descuento" />
 </div>

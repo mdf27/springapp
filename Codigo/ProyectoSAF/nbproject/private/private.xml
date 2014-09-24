@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
@@ -12,3 +13,23 @@
         </group>
     </open-files>
 </project-private>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/Fernanda/Documents/NetBeansProjects/pis-2014/Codigo/ProyectoSAF/src/java/SAF/VO/Facturacion/RenglonFacturaVO.java</file>
+            <file>file:/C:/Users/Fernanda/Documents/NetBeansProjects/pis-2014/Codigo/ProyectoSAF/test/SAF/Datos/Seguridad/LoginDAOTest.java</file>
+            <file>file:/C:/Users/Fernanda/Documents/NetBeansProjects/pis-2014/Codigo/ProyectoSAF/src/java/SAF/Logica/Facturacion/FacturacionManager.java</file>
+            <file>file:/C:/Users/Fernanda/Documents/NetBeansProjects/pis-2014/Codigo/ProyectoSAF/test/SAF/Datos/Seguridad/UsuarioDAOTest.java</file>
+            <file>file:/C:/Users/Fernanda/Documents/NetBeansProjects/pis-2014/Codigo/ProyectoSAF/src/java/SAF/VO/Facturacion/FacturaVO.java</file>
+            <file>file:/C:/Users/Fernanda/Documents/NetBeansProjects/pis-2014/Codigo/ProyectoSAF/src/java/SAF/Datos/Stock/LuceneDAO.java</file>
+            <file>file:/C:/Users/Fernanda/Documents/NetBeansProjects/pis-2014/Codigo/ProyectoSAF/src/java/SAF/Facade/Stock/FacadeStock.java</file>
+            <file>file:/C:/Users/Fernanda/Documents/NetBeansProjects/pis-2014/Codigo/ProyectoSAF/web/WEB-INF/dispatcher-servlet.xml</file>
+            <file>file:/C:/Users/Fernanda/Documents/NetBeansProjects/pis-2014/Codigo/ProyectoSAF/src/java/SAF/Facade/Facturacion/FacadeFacturacion.java</file>
+            <file>file:/C:/Users/Fernanda/Documents/NetBeansProjects/pis-2014/Codigo/ProyectoSAF/test/SAF/Logica/Facturacion/FacturacionManagerTest.java</file>
+        </group>
+    </open-files>
+</project-private>
+>>>>>>> 472046de23ab092f8fee4a411180b0034f74a6c8

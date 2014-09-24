@@ -2,7 +2,7 @@
 
 #buscador {
     float:left;
-    margin-top: 6px;
+    margin-top: 3px;
 } 
 
 #buscador > form {
@@ -22,4 +22,9 @@
 #buscador input[type=submit]{
      margin-top: 0px !important;
      width: 24px;
+}
+
+#buscar {
+    margin-top: 3px;
+    padding: 3px 11px;
 }

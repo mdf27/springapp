@@ -13,7 +13,7 @@
             </td>
             <td width="16">&nbsp;</td>
             <td width="316"><span style="font-size:14px; font-family:Arial">
-                                <input class="form-control" type="text" data-bind="value: filtro, valueUpdate: 'afterkeydown', event: { keyup: actualizarLista}">
+                                <input class="form-control" type="text" data-bind="value: filtro, valueUpdate: 'afterkeydown', event: { input: actualizarLista, keyup: actualizarLista}">
                             </span>
             </td>
             <td width="26">&nbsp;</td>
@@ -62,4 +62,7 @@
         </tbody>
     </table>
     <button data-bind="click: buscarProducto">Aceptar</button> <br>
+    
+    Receta <input type="checkbox" data-bind="checked: conReceta" />
+    Cantidad <input data-bind="value: cantProd" />
 </div>

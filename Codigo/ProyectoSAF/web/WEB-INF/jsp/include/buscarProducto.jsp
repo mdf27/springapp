@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="application/json; charset=iso-8859-1" pageEncoding="UTF-8"%>
 <div> 
     <table width="796" border="0">
         <tr>
@@ -13,7 +14,8 @@
             </td>
             <td width="16">&nbsp;</td>
             <td width="316"><span style="font-size:14px; font-family:Arial">
-                                <input class="form-control" type="text" data-bind="value: filtro, valueUpdate: 'afterkeydown', event: { keyup: actualizarLista}">
+                                
+                    <input class="form-control" type="text" data-bind="value: filtro(), valueUpdate: 'afterkeydown', event: { keyup: actualizarLista">
                             </span>
             </td>
             <td width="26">&nbsp;</td>
@@ -21,7 +23,7 @@
             <td width="193">
                 <div align="left">
                     <div align="left"><span class="container body-content">
-                            <select name="select2" class="form-control" style="width: 100% !important" data-bind="options: optionValues, value: selectedOptionValue,visible: hayResultado, event: { change: selectionChanged }"></select>
+                            <select name="select2" class="form-control" style="width: 100% !important" data-bind="options: optionValues, value: selectedOptionValue,visible: hayResultado, event: { change: selectionChanged}"></select>
                         </span>
                     </div>
                 </div>
@@ -52,12 +54,11 @@
         <tbody data-bind="foreach: paginated">
             <tr>                            
                 <td><li data-bind="click: $parent.selectResult"><a><p align="left" data-bind="text: descripcion"></p></a></li></td>
-                <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: habilitado"></p></td>
-                <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: cantidad"></p></td>
-                <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: precioVenta"></p></td>
-                <td><p style="color: #d43f3a; font-weight: bold" align="center" >0</p></td>
-                <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: precioCompra"></p></td>
-                
+                <td><p align="center" data-bind="text: habilitado"></p></td>
+                <td><p align="center" data-bind="text: cantidad"></p></td>
+                <td><p style="color: #d43f3a;" align="center" data-bind="text: '$ '+ precioVenta"></p></td>
+                <td><p style="color: #d43f3a;" align="center" >0</p></td>
+                <td><p style="color: #d43f3a;" align="center" data-bind="text: '$ '+ precioCompra"></p></td>                
             </tr>
         </tbody>
     </table>

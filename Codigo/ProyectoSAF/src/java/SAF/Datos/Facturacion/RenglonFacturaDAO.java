@@ -6,9 +6,7 @@
 package SAF.Datos.Facturacion;
 
 import SAF.Datos.Abstract.AbstractDAO;
-import java.math.BigInteger;
-import java.text.DecimalFormat;
-import java.util.Date;
+import SAF.VO.Facturacion.RenglonFacturaVO;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -18,14 +16,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class RenglonFacturaDAO extends AbstractDAO {
 
-    public void insertarRenglonFactura(short idTipoFactura, int idFactura, int idProducto, DecimalFormat precioProducto,
-            DecimalFormat precioVtaReal, String descDescripcion, int descCantBonif, DecimalFormat descPorcentBonif, DecimalFormat descMontoBonif, BigInteger idTransaccion) {
+    public void insertarRenglonFactura(RenglonFacturaVO renglon) {
 
         //Genero sentencia SQL
         String sql = "INSERT INTO RenglonFactura VALUES(? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        Object[] parametros ={idTipoFactura, idFactura, idProducto, precioProducto,
-            precioVtaReal, descDescripcion, descCantBonif, descPorcentBonif, descMontoBonif, idTransaccion};
+        Object[] parametros ={renglon.getIdTipoFactura(), renglon.getIdFactura(), renglon.getIdProducto(), 
+            renglon.getPrecioProducto(), renglon.getPrecioVtaReal(), renglon.getDescDescripcion(), 
+            renglon.getDescCantBonif(), renglon.getDescPorcentBonif(), renglon.getDescMontoBonif(),
+            renglon.getIdTransaccion()};
         
         this.getJdbcTemplate().update(sql, parametros);
     }

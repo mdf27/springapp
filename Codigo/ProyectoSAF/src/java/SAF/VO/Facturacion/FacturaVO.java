@@ -3,6 +3,7 @@ package SAF.VO.Facturacion;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Map;
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -29,6 +30,15 @@ public class FacturaVO {
     private double montoTotal;
     private double montoTotalAPagar;
     private double idTransaccion;
+    private ArrayList<RenglonFacturaVO> renglones;
+
+    public ArrayList<RenglonFacturaVO> getRenglones() {
+        return renglones;
+    }
+
+    public void setRenglones(ArrayList<RenglonFacturaVO> renglones) {
+        this.renglones = renglones;
+    }
 
     public FacturaVO() {
     }

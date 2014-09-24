@@ -56,12 +56,17 @@
                    </ul>
 
                </div><!--/.nav-collapse -->
-               <div id = "buscador"> 
-                   <form action="·" method="post" >
-                       <input id="search" type="search" placeholder="buscar producto..." name="busqueda" >
-                       <input class="btn btn-default"  id="buscar" value="Ir" size="10">         
-                   </form>
-               </div>
+               <%if (request.getSession().getAttribute("menuBuscar")==null){%>
+                    <div id = "buscador"> 
+                        <form action="·" method="post" >
+                            <input id="search" type="search" placeholder="buscar producto..." name="busqueda" >
+
+                             <button class="btn btn-default" id="buscar" type="button">Buscar</button> 
+                        </form>
+                    </div>
+               <%}else{
+                   request.getSession().setAttribute("menuBuscar",null);
+               }%>
            </div>
        </div>
    </div>

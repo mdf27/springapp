@@ -35,40 +35,13 @@
         </script>  
     </head>
     <body>
-        <div class="navbar navbar-inverse navbar-fixed-top">
-                <div class="navbar-inner">
-                    <div class="container">
-                        <a class="brand" href="#" style="color:#FFF">Drogueria Uruguay</a>
-                        <div class="nav-collapse collapse">
-
-                            <ul class="nav">                                      
-                                <li><a href="inicio.html" style="color:#FFF">Principal</a></li>                                                                            
-                                <li><a href="#" id="facturacion" style="color:#FFF">Facturación</a></li> 
-                                <li><a href="#" id="stock" style="color:#FFF">Stock</a></li> 
-
-                                <li><a href="#" style="color:#FFF">Compras</a></li> 
-                                <li><a href="#" style="color:#FFF">Clientes</a></li>   
-
-                                <li><a href="#" style="color:#FFF">Reponer Stock</a></li> 
-                                <li class="dropdown">
-                                    <a href="#" style="color:#FFF" class="dropdown-toggle" data-toggle="dropdown">Más<b class="caret"></b></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#"><i class="icon-signal"></i>Estadisticas</a></li>
-                                        <li><a href="#"><i class="icon-wrench"></i>Ajustes</a></li>
-                                    </ul>
-                                </li>    
-                            </ul>
-
-                        </div><!--/.nav-collapse -->
-                        <div id="contenedor">
-                            <%String buscar= request.getSession().getAttribute("search").toString();
-                                %> 
-                           <div id ="contenedorPrincipal" align="center" data-bind="visible: $root.mostrarBuscar"> <jsp:include page="include/buscarProducto.jsp"/>  </div>
-                           <div id ="contenedorPrincipal" align="center" data-bind="if: $root.selectedResult,visible: $root.mostrarVer"> <jsp:include page="include/verProducto.jsp"/>  </div>
-                        </div>
-                    </div>
-                </div>
-        </div>
+        <%request.getSession().setAttribute("menuBuscar","false");%>
+        <jsp:include page="include/menu.jsp"/>  
+        <div id="contenedor">
+            <%String buscar= request.getSession().getAttribute("search").toString();%> 
+            <div id ="contenedorPrincipal" align="center" data-bind="visible: $root.mostrarBuscar"> <jsp:include page="include/buscarProducto.jsp"/>  </div>
+            <div id ="contenedorPrincipal" align="center" data-bind="if: $root.selectedResult,visible: $root.mostrarVer"> <jsp:include page="include/verProducto.jsp"/>  </div>
+        </div>   
     </body>
     
     <script id="buscarScript" type="text/javascript" language="javascript" charset="utf-8" src="Librerias/buscarProducto/buscarKO.js?" data-buscar="<%=buscar%>"></script>

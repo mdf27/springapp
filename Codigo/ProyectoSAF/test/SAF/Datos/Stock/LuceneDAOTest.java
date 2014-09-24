@@ -8,8 +8,11 @@ package SAF.Datos.Stock;
 import SAF.VO.Stock.DatosCompletosMedProdVO;
 import SAF.VO.Stock.DatosCompletosMedicamentoVO;
 import SAF.VO.Stock.DatosCompletosProductoVO;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.store.Directory;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -17,12 +20,16 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 /**
  *
  * @author majo
  */
 public class LuceneDAOTest {
+    private LuceneDAO luceneDao;
+    private ApplicationContext context;
     
     public LuceneDAOTest() {
     }
@@ -36,7 +43,9 @@ public class LuceneDAOTest {
     }
     
     @Before
-    public void setUp() {
+    public void setUp() throws ClassNotFoundException, SQLException, IOException, ParseException {
+        context = new FileSystemXmlApplicationContext("file:web/WEB-INF/dispatcher-servlet.xml");
+        luceneDao = (LuceneDAO)context.getBean(LuceneDAO.class);
     }
     
     @After
@@ -50,6 +59,7 @@ public class LuceneDAOTest {
     public void testGetIndiceProductosLucene() {
         System.out.println("getIndiceProductosLucene");
         LuceneDAO instance = new LuceneDAO();
+        
         Directory expResult = null;
         Directory result = instance.getIndiceProductosLucene();
         assertEquals(expResult, result);

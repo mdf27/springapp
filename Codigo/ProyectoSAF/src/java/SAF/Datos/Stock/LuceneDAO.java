@@ -35,7 +35,7 @@ import org.springframework.stereotype.Service;
  *
  * @author majo
  */
-@Service
+//@Service
 @Repository
 public class LuceneDAO extends AbstractDAO{
         
@@ -47,6 +47,7 @@ public class LuceneDAO extends AbstractDAO{
         return this.indiceProductosLucene;
     }
     
+  
     private String devolverCodigosBarraProducto(DatosCompletosProductoVO p){
         String resultado="";
         List<String> codigos = p.getCodigoBarras();
@@ -229,12 +230,13 @@ public class LuceneDAO extends AbstractDAO{
         if (hits.length>0){                
             productos = new LinkedList<>();
             for(int i=0;i<hits.length;i++) {
-                int docId = hits[0].doc;
+                int docId = hits[i].doc;
                 Document d = searcher.doc(docId);
                 int idProducto = Integer.valueOf(d.get("idProducto"));
                 String desc = d.get("descripcion");
                 double descuento = 10;
                 double precioVenta = Double.valueOf(d.get("precioVenta"));
+                double precioLista = precioVenta;
                 precioVenta -= precioVenta*(descuento/100);
                 double precioCompra = Double.valueOf(d.get("precioCompra"));
                 String habilitado;
@@ -267,6 +269,7 @@ public class LuceneDAO extends AbstractDAO{
                 productoMedicamento.setLaboratorio(laboratorio);
                 productoMedicamento.setPrecioCompra(precioCompra);
                 productoMedicamento.setPrecioVenta(precioVenta);
+                productoMedicamento.setPrecioLista(precioLista);
                 productoMedicamento.setPresentacion(presentacion);
                 productoMedicamento.setProveedor(proveedor);
                 productoMedicamento.setReceta(receta);

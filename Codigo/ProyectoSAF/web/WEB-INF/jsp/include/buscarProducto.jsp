@@ -56,9 +56,9 @@
                 <td><li data-bind="click: $parent.selectResult"><a><p align="left" data-bind="text: descripcion"></p></a></li></td>
                 <td><p align="center" data-bind="text: habilitado"></p></td>
                 <td><p align="center" data-bind="text: cantidad"></p></td>
-                <td><p style="color: #d43f3a;" align="center" data-bind="text: '$ '+ precioVenta"></p></td>
-                <td><p style="color: #d43f3a;" align="center" >0</p></td>
-                <td><p style="color: #d43f3a;" align="center" data-bind="text: '$ '+ precioCompra"></p></td>                
+                <td><p style="color: #d43f3a;" align="center" data-bind="text: '$ '+ precioLista"></p></td>
+                <td><p style="color: #d43f3a;" align="center" data-bind="text: descuento + ' %'" ></p></td>
+                <td><p style="color: #d43f3a;" align="center" data-bind="text: '$ '+ precioVenta"></p></td>                
             </tr>
         </tbody>
     </table>

@@ -40,8 +40,8 @@
     <td height="52" colspan="4"><span style="font-weight: bold; text-decoration: underline">Precios y costos</span></td>
   </tr>
   <tr>
-    <td height="33">Precio de lista: <span data-bind="text: $root.selectedResult().precioCompra"></span>  </td>
-    <td width="167" style="color: red">Descuento: <span data-bind="text: $root.selectedResult().descuento"></span></td>
+    <td height="33">Precio de lista: <span data-bind="text: $root.selectedResult().precioLista"></span>  </td>
+    <td width="167" style="color: red">Descuento: <span data-bind="text: $root.selectedResult().descuento"></span> % </td>
     <td width="203">Precio de venta: $ <span data-bind="text: $root.selectedResult().precioVenta"></span>  </td>
     <td width="208" style="color: red">Farma Descuento:</td>
   </tr>

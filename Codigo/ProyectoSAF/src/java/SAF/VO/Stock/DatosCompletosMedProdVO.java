@@ -17,6 +17,7 @@ public class DatosCompletosMedProdVO {
     private String descripcion;
     private double precioCompra;
     private double precioVenta;
+    private double precioLista;
     private String habilitado;
     private int cantidad;
     private List<String> vencimientos;
@@ -174,5 +175,14 @@ public class DatosCompletosMedProdVO {
     public void setCostoReal(double costoReal) {
         this.costoReal = costoReal;
     }
+
+    public double getPrecioLista() {
+        return precioLista;
+    }
+
+    public void setPrecioLista(double precioLista) {
+        this.precioLista = precioLista;
+    }
+    
     
 }

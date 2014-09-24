@@ -11,8 +11,10 @@ package SAF.UI.Stock;
  * @author majo
  */
 import SAF.Facade.Stock.FacadeStock;
+import SAF.VO.Stock.DatosCompletosMedProdVO;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,8 +28,8 @@ public class luceneController {
     @Autowired
     private FacadeStock bpm;
 
-    @RequestMapping(value = "busqueda.htm",method = RequestMethod.GET)      
-    public @ResponseBody String buscar (@RequestParam(value="buscar") String texto_buscar, @RequestParam(value="filtro") String filtro) throws ClassNotFoundException, SQLException, IOException, ParseException, java.text.ParseException{
+    @RequestMapping(value = "busqueda.json",method = RequestMethod.GET)      
+    public @ResponseBody List<DatosCompletosMedProdVO> buscar (@RequestParam(value="buscar") String texto_buscar, @RequestParam(value="filtro") String filtro) throws ClassNotFoundException, SQLException, IOException, ParseException, java.text.ParseException{
         return bpm.buscarProducto(texto_buscar, filtro);
     }
 }

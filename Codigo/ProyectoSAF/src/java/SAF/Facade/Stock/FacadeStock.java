@@ -8,6 +8,7 @@ package SAF.Facade.Stock;
 import SAF.Logica.Stock.BuscarProductoManager;
 import SAF.Logica.Stock.ModificarProductoManager;
 import SAF.VO.Stock.DataInfoProductoVO;
+import SAF.VO.Stock.DatosCompletosMedProdVO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -27,7 +28,7 @@ public class FacadeStock {
 //    @Autowired
 //    ModificarProductoManager mpm;
     
-    public String buscarProducto(String texto_buscar, String filtro) throws ClassNotFoundException, ParseException, SQLException, IOException, java.text.ParseException{
+    public List<DatosCompletosMedProdVO> buscarProducto(String texto_buscar, String filtro) throws ClassNotFoundException, ParseException, SQLException, IOException, java.text.ParseException{
         return bpm.buscarProducto(texto_buscar, filtro);
     }
     

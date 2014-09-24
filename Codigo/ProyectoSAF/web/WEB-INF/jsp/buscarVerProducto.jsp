@@ -35,6 +35,9 @@
         </script>  
     </head>
     <body>
+        
+        <div id = "leftColuma"> <jsp:include page="include/menuPrincipal.jsp"/>  </div>
+        
         <%request.getSession().setAttribute("menuBuscar","false");%>
         <jsp:include page="include/menu.jsp"/>  
         <div id="contenedor">

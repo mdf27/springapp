@@ -49,11 +49,12 @@
     <table width="94%" class="table" style ="width: 95% !important" data-bind="visible: $root.lista().length>0 ">
         <thead>
             
-            <tr><th width="32%"><div align="center">Nombre</div></th><th width="10%"><div align="center">Estado</div></th><th width="9%"><div align="center">Cantidad</div></th><th width="15%"><div align="center">Precio Lista</div></th><th width="18%"><div align="center">Farmadescuento</div></th><th width="16%"><div align="center">Precio Venta</div></th></tr>
+            <tr><th width="20%"><div align="center">Nombre</div></th><th width="16%"><div align="center">Laboratorio</div></th><th width="10%"><div align="center">Estado</div></th><th width="11%"><div align="center">Cantidad</div></th><th width="15%"><div align="center">Precio Lista</div></th><th width="13%"><div align="center">Farmadescuento</div></th><th width="15%"><div align="center">Precio Venta</div></th></tr>
         </thead>
         <tbody data-bind="foreach: paginated">
             <tr>                            
                 <td><li data-bind="click: $parent.selectResult"><a><p align="left" data-bind="text: descripcion"></p></a></li></td>
+                <td><p align="center" data-bind="text: laboratorio"></p></td>
                 <td><p align="center" data-bind="text: habilitado"></p></td>
                 <td><p align="center" data-bind="text: cantidad"></p></td>
                 <td><p style="color: #d43f3a;" align="center" data-bind="text: '$ '+ precioLista"></p></td>

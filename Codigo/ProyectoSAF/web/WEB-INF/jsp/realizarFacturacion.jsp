@@ -175,6 +175,7 @@
                                                     <tr height="60%">
                                                         <td>
                                                             <h3>&nbsp TOTAL </h3>
+                                                            <p><strong data-bind="text: total"></strong></p>
                                                             <h4>&nbsp $168.75</h4>
                                                         </td>
                                                     </tr>

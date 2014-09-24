@@ -51,7 +51,7 @@
         </thead>
         <tbody data-bind="foreach: paginated">
             <tr>                            
-                <td><li data-bind="click: $parent.selectResult"><a><p align="left" data-bind="text: descripcion"></p></a></li></td>
+                <td><li data-bind="click: $parent.selecccionarProducto"><a><p align="left" data-bind="text: descripcion"></p></a></li></td>
                 <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: habilitado"></p></td>
                 <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: cantidad"></p></td>
                 <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: precioLista"></p></td>

@@ -232,7 +232,15 @@ function ViewModel() {
     self.conReceta = ko.observable();
     self.cantProd = ko.observable();
     self.descuento = ko.observable();
-    self.selectResult = function(item) {
+//    this.total = ko.computed(function() {
+//        var total = 0;
+////        for(i= 0; i < renglonesFactura().length; i++){
+////            total+= renglonesFactura()[i];
+////        }    
+//        return total;
+//    }, this);
+    
+    self.selecccionarProducto = function(item) {
         self.precioVenta = ko.observable(parseFloat(item.precioCompra)-
                                         ((parseFloat(item.precioCompra)*parseFloat(self.descuento()))/100)
                                         );

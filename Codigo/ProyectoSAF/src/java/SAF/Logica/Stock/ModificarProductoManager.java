@@ -11,12 +11,14 @@ import SAF.Logica.Abstract.AbstractManejador;
 import SAF.VO.Stock.DataInfoProductoVO;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Manu
  */
+//@Service
 public class ModificarProductoManager extends AbstractManejador {
     @Autowired
     private ProductoDAO productoDAO;

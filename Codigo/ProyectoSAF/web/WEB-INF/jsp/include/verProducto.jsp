@@ -66,12 +66,16 @@
       <td>$ <span data-bind="text: $root.selectedResult().precioVenta"></span>  </td>
     </tr>
     <tr>
-      <td style="font-weight: bold;">Descuento:</td>
-      <td><span data-bind="text: $root.selectedResult().descuento"></span> % </td>
+      <td style="font-weight: bold;">Descuento Producto:</td>
+      <td><span data-bind="text: $root.selectedResult().descuentoProducto"></span>%</td>
+    </tr>
+    <tr>
+      <td style="font-weight: bold;">Descuento de Receta: </td>
+      <td><span data-bind="text: $root.selectedResult().descuentoReceta"></span>%</td>
     </tr>
     <tr>
       <td style="font-weight: bold;">Farma Descuento:</td>
-      <td>% </td>
+      <td>$ <span data-bind="text: $root.selectedResult().farmaDescuento"></span></td>
     </tr>
     <tr>
       <td>&nbsp;</td>

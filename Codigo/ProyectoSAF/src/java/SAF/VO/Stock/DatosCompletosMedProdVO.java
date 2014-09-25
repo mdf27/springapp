@@ -29,8 +29,11 @@ public class DatosCompletosMedProdVO {
     private List<String> drogas;
     private List<String> accion;
     private List<String> presentacion;
-    private double descuento;
+    private double descuentoReceta; 
+    private double descuentoProducto;
+    private double farmaDescuento; //precio lista + %receta
     private double costoReal;
+    private List<String> descDescuento;
 
     public DatosCompletosMedProdVO() {
         vencimientos = new LinkedList<>();
@@ -160,14 +163,22 @@ public class DatosCompletosMedProdVO {
         this.presentacion.add(presentacion);
     }
 
-    public double getDescuento() {
-        return descuento;
+    public double getDescuentoReceta() {
+        return descuentoReceta;
     }
 
-    public void setDescuento(double descuento) {
-        this.descuento = descuento;
+    public void setDescuentoReceta(double descuento) {
+        this.descuentoReceta = descuento;
     }
 
+    public double getDescuentoProducto() {
+        return descuentoProducto;
+    }
+
+    public void setDescuentoProducto(double descuentoProducto) {
+        this.descuentoProducto = descuentoProducto;
+    }
+    
     public double getCostoReal() {
         return costoReal;
     }
@@ -182,6 +193,22 @@ public class DatosCompletosMedProdVO {
 
     public void setPrecioLista(double precioLista) {
         this.precioLista = precioLista;
+    }
+
+    public List<String> getDescDescuento() {
+        return descDescuento;
+    }
+
+    public void setDescDescuento(String descDescuento) {
+        this.descDescuento.add(descDescuento);
+    }
+
+    public double getFarmaDescuento() {
+        return farmaDescuento;
+    }
+
+    public void setFarmaDescuento(double farmaDescuento) {
+        this.farmaDescuento = farmaDescuento;
     }
     
     

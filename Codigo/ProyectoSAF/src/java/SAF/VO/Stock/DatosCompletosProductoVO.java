@@ -25,10 +25,14 @@ public class DatosCompletosProductoVO {
     
     private String tipoIVA;
     private String proveedor;
+    private List<Double> descuentos;
+    private List<String> descripcionDescuento;
 
     public DatosCompletosProductoVO() {
         vencimientoStock = new LinkedList<>();
         codigoBarras= new LinkedList<>();
+        descuentos=new LinkedList<>();
+        descripcionDescuento=new LinkedList<>();        
     }
 
     public int getIdProducto() {
@@ -110,5 +114,24 @@ public class DatosCompletosProductoVO {
     public void setProveedor(String proveedor) {
         this.proveedor = proveedor;
     }
+
+    public List<Double> getDescuentos() {
+        return descuentos;
+    }
+
+    public void setDescuentos(Double descuentos) {
+        this.descuentos.add(descuentos);
+    }
+    
+    
+    public List<String> getDescripcionDescuento() {
+        return descripcionDescuento;
+    }
+
+    public void setDescripcionDescuento(String descripcionDescuento) {
+        this.descripcionDescuento.add(descripcionDescuento);
+    }
+    
+    
     
 }

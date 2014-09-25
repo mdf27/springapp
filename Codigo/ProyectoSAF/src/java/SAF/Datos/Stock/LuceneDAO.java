@@ -5,6 +5,7 @@ import SAF.VO.Stock.DatosCompletosMedicamentoVO;
 import SAF.VO.Stock.DatosCompletosProductoVO;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -121,13 +122,46 @@ public class LuceneDAO extends AbstractDAO{
         while (it.hasNext()){
             String d= (String)it.next();
             if (size!=1)
-                resultado+= d +",\n";
+                resultado+= d +", ";
             else
                 resultado+=d;
             size--;
         }
         return resultado;
     }
+    
+    private String devolverDescripcionDescuentos(DatosCompletosProductoVO m){
+        String resultado="";
+        List<String> descripciones = m.getDescripcionDescuento();
+        ListIterator it = descripciones.listIterator();
+        int size= descripciones.size();
+        while (it.hasNext()){
+            String d= (String)it.next();
+            if (size!=1)
+                resultado+= d +",";
+            else
+                resultado+=d;
+            size--;
+        }
+        return resultado;
+    }
+        
+    private String devolverDescuentos(DatosCompletosProductoVO m){
+        String resultado="";
+        List<Double> descripciones = m.getDescuentos();
+        ListIterator it = descripciones.listIterator();
+        int size= descripciones.size();
+        while (it.hasNext()){
+            String d= ""+it.next();
+            if (size!=1)
+                resultado+= d +",\n";
+            else
+                resultado+=d;
+            size--;
+        }
+        return resultado;
+    }    
+    
     private void crearIndiceProductosLuecene (Map <Integer,DatosCompletosProductoVO> productos,Map <Integer,DatosCompletosMedicamentoVO> medicamentos ) throws ClassNotFoundException, SQLException, IOException, ParseException{       
         //Lucene
         StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_40);            
@@ -152,6 +186,8 @@ public class LuceneDAO extends AbstractDAO{
             d.add(new org.apache.lucene.document.TextField ("proveedor", rt.getProveedor(), Field.Store.YES));
             d.add(new org.apache.lucene.document.TextField ("tipoIva", rt.getTipoIVA(), Field.Store.YES));
             d.add(new org.apache.lucene.document.TextField ("vencimientos",devolverVencimientosProducto(rt), Field.Store.YES));
+            d.add(new org.apache.lucene.document.TextField ("descuentos",""+devolverDescuentos(rt), Field.Store.YES));
+            d.add(new org.apache.lucene.document.TextField ("descipcionesDescuento",devolverDescripcionDescuentos(rt), Field.Store.YES));
             
             Iterator it1 = medicamentos.keySet().iterator();
             while (it1.hasNext()){
@@ -232,13 +268,9 @@ public class LuceneDAO extends AbstractDAO{
             for(int i=0;i<hits.length;i++) {
                 int docId = hits[i].doc;
                 Document d = searcher.doc(docId);
+                productoMedicamento = new DatosCompletosMedProdVO();
                 int idProducto = Integer.valueOf(d.get("idProducto"));
                 String desc = d.get("descripcion");
-                double descuento = 10;
-                double precioVenta = Double.valueOf(d.get("precioVenta"));
-                double precioLista = precioVenta;
-                precioVenta -= precioVenta*(descuento/100);
-                double precioCompra = Double.valueOf(d.get("precioCompra"));
                 String habilitado;
                 if (d.get("habilitado").equals("true"))
                     habilitado ="Disponible";
@@ -258,7 +290,42 @@ public class LuceneDAO extends AbstractDAO{
                 String laboratorio =  d.get("laboratorio");
                 String accion = d.get("accion");
                 String presentacion=  d.get("presentacion");
-                productoMedicamento = new DatosCompletosMedProdVO();
+                double descuentoReceta = 0;
+                double descuentoProducto = 0;
+                double precioVenta = Double.valueOf(d.get("precioVenta"));
+                double precioLista = precioVenta;   
+                double farmaDescuento =0;
+                
+                String descripcionesDescuentos = d.get("descipcionesDescuento");
+                descripcionesDescuentos=descripcionesDescuentos.replace(",", " ");
+                descripcionesDescuentos=descripcionesDescuentos.replace("\n","");
+                String [] listaDescripcionDescuentos = descripcionesDescuentos.split(" ");
+                
+                String descuentos = d.get("descuentos");
+                descuentos=descuentos.replace(",", " ");
+                descuentos=descuentos.replace("\n","");
+                String [] listaDescuentos = descuentos.split(" ");
+                
+                int size= listaDescripcionDescuentos.length;                
+                DecimalFormat df = new DecimalFormat("#.##");  
+                Number numero;
+                for (int j=0;j<size;j++){
+                    numero = df.parse(listaDescuentos[i]);
+                    descuentoReceta=numero.doubleValue();
+                    switch (listaDescripcionDescuentos[j]) {
+                        case "Producto":
+                            precioVenta -= Double.valueOf(df.format(precioVenta*(descuentoProducto/100)));
+                            break;
+                        case "Receta":
+                            farmaDescuento = Double.valueOf(df.format(precioLista-(precioLista*(descuentoReceta/100))));
+                            break;
+                    }
+                }
+                             
+                double precioCompra = Double.valueOf(d.get("precioCompra"));
+                productoMedicamento.setFarmaDescuento(farmaDescuento);
+                productoMedicamento.setDescuentoProducto(descuentoProducto);                
+                productoMedicamento.setDescuentoReceta(descuentoReceta);          
                 productoMedicamento.setDescripcion(desc);
                 productoMedicamento.setAccion(accion);
                 productoMedicamento.setCantidad(cantidad);
@@ -275,7 +342,7 @@ public class LuceneDAO extends AbstractDAO{
                 productoMedicamento.setReceta(receta);
                 productoMedicamento.setTipoIVA(tipoIva);
                 productoMedicamento.setVencimientos(vencimientos);
-                productoMedicamento.setDescuento(descuento);
+
                 productos.add(productoMedicamento);
             }
             

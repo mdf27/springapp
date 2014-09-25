@@ -4,6 +4,7 @@ import SAF.Datos.Stock.ActualizacionService;
 import SAF.Logica.Abstract.AbstractManejador;
 import SAF.VO.Stock.ProductoVO;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +22,7 @@ public class ModificarProductoManager extends AbstractManejador {
     private ActualizacionService servicio;
     
     @Transactional(rollbackFor = Exception.class)
-    public List<ProductoVO> actualizarProductosDUSA () {
+    public Map <String, List<ProductoVO>> actualizarProductosDUSA () {
         return servicio.actualizarProductosDUSA();
 //        productoDAO.actualizarProductosDUSA (productos);
     }

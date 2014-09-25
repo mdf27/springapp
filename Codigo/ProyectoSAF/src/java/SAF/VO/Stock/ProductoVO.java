@@ -30,15 +30,15 @@ public class ProductoVO {
      
     }
     
-    public ProductoVO(Map<String,Object> query){
-
-        idProducto = (int) query.get("idProducto");
-        idTipoIva = (int) query.get("idTipoIVA");
-        descripcion = (String) query.get("descripcion");
-        precioCompra = ((BigDecimal) query.get("precioCompra")).doubleValue();
-        precioVenta = ((BigDecimal) query.get("precioVenta")).doubleValue();
-        habilitado = (boolean) query.get("habilitado");
-    }
+//    public ProductoVO(Map<String,Object> query){
+//
+//        idProducto = (int) query.get("idProducto");
+//        idTipoIva = (int) query.get("idTipoIVA");
+//        descripcion = (String) query.get("descripcion");
+//        precioCompra = ((BigDecimal) query.get("precioCompra")).doubleValue();
+//        precioVenta = ((BigDecimal) query.get("precioVenta")).doubleValue();
+//        habilitado = (boolean) query.get("habilitado");
+//    }
     
     /// esto se borra despues //////////////////////
     

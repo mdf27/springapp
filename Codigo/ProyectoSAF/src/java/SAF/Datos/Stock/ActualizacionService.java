@@ -5,6 +5,7 @@ import SAF.VO.Stock.ProductoVO;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public class ActualizacionService {
 //    }
     
 /// mientras no funciona el web service me creo yo una lista de DataInfoProductoVO
-    public List <ProductoVO> actualizarProductosDUSA(){
+    public Map <String, List<ProductoVO>> actualizarProductosDUSA(){
     
 // supongamos que productosDUSA es la lista de DataInfoProducto que me llega de DUSA
             

@@ -5,6 +5,7 @@ import SAF.VO.Stock.ProductoVO;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,6 +30,10 @@ public class ActualizarProductoDAOTest {
     
     @Test
     public void testActualizarProductosDUSA() {
+        
+    // OJO que para que el TEST pase hay que cambiar los datos para que entren
+    // a las listas correspondientes. 
+        
         List<DataInfoProductoVO> productosDUSA = new ArrayList<>();
         DataInfoProductoVO prod = new DataInfoProductoVO();
         DataInfoProductoVO prod1 = new DataInfoProductoVO();
@@ -37,13 +42,13 @@ public class ActualizarProductoDAOTest {
         DataInfoProductoVO prod4 = new DataInfoProductoVO();
         
         prod.setNumeroArticulo(11);
-        prod.setDescripcion("cambie, me deshabilite");
+        prod.setDescripcion("cambie precio y me habilite");
         prod.setTipoIVA("basico");
         BigDecimal num = new BigDecimal(355);
         prod.setPrecioVenta(num);
-        num = new BigDecimal(455);
+        num = new BigDecimal(977);
         prod.setPrecioPublico(num);
-        prod.setHabilitado(0);
+        prod.setHabilitado(1);
         productosDUSA.add(prod);
         
         prod1.setNumeroArticulo(13);
@@ -63,7 +68,7 @@ public class ActualizarProductoDAOTest {
         prod2.setPrecioVenta(num);
         num = new BigDecimal(855);
         prod2.setPrecioPublico(num);
-        prod2.setHabilitado(1);
+        prod2.setHabilitado(0);
         productosDUSA.add(prod2);
         
         prod3.setNumeroArticulo(22);
@@ -71,7 +76,7 @@ public class ActualizarProductoDAOTest {
         prod3.setTipoIVA("basico");
         num = new BigDecimal(455);
         prod3.setPrecioVenta(num);
-        num = new BigDecimal(755);
+        num = new BigDecimal(222);
         prod3.setPrecioPublico(num);
         prod3.setHabilitado(1);
         productosDUSA.add(prod3);
@@ -87,36 +92,40 @@ public class ActualizarProductoDAOTest {
         productosDUSA.add(prod4);
         
         //ProductoDAO productoDao = new ActualizarProductoDAO();
-        List <ProductoVO> productosActualizados = productoDao.actualizarProductosDUSA(productosDUSA);
+        Map <String, List <ProductoVO>> productosActualizados = productoDao.actualizarProductosDUSA(productosDUSA);
         
-        ProductoVO producto = productosActualizados.get(0);
+        ProductoVO producto = productosActualizados.get("aumentaron").get(0);
         assertEquals(11,producto.getIdProducto());
         double expected = new Double(355.0);
         double actual = producto.getPrecioCompra();
         assertEquals(expected,actual,0);
-        expected = new Double(455.0);
-        actual = producto.getPrecioVenta();
-        assertEquals(expected,actual,0);
-        assertFalse(producto.isHabilitado());
-        
-        producto = productosActualizados.get(3);
-        assertEquals(22,producto.getIdProducto());
-        expected = new Double(455.0);
-        actual = producto.getPrecioCompra();
-        assertEquals(expected,actual,0);
-        expected = new Double(755.0);
+        expected = new Double(977.0);
         actual = producto.getPrecioVenta();
         assertEquals(expected,actual,0);
         assertTrue(producto.isHabilitado());
         
-        producto = productosActualizados.get(4);
-        assertEquals(12,producto.getIdProducto());
-        expected = new Double(755.0);
+        producto = productosActualizados.get("disminuyeron").get(0);
+        assertEquals(22,producto.getIdProducto());
+        expected = new Double(455.0);
         actual = producto.getPrecioCompra();
         assertEquals(expected,actual,0);
-        expected = new Double(877.0);
+        expected = new Double(222.0);
         actual = producto.getPrecioVenta();
         assertEquals(expected,actual,0);
+        assertTrue(producto.isHabilitado());
+        
+        producto = productosActualizados.get("habilitaron").get(0);
+        assertEquals(13,producto.getIdProducto());
+        assertTrue(producto.isHabilitado());
+        
+        producto = productosActualizados.get("deshabilitaron").get(0);
+        assertEquals(14,producto.getIdProducto());
+//        expected = new Double(755.0);
+//        actual = producto.getPrecioCompra();
+//        assertEquals(expected,actual,0);
+//        expected = new Double(855.0);
+//        actual = producto.getPrecioVenta();
+//        assertEquals(expected,actual,0);
         assertFalse(producto.isHabilitado());
 
     }

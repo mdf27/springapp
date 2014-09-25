@@ -3,6 +3,7 @@ package SAF.UI.Stock;
 import SAF.Facade.Stock.FacadeStock;
 import SAF.VO.Stock.ProductoVO;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,7 @@ public class ActualizarProductosController {
 //        for (DataInfoProductoVO prodActual : productosDUSA) {
 //            
 //        }
-        List<ProductoVO> productosActualizados = fs.actualizarProductosDUSA(); 
+        Map <String, List<ProductoVO>>  productosActualizados = fs.actualizarProductosDUSA(); 
         return (new ModelAndView("actualizarProductosDUSA",
                 "productosActualizados", productosActualizados));
     }

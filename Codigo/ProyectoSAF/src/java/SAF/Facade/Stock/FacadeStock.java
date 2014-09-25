@@ -7,12 +7,12 @@ package SAF.Facade.Stock;
 
 import SAF.Logica.Stock.BuscarProductoManager;
 import SAF.Logica.Stock.ModificarProductoManager;
-import SAF.VO.Stock.DataInfoProductoVO;
 import SAF.VO.Stock.DatosCompletosMedProdVO;
 import SAF.VO.Stock.ProductoVO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +36,7 @@ public class FacadeStock {
     @Autowired
     ModificarProductoManager mpm;
     
-    public List<ProductoVO> actualizarProductosDUSA() {
+    public Map <String, List<ProductoVO>> actualizarProductosDUSA() {
         return mpm.actualizarProductosDUSA();
     }     
 }

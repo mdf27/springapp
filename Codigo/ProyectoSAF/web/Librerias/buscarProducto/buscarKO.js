@@ -100,7 +100,7 @@ function ViewModel() {
         self.timerID = window.setTimeout(function() {
             self.buscar();
         }
-        , 200);
+        , 100);
         return true;
     };
 

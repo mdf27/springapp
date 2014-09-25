@@ -1,59 +1,89 @@
-<table width="912" border="0">
-  <tr>
-    <td height="41" colspan="4"><span style="font-weight: bold;">INFORMACIÓN DEL PRODUCTO</span></td>
-  </tr>
-  <tr>
-    <td height="50" colspan="4"><span style="font-weight: bold; text-decoration: underline">Datos Básicos</span></td>
-  </tr>
-  <tr>
-    <td width="306" height="27">Nombre: <span data-bind="text: $root.selectedResult().descripcion"></span></td>
-    <td colspan="3">&nbsp;</td>
-  </tr>
-  <tr>
-    <td height="40">Códigos de barra: <span data-bind="text: $root.selectedResult().codigos"></span></td>
-    <td colspan="3">Proveedores: <span data-bind="text: $root.selectedResult().proveedor"></span></td>
-  </tr>
-  <tr>
-    <td height="63" colspan="4"><span style="font-weight: bold; text-decoration: underline">Detalles</span></td>
-  </tr>
-  <tr>
-    <td height="30">Marca/Laboratorio: <span data-bind="text: $root.selectedResult().laboratorio"></span> </td>
-    <td colspan="3">Cantidad: <span data-bind="text: $root.selectedResult().cantidad"></span></td>
-  </tr>
-  <tr>
-    <td height="39">Drogas: <span data-bind="text: $root.selectedResult().drogas"></span></td>
-    <td colspan="3">Vencimientos: <span data-bind="text: $root.selectedResult().vencimientos"></span> </td>
-  </tr>
-  <tr>
-    <td height="38">Venta sólo Receta: <span data-bind="text: $root.selectedResult().receta"></span> </td>
-    <td colspan="3"></td>
-  </tr>
-  <tr>
-    <td height="38">Categoía:</td>
-    <td colspan="3">&nbsp;</td>
-  </tr>
-  <tr>
-    <td height="41">Acciones Terapéuticas: <span data-bind="text: $root.selectedResult().accion"></span> </td>
-    <td colspan="3">&nbsp;</td>
-  </tr>
-  <tr>
-    <td height="52" colspan="4"><span style="font-weight: bold; text-decoration: underline">Precios y costos</span></td>
-  </tr>
-  <tr>
-    <td height="33">Precio de lista: <span data-bind="text: $root.selectedResult().precioLista"></span>  </td>
-    <td width="167" style="color: red">Descuento: <span data-bind="text: $root.selectedResult().descuento"></span> % </td>
-    <td width="203">Precio de venta: $ <span data-bind="text: $root.selectedResult().precioVenta"></span>  </td>
-    <td width="208" style="color: red">Farma Descuento:</td>
-  </tr>
-  <tr>
-    <td height="43" style="color: red">Costo real: $</td>
-    <td>Costo de lista: $<span data-bind="text: $root.selectedResult().precioCompra"></span> </td>
-    <td style="color: red">Costo última compra: $  ultima factura </td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr></tr>
-  <tr>
-      <td height="41" colspan="4" align="center"><a data-bind="click: atras"style="font-weight: bold;">Atras</a></td>
-  </tr>
-</table>
-<p>&nbsp;</p>                    
+<%@ page language="java" contentType="application/json; charset=iso-8859-1" pageEncoding="UTF-8"%>  
+<table width="442" border="0">
+    <tr>
+        <td colspan="2"> <blockquote><h3 style="font-weight: bold;">INFORMACIÃ“N DEL PRODUCTO</h3></blockquote></td>
+    </tr>
+    <tr>
+      <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="2"><h4 style="font-weight: bold; text-decoration: underline">Datos BÃ¡sicos</h4></td>
+    </tr>
+    <tr>
+      <td width="170" style="font-weight: bold;">Nombre:</td>
+      <td width="262"><span data-bind="text: $root.selectedResult().descripcion"></span></td>
+    </tr>
+    <tr>
+      <td style="font-weight: bold;">CÃ³digos de Barras:</td>
+      <td><span data-bind="text: $root.selectedResult().codigos"></span></td>
+    </tr>
+    <tr>
+      <td style="font-weight: bold;">Poveedores:</td>
+      <td><span data-bind="text: $root.selectedResult().proveedor"></span></td>
+    </tr>
+    <tr>
+      <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="2"><h4 style="font-weight: bold; text-decoration: underline">Detalles</h4></td>
+    </tr>
+    <tr>
+      <td style="font-weight: bold;">Laboratorio:</td>
+      <td><span data-bind="text: $root.selectedResult().laboratorio"></span> </td>
+    </tr>
+    <tr>
+      <td style="font-weight: bold;">Cantidad:</td>
+      <td><span data-bind="text: $root.selectedResult().cantidad"></span></td>
+    </tr>
+    <tr>
+      <td style="font-weight: bold;">Droga:</td>
+      <td><span data-bind="text: $root.selectedResult().drogas"></span></td>
+    </tr>
+    <tr>
+      <td style="font-weight: bold;">Vencimientos:</td>
+      <td><span data-bind="text: $root.selectedResult().vencimientos"></span> </td>
+    </tr>
+    <tr>
+      <td style="font-weight: bold;">Venta sÃ³lo Receta:</td>
+      <td><span data-bind="text: $root.selectedResult().receta"></span> </td> 
+    </tr>
+    <tr>
+      <td style="font-weight: bold;">Acciones TerapÃ©uticas:</td>
+      <td><span data-bind="text: $root.selectedResult().accion"></span> </td>
+    </tr>
+    <tr>
+      <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="2"><h4 align="left" style="font-weight: bold; text-decoration: underline">Precios</h4></td>
+    </tr>
+    <tr>
+      <td style="font-weight: bold;">Precio de lista:</td>
+      <td> $  <span data-bind="text: $root.selectedResult().precioLista"></span></td>
+    </tr>
+    <tr>
+      <td style="font-weight: bold;">Precio de venta:</td>
+      <td>$ <span data-bind="text: $root.selectedResult().precioVenta"></span>  </td>
+    </tr>
+    <tr>
+      <td style="font-weight: bold;">Descuento:</td>
+      <td><span data-bind="text: $root.selectedResult().descuento"></span> % </td>
+    </tr>
+    <tr>
+      <td style="font-weight: bold;">Farma Descuento:</td>
+      <td>% </td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="2"><button data-bind="click: atras" type="button" class="btn btn-primary">Atras</button></td>
+    </tr>
+  </table>
+<h3 style="font-weight: bold;">&nbsp;</h3>
+  <h3 style="font-weight: bold;">&nbsp;</h3>
+  <h3 style="font-weight: bold;">&nbsp;</h3>
+  <h3 style="font-weight: bold;">&nbsp;</h3>
+  <h3 style="font-weight: bold;">&nbsp;</h3>
+ 

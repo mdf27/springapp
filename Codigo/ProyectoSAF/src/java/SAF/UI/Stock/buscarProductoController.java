@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,7 +44,7 @@ public class buscarProductoController {
     }
     
     @RequestMapping(value ="search.htm",method = RequestMethod.POST)      
-    public @ResponseBody void setProductoBuscar (HttpServletRequest request) throws ServletException {
+    public @ResponseBody void setProductoBuscar (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String buscar= (String) request.getParameter("search");
         request.getSession().setAttribute("search", buscar); 
     }

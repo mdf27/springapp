@@ -28,19 +28,6 @@
         });
     });
 </script>
-<script>
-    $(document).ready(function() {
-            $('#search').keydown(function (e){
-            if(e.keyCode == 13){
-                var str1 = $('#search').val();
-                $.post("search.htm",{search: str1}, function(){
-                    var url1 = "buscarVerProducto.htm";
-                    location.href = url1;
-                });
-            }
-        });
-    });
-</script>
 
 <div class="navbar navbar-inverse navbar-fixed-top">
        <div class="navbar-inner">

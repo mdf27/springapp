@@ -14,12 +14,14 @@ import SAF.VO.Seguridad.PerfilVO;
 import SAF.VO.Seguridad.UsuarioVO;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Guillermo
  */
+@Service
 public class LoginManager extends AbstractManejador{
     
     @Autowired

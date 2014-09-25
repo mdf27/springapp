@@ -1,10 +1,5 @@
-<%-- 
-    Document   : actualizarProductosDUSA
-    Created on : 23-sep-2014, 17:50:27
-    Author     : Usuario
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%request.setCharacterEncoding("UTF-8");%>
 <!DOCTYPE html>
 <html>
     <head>

@@ -402,14 +402,6 @@ function renglonFactura(data) {
 ;
 
 function renglonFacturaVO(data) {
-    this.descripcion = ko.observable(data.descripcion);
-    this.cantidad = ko.observable(data.cantidad);
-    this.precio = ko.observable(data.precio);
-    this.receta = ko.observable(data.receta);
-    this.subtotal = ko.observable(data.subtotal);
-    this.precioVenta = ko.observable(data.precioVenta);
-    this.descuento = ko.observable(data.descuento);
-
     this.idTipoFactura = 101;
     this.idFactura = 25;
     this.idProducto = 123;

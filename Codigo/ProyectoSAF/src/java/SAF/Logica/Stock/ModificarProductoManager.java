@@ -1,6 +1,7 @@
 package SAF.Logica.Stock;
 
 import SAF.Datos.Stock.ActualizacionService;
+import SAF.Datos.Stock.ActualizarProductoDAO;
 import SAF.Logica.Abstract.AbstractManejador;
 import SAF.VO.Stock.ProductoVO;
 import java.util.List;
@@ -21,9 +22,12 @@ public class ModificarProductoManager extends AbstractManejador {
     @Autowired
     private ActualizacionService servicio;
     
+    @Autowired
+    private ActualizarProductoDAO productoDAO;
+    
     @Transactional(rollbackFor = Exception.class)
     public Map <String, List<ProductoVO>> actualizarProductosDUSA () {
-        return servicio.actualizarProductosDUSA();
+        return productoDAO.actualizarProductosDUSA(servicio.actualizarProductosDUSA());
 //        productoDAO.actualizarProductosDUSA (productos);
     }
 }

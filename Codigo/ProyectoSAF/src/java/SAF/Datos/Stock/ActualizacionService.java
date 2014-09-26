@@ -16,9 +16,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class ActualizacionService {
     
-    @Autowired
-    private ActualizarProductoDAO productoDAO;
-    
 //    public List <DataInfoProducto> obtenerActualizacionDUSA(){
 //        WSConsultaStockService servicio = new WSConsultaStockService();
 //        WSConsultaStock consultaStock = servicio.getWSConsultaStockPort();
@@ -27,7 +24,7 @@ public class ActualizacionService {
 //    }
     
 /// mientras no funciona el web service me creo yo una lista de DataInfoProductoVO
-    public Map <String, List<ProductoVO>> actualizarProductosDUSA(){
+    public List<DataInfoProductoVO> actualizarProductosDUSA(){
     
 // supongamos que productosDUSA es la lista de DataInfoProducto que me llega de DUSA
             
@@ -88,6 +85,6 @@ public class ActualizacionService {
         prod4.setHabilitado(0);
         productosDUSA.add(prod4);
 
-        return productoDAO.actualizarProductosDUSA(productosDUSA);
+        return productosDUSA;
     }
 }

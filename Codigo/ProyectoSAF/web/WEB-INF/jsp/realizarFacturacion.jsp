@@ -27,7 +27,7 @@
 
 %>
         --%>
-    
+
         <div id="contenedor">
 
             <div id = "leftColuma">  
@@ -65,58 +65,74 @@
             <div class="centerTable" id ="contenedorPrincipal" align="center" data-bind="visible: $root.buscarProd"> <jsp:include page="include/buscarProductoFactura.jsp"/>  </div>
             <div class="centerTable" id ="contenedorPrincipal" align="center" data-bind="visible: $root.realizandoFactura">
 
-                
-                <table  style="margin: 0 auto;" valign="middle"  width="100%" cellpadding="18" >
+
+                <table  style="margin: 0 auto;" valign="middle"  width="100%" height="100%" cellpadding="10" >
                     <tbody>
                         <%-- Fila 1 --%>
 
                         <tr>
-                            <td colspan="3">
-                                <i class="icon-user"></i>&nbsp<strong>Cajero:&nbsp &nbsp Pepito Perez</strong>
+                            <td align ="left" colspan="1">
+                                <i class="icon-user"></i>&nbsp &nbsp<strong>Cajero :</strong>
                             </td>
-                            <td colspan="3">
-                                &nbsp &nbsp  <i class="icon-calendar"></i>&nbsp <strong>Fecha:&nbsp 09/09/2014</strong>
+                            <td colspan="1">
+                                <strong>Pepito Perez</strong>
+                            </td>
+                            <td colspan="3">&nbsp</td>
+                            <td colspan="1">
+                                <i class="icon-calendar"></i><strong>Fecha:&nbsp 09/09/2014</strong>
                             </td>
                         </tr>
                         <%-- Fila 2 --%>
 
                         <%-- Fila 3 --%>
                         <tr>
-                            <td colspan="4">
-                                <i class="icon-user"></i>&nbsp <strong class="textoLugarMedio" >Cliente</strong>
-                                <input type="text" autofocus list="browsers" name="buscar" autocomplete="off" class="input-large" >
+                            <td align ="left" colspan="1">
+                                <i class="icon-user"></i>&nbsp <strong>Cliente :</strong>
                             </td>  
+                            <td colspan="1">
+                                <input type="text" autofocus list="browsers" name="buscar" autocomplete="off" class="input-large" >
+                            </td>
+                            <td colspan="2">
+                                <strong>&nbsp RUT&nbsp </strong>
+                                <strong>&nbsp</strong><input class="input-medium" type="checkbox" data-bind="checked: conRut" />
+                            </td>
+                            <td colspan="1">
+                                &nbsp
+                            </td>
 
                             <td colspan="2">
-                                <input style="width:110px; height:30px" class="btn btn-primary" type="submit" value="Nuevo cliente" />
+                                <a href="#" data-bind="click: $root.registrarCliente">Registrar cliente</a>
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="1"> <strong>RUT&nbsp &nbsp</strong><input class="input-medium" type="checkbox" data-bind="checked: conRut" />
-                            <td colspan="2"> <strong>R. social&nbsp &nbsp</strong><input class="input-large" type="text" data-bind="value: rSocial, enable: conRut" /></td>
-                            <td colspan="1" align="right"> <strong>RUT&nbsp</strong> </td>
-                            <td colspan="2"><input class="input-medium" type="text" data-bind="value: nroRut, enable: conRut" /></td>
 
+                            <td align ="right" colspan="1"> <strong>Razón social</strong>
+                            <td colspan="1"><input class="input-large" type="text" data-bind="value: rSocial, enable: conRut" /></td></td>
+
+                            <td colspan="2" align="right"> <strong>&nbsp RUT&nbsp &nbsp</strong><input class="input-medium" type="text" data-bind="value: nroRut, enable: conRut" /> </td>
+
+                            <td colspan="2">&nbsp</td>
                             <%-- Fila 4 --%>
                         <tr>
-
-                            <td valing="middle" colspan="4" >
+                            <td align ="right" valign="top" colspan="1">
+                                <i class="icon-barcode"></i>&nbsp<strong> Producto</strong>
+                            </td>
+                            <td valing="middle" colspan="5" >
                                 <div >
                                     <form name="form2" action="" method="post">
-                                        <i class="icon-barcode"></i>&nbsp<strong> Producto &nbsp &nbsp</strong><input type="text" autofocus list="browsers" name="buscar" autocomplete="off" class="input-xlarge" 
-                                                                                                                      data-bind="value: textoProducto, valueUpdate: 'input', executeOnEnter: buscarProducto" 
-                                                                                                                      placeholder="Ingrese nombre o codigo del producto"/>
+
+                                        <input type="text" autofocus list="browsers" name="buscar" autocomplete="off" class="input-large" 
+                                               data-bind="value: textoProducto, valueUpdate: 'input', executeOnEnter: buscarProducto" 
+                                               placeholder="Ingrese nombre o codigo del producto"/>
                                     </form>
                                 </div> 
                             </td>
-                            <td colspan="2">
-                                <select style="width:110px; height:30px" data-bind="options: $root.formasPago, value: formaPago, optionsText: 'formaPago'"></select>
-                            </td>
+
                             <%--
                             <td colspan="1"> 
                                 <button  style="width:110px; height:30px" class="btn btn-primary" data-bind="click: buscarProducto">Buscar</button>
                             </td>
-                             --%>
+                            --%>
                         </tr>
                         <%-- Fila 5 --%>
                         <tr>
@@ -162,34 +178,48 @@
                             </td>
 
                             <%--Total--%>
-                            <td>
+                            <td colspan="1">
                                 <table id="tablaTotal">
-                                    
+
                                     <tbody>
+                                        <tr>
+                                            <td>&nbsp</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Forma de pago</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <select style="width:110px; height:30px" data-bind="options: $root.formasPago, value: formaPago, optionsText: 'formaPago'"></select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>&nbsp</td>
+                                        </tr>
                                         <tr>
                                             <td>
                                                 <h3>TOTAL </h3>
                                                 <h4><strong data-bind="text: total"></strong></h4>
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr valign="bottom">
                                             <td>
-                                            <button style="width:110px; height:30px" class="btn btn-primary" data-bind="click: realizarFactura">Realizar</button>
+                                                <button style="width:110px; height:30px" class="btn btn-primary" data-bind="click: realizarFactura">Realizar</button>
                                             </td>
                                         </tr>
 
                                     </tbody>
-                                 </table>
+                                </table>
 
 
                             </td>
 
 
-                </tr>
+                        </tr>
 
-                </tbody>
+                    </tbody>
                 </table> 
-                
+
 
             </div>
         </div>

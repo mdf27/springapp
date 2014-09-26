@@ -1,7 +1,7 @@
 
-<table width="442" border="0">
+<table width="622" border="0">
     <tr>
-        <td colspan="2"> <blockquote><h3 style="font-weight: bold;">INFORMACI?N DEL PRODUCTO</h3></blockquote></td>
+        <td colspan="2"> <blockquote><h3 style="font-weight: bold;">INFORMACIÓN DEL PRODUCTO</h3></blockquote></td>
     </tr>
     <tr>
       <td colspan="3">&nbsp;</td>
@@ -13,12 +13,12 @@
       <div align="right"></div></td>
     </tr>
     <tr>
-      <td width="166" style="font-weight: bold;">Nombre:</td>
-      <td width="188"><span data-bind="text: $root.selectedResult().descripcion"></span></td>
-      <td width="132"><div align="right"></div></td>
+      <td width="190" style="font-weight: bold;">Nombre:</td>
+      <td width="268"><span data-bind="text: $root.selectedResult().descripcion"></span></td>
+      <td width="150"><div align="right"></div></td>
     </tr>
     <tr>
-      <td style="font-weight: bold;">C?digos de Barras:</td>
+      <td style="font-weight: bold;">Códigos de Barras:</td>
       <td><span data-bind="text: $root.selectedResult().codigos"></span></td>
       <td>&nbsp;</td>
     </tr>
@@ -59,7 +59,7 @@
       <td>&nbsp;</td>
     </tr>
     <tr>
-      <td style="font-weight: bold;">Acciones Terap?uticas:</td>
+      <td style="font-weight: bold;">Acciones Terapéuticas:</td>
       <td><span data-bind="text: $root.selectedResult().accion"></span> </td>
       <td>&nbsp;</td>
     </tr>
@@ -105,7 +105,7 @@
       </div></td>
     </tr>
   </table>
-<blockquote>&nbsp;</blockquote>
+
 <h3 style="font-weight: bold;">&nbsp;</h3>
   <h3 style="font-weight: bold;">&nbsp;</h3>
   <h3 style="font-weight: bold;">&nbsp;</h3>

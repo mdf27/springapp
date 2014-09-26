@@ -1,9 +1,11 @@
 package SAF.VO.Facturacion;
 
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -22,6 +24,7 @@ public class FacturaVO {
     private int idCliente;
     private String RUT;
     private String razonSocial;
+    @JsonDeserialize(using=ShortDateDeserializer.class)
     private Timestamp fecha;
     private double descuento;
     private double montoNetoTotal;
@@ -30,17 +33,18 @@ public class FacturaVO {
     private double montoTotal;
     private double montoTotalAPagar;
     private double idTransaccion;
-    private ArrayList<RenglonFacturaVO> renglones;
+    private List<RenglonFacturaVO> renglones;
 
-    public ArrayList<RenglonFacturaVO> getRenglones() {
+    public List<RenglonFacturaVO> getRenglones() {
         return renglones;
     }
 
-    public void setRenglones(ArrayList<RenglonFacturaVO> renglones) {
+    public void setRenglones(List<RenglonFacturaVO> renglones) {
         this.renglones = renglones;
     }
 
     public FacturaVO() {
+        renglones = new LinkedList<>();
     }
     
     public FacturaVO(Map<String,Object> query){

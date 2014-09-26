@@ -19,7 +19,7 @@
     </tr>
     <tr>
       <td style="font-weight: bold;">Poveedores:</td>
-      <td><span data-bind="text: $root.selectedResult().proveedor"></span></td>
+      <td><a href="#"><span data-bind="text: $root.selectedResult().proveedor"></span></a></td>
     </tr>
     <tr>
       <td colspan="2">&nbsp;</td>

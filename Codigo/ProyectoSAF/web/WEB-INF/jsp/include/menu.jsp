@@ -17,17 +17,6 @@
      });
    });
 </script>  
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#buscar').on('click', function() { 
-            var str = $('#search').val();
-            $.post("search.htm",{ search: str}, function(){
-                var url = "buscarVerProducto.htm";
-                location.href = url;
-            });
-        });
-    });
-</script>
 
 <div class="navbar navbar-inverse navbar-fixed-top">
        <div class="navbar-inner">

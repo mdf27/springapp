@@ -310,14 +310,14 @@ public class LuceneDAO extends AbstractDAO{
                 DecimalFormat df = new DecimalFormat("#.##");  
                 Number numero;
                 for (int j=0;j<size;j++){
-                    numero = df.parse(listaDescuentos[i]);
+                    numero = df.parse(listaDescuentos[j]);
                     descuentoReceta=numero.doubleValue();
                     switch (listaDescripcionDescuentos[j]) {
                         case "Producto":
-                            precioVenta -= Double.valueOf(df.format(precioVenta*(descuentoProducto/100)));
+                            precioVenta -= precioVenta*(descuentoProducto/100);
                             break;
                         case "Receta":
-                            farmaDescuento = Double.valueOf(df.format(precioLista-(precioLista*(descuentoReceta/100))));
+                            farmaDescuento = precioLista-(precioLista*(descuentoReceta/100));
                             break;
                     }
                 }

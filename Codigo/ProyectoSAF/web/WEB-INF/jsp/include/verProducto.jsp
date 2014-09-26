@@ -1,20 +1,19 @@
-<%@ page language="java" contentType="application/json; charset=iso-8859-1" pageEncoding="UTF-8"%>  
 <table width="442" border="0">
     <tr>
-        <td colspan="2"> <blockquote><h3 style="font-weight: bold;">INFORMACIÃ“N DEL PRODUCTO</h3></blockquote></td>
+        <td colspan="2"> <blockquote><h3 style="font-weight: bold;">INFORMACIÓN DEL PRODUCTO</h3></blockquote></td>
     </tr>
     <tr>
       <td colspan="2">&nbsp;</td>
     </tr>
     <tr>
-      <td colspan="2"><h4 style="font-weight: bold; text-decoration: underline">Datos BÃ¡sicos</h4></td>
+      <td colspan="2"><h4 style="font-weight: bold; text-decoration: underline">Datos Básicos</h4></td>
     </tr>
     <tr>
       <td width="170" style="font-weight: bold;">Nombre:</td>
       <td width="262"><span data-bind="text: $root.selectedResult().descripcion"></span></td>
     </tr>
     <tr>
-      <td style="font-weight: bold;">CÃ³digos de Barras:</td>
+      <td style="font-weight: bold;">Códigos de Barras:</td>
       <td><span data-bind="text: $root.selectedResult().codigos"></span></td>
     </tr>
     <tr>
@@ -44,11 +43,11 @@
       <td><span data-bind="text: $root.selectedResult().vencimientos"></span> </td>
     </tr>
     <tr>
-      <td style="font-weight: bold;">Venta sÃ³lo Receta:</td>
+      <td style="font-weight: bold;">Venta sólo Receta:</td>
       <td><span data-bind="text: $root.selectedResult().receta"></span> </td> 
     </tr>
     <tr>
-      <td style="font-weight: bold;">Acciones TerapÃ©uticas:</td>
+      <td style="font-weight: bold;">Acciones Terapéuticas:</td>
       <td><span data-bind="text: $root.selectedResult().accion"></span> </td>
     </tr>
     <tr>

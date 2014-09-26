@@ -1,8 +1,8 @@
 // Para enter en buscar producto.
 ko.bindingHandlers.executeOnEnter = {
-    init: function(element, valueAccessor, allBindingsAccessor, viewModel) {
+    init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
         var allBindings = allBindingsAccessor();
-        $(element).keypress(function(event) {
+        $(element).keypress(function (event) {
             var keyCode = (event.which ? event.which : event.keyCode);
             if (keyCode === 13) {
                 allBindings.executeOnEnter.call(viewModel);
@@ -24,7 +24,7 @@ function ViewModel() {
     self.indicePaginado = ko.observable(-1);
 
     self.timerID;
-    self.buscar = function() {
+    self.buscar = function () {
         if (self.filtro() && self.filtro().length > 2) {
             var buscar = "";
             if (self.selectedOptionValueFiltro() == "Código:") {
@@ -62,45 +62,45 @@ function ViewModel() {
 
     //ordenar
     self.selectedOptionValue = ko.observable("Nombre ascendente"),
-            self.ordenar = function() {
+            self.ordenar = function () {
                 if (self.selectedOptionValue() == "Nombre descendente") {
-                    self.lista.sort(function(a, b) {
+                    self.lista.sort(function (a, b) {
                         return a.descripcion > b.descripcion ? -1 : 1;
                     });
                 } else if (self.selectedOptionValue() == "Nombre ascendente") {
-                    self.lista.sort(function(a, b) {
+                    self.lista.sort(function (a, b) {
                         return a.descripcion < b.descripcion ? -1 : 1;
                     });
                 } else if (self.selectedOptionValue() == "Precio descendente") {
-                    self.lista.sort(function(a, b) {
+                    self.lista.sort(function (a, b) {
                         return a.precio > b.precio ? -1 : 1;
                     });
                 } else if (self.selectedOptionValue() == "Precio ascendente") {
-                    self.lista.sort(function(a, b) {
+                    self.lista.sort(function (a, b) {
                         return a.precio < b.precio ? -1 : 1;
                     });
                 } else if (self.selectedOptionValue() == "Laboratorio descendente") {
-                    self.lista.sort(function(a, b) {
+                    self.lista.sort(function (a, b) {
                         return a.lab > b.lab ? -1 : 1;
                     });
                 } else if (self.selectedOptionValue() == "Laboratorio ascendente") {
-                    self.lista.sort(function(a, b) {
+                    self.lista.sort(function (a, b) {
                         return a.lab < b.lab ? -1 : 1;
                     });
                 }
                 ;
             };
 
-    self.actualizarLista = function(d) {
+    self.actualizarLista = function (d) {
         self.timerID = window.clearTimeout(self.timerID);
-        self.timerID = window.setTimeout(function() {
+        self.timerID = window.setTimeout(function () {
             self.buscar();
         }
         , 100);
         return true;
     };
 
-    self.cargarLista = function(d) {
+    self.cargarLista = function (d) {
         self.lista.removeAll();
         for (var i = 0; i < d.length; i++) {
             self.lista.push(d[i]);
@@ -110,7 +110,7 @@ function ViewModel() {
 
     //paginado
     self.topePaginado = self.rowPerPage;
-    self.totalPages = ko.computed(function() {
+    self.totalPages = ko.computed(function () {
         var div = Math.floor(self.lista().length / self.rowPerPage);
         div += self.lista().length % self.rowPerPage > 0 ? 1 : 0;
         if (div !== 0)
@@ -120,22 +120,22 @@ function ViewModel() {
         return div;
     });
 
-    self.paginado = ko.computed(function() {
+    self.paginado = ko.computed(function () {
         if (self.totalPages() !== 0)
             return (self.pageNumber() + " de " + self.totalPages());
         else
             return (self.pageNumber() + " de 1");
     });
 
-    self.hasPrevious = ko.computed(function() {
+    self.hasPrevious = ko.computed(function () {
         return (self.pageNumber() !== 1);
     });
 
-    self.hasNext = ko.computed(function() {
+    self.hasNext = ko.computed(function () {
         return (self.totalPages() > 1) && (self.pageNumber() !== self.totalPages());
     });
 
-    self.next = function() {
+    self.next = function () {
         if (self.pageNumber() < self.totalPages()) {
             self.pageNumber(self.pageNumber() + 1);
             self.indicePaginado(self.topePaginado + self.rowPerPage);
@@ -145,7 +145,7 @@ function ViewModel() {
         }
     };
 
-    self.previous = function() {
+    self.previous = function () {
         if (self.pageNumber() !== 0) {
             self.pageNumber(self.pageNumber() - 1);
             self.indicePaginado(self.topePaginado - 2 * self.rowPerPage - 1);
@@ -153,29 +153,29 @@ function ViewModel() {
         }
     };
 
-    self.hayResultado = ko.computed(function() {
+    self.hayResultado = ko.computed(function () {
         return (self.lista().length > 0);
     });
 
-    self.paginated = ko.computed(function() {
+    self.paginated = ko.computed(function () {
         var first = (self.pageNumber() - 1) * self.rowPerPage;
         return self.lista.slice(first, first + self.rowPerPage);
     });
 
     self.isSelected = ko.observable(true);
     self.hiddenSelected = ko.observable(false);
-    self.setIsSelected = function() {
+    self.setIsSelected = function () {
         this.isSelected(false);
         this.hiddenSelected(true)
     };
     //ordenar                    
     self.optionValues = ["Nombre descendente", "Nombre ascendente", "Precio descendente", "Precio ascendente", "Laboratorio descendente", "Laboratorio ascendente"],
             //self.selectedChoice = ko.observable();
-            self.selectionChanged = function(event) {
+            self.selectionChanged = function (event) {
                 self.ordenar();
             };//evento ordenar 
 
-    self.filtroSelectionChanged = function(event) {
+    self.filtroSelectionChanged = function (event) {
         self.buscar();
     };//evento buscar con filtro 
 
@@ -187,20 +187,20 @@ function ViewModel() {
     self.mostrarBuscar = ko.observable(true);
     self.mostrarVer = ko.observable(false);
     self.selectedResult = ko.observable();
-    self.selectResult = function(item) {
+    self.selectResult = function (item) {
         self.selectedResult(item);
         self.mostrarVer(true);
         self.mostrarBuscar(false);
         self.indicePaginado(self.lista().indexOf(self.selectedResult()));
     };
 
-    self.atras = function() {
+    self.atras = function () {
         self.mostrarVer(false);
         self.mostrarBuscar(true);
     };
 
     //teclado
-    self.selectPrevious = function() {
+    self.selectPrevious = function () {
         var index = self.indicePaginado() - 1;
         if (index < 0)
             index = self.topePaginado - 1;
@@ -218,7 +218,7 @@ function ViewModel() {
     };
 
 
-    self.selectNext = function() {
+    self.selectNext = function () {
         var index = self.indicePaginado() + 1;
         if (index >= self.topePaginado) {
             index = (self.topePaginado - self.rowPerPage);
@@ -245,7 +245,7 @@ function ViewModel() {
     ];
     //Nuevo
     // Para posterior registro de clientes.
-    self.registrarCliente = function() {
+    self.registrarCliente = function () {
     };
 
     // Traer del controlador.
@@ -258,7 +258,7 @@ function ViewModel() {
     self.realizandoFactura = ko.observable(true);
     self.buscarProd = ko.observable(false);
 
-    self.buscarProducto = function(item) {
+    self.buscarProducto = function (item) {
         var facturando = self.realizandoFactura();
         var buscando = self.buscarProd();
         self.realizandoFactura(!facturando);
@@ -276,7 +276,7 @@ function ViewModel() {
     self.conReceta = ko.observable(false);
     self.cantProd = ko.observable(1);
     self.descuento = ko.observable(0);
-    self.total = ko.computed(function() {
+    self.total = ko.computed(function () {
         var largo = parseInt(self.renglonesFactura().length);
         var total = parseFloat(0);
         if (largo > 0) {
@@ -291,23 +291,25 @@ function ViewModel() {
         return parseFloat(total).toFixed(2);
     }, this);
 
-    self.guardarProducto = function(data) {
+    self.guardarProducto = function (data) {
         self.productoSeleccionado(data);
 
     };
     // Nuevo
-    self.estaProductoEnFactura = function(item) {
+    self.estaProductoEnFactura = function (item) {
         var largo = parseInt(self.renglonesFactura().length);
         var esta = false;
         for (i = 0; (i < largo) && !esta; i++) {
             var renglon = self.renglonesFactura()[i];
             // Es el mismo producto si tiene el mismo descuento, mismo codigo y ambos tienen o no receta.
-            if ((renglon.idProducto === item.idProducto) &&
-                    (renglon.descuento === self.descuento()) &&
-                    (renglon.receta === self.conReceta())) {
+            //var id = parseInt(renglon.codigo());
+            
+            if ((parseInt(renglon.codigo()) === item.idProducto) &&
+                    (renglon.descuento() === self.descuento()) &&
+                    (renglon.receta() === self.conReceta())) {
                 // Parsear a entero porque javascript toma el + como concatenacion.
-                var cant = parseInt(renglon[i].cantidad);
-                self.renglonesFactura()[i] = cant + parseInt(item.cantidad);
+                var cant = parseInt(renglon.cantidad());
+                self.renglonesFactura()[i].cantidad(cant + parseInt(self.cantProd()));
                 esta = true;
 
             }
@@ -316,7 +318,7 @@ function ViewModel() {
         ;
 
     };
-    self.selecccionarProducto = function() {
+    self.selecccionarProducto = function () {
         var item = self.productoSeleccionado();
 
         if (self.cantProd() != null) {
@@ -359,13 +361,13 @@ function ViewModel() {
 //        })
 //    };
 
-    self.realizarFactura = function(item) {
+    self.realizarFactura = function (item) {
         alert(self.total().toString());
         var data = ko.toJSON([{renglones: self.renglonesFactura}, {cajero: "Pepe"}, {total: self.total()}]);
         $.ajax("ingresarFactura.htm", {
             data: data,
             type: "post", contentType: "application/json",
-            success: function(result) {
+            success: function (result) {
                 alert(Ok)
             }
         });
@@ -381,7 +383,7 @@ function renglonFactura(data) {
     this.subtotal = ko.observable(data.subtotal);
     this.precioVenta = ko.observable(data.precioVenta);
     this.descuento = ko.observable(data.descuento);
-    this.idProducto = ko.observable(data.idProducto);
+    this.codigo = ko.observable(data.codigo);
 }
 ;
 
@@ -394,9 +396,9 @@ $(window).keyup(function (evt) {
         vm.selectPrevious();
     } else if (evt.keyCode == 40) { //abajo
         vm.setIsSelected();
-        vm.selectNext();        
-    } else if (evt.keyCode == 13){ //enter
-        
+        vm.selectNext();
+    } else if (evt.keyCode == 13) { //enter
+
     }
-}); 
+});
 

@@ -62,7 +62,7 @@
             </script>
 
 
-            <div class="centerTable" id ="contenedorPrincipal" align="center" data-bind="visible: $root.buscarProd"> <jsp:include page="include/buscarProductoFactura.jsp"/>  </div>
+            <div class="centerTable" id ="contenedorPrincipal" align="center" data-bind="visible: $root.buscarProd"> <jsp:directive.include file="include/buscarProductoFactura.jsp"/>  </div>
             <div class="centerTable" id ="contenedorPrincipal" align="center" data-bind="visible: $root.realizandoFactura">
 
 
@@ -71,7 +71,7 @@
                         <%-- Fila 1 --%>
 
                         <tr>
-                            <td align ="left" colspan="1">
+                            <td align ="right" colspan="1">
                                 <i class="icon-user"></i>&nbsp &nbsp<strong>Cajero :</strong>
                             </td>
                             <td colspan="1">
@@ -86,7 +86,7 @@
 
                         <%-- Fila 3 --%>
                         <tr>
-                            <td align ="left" colspan="1">
+                            <td align ="right" colspan="1">
                                 <i class="icon-user"></i>&nbsp <strong>Cliente :</strong>
                             </td>  
                             <td colspan="1">
@@ -109,7 +109,7 @@
                             <td align ="right" colspan="1"> <strong>Razón social</strong>
                             <td colspan="1"><input class="input-large" type="text" data-bind="value: rSocial, enable: conRut" /></td></td>
 
-                            <td colspan="2" align="right"> <strong>&nbsp RUT&nbsp &nbsp</strong><input class="input-medium" type="text" data-bind="value: nroRut, enable: conRut" /> </td>
+                            <td colspan="2" align="left"> <strong>&nbsp RUT&nbsp &nbsp</strong><input class="input-medium" type="text" data-bind="value: nroRut, enable: conRut" /> </td>
 
                             <td colspan="2">&nbsp</td>
                             <%-- Fila 4 --%>

@@ -1,7 +1,3 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
-
 <html lang="es">
 <head>
 	<title>Login</title>
@@ -14,11 +10,10 @@
 
 <body>
         <div id="contenedor">
-            <div id = "leftColuma">  
-            </div>
+            <div id = "leftColuma"></div>
             <div id ="contenedorPrincipal" align="center">
 
-           <jsp:include page="include/login.jsp"/>  
+           <jsp:directive.include file="include/login.jsp"/>  
            </div>
        </div>
 

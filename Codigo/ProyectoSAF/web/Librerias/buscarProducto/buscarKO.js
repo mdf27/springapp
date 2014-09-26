@@ -168,7 +168,10 @@ function ViewModel() {
 
     self.isSelected = ko.observable(true);
     self.hiddenSelected = ko.observable(false);
-    self.setIsSelected = function() { this.isSelected(false); this.hiddenSelected(true) };
+    self.setIsSelected = function() {
+        this.isSelected(false);
+        this.hiddenSelected(true)
+    };
     //ordenar                    
     self.optionValues = ["Nombre descendente", "Nombre ascendente", "Precio descendente", "Precio ascendente", "Laboratorio descendente", "Laboratorio ascendente"],
             //self.selectedChoice = ko.observable();
@@ -205,39 +208,39 @@ function ViewModel() {
     }
 
     //teclado
-    self.selectPrevious = function () {
-        var index = self.indicePaginado()-1;
-        if (index < 0) 
-            index = self.topePaginado-1;
-        else if (index<(self.topePaginado-self.rowPerPage)){
-            var dif =self.topePaginado-self.lista().length;                            
-            if ((dif<self.rowPerPage)&&(dif>0))
-                index = self.topePaginado-(self.topePaginado-self.lista().length)-1;//self.rowPerPage;
-            else 
-                index = self.topePaginado-1;//self.rowPerPage;
-        }                       
-        self.selectedResult(self.lista()[index]);
-        self.indicePaginado(index);
-        self.guardarProducto(self.lista()[index]);
-
-    };
-
-
-    self.selectNext = function () {                                           
-        var index = self.indicePaginado()+1;
-        if (index>=self.topePaginado){
-            index = (self.topePaginado-self.rowPerPage);
-            if (index<0)
-                index=index*(-1);
+    self.selectPrevious = function() {
+        var index = self.indicePaginado() - 1;
+        if (index < 0)
+            index = self.topePaginado - 1;
+        else if (index < (self.topePaginado - self.rowPerPage)) {
+            var dif = self.topePaginado - self.lista().length;
+            if ((dif < self.rowPerPage) && (dif > 0))
+                index = self.topePaginado - (self.topePaginado - self.lista().length) - 1;//self.rowPerPage;
+            else
+                index = self.topePaginado - 1;//self.rowPerPage;
         }
-        else if (index >= self.lista().length) 
-            index = (self.topePaginado-self.rowPerPage);                       
+        self.selectedResult(self.lista()[index]);
+        self.indicePaginado(index);
+        self.guardarProducto(self.lista()[index]);
+
+    };
+
+
+    self.selectNext = function() {
+        var index = self.indicePaginado() + 1;
+        if (index >= self.topePaginado) {
+            index = (self.topePaginado - self.rowPerPage);
+            if (index < 0)
+                index = index * (-1);
+        }
+        else if (index >= self.lista().length)
+            index = (self.topePaginado - self.rowPerPage);
         self.selectedResult(self.lista()[index]);
         self.indicePaginado(index);
         self.guardarProducto(self.lista()[index]);
     };
 
-    
+
     // Traer del controlador.
     self.vendedores = [
         {nombreVendedor: "Juan"},
@@ -248,9 +251,13 @@ function ViewModel() {
         {nombreVendedor: "Daniel"}
 
     ];
-    
+    //Nuevo
+    // Para posterior registro de clientes.
+    self.registrarCliente = function() {
+    };
+
     // Traer del controlador.
-    self.formasPago = [{formaPago: "Contado"},{formaPago: "Credito"}];
+    self.formasPago = [{formaPago: "Contado"}, {formaPago: "Credito"}];
     self.formaPago = ko.observable();
 
     self.vendedor = ko.observable();
@@ -268,48 +275,108 @@ function ViewModel() {
         self.filtro(prod.toString());
     };
 
-    
-
+    self.productoSeleccionado = ko.observable();
+    self.conRut = ko.observable();
+    self.rSocial = ko.observable();
+    self.nroRut = ko.observable();
+    self.renglonesVacios = ko.observableArray([1, 1, 1, 1, 1]) // Chanchada para rengoles vacios.
     self.renglonesFactura = ko.observableArray();
-    self.conReceta = ko.observable();
-    self.cantProd = ko.observable();
-    self.descuento = ko.observable();
-//    this.total = ko.computed(function() {
-//        var total = 0;
-////        for(i= 0; i < renglonesFactura().length; i++){
-////            total+= renglonesFactura()[i];
-////        }    
-//        return total;
-//    }, this);
-    
-    self.selecccionarProducto = function(item) {
-        self.precioVenta = ko.observable(parseFloat(item.precioCompra)-
-                                        ((parseFloat(item.precioCompra)*parseFloat(self.descuento()))/100)
-                                        );
-        self.subtotal = ko.observable(parseFloat(self.precioVenta())*parseFloat(self.cantProd()));
-        
-        self.renglonesFactura.push(new renglonFactura({ cantidad: self.cantProd(),
-                                                        descripcion: item.descripcion,
-                                                        precio: item.precioCompra,
-                                                        receta: self.conReceta(),
-                                                        subtotal: self.subtotal(),
-                                                        descuento: self.descuento(),
-                                                        precioVenta :self.precioVenta()
-                                                     })
-        );
-        self.realizandoFactura(true);
-        self.buscarProd(false);
-        alert("Esta es la descripcion: " + item.descripcion);
+    self.conReceta = ko.observable(false);
+    self.cantProd = ko.observable(1);
+    self.descuento = ko.observable(0);
+    self.total = ko.computed(function() {
+        var largo = parseInt(self.renglonesFactura().length);
+        var total = parseFloat(0);
+        if (largo > 0) {
+            for (i = 0; i < largo; i++) {
+                var subtotal = parseFloat(self.renglonesFactura()[i].subtotal());
+                total = total + subtotal;
+            }
+            ;
+        }
+        ;
+
+        return parseFloat(total).toFixed(2);
+    }, this);
+
+    self.guardarProducto = function(data) {
+        self.productoSeleccionado(data);
+
+    };
+    // Nuevo
+    self.estaProductoEnFactura = function(item) {
+        var largo = parseInt(self.renglonesFactura().length);
+        var esta = false;
+        for (i = 0; (i < largo) && !esta; i++) {
+            var renglon = self.renglonesFactura()[i];
+            // Es el mismo producto si tiene el mismo descuento, mismo codigo y ambos tienen o no receta.
+            if ((renglon.idProducto === item.idProducto) &&
+                    (renglon.descuento === self.descuento()) &&
+                    (renglon.receta === self.conReceta())) {
+                // Parsear a entero porque javascript toma el + como concatenacion.
+                var cant = parseInt(renglon[i].cantidad);
+                self.renglonesFactura()[i] = cant + parseInt(item.cantidad);
+                esta = true;
+
+            }
+            return esta;
+        }
+        ;
+
+    };
+    self.selecccionarProducto = function() {
+        var item = self.productoSeleccionado();
+
+        if (self.cantProd() != null) {
+            if (!self.estaProductoEnFactura(item)) {
+                var descuento = (parseFloat(item.precioLista) * parseFloat(self.descuento())) / 100;
+                var precioVenta = parseFloat(parseFloat(item.precioLista) - descuento).toFixed(2);
+
+                self.precioVenta = ko.observable(precioVenta);
+                var subtotal = parseFloat(self.precioVenta()) * parseFloat(self.cantProd());
+                self.subtotal = ko.observable(parseFloat(subtotal).toFixed(2));
+
+                self.renglonesFactura.push(new renglonFactura({cantidad: self.cantProd(),
+                    descripcion: item.descripcion,
+                    precio: item.precioLista,
+                    receta: self.conReceta(),
+                    subtotal: self.subtotal(),
+                    descuento: self.descuento(),
+                    precioVenta: self.precioVenta(),
+                    codigo: item.idProducto // Nuevo
+                })
+                        );
+                self.renglonesVacios.pop();
+            }
+            ;
+            self.realizandoFactura(true);
+            self.buscarProd(false);
+        }
+        // Seteo variables a valores por defecto
+        self.cantProd(1);
+        self.descuento(0);
     };
 
-    // Enviar la factura
+//    // Enviar la factura
+//    self.realizarFactura = function(item) {
+//        var data = ko.toJSON([{renglones: self.renglonesFactura}, {nombre: "Pepe"}]);
+//        alert(data);
+//        $.post("/ingresarFactura.htm", data, function(returnedData) {
+//            // This callback is executed if the post was successful 
+//            alert(Ok);
+//        })
+//    };
+
     self.realizarFactura = function(item) {
-        var data = ko.toJSON([{renglones: self.renglonesFactura}, {nombre: "Pepe"}]);
-        alert(data);
-        $.post("/ingresarFactura.htm", data, function(returnedData) {
-            // This callback is executed if the post was successful 
-            alert(Ok);
-        })
+        alert(self.total().toString());
+        var data = ko.toJSON([{renglones: self.renglonesFactura}, {cajero: "Pepe"}, {total: self.total()}]);
+        $.ajax("ingresarFactura.htm", {
+            data: data,
+            type: "post", contentType: "application/json",
+            success: function(result) {
+                alert(Ok)
+            }
+        });
     };
 }
 ;
@@ -322,8 +389,22 @@ function renglonFactura(data) {
     this.subtotal = ko.observable(data.subtotal);
     this.precioVenta = ko.observable(data.precioVenta);
     this.descuento = ko.observable(data.descuento);
+    this.idProducto = ko.observable(data.idProducto);
 }
 ;
 
 var vm = new ViewModel();
 ko.applyBindings(vm);
+
+$(window).keyup(function (evt) {
+    if (evt.keyCode == 38) { //arriba
+        vm.setIsSelected();
+        vm.selectPrevious();
+    } else if (evt.keyCode == 40) { //abajo
+        vm.setIsSelected();
+        vm.selectNext();        
+    } else if (evt.keyCode == 13){ //enter
+        
+    }
+}); 
+

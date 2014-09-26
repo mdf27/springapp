@@ -41,12 +41,12 @@
         <%request.getSession().setAttribute("menuBuscar","false");%>
         <jsp:include page="include/menu.jsp"/>  
         <div id="contenedor">
-            <%String buscar= request.getSession().getAttribute("search").toString();%> 
             <div id ="contenedorPrincipal" align="center" data-bind="visible: $root.mostrarBuscar"> <jsp:include page="include/buscarProducto.jsp"/>  </div>
-            <div id ="contenedorPrincipal" align="center" data-bind="if: $root.selectedResult,visible: $root.mostrarVer"> <jsp:include page="include/verProducto.jsp"/>  </div>
+            <div style="margin-left: 300px !important; margin-top: 100px !important" id ="contenedorPrincipal" align="center" data-bind="if: $root.selectedResult,visible: $root.mostrarVer"> <jsp:include page="include/verProducto.jsp"/>  </div>
         </div>   
+        <script id="buscarScript" type="text/javascript" language="javascript" charset="utf-8" src="Librerias/buscarProducto/buscarKO.js"></script>
     </body>
     
-    <script id="buscarScript" type="text/javascript" language="javascript" charset="utf-8" src="Librerias/buscarProducto/buscarKO.js?" data-buscar="<%=buscar%>"></script>
+    
     
 </html>

@@ -17,17 +17,6 @@
      });
    });
 </script>  
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#buscar').on('click', function() { 
-            var str = $('#search').val();
-            $.post("search.htm",{ search: str}, function(){
-                var url = "buscarVerProducto.htm";
-                location.href = url;
-            });
-        });
-    });
-</script>
 
 <div class="navbar navbar-inverse navbar-fixed-top">
        <div class="navbar-inner">
@@ -50,22 +39,11 @@
                                <li><a href="#"><i class="icon-signal"></i>Estadisticas</a></li>
                                <li><a href="#"><i class="icon-wrench"></i>Ajustes</a></li>
                            </ul>
-                       </li>    
+                       </li> 
+                       <li><a href="buscarVerProducto.htm" id="facturacion" style="color:#FFF">Buscar Producto</a></li>
                    </ul>
 
-               </div><!--/.nav-collapse -->
-               <%if (request.getSession().getAttribute("menuBuscar")==null){%>
-                    <div id = "buscador"> 
-                        <form action="·" method="post" >
-                            <input id="search" type="search" placeholder="buscar producto..." name="busqueda" >
-
-                             <button class="btn btn-default" id="buscar" type="button">Buscar</button> 
-                        </form>
-                    </div>
-               <%}else{
-                   request.getSession().setAttribute("menuBuscar",null);
-               }%>
-           </div>
+               
        </div>
    </div>
 

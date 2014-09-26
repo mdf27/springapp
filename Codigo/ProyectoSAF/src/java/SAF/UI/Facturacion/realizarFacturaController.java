@@ -2,12 +2,12 @@ package SAF.UI.Facturacion;
 
 import SAF.Facade.Facturacion.FacadeFacturacion;
 import SAF.VO.Facturacion.FacturaVO;
-import javax.servlet.http.HttpServletRequest;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -23,11 +23,20 @@ public class realizarFacturaController { //implements Controller{
         return (mv);
     }
 
+    /**
+     *
+     * @param json
+     * @param factura
+     * @return 
+     */
     @RequestMapping(value = "ingresarFactura.htm", method = RequestMethod.POST)
-    public void ingresarFactura(@RequestParam(value = "buscar") String texto_buscar, @RequestParam(value = "filtro") String filtro,HttpServletRequest request) {
+    public ModelAndView ingresarFactura(String json) throws IOException {
 
-        FacturaVO factura = new FacturaVO();
+        FacturaVO factura = new ObjectMapper().readValue(json, FacturaVO.class);
         facadeFacturacion.registrarFactura(factura);
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("index");
+        return (mv); 
     }
     
 }

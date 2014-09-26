@@ -5,6 +5,7 @@
  */
 package SAF.VO.Facturacion;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import java.math.BigInteger;
 
 /**
@@ -54,6 +55,8 @@ public class RenglonFacturaVO {
         this.conReceta = conReceta;
     }
 
+    
+    @JsonCreator
     public RenglonFacturaVO() {
     }
 

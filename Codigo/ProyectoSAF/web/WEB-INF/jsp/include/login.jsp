@@ -23,10 +23,12 @@
                     }
                     else{   
                         if (resLogin.equals("Exito")){
+                            out.print("<form action=\"inicio.html\" method=\"POST\">");
                             out.print("<fieldset>");
                             out.print("<p id=\"exitoLogin\">Se a logeado de forma correcta.</p>");
+                            out.print("<p><input type=\"submit\" value=\"Continuar\" id=\"botonLogin\"></p>");
                             out.print("</fieldset>");
-                            response.sendRedirect("inicio.html"); 
+                            out.print("</form>");
                         }
                         else{
                             

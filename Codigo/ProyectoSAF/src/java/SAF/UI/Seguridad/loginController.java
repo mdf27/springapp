@@ -31,16 +31,18 @@ public class loginController {
     
 
     @RequestMapping(value = "controlLogin", method = RequestMethod.POST)
-    public ModelAndView validarUsuario(@RequestParam(value = "usuario") int codigoU){       
+    public ModelAndView validarUsuario(@RequestParam(value = "usuario") int codigoU,HttpSession session){       
         ModelAndView mv = new ModelAndView();
-        
-        boolean loginCorrecto = facadeSeguridad.login(codigoU);        
-        if (facadeSeguridad.login(codigoU))         
-             mv.setViewName("inicio");
-        else
-             mv.setViewName("index");
-        mv.addObject("resultadoLogin", loginCorrecto);                
+            boolean loginCorrecto = facadeSeguridad.login(codigoU);        
+            if (facadeSeguridad.login(codigoU)){        
+                 mv.setViewName("inicio");
+                 session.setAttribute("codigoUsuario", codigoU);
+            }
+            else
+                 mv.setViewName("index");
+            mv.addObject("resultadoLogin", loginCorrecto);                
         return (mv);
+        
     }
         
 }

@@ -21,7 +21,7 @@
                         out.print("</fieldset>");
                         out.print("</form>");
                     }
-                    else{   
+                    else { 
                         if (resLogin.equals("Exito")){
                             out.print("<form action=\"inicio.html\" method=\"POST\">");
                             out.print("<fieldset>");

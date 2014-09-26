@@ -9,10 +9,11 @@ package SAF.Logica.Facturacion;
 import SAF.Datos.Facturacion.FacturaDAO;
 import SAF.Datos.Facturacion.RenglonFacturaDAO;
 import SAF.Datos.Facturacion.TipoFacturaDAO;
+import SAF.Datos.Facturacion.TipoFormaPagoDAO;
 import SAF.Logica.Abstract.AbstractManejador;
 import SAF.VO.Facturacion.FacturaVO;
 import SAF.VO.Facturacion.RenglonFacturaVO;
-import java.util.ArrayList;
+import SAF.VO.Facturacion.TipoFormaPagoVO;import java.util.List;import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,13 +29,15 @@ public class FacturacionManager extends AbstractManejador{
     private FacturaDAO facturaDAO;
     private RenglonFacturaDAO renglonFacturaDAO;
     private TipoFacturaDAO tipoFacturaDAO;
+    private TipoFormaPagoDAO tipoFormaPago;
     
     @Transactional(rollbackFor = Exception.class)
     public int ingresarFactura(FacturaVO factura){
         
         int idFactura = facturaDAO.insertarFactura(factura);
         
-        ArrayList<RenglonFacturaVO> renglones = factura.getRenglones();
+
+        List<RenglonFacturaVO> renglones = factura.getRenglones();
         
         for(RenglonFacturaVO renglon : renglones){
             
@@ -44,5 +47,11 @@ public class FacturacionManager extends AbstractManejador{
  
         return idFactura;
     
+    };
+    
+    public Map<Short,TipoFormaPagoVO> consultarFormasDePago(){
+    
+        return tipoFormaPago.obtenerTiposFormaPago();
+        
     }
 }

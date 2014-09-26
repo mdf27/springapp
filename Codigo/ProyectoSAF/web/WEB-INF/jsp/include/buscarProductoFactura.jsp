@@ -44,7 +44,7 @@
                                 <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: habilitado"></p></td>
                                 <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: cantidad"></p></td>
                                 <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: precioLista"></p></td>
-                                <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: descuento + '%'"></p></td>
+                                <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: farmaDescuento"></p></td>
                                 <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: precioVenta"></p></td>
 
                             </tr>

@@ -10,11 +10,11 @@
     <body>
         
         <!-- /menu -->
-        <jsp:include page="include/menu.jsp"/>  
+        <jsp:directive.include file ="include/menu.jsp"/>  
         
         <div id="contenedor">
             
-            <div id = "leftColuma"> <jsp:include page="include/menuPrincipal.jsp"/>  </div>
+            <div id = "leftColuma"> <jsp:directive.include file="include/menuPrincipal.jsp"/>  </div>
 
             <!-- /container -->
             <div id ="contenedorPrincipal" align="center">

@@ -293,7 +293,9 @@ public class LuceneDAO extends AbstractDAO{
                 double descuentoReceta = 0;
                 double descuentoProducto = 0;
                 double precioVenta = Double.valueOf(d.get("precioVenta"));
+                precioVenta=Math.round(precioVenta*100.0)/100.0;
                 double precioLista = precioVenta;   
+                precioLista = Math.round(precioLista*100.0)/100.0;
                 double farmaDescuento =0;
                 
                 String descripcionesDescuentos = d.get("descipcionesDescuento");
@@ -310,19 +312,22 @@ public class LuceneDAO extends AbstractDAO{
                 DecimalFormat df = new DecimalFormat("#.##");  
                 Number numero;
                 for (int j=0;j<size;j++){
-                    numero = df.parse(listaDescuentos[i]);
+                    numero = df.parse(listaDescuentos[j]);
                     descuentoReceta=numero.doubleValue();
                     switch (listaDescripcionDescuentos[j]) {
                         case "Producto":
-                            precioVenta -= Double.valueOf(df.format(precioVenta*(descuentoProducto/100)));
+                            precioVenta -= precioVenta*(descuentoProducto/100);
+                            precioVenta= Math.round(precioVenta*100.0)/100.0;
                             break;
                         case "Receta":
-                            farmaDescuento = Double.valueOf(df.format(precioLista-(precioLista*(descuentoReceta/100))));
+                            farmaDescuento = precioLista-(precioLista*(descuentoReceta/100));
+                            farmaDescuento= Math.round(farmaDescuento*100.0)/100.0;
                             break;
                     }
                 }
                              
                 double precioCompra = Double.valueOf(d.get("precioCompra"));
+                precioCompra= Math.round(precioCompra*100.0)/100.0;
                 productoMedicamento.setFarmaDescuento(farmaDescuento);
                 productoMedicamento.setDescuentoProducto(descuentoProducto);                
                 productoMedicamento.setDescuentoReceta(descuentoReceta);          

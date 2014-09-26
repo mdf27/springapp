@@ -1,4 +1,3 @@
-<%@ page language="java" contentType="application/json; charset=iso-8859-1" pageEncoding="UTF-8"%>
 <div> 
     <table width="796" border="0">
         <tr>

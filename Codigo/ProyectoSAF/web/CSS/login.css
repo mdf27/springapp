@@ -97,6 +97,15 @@ input {
 	background-color: #6489C4;
 }
 
+#errorLogin{
+    color: #be4b49 !important; 
+}
+
+#exitoLogin{
+    color: #468847 !important;
+
+}
+
 
 .errores{
     -webkit-boxshadow: 0 0 10px rgba(0, 0, 0, 0.3);

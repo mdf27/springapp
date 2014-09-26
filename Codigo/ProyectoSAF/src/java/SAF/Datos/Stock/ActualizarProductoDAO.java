@@ -49,6 +49,7 @@ public class ActualizarProductoDAO extends AbstractDAO {
             precioVentaNuevo = prodDUSA.getPrecioPublico();
             habilitadoNuevo = (prodDUSA.getHabilitado() == 1);  
             tipoIva = prodDUSA.getTipoIVA();
+            // busco si existe el producto y obtengo el idTipoIVA
             sql = "SELECT p.precioVenta, p.habilitado, p.idTipoIva FROM Producto p, tipoiva ti  "
                     + "WHERE p.idProducto = ? AND ti.descripcion = ? AND p.idTipoIva = ti.idTipoIva";
             params = new Object[] {idProd, tipoIva};

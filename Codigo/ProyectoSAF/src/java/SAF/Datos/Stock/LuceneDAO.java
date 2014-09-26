@@ -30,7 +30,6 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 /**
  *
@@ -116,7 +115,7 @@ public class LuceneDAO extends AbstractDAO{
     
     private String devolverPresentacionesMedicamento(DatosCompletosMedicamentoVO m){
         String resultado="";
-        List<String> presentaciones = m.getNombreDroga();
+        List<String> presentaciones = m.getPresentacion();
         ListIterator it = presentaciones.listIterator();
         int size= presentaciones.size();
         while (it.hasNext()){
@@ -162,7 +161,7 @@ public class LuceneDAO extends AbstractDAO{
         return resultado;
     }    
     
-    private void crearIndiceProductosLuecene (Map <Integer,DatosCompletosProductoVO> productos,Map <Integer,DatosCompletosMedicamentoVO> medicamentos ) throws ClassNotFoundException, SQLException, IOException, ParseException{       
+    public void crearIndiceProductosLuecene (Map <Integer,DatosCompletosProductoVO> productos,Map <Integer,DatosCompletosMedicamentoVO> medicamentos ) throws ClassNotFoundException, SQLException, IOException, ParseException{       
         //Lucene
         StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_40);            
         IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_40, analyzer);            
@@ -217,6 +216,10 @@ public class LuceneDAO extends AbstractDAO{
     
     public boolean indiceCargado(){
         return (indiceProductosLucene!=null);
+    }
+
+    public void setIndiceProductosLucene(Directory indiceProductosLucene) {
+        this.indiceProductosLucene = indiceProductosLucene;
     }
     
     public void cargarProductos(Map <Integer,DatosCompletosProductoVO> productos,Map <Integer,DatosCompletosMedicamentoVO> medicamentos)

@@ -29,7 +29,8 @@ public class BuscarProductoDAO extends AbstractDAO{
                  "where (exists (select * from medicamento m, producto p where m.idProducto=p.idProducto))\n" +
                  " and (m.idProducto = p.idProducto and m.idLaboratorio = l.idLaboratorio)\n" +
                  " and (exists (select * from drogamedicamento dm where dm.idProducto=m.idProducto and dm.idDroga=d.idDroga))\n" +
-                 " and (exists (select * from accionterapeuticamedicamento atm where m.idProducto=atm.idProducto and atm.idAccionTerapeutica=act.idAccionTerapeutica))";
+                 " and (exists (select * from accionterapeuticamedicamento atm where m.idProducto=atm.idProducto and atm.idAccionTerapeutica=act.idAccionTerapeutica))\n"+
+                 "and (pr.idPresentacion=m.idPresentacion)";
 
         Map <Integer, DatosCompletosMedicamentoVO> medicamentos = new HashMap<Integer,DatosCompletosMedicamentoVO>();
                 

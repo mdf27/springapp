@@ -42,8 +42,8 @@
                        </li> 
                        <li><a href="buscarVerProducto.htm" id="facturacion" style="color:#FFF">Buscar Producto</a></li>
                    </ul>
-
-               
+               </div>
+           </div>
        </div>
    </div>
 

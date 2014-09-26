@@ -27,7 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author majo
  */
 @Controller
-public class buscarProductoController {
+public class BuscarProductoController {
     @RequestMapping(value = "buscarVerProducto")
     public ModelAndView redireccion(){
         ModelAndView mv = new ModelAndView();

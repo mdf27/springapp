@@ -41,6 +41,7 @@ public class DatosCompletosMedProdVO {
         drogas = new LinkedList<>();
         accion = new LinkedList<>();
         presentacion = new LinkedList<>();
+        descDescuento= new LinkedList<>();
     }
 
     public int getIdProducto() {

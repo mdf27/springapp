@@ -16,11 +16,7 @@ ko.bindingHandlers.executeOnEnter = {
 function ViewModel() {
     var self = this;
     self.lista = ko.observableArray();
-    var scriptPram = document.getElementById('buscarScript');
-    var lala = scriptPram.getAttribute('data-buscar');
     self.filtro = ko.observable();
-    if (lala != null)
-        self.filtro(lala);
 
     //paginado
     self.pageNumber = ko.observable(1);
@@ -199,10 +195,6 @@ function ViewModel() {
         self.mostrarVer(false);
         self.mostrarBuscar(true);
     };
-    if (lala != null) {
-        self.buscar();
-        lala = null;
-    }
 
     //teclado
     self.selectPrevious = function () {

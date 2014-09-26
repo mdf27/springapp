@@ -293,7 +293,9 @@ public class LuceneDAO extends AbstractDAO{
                 double descuentoReceta = 0;
                 double descuentoProducto = 0;
                 double precioVenta = Double.valueOf(d.get("precioVenta"));
+                precioVenta=Math.round(precioVenta*100.0)/100.0;
                 double precioLista = precioVenta;   
+                precioLista = Math.round(precioLista*100.0)/100.0;
                 double farmaDescuento =0;
                 
                 String descripcionesDescuentos = d.get("descipcionesDescuento");
@@ -315,14 +317,17 @@ public class LuceneDAO extends AbstractDAO{
                     switch (listaDescripcionDescuentos[j]) {
                         case "Producto":
                             precioVenta -= precioVenta*(descuentoProducto/100);
+                            precioVenta= Math.round(precioVenta*100.0)/100.0;
                             break;
                         case "Receta":
                             farmaDescuento = precioLista-(precioLista*(descuentoReceta/100));
+                            farmaDescuento= Math.round(farmaDescuento*100.0)/100.0;
                             break;
                     }
                 }
                              
                 double precioCompra = Double.valueOf(d.get("precioCompra"));
+                precioCompra= Math.round(precioCompra*100.0)/100.0;
                 productoMedicamento.setFarmaDescuento(farmaDescuento);
                 productoMedicamento.setDescuentoProducto(descuentoProducto);                
                 productoMedicamento.setDescuentoReceta(descuentoReceta);          

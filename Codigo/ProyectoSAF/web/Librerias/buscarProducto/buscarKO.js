@@ -308,8 +308,10 @@ function ViewModel() {
                     (renglon.descuento() === self.descuento()) &&
                     (renglon.receta() === self.conReceta())) {
                 // Parsear a entero porque javascript toma el + como concatenacion.
-                var cant = parseInt(renglon.cantidad());
-                self.renglonesFactura()[i].cantidad(cant + parseInt(self.cantProd()));
+                var cantAnterior = parseInt(renglon.cantidad());
+                var subtotalAnterior = parseFloat(renglon.subtotal());
+                self.renglonesFactura()[i].cantidad(cantAnterior + parseInt(self.cantProd()));
+                self.renglonesFactura()[i].subtotal(subtotalAnterior + (parseFloat(renglon.precioVenta()))*parseInt(self.cantProd()));
                 esta = true;
 
             }

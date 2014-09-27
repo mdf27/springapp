@@ -52,7 +52,7 @@ public class LuceneDAOTest {
         context = new FileSystemXmlApplicationContext("file:web/WEB-INF/dispatcher-servlet.xml");
         luceneDao = (LuceneDAO)context.getBean(LuceneDAO.class);
        
-        Map<Integer, DatosCompletosProductoVO> produtos = new HashMap<Integer,DatosCompletosProductoVO>();
+        Map<Integer, DatosCompletosProductoVO> productos = new HashMap<Integer,DatosCompletosProductoVO>();
         DatosCompletosProductoVO p = new DatosCompletosProductoVO();
         p.setIdProducto(2);
         p.setDescripcion("VOLTAREN  75  5 AMP");
@@ -68,7 +68,7 @@ public class LuceneDAOTest {
         p.setDescuentos(15.0);
         p.setDescripcionDescuento("Receta");
         p.setDescripcionDescuento("Producto");
-        produtos.put(2, p);
+        productos.put(2, p);
         DatosCompletosProductoVO p1 = new DatosCompletosProductoVO();
         p1.setIdProducto(3);
         p1.setDescripcion("VOLTAREN RETARD 100 MG");
@@ -86,7 +86,7 @@ public class LuceneDAOTest {
         p1.setDescuentos(15.0);
         p1.setDescripcionDescuento("Receta");
         p1.setDescripcionDescuento("Descuento");
-        produtos.put(3, p1);
+        productos.put(3, p1);
         
         Map <Integer, DatosCompletosMedicamentoVO> medicamentos = new HashMap<Integer,DatosCompletosMedicamentoVO>(); 
         DatosCompletosMedicamentoVO m = new DatosCompletosMedicamentoVO();
@@ -106,7 +106,7 @@ public class LuceneDAOTest {
         m1.setPresentacion("drogaVoltaren");
         medicamentos.put(3, m1);  
         
-        luceneDao.cargarProductos(produtos, medicamentos);
+        luceneDao.cargarProductos(productos, medicamentos);
 
     }
     
@@ -135,9 +135,8 @@ public class LuceneDAOTest {
         System.out.println("getInstance");
         LuceneDAO expResult = null;
         LuceneDAO result = LuceneDAO.getInstance();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);        
+        assertEquals(result, LuceneDAO.getInstance());
     }
 
     /**
@@ -165,12 +164,71 @@ public class LuceneDAOTest {
     @Test
     public void testCargarProductos() throws Exception {
         System.out.println("cargarProductos");
-        Map<Integer, DatosCompletosProductoVO> productos = null;
-        Map<Integer, DatosCompletosMedicamentoVO> medicamentos = null;
+       
+        Map<Integer, DatosCompletosProductoVO> productos = new HashMap<Integer,DatosCompletosProductoVO>();
+        DatosCompletosProductoVO p = new DatosCompletosProductoVO();
+        p.setIdProducto(2);
+        p.setDescripcion("VOLTAREN  75  5 AMP");
+        p.setPrecioCompra(240.0);
+        p.setPrecioVenta(220.8);
+        p.setHabilitado(true);
+        p.setCantidadStock(5);        
+        p.setVencimientoStock(new Date("30/08/2015"));
+        p.setCodigoBarras("1568");
+        p.setTipoIVA("basico");
+        p.setProveedor("Daniela Fagúndez");
+        p.setDescuentos(40.0);
+        p.setDescuentos(15.0);
+        p.setDescripcionDescuento("Receta");
+        p.setDescripcionDescuento("Producto");
+        productos.put(2, p);
+        DatosCompletosProductoVO p1 = new DatosCompletosProductoVO();
+        p1.setIdProducto(3);
+        p1.setDescripcion("VOLTAREN RETARD 100 MG");
+        p1.setPrecioCompra(207.0);
+        p1.setPrecioVenta(190.44);
+        p1.setHabilitado(true);
+        p1.setCantidadStock(15);        
+        p1.setVencimientoStock(new Date("11/01/2020"));
+        p1.setVencimientoStock(new Date("05/10/2023"));
+        p1.setVencimientoStock(new Date("15/09/2016"));
+        p1.setCodigoBarras("1570");
+        p1.setTipoIVA("basico");
+        p1.setProveedor("Ma José Rabaza");
+        p1.setDescuentos(40.0);
+        p1.setDescuentos(15.0);
+        p1.setDescripcionDescuento("Receta");
+        p1.setDescripcionDescuento("Descuento");
+        productos.put(3, p1);
+        
+        Map <Integer, DatosCompletosMedicamentoVO> medicamentos = new HashMap<Integer,DatosCompletosMedicamentoVO>(); 
+        DatosCompletosMedicamentoVO m = new DatosCompletosMedicamentoVO();
+        m.setIdProducto(2);
+        m.setRequiereReceta(true);
+        m.setNombreLaboratorio("GRA");
+        m.setNombreDroga("drogaVoltaren");
+        m.setAccionTerapeutica("atVoltaren");
+        m.setPresentacion("drogaVoltaren");
+        medicamentos.put(2, m);
+        DatosCompletosMedicamentoVO m1 = new DatosCompletosMedicamentoVO();
+        m1.setIdProducto(3);
+        m1.setRequiereReceta(true);
+        m1.setNombreLaboratorio("GRA");
+        m1.setNombreDroga("drogaVoltaren");
+        m1.setAccionTerapeutica("atVoltaren");
+        m1.setPresentacion("drogaVoltaren");
+        medicamentos.put(3, m1);  
+        
         LuceneDAO instance = new LuceneDAO();
         instance.cargarProductos(productos, medicamentos);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        LuceneDAO instance1 = LuceneDAO.getInstance();
+        instance1.setIndiceProductosLucene(new RAMDirectory());
+        instance1.crearIndiceProductosLuecene(productos, medicamentos);
+        int expResult = instance1.getIndiceProductosLucene().listAll().length;
+        int result = instance.getIndiceProductosLucene().listAll().length;
+        assertEquals(expResult, result);
+        
     }
 
     /**
@@ -179,12 +237,70 @@ public class LuceneDAOTest {
     @Test
     public void testActualizarIndiceProductosLucene() throws Exception {
         System.out.println("actualizarIndiceProductosLucene");
-        Map<Integer, DatosCompletosProductoVO> productos = null;
-        Map<Integer, DatosCompletosMedicamentoVO> medicamentos = null;
+        Map<Integer, DatosCompletosProductoVO> productos = new HashMap<Integer,DatosCompletosProductoVO>();
+        DatosCompletosProductoVO p = new DatosCompletosProductoVO();
+        p.setIdProducto(2);
+        p.setDescripcion("VOLTAREN  75  5 AMP");
+        p.setPrecioCompra(240.0);
+        p.setPrecioVenta(220.8);
+        p.setHabilitado(true);
+        p.setCantidadStock(5);        
+        p.setVencimientoStock(new Date("30/08/2015"));
+        p.setCodigoBarras("1568");
+        p.setTipoIVA("basico");
+        p.setProveedor("Daniela Fagúndez");
+        p.setDescuentos(40.0);
+        p.setDescuentos(15.0);
+        p.setDescripcionDescuento("Receta");
+        p.setDescripcionDescuento("Producto");
+        productos.put(2, p);
+        DatosCompletosProductoVO p1 = new DatosCompletosProductoVO();
+        p1.setIdProducto(3);
+        p1.setDescripcion("VOLTAREN RETARD 100 MG");
+        p1.setPrecioCompra(207.0);
+        p1.setPrecioVenta(190.44);
+        p1.setHabilitado(true);
+        p1.setCantidadStock(15);        
+        p1.setVencimientoStock(new Date("11/01/2020"));
+        p1.setVencimientoStock(new Date("05/10/2023"));
+        p1.setVencimientoStock(new Date("15/09/2016"));
+        p1.setCodigoBarras("1570");
+        p1.setTipoIVA("basico");
+        p1.setProveedor("Ma José Rabaza");
+        p1.setDescuentos(40.0);
+        p1.setDescuentos(15.0);
+        p1.setDescripcionDescuento("Receta");
+        p1.setDescripcionDescuento("Descuento");
+        productos.put(3, p1);
+        
+        Map <Integer, DatosCompletosMedicamentoVO> medicamentos = new HashMap<Integer,DatosCompletosMedicamentoVO>(); 
+        DatosCompletosMedicamentoVO m = new DatosCompletosMedicamentoVO();
+        m.setIdProducto(2);
+        m.setRequiereReceta(true);
+        m.setNombreLaboratorio("GRA");
+        m.setNombreDroga("drogaVoltaren");
+        m.setAccionTerapeutica("atVoltaren");
+        m.setPresentacion("drogaVoltaren");
+        medicamentos.put(2, m);
+        DatosCompletosMedicamentoVO m1 = new DatosCompletosMedicamentoVO();
+        m1.setIdProducto(3);
+        m1.setRequiereReceta(true);
+        m1.setNombreLaboratorio("GRA");
+        m1.setNombreDroga("drogaVoltaren");
+        m1.setAccionTerapeutica("atVoltaren");
+        m1.setPresentacion("drogaVoltaren");
+        medicamentos.put(3, m1);  
+        
         LuceneDAO instance = new LuceneDAO();
+        instance.setIndiceProductosLucene(new RAMDirectory());
         instance.actualizarIndiceProductosLucene(productos, medicamentos);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        LuceneDAO instance1 = LuceneDAO.getInstance();
+        instance1.setIndiceProductosLucene(new RAMDirectory());
+        instance1.crearIndiceProductosLuecene(productos, medicamentos);
+        int expResult = instance1.getIndiceProductosLucene().listAll().length;
+        int result = instance.getIndiceProductosLucene().listAll().length;
+        assertEquals(expResult, result);
     }
 
     /**

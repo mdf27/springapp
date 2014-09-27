@@ -16,24 +16,17 @@ public class LoginController {
     
     @Autowired
     FacadeSeguridad facadeSeguridad;
+    ControlDeAcceso cAcceso = ControlDeAcceso.getInstancia();
     
     
-    public static boolean controlDeSeguridad(HttpSession session,int codigo){
-        int codigoUsuario;
-        Object cUsuario =  session.getAttribute("codigoUsuario");
-        if (cUsuario != null){
-            codigoUsuario = (int) cUsuario;
-            return true;
-        }
-        else
-            return false;  
-    }
-    
-    
+    //Principal
     @RequestMapping(value = "inicio")
-    public ModelAndView redireccion(){
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("inicio");
+    public ModelAndView redireccion(HttpSession session){
+        ModelAndView mv = new ModelAndView(); 
+        if (cAcceso.controlDeLogin(session))
+            mv.setViewName("inicio");
+        else
+             mv.setViewName("index");
         return (mv);
     }
     

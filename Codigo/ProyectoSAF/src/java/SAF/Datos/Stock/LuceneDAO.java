@@ -176,6 +176,7 @@ public class LuceneDAO extends AbstractDAO{
    
             d.add(new org.apache.lucene.document.TextField ("precioVenta", ""+rt.getPrecioVenta(), Field.Store.YES));
             d.add(new org.apache.lucene.document.TextField ("precioCompra", ""+rt.getPrecioCompra(), Field.Store.YES));
+            d.add(new org.apache.lucene.document.TextField ("porcentajeIva", ""+rt.getPorcentajeIva(), Field.Store.YES));
             if(rt.isHabilitado())
                 d.add(new org.apache.lucene.document.TextField ("habilitado", "true", Field.Store.YES));
             else
@@ -299,6 +300,8 @@ public class LuceneDAO extends AbstractDAO{
                 precioVenta=Math.round(precioVenta*100.0)/100.0;
                 double precioLista = precioVenta;   
                 precioLista = Math.round(precioLista*100.0)/100.0;
+                double porcentajeIva = Double.valueOf(d.get("porcentajeIva"));
+                porcentajeIva = Math.round(porcentajeIva*100.0)/100.0;
                 double farmaDescuento =0;
                 
                 String descripcionesDescuentos = d.get("descipcionesDescuento");
@@ -332,6 +335,7 @@ public class LuceneDAO extends AbstractDAO{
                 double precioCompra = Double.valueOf(d.get("precioCompra"));
                 precioCompra= Math.round(precioCompra*100.0)/100.0;
                 productoMedicamento.setFarmaDescuento(farmaDescuento);
+                productoMedicamento.setPorcentajeIva(porcentajeIva);
                 productoMedicamento.setDescuentoProducto(descuentoProducto);                
                 productoMedicamento.setDescuentoReceta(descuentoReceta);          
                 productoMedicamento.setDescripcion(desc);

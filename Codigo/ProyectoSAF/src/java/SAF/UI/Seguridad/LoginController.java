@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
-public class loginController {
+public class LoginController {
     
     @Autowired
     FacadeSeguridad facadeSeguridad;

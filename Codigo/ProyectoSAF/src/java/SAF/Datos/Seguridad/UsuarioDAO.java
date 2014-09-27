@@ -25,7 +25,7 @@ public class UsuarioDAO extends AbstractDAO{
     
     public UsuarioVO devolverUsuario(int codigo){
         
-        String sql = "select * from Usuario where codigo=?"; 
+        String sql = "SELECT * FROM Usuario WHERE codigo=?"; 
         try{
                 UsuarioVO usuario = (UsuarioVO)getJdbcTemplate().queryForObject(
                 sql, new Object[] { codigo }, new BeanPropertyRowMapper(UsuarioVO.class));  
@@ -38,10 +38,10 @@ public class UsuarioDAO extends AbstractDAO{
 	}   
     }
     public PerfilVO devolverRol(int codigo){
-        String sql = "select p.idPerfil,p.descripcion from\n"+
-                "PerfilUsuario pu , Perfil p where\n" +
+        String sql = "SELECT p.idPerfil,p.descripcion FROM\n"+
+                "PerfilUsuario pu , Perfil p WHERE\n" +
                 "pu.idPerfil = p.idperfil and idUsuario in\n" +
-                "(select idUsuario from Usuario where codigo = ?)";
+                "(SELECT idUsuario FROM Usuario WHERE codigo = ?)";
 
         try{
                 PerfilVO perfil = (PerfilVO)getJdbcTemplate().queryForObject(

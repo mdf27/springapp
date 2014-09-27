@@ -43,6 +43,11 @@ public class BuscarProductoController {
         return bpm.buscarProducto(texto_buscar, filtro);
     }
     
+    @RequestMapping(value = "ajustarStock.json",method = RequestMethod.GET)      
+    public @ResponseBody List<DatosCompletosMedProdVO> ajustarStock () throws ClassNotFoundException, SQLException, IOException, ParseException, java.text.ParseException{
+        return bpm.ajustarStock();
+    }
+    
     @RequestMapping(value ="search.htm",method = RequestMethod.POST)      
     public @ResponseBody void setProductoBuscar (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String buscar= (String) request.getParameter("search");

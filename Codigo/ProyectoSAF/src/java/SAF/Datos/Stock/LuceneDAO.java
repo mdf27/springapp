@@ -234,6 +234,93 @@ public class LuceneDAO extends AbstractDAO{
         crearIndiceProductosLuecene(productos,medicamentos);
     }    
     
+    
+    private void cargarListaProductos(Document d, List<DatosCompletosMedProdVO> productos) throws java.text.ParseException{
+            DatosCompletosMedProdVO productoMedicamento=new DatosCompletosMedProdVO();
+            int idProducto = Integer.valueOf(d.get("idProducto"));
+            String desc = d.get("descripcion");
+            String habilitado;
+            if (d.get("habilitado").equals("true"))
+                habilitado ="Disponible";
+            else
+                habilitado ="No Disponible";
+            int cantidad =Integer.valueOf(d.get("cantidad"));
+            String vencimientos = d.get("vencimientos");
+            String codigos = d.get("codigos");
+            String proveedor =d.get("proveedor");
+            String tipoIva = d.get("tipoIva");
+            String receta="";
+            if (d.get("requiereReceta").equals("Si"))
+                receta+="Si";
+            else
+                receta+="No";
+            String drogas =  d.get("drogas");
+            String laboratorio =  d.get("laboratorio");
+            String accion = d.get("accion");
+            String presentacion=  d.get("presentacion");
+            double descuentoReceta = 0;
+            double descuentoProducto = 0;
+            double precioVenta = Double.valueOf(d.get("precioVenta"));
+            precioVenta=Math.round(precioVenta*100.0)/100.0;
+            double precioLista = precioVenta;   
+            precioLista = Math.round(precioLista*100.0)/100.0;
+            double porcentajeIva = Double.valueOf(d.get("porcentajeIva"));
+            porcentajeIva = Math.round(porcentajeIva*100.0)/100.0;
+            double farmaDescuento =0;
+
+            String descripcionesDescuentos = d.get("descipcionesDescuento");
+            descripcionesDescuentos=descripcionesDescuentos.replace(",", " ");
+            descripcionesDescuentos=descripcionesDescuentos.replace("\n","");
+            String [] listaDescripcionDescuentos = descripcionesDescuentos.split(" ");
+
+            String descuentos = d.get("descuentos");
+            descuentos=descuentos.replace(",", " ");
+            descuentos=descuentos.replace("\n","");
+            String [] listaDescuentos = descuentos.split(" ");
+
+            int size= listaDescripcionDescuentos.length;                
+            DecimalFormat df = new DecimalFormat("#.##");  
+            Number numero;
+            for (int j=0;j<size;j++){
+                numero = df.parse(listaDescuentos[j]);
+                descuentoReceta=numero.doubleValue();
+                switch (listaDescripcionDescuentos[j]) {
+                    case "Producto":
+                        precioVenta -= precioVenta*(descuentoProducto/100);
+                        precioVenta= Math.round(precioVenta*100.0)/100.0;
+                        break;
+                    case "Receta":
+                        farmaDescuento = precioLista-(precioLista*(descuentoReceta/100));
+                        farmaDescuento= Math.round(farmaDescuento*100.0)/100.0;
+                        break;
+                }
+            }
+
+            double precioCompra = Double.valueOf(d.get("precioCompra"));
+            precioCompra= Math.round(precioCompra*100.0)/100.0;
+            productoMedicamento.setFarmaDescuento(farmaDescuento);
+            productoMedicamento.setPorcentajeIva(porcentajeIva);
+            productoMedicamento.setDescuentoProducto(descuentoProducto);                
+            productoMedicamento.setDescuentoReceta(descuentoReceta);          
+            productoMedicamento.setDescripcion(desc);
+            productoMedicamento.setAccion(accion);
+            productoMedicamento.setCantidad(cantidad);
+            productoMedicamento.setCodigos(codigos);
+            productoMedicamento.setHabilitado(habilitado);
+            productoMedicamento.setIdProducto(idProducto);
+            productoMedicamento.setDrogas(drogas);
+            productoMedicamento.setLaboratorio(laboratorio);
+            productoMedicamento.setPrecioCompra(precioCompra);
+            productoMedicamento.setPrecioVenta(precioVenta);
+            productoMedicamento.setPrecioLista(precioLista);
+            productoMedicamento.setPresentacion(presentacion);
+            productoMedicamento.setProveedor(proveedor);
+            productoMedicamento.setReceta(receta);
+            productoMedicamento.setTipoIVA(tipoIva);
+            productoMedicamento.setVencimientos(vencimientos);
+
+            productos.add(productoMedicamento);
+    }
     public List<DatosCompletosMedProdVO> buscarProducto(String texto_buscar, String filtro) throws IOException, ParseException, java.text.ParseException{
         StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_40); 
         
@@ -250,8 +337,8 @@ public class LuceneDAO extends AbstractDAO{
             if (espacios)
                 querystr = querystr = "numero: "+ texto_buscar + " OR laboratorio: "+ texto_buscar + " OR descripcion: " + texto_buscar;
             else
-                //querystr = "numero: "+ texto_buscar + "* OR laboratorio: "+ texto_buscar + "* OR descripcion: " + texto_buscar +"*";
-                querystr = "descripcion:*";
+                querystr = "numero: "+ texto_buscar + "* OR laboratorio: "+ texto_buscar + "* OR descripcion: " + texto_buscar +"*";
+                
         }else{
             if (espacios)
                 querystr = filtro+ ": " + texto_buscar;//+ " *";
@@ -265,7 +352,7 @@ public class LuceneDAO extends AbstractDAO{
         TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, true);
         searcher.search(q, collector);
         ScoreDoc[] hits = collector.topDocs().scoreDocs;
-        DatosCompletosMedProdVO productoMedicamento=null;
+        
         List<DatosCompletosMedProdVO> productos=null;
         //mostrar resultados
         if (hits.length>0){                
@@ -273,95 +360,26 @@ public class LuceneDAO extends AbstractDAO{
             for(int i=0;i<hits.length;i++) {
                 int docId = hits[i].doc;
                 Document d = searcher.doc(docId);
-                productoMedicamento = new DatosCompletosMedProdVO();
-                int idProducto = Integer.valueOf(d.get("idProducto"));
-                String desc = d.get("descripcion");
-                String habilitado;
-                if (d.get("habilitado").equals("true"))
-                    habilitado ="Disponible";
-                else
-                    habilitado ="No Disponible";
-                int cantidad =Integer.valueOf(d.get("cantidad"));
-                String vencimientos = d.get("vencimientos");
-                String codigos = d.get("codigos");
-                String proveedor =d.get("proveedor");
-                String tipoIva = d.get("tipoIva");
-                String receta="";
-                if (d.get("requiereReceta").equals("Si"))
-                    receta+="Si";
-                else
-                    receta+="No";
-                String drogas =  d.get("drogas");
-                String laboratorio =  d.get("laboratorio");
-                String accion = d.get("accion");
-                String presentacion=  d.get("presentacion");
-                double descuentoReceta = 0;
-                double descuentoProducto = 0;
-                double precioVenta = Double.valueOf(d.get("precioVenta"));
-                precioVenta=Math.round(precioVenta*100.0)/100.0;
-                double precioLista = precioVenta;   
-                precioLista = Math.round(precioLista*100.0)/100.0;
-                double porcentajeIva = Double.valueOf(d.get("porcentajeIva"));
-                porcentajeIva = Math.round(porcentajeIva*100.0)/100.0;
-                double farmaDescuento =0;
-                
-                String descripcionesDescuentos = d.get("descipcionesDescuento");
-                descripcionesDescuentos=descripcionesDescuentos.replace(",", " ");
-                descripcionesDescuentos=descripcionesDescuentos.replace("\n","");
-                String [] listaDescripcionDescuentos = descripcionesDescuentos.split(" ");
-                
-                String descuentos = d.get("descuentos");
-                descuentos=descuentos.replace(",", " ");
-                descuentos=descuentos.replace("\n","");
-                String [] listaDescuentos = descuentos.split(" ");
-                
-                int size= listaDescripcionDescuentos.length;                
-                DecimalFormat df = new DecimalFormat("#.##");  
-                Number numero;
-                for (int j=0;j<size;j++){
-                    numero = df.parse(listaDescuentos[j]);
-                    descuentoReceta=numero.doubleValue();
-                    switch (listaDescripcionDescuentos[j]) {
-                        case "Producto":
-                            precioVenta -= precioVenta*(descuentoProducto/100);
-                            precioVenta= Math.round(precioVenta*100.0)/100.0;
-                            break;
-                        case "Receta":
-                            farmaDescuento = precioLista-(precioLista*(descuentoReceta/100));
-                            farmaDescuento= Math.round(farmaDescuento*100.0)/100.0;
-                            break;
-                    }
-                }
-                             
-                double precioCompra = Double.valueOf(d.get("precioCompra"));
-                precioCompra= Math.round(precioCompra*100.0)/100.0;
-                productoMedicamento.setFarmaDescuento(farmaDescuento);
-                productoMedicamento.setPorcentajeIva(porcentajeIva);
-                productoMedicamento.setDescuentoProducto(descuentoProducto);                
-                productoMedicamento.setDescuentoReceta(descuentoReceta);          
-                productoMedicamento.setDescripcion(desc);
-                productoMedicamento.setAccion(accion);
-                productoMedicamento.setCantidad(cantidad);
-                productoMedicamento.setCodigos(codigos);
-                productoMedicamento.setHabilitado(habilitado);
-                productoMedicamento.setIdProducto(idProducto);
-                productoMedicamento.setDrogas(drogas);
-                productoMedicamento.setLaboratorio(laboratorio);
-                productoMedicamento.setPrecioCompra(precioCompra);
-                productoMedicamento.setPrecioVenta(precioVenta);
-                productoMedicamento.setPrecioLista(precioLista);
-                productoMedicamento.setPresentacion(presentacion);
-                productoMedicamento.setProveedor(proveedor);
-                productoMedicamento.setReceta(receta);
-                productoMedicamento.setTipoIVA(tipoIva);
-                productoMedicamento.setVencimientos(vencimientos);
-
-                productos.add(productoMedicamento);
-            }
-            
+                cargarListaProductos(d, productos);
+            }            
         }
         reader.close();
 
         return productos;
+    }
+    
+    public List<DatosCompletosMedProdVO> obtenerTodosLosProductos() throws IOException, java.text.ParseException{
+        IndexReader reader = DirectoryReader.open(this.getIndiceProductosLucene());
+        IndexSearcher searcher = new IndexSearcher(reader);
+        int cantidadDocumentos = reader.numDocs();
+        
+        List<DatosCompletosMedProdVO> productos = new LinkedList<>();
+                
+        for (int i=0; i<cantidadDocumentos;i++){
+            Document d = searcher.doc(i);
+            cargarListaProductos(d, productos);            
+        }
+            
+     return productos;   
     }
 }

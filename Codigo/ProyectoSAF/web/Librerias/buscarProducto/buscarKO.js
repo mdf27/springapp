@@ -273,10 +273,10 @@ function ViewModel() {
         self.filtro(prod.toString());
     };
 
-    self.montoNetoGravIva = ko.observable();
-    self.montoNetoGravIvaMin = ko.observable();
-    self.montoTotal = ko.observable();
-    self.montoTotalAPagar = ko.observable();
+    self.montoNetoGravIva = ko.observable(0);
+    self.montoNetoGravIvaMin = ko.observable(0);
+    self.montoTotal = ko.observable(0);
+    self.montoTotalAPagar = ko.observable(0);
     self.productoSeleccionado = ko.observable();
     self.conRut = ko.observable();
     self.rSocial = ko.observable();
@@ -363,9 +363,11 @@ function ViewModel() {
                     precioVenta: self.precioVenta(),
                     codigo: item.idProducto, // Nuevo
                     tipoIVA: item.tipoIVA,
-                    porcentajeIVA: item.porcentaje
+                    porcentajeIVA: item.porcentajeIva
+                    
                     
                 })
+                        
                         );
                 self.renglonesFacturaVO.push(new renglonFacturaVO({
                     idTipoFactura: 0, // Falta integrar tipo factura.
@@ -388,23 +390,25 @@ function ViewModel() {
                 var renglon = self.renglonesFactura()[self.renglonesFactura().length - 1];
                 
                 // Actualizo montos.
-                var descIva = (parseFloat(renglon.precioVenta()) * parseFloat(renglon.porcentajeIVA())) / 100;
+                var precioListaSinIva =  (parseFloat(renglon.precio()) * 100) / (parseFloat(100+parseFloat(renglon.porcentajeIVA())));
+                var descIva = parseFloat(renglon.precio()) - precioListaSinIva;
                 // Calculos montoIva
                 if (renglon.tipoIVA() === "basico") {
                     var montoAnterior = parseFloat(self.montoNetoGravIva());
-                    self.montoNetoGravIva(montoAnterior + (descIva*renglon.cantidad()));
+                    alert(descIva);
+                    self.montoNetoGravIva(montoAnterior + (descIva*parseInt(renglon.cantidad())));
 
                 } else if (renglon.tipoIVA() === "minimo") {
                     var montoAnterior = parseFloat(self.montoNetoGravIvaMin());
-                    self.montoNetoGravIvaMin(montoAnterior + descIva*renglon.cantidad());
+                    self.montoNetoGravIvaMin(montoAnterior + descIva*parseInt(renglon.cantidad()));
                 }
                 // Calculo monto total sin iva.
                 var montoTotalAnterior = parseFloat(self.montoTotal());
-                self.montoTotal(montoTotalAnterior + (parseFloat(self.precioVenta()) - descIva)*renglon.cantidad());
+                self.montoTotal(montoTotalAnterior + parseFloat(renglon.precioVenta()-descIva)*parseInt(renglon.cantidad()));
                 // Calculo monto total con iva.
                 var subtotal = parseFloat(renglon.subtotal());
                 var totalAnterior = parseFloat(self.total());
-                self.total(totalAnterior + subtotal);
+                self.total(parseFloat(totalAnterior + subtotal).toFixed(2));
 
             }
             ;
@@ -420,10 +424,13 @@ function ViewModel() {
     self.realizarFactura = function() {
         var date = new Date();
         var timestamp = date.getTime();
+        alert("montoNGI: "+self.montoNetoGravIva()+" montoNGIM: "+self.montoNetoGravIvaMin()+"montoTotal sin iva: "+self.montoTotal());
+        
+               
         //var renglonData = ko.toJSON(self.renglonesFacturaVO()[0]) // Ver que pasa cuando no hay rut y r social, que manda?
         var data = ko.toJSON({idTipoFactura: 101, idFactura: 0, idCliente: 1, rut: self.nroRut(),
-            razonSocial: self.rSocial(), fecha: timestamp, descuento: 0, montoNetoTotal: self.total(), montoNetoGravIva: 100,
-            montoNetoGravIvaMin: 100, montoTotal: 100, montoTotalAPagar: 100, idTransaccion: 100, renglones: self.renglonesFacturaVO});
+            razonSocial: self.rSocial(), fecha: timestamp, descuento: 0, montoNetoGravIva: self.montoNetoGravIva(),
+            montoNetoGravIvaMin: self.montoNetoGravIvaMin(), montoTotal: self.montoTotal(), montoTotalAPagar: self.total(), idTransaccion: 100, renglones: self.renglonesFacturaVO});
         alert(data);
         $.ajax("ingresarFactura.htm", {
             data: "json=" + data,

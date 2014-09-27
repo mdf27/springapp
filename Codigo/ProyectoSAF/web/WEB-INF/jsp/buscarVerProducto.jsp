@@ -39,7 +39,7 @@
         <div id = "leftColuma"> <jsp:directive.include file="include/menuPrincipal.jsp"/>  </div>
         
         <!-- %request.getSession().setAttribute("menuBuscar","false");%-->
-        <jsp:include page="include/menu.jsp"/>  
+        <jsp:directive.include file="include/menu.jsp"/>  
         <div id="contenedor">
             <div id ="contenedorPrincipal" align="center" data-bind="visible: $root.mostrarBuscar"> <jsp:directive.include file="include/buscarProducto.jsp"/>  </div>
             <div style="margin-left: 300px !important; margin-top: 100px !important" id ="contenedorPrincipal" align="center" data-bind="if: $root.selectedResult,visible: $root.mostrarVer"> <jsp:directive.include file="include/verProducto.jsp"/>  </div>

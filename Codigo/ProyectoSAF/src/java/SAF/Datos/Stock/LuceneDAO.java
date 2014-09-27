@@ -250,7 +250,8 @@ public class LuceneDAO extends AbstractDAO{
             if (espacios)
                 querystr = querystr = "numero: "+ texto_buscar + " OR laboratorio: "+ texto_buscar + " OR descripcion: " + texto_buscar;
             else
-                querystr = "numero: "+ texto_buscar + "* OR laboratorio: "+ texto_buscar + "* OR descripcion: " + texto_buscar +"*";
+                //querystr = "numero: "+ texto_buscar + "* OR laboratorio: "+ texto_buscar + "* OR descripcion: " + texto_buscar +"*";
+                querystr = "descripcion:*";
         }else{
             if (espacios)
                 querystr = filtro+ ": " + texto_buscar;//+ " *";

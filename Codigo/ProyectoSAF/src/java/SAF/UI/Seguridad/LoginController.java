@@ -13,8 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class LoginController {
-    
-    @Autowired
+@Autowired
     FacadeSeguridad facadeSeguridad;
     ControlDeAcceso cAcceso = ControlDeAcceso.getInstancia();
     
@@ -24,12 +23,11 @@ public class LoginController {
     public ModelAndView redireccion(HttpSession session){
         ModelAndView mv = new ModelAndView(); 
         if (cAcceso.controlDeLogin(session))
-            mv.setViewName("inicio");
+          mv.setViewName("inicio");
         else
-             mv.setViewName("index");
+            mv.setViewName("index");
         return (mv);
     }
-    
 
     @RequestMapping(value = "controlLogin", method = RequestMethod.POST)
     public ModelAndView validarUsuario(@RequestParam(value = "usuario") int codigoU,HttpSession session){       
@@ -46,6 +44,5 @@ public class LoginController {
             }                            
         return (mv);
         
-    }
-        
+    }        
 }

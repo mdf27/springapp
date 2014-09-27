@@ -42,107 +42,78 @@ public class VerInfoProducto extends HttpServlet {
             out.println("<title>Informacion Producto 77</title>");            
             out.println("</head>");
             out.println("<body>");  
-            out.println("<h1>Informacion del Producto 77</h1>");
+            //out.println("<h1>Informacion del Producto 77</h1>");
 
            // URL rutaService= new URL ("http://dev.dusa.com.uy/ws_consulta_stock?wsdl");
             WSConsultaStockService servicio = new WSConsultaStockService();
             WSConsultaStock consultaStock = servicio.getWSConsultaStockPort();
             
             try {
-                ResultGetStock prod = consultaStock.getStock("PIS2014","uvM4-N39C-Jt01-mc9E-e95b", 77);
-                DataInfoProducto producto = prod.getProducto(); 
-                out.println("<ul>");  
-                       out.println("<li>Clave 1: " + producto.getClave1() + "</li><br/>");
-                       out.println("<li>Clave 2: " + producto.getClave2() + "</li><br/>");
-                       out.println("<li>Clave 3: " + producto.getClave3() + "</li><br/>");
-                       out.println("<li>Codigo de Barras: " + producto.getCodigoBarra() + "</li><br/>");
-                       out.println("<li>Descripcion: " + producto.getDescripcion() + "</li><br/>");
-                       out.println("<li>IdLaboratorio: " + producto.getIdLaboratorio() + "</li><br/>");
-                       out.println("<li>IdLineaLaboratorio: " + producto.getIdLineaLaboratorio()+ "</li><br/>");
-                       out.println("<li>CodigoLaboratorio: " + producto.getCodigoLaboratorio() + "</li><br/>");
-                       out.println("<li>Tipo IVA: " + producto.getTipoIVA() + "</li><br/>");
-                       out.println("<li>Fecha Ultimo Precio: " + producto.getFechaUltimaActualizacion() + "</li><br/>");
-                       out.println("<li>Fecha Ultima Actualizacion: " + producto.getFechaUltimaActualizacion() + "</li><br/>");
-                       out.println("<li>Habilitado: " + producto.getHabilitado() + "</li><br/>");
-                       out.println("<li>IdPresentacionNoritel: " + producto.getIdPresentacionNoritel() + "</li><br/>");
-                       out.println("<li>IdProductoNoritel: " + producto.getIdProductoNoritel() + "</li><br/>");                 
-                       out.println("<li>Numero Articulo: " + producto.getNumeroArticulo() + "</li><br/>");
-                       out.println("<li>Porcentaje Descuento Oferta: " + producto.getPorcentajeDescuentoOferta() + "</li><br/>");
-                       out.println("<li>Precio Oferta: " + producto.getPrecioOferta() + "</li><br/>");
-                       out.println("<li>Precio Publico: " + producto.getPrecioPublico() + "</li><br/>");
-                       out.println("<li>Precio Venta: " + producto.getPrecioVenta() + "</li><br/>");
-                out.println("</ul>");
-                out.println("<br/>");
-                
-                List <DataOferta> ofertas =  producto.getOfertas();
-                
-                Iterator it = ofertas.iterator();
-                DataOferta oferta; 
-                
-                out.println("<h3>Ofertas!</h3><br/>");
-                   
-                out.println("<table border=\"2\">\n" +
-                 "    <thead>\n" +
-                 "        <tr>\n" +
-                 "            <th>Descripcion</th>\n" +
-                 "            <th>Cantidad Bonificado</th>\n" +
-                 "            <th>Cantidad Venta</th>\n" +
-                 "            <th>Fecha Fin</th>\n" +
-                 "            <th>Numero Articulo</th>\n" +
-                 "            <th>Porcentaje Bonificado</th>\n" +       
-                 "        </tr>\n" +
-                 "    </thead>\n" +
-                 "    <tbody>\n");  
-                
-                while(it.hasNext()){
-                    oferta = (DataOferta) it.next();
-                    
-                    out.println("<tr>\n" +
-                    "<td>"+ oferta.getDescripcion() + "</td>\n" +                      
-                    "<td>"+ oferta.getCantidadBonificado() +"</td>\n" +
-                    "<td>"+ oferta.getCantidadVenta() +"</td>\n" +
-                    "<td>"+ oferta.getFechaFin() +"</td>\n" +
-                    "<td>"+ oferta.getNumeroArticulo() +"</td>\n" +
-                    "<td>"+ oferta.getPorcentajeBonificado() +"</td>\n" +
-                    "</tr>\n");             
-                }
-                
-                out.println("</tbody>\n" +
-                "</table>");
-                out.println("<br/>");
-                
-                List <DataPreciosReceta> preciosRecetas = producto.getPreciosRecetas();
-                it = preciosRecetas.iterator();
-                DataPreciosReceta precioReceta; 
-                
-                out.println("<h3>Precios de Recetas</h3><br/>");
-                   
-                out.println("<table border=\"2\">\n" +
-                 "    <thead>\n" +
-                 "        <tr>\n" +
-                 "            <th>Institucion</th>\n" +
-                 "            <th>Descuento Receta</th>\n" +
-                 "            <th>Numero Articulo</th>\n" +
-                 "            <th>Precio Receta</th>\n" +     
-                 "        </tr>\n" +
-                 "    </thead>\n" +
-                 "    <tbody>\n");  
-                
-                while(it.hasNext()){
-                    precioReceta = (DataPreciosReceta) it.next();
-                    
-                    out.println("<tr>\n" +
-                    "<td>"+ precioReceta.getInstitucion() + "</td>\n" +        
-                    "<td>"+ precioReceta.getDescuentoReceta() + "</td>\n" +                      
-                    "<td>"+ precioReceta.getNumeroArticulo() +"</td>\n" +
-                    "<td>"+ precioReceta.getPrecioReceta() +"</td>\n" + 
-                    "</tr>\n");             
-                }
-                
-                out.println("</tbody>\n" +
-                "</table>");
-                out.println("<br/>");
-                
+                for (int i = 1; i < 100; i++) {
+                    out.println("<h1>Informacion del Producto " + i + "</h1>");
+                    ResultGetStock prod = consultaStock.getStock("PIS2014","uvM4-N39C-Jt01-mc9E-e95b", i);
+                    DataInfoProducto producto = prod.getProducto(); 
+                    out.println("<ul>");  
+                           out.println("<li>Clave 1: " + producto.getClave1() + "</li><br/>");
+                           out.println("<li>Clave 2: " + producto.getClave2() + "</li><br/>");
+                           out.println("<li>Clave 3: " + producto.getClave3() + "</li><br/>");
+                           out.println("<li>Codigo de Barras: " + producto.getCodigoBarra() + "</li><br/>");
+                           out.println("<li>Descripcion: " + producto.getDescripcion() + "</li><br/>");
+                           out.println("<li>IdLaboratorio: " + producto.getIdLaboratorio() + "</li><br/>");
+                           out.println("<li>IdLineaLaboratorio: " + producto.getIdLineaLaboratorio()+ "</li><br/>");
+                           out.println("<li>CodigoLaboratorio: " + producto.getCodigoLaboratorio() + "</li><br/>");
+                           out.println("<li>Tipo IVA: " + producto.getTipoIVA() + "</li><br/>");
+                           out.println("<li>Fecha Ultimo Precio: " + producto.getFechaUltimaActualizacion() + "</li><br/>");
+                           out.println("<li>Fecha Ultima Actualizacion: " + producto.getFechaUltimaActualizacion() + "</li><br/>");
+                           out.println("<li>Habilitado: " + producto.getHabilitado() + "</li><br/>");
+                           out.println("<li>IdPresentacionNoritel: " + producto.getIdPresentacionNoritel() + "</li><br/>");
+                           out.println("<li>IdProductoNoritel: " + producto.getIdProductoNoritel() + "</li><br/>");                 
+                           out.println("<li>Numero Articulo: " + producto.getNumeroArticulo() + "</li><br/>");
+                           out.println("<li>Porcentaje Descuento Oferta: " + producto.getPorcentajeDescuentoOferta() + "</li><br/>");
+                           out.println("<li>Precio Oferta: " + producto.getPrecioOferta() + "</li><br/>");
+                           out.println("<li>Precio Publico: " + producto.getPrecioPublico() + "</li><br/>");
+                           out.println("<li>Precio Venta: " + producto.getPrecioVenta() + "</li><br/>");
+                           out.println("<li>Precio Receta: " +producto.getPrecioReceta() + "</li><br/>");
+                    out.println("</ul>");
+                    out.println("<br/>");
+
+                    List <DataOferta> ofertas =  producto.getOfertas();
+
+                    Iterator it = ofertas.iterator();
+                    DataOferta oferta; 
+
+                    out.println("<h3>Ofertas!</h3><br/>");
+
+                    out.println("<table border=\"2\">\n" +
+                     "    <thead>\n" +
+                     "        <tr>\n" +
+                     "            <th>Descripcion</th>\n" +
+                     "            <th>Cantidad Bonificado</th>\n" +
+                     "            <th>Cantidad Venta</th>\n" +
+                     "            <th>Fecha Fin</th>\n" +
+                     "            <th>Numero Articulo</th>\n" +
+                     "            <th>Porcentaje Bonificado</th>\n" +       
+                     "        </tr>\n" +
+                     "    </thead>\n" +
+                     "    <tbody>\n");  
+
+                    while(it.hasNext()){
+                        oferta = (DataOferta) it.next();
+
+                        out.println("<tr>\n" +
+                        "<td>"+ oferta.getDescripcion() + "</td>\n" +                      
+                        "<td>"+ oferta.getCantidadBonificado() +"</td>\n" +
+                        "<td>"+ oferta.getCantidadVenta() +"</td>\n" +
+                        "<td>"+ oferta.getFechaFin() +"</td>\n" +
+                        "<td>"+ oferta.getNumeroArticulo() +"</td>\n" +
+                        "<td>"+ oferta.getPorcentajeBonificado() +"</td>\n" +
+                        "</tr>\n");             
+                    }
+
+                    out.println("</tbody>\n" +
+                    "</table>");
+                    out.println("<br/>");
+                }    
             } catch (Exception e) {
                 out.println("<h1>ERROR: " + e.getMessage() + "</h1>");
             }

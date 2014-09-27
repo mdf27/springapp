@@ -22,6 +22,12 @@
 <message name="getComprobantesDesdeFechaResponse">
 <part name="parameters" element="tns:getComprobantesDesdeFechaResponse"/>
 </message>
+<message name="getComprobantesEntreFechas">
+<part name="parameters" element="tns:getComprobantesEntreFechas"/>
+</message>
+<message name="getComprobantesEntreFechasResponse">
+<part name="parameters" element="tns:getComprobantesEntreFechasResponse"/>
+</message>
 <portType name="WSConsultaComprobantes">
 <operation name="getComprobante">
 <input wsam:Action="http://ws.dusa.com.uy/WSConsultaComprobantes/getComprobanteRequest" message="tns:getComprobante"/>
@@ -34,6 +40,10 @@
 <operation name="getComprobantesDesdeFecha">
 <input wsam:Action="http://ws.dusa.com.uy/WSConsultaComprobantes/getComprobantesDesdeFechaRequest" message="tns:getComprobantesDesdeFecha"/>
 <output wsam:Action="http://ws.dusa.com.uy/WSConsultaComprobantes/getComprobantesDesdeFechaResponse" message="tns:getComprobantesDesdeFechaResponse"/>
+</operation>
+<operation name="getComprobantesEntreFechas">
+<input wsam:Action="http://ws.dusa.com.uy/WSConsultaComprobantes/getComprobantesEntreFechasRequest" message="tns:getComprobantesEntreFechas"/>
+<output wsam:Action="http://ws.dusa.com.uy/WSConsultaComprobantes/getComprobantesEntreFechasResponse" message="tns:getComprobantesEntreFechasResponse"/>
 </operation>
 </portType>
 <binding name="WSConsultaComprobantesPortBinding" type="tns:WSConsultaComprobantes">
@@ -57,6 +67,15 @@
 </output>
 </operation>
 <operation name="getComprobantesDesdeFecha">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="getComprobantesEntreFechas">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.2.8 svn-revision#13980. --><xs:schema xmlns:tns="http://ws.dusa.com.uy/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://ws.dusa.com.uy/">
+
+<xs:element name="realizarPedidoSimple" type="tns:realizarPedidoSimple"/>
+
+<xs:element name="realizarPedidoSimpleResponse" type="tns:realizarPedidoSimpleResponse"/>
+
+<xs:complexType name="realizarPedidoSimple">
+<xs:sequence>
+<xs:element name="usuario" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+<xs:element name="pedido" type="tns:dataPedidoSimple" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="dataPedidoSimple" final="extension restriction">
+<xs:sequence>
+<xs:element name="formaDePago" type="tns:pedidoFormaDePago" minOccurs="0"/>
+<xs:element name="lineas" type="tns:dataLineaPedidoSimple" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="dataLineaPedidoSimple" final="extension restriction">
+<xs:sequence>
+<xs:element name="numeroArticulo" type="xs:int"/>
+<xs:element name="cantidad" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="realizarPedidoSimpleResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:resultRealizarPedido" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="resultRealizarPedido" final="extension restriction">
+<xs:sequence>
+<xs:element name="mensaje" type="tns:mensajeError" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="mensajeError" final="extension restriction">
+<xs:sequence>
+<xs:element name="codigo" type="xs:int"/>
+<xs:element name="mensaje" type="xs:string" minOccurs="0"/>
+<xs:element name="valor" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:simpleType name="pedidoFormaDePago">
+<xs:restriction base="xs:string">
+<xs:enumeration value="CONTADO"/>
+<xs:enumeration value="CREDITO"/>
+</xs:restriction>
+</xs:simpleType>
+</xs:schema>

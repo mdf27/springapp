@@ -34,7 +34,8 @@ public class DatosCompletosMedProdVO {
     private double farmaDescuento; //precio lista + %receta
     private double costoReal;
     private String descDescuento;
-
+    private double porcentajeIva;
+    
     public DatosCompletosMedProdVO() {
     }
 
@@ -205,6 +206,13 @@ public class DatosCompletosMedProdVO {
     public void setFarmaDescuento(double farmaDescuento) {
         this.farmaDescuento = farmaDescuento;
     }
-    
-    
+
+    public double getPorcentajeIva() {
+        return porcentajeIva;
+    }
+
+    public void setPorcentajeIva(double porcentajeIva) {
+        this.porcentajeIva = porcentajeIva;
+    }
+       
 }

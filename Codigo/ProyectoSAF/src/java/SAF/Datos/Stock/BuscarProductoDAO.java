@@ -58,7 +58,7 @@ public class BuscarProductoDAO extends AbstractDAO{
     
     public Map <Integer,DatosCompletosProductoVO> obtenerDatosCompletosProducto() throws ParseException{ //ver
         String sql ="select distinct p.idProducto, p.descripcion, p.precioCompra, p.precioVenta, p.habilitado,\n" +
-                        "c.codigo, s.cantidad, v.fecha, pv.nombre as 'proveedor', t.descripcion as 'tipoiva', o.porcentBonif as 'porcentajeDescuento', o.descripcion as 'descDescuento'\n" +
+                        "c.codigo, s.cantidad, v.fecha, pv.nombre as 'proveedor', t.descripcion as 'tipoiva',t.porcentaje as 'porcentajeIva', o.porcentBonif as 'porcentajeDescuento', o.descripcion as 'descDescuento'\n" +
                     "from producto p,proveedor pv, codigoproducto c, stock s, tipoiva t, vencimientostock v, ofertadescuento o\n" +
                     "where (exists (select * from productoproveedor pp where p.idProducto=pp.idProducto and pv.idProveedor=pp.idProveedor)) \n" +
                         "and (p.idProducto=s.idProducto)\n" +
@@ -91,6 +91,8 @@ public class BuscarProductoDAO extends AbstractDAO{
                 prodCompleto.setDescripcionDescuento(descripcionDescuento);
                 bd= (BigDecimal)row.get("porcentajeDescuento");
                 prodCompleto.setDescuentos(bd.doubleValue());                
+                bd= (BigDecimal)row.get("porcentajeIva");
+                prodCompleto.setPorcentajeIva(bd.doubleValue());
                 productos.put(idProducto,prodCompleto);
             }else{
                 DatosCompletosProductoVO p1 = productos.get(idProducto);

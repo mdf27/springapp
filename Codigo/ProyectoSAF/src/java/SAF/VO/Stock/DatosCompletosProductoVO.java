@@ -27,7 +27,8 @@ public class DatosCompletosProductoVO {
     private String proveedor;
     private List<Double> descuentos;
     private List<String> descripcionDescuento;
-
+    private double porcentajeIva;
+    
     public DatosCompletosProductoVO() {
         vencimientoStock = new LinkedList<>();
         codigoBarras= new LinkedList<>();
@@ -130,6 +131,14 @@ public class DatosCompletosProductoVO {
 
     public void setDescripcionDescuento(String descripcionDescuento) {
         this.descripcionDescuento.add(descripcionDescuento);
+    }
+
+    public double getPorcentajeIva() {
+        return porcentajeIva;
+    }
+
+    public void setPorcentajeIva(double porcentajeIva) {
+        this.porcentajeIva = porcentajeIva;
     }
     
     

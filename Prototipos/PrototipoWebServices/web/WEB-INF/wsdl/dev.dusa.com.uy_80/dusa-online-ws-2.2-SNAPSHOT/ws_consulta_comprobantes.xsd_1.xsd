@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.2.8 svn-revision#13980. --><xs:schema xmlns:tns="http://ws.dusa.com.uy/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://ws.dusa.com.uy/">
+
+<xs:element name="getComprobante" type="tns:getComprobante"/>
+
+<xs:element name="getComprobanteResponse" type="tns:getComprobanteResponse"/>
+
+<xs:element name="getComprobantesDesdeFecha" type="tns:getComprobantesDesdeFecha"/>
+
+<xs:element name="getComprobantesDesdeFechaResponse" type="tns:getComprobantesDesdeFechaResponse"/>
+
+<xs:element name="getComprobantesDesdeNumero" type="tns:getComprobantesDesdeNumero"/>
+
+<xs:element name="getComprobantesDesdeNumeroResponse" type="tns:getComprobantesDesdeNumeroResponse"/>
+
+<xs:element name="getComprobantesEntreFechas" type="tns:getComprobantesEntreFechas"/>
+
+<xs:element name="getComprobantesEntreFechasResponse" type="tns:getComprobantesEntreFechasResponse"/>
+
+<xs:complexType name="getComprobantesDesdeFecha">
+<xs:sequence>
+<xs:element name="usuario" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+<xs:element name="desde" type="xs:dateTime" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getComprobantesDesdeFechaResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:resultGetComprobantes" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="resultGetComprobantes" final="extension restriction">
+<xs:sequence>
+<xs:element name="comprobantes" type="tns:dataComprobante" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="mensaje" type="tns:mensajeError" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="dataComprobante" final="extension restriction">
+<xs:sequence>
+<xs:element name="tipoCFE" type="xs:int"/>
+<xs:element name="serieCFE" type="xs:string" minOccurs="0"/>
+<xs:element name="numeroCFE" type="xs:int"/>
+<xs:element name="fechaComprobante" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="fechaEmision" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="numeroCliente" type="xs:int"/>
+<xs:element name="formaDePago" type="tns:comprobanteFormaDePago" minOccurs="0"/>
+<xs:element name="ordenDeCompra" type="xs:long"/>
+<xs:element name="montoNoGravado" type="xs:decimal" minOccurs="0"/>
+<xs:element name="montoNetoGravadoIvaMinimo" type="xs:decimal" minOccurs="0"/>
+<xs:element name="montoNetoGravadoIvaBasico" type="xs:decimal" minOccurs="0"/>
+<xs:element name="totalIvaMinimo" type="xs:decimal" minOccurs="0"/>
+<xs:element name="totalIvaBasico" type="xs:decimal" minOccurs="0"/>
+<xs:element name="montoTotal" type="xs:decimal" minOccurs="0"/>
+<xs:element name="cantidadLineas" type="xs:int" minOccurs="0"/>
+<xs:element name="montoRetenidoIVA" type="xs:decimal" minOccurs="0"/>
+<xs:element name="montoRetenidoIRAE" type="xs:decimal" minOccurs="0"/>
+<xs:element name="montoNoFacturable" type="xs:decimal" minOccurs="0"/>
+<xs:element name="montoTotalAPagar" type="xs:decimal" minOccurs="0"/>
+<xs:element name="montoTributoIvaMinimo" type="xs:decimal" minOccurs="0"/>
+<xs:element name="montoTributoIvaBasico" type="xs:decimal" minOccurs="0"/>
+<xs:element name="detalle" type="tns:dataLineaComprobante" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="vencimientos" type="tns:dataVencimiento" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="dataLineaComprobante" final="extension restriction">
+<xs:sequence>
+<xs:element name="tipoCFE" type="xs:int"/>
+<xs:element name="serieCFE" type="xs:string" minOccurs="0"/>
+<xs:element name="numeroCFE" type="xs:int"/>
+<xs:element name="numeroLinea" type="xs:int"/>
+<xs:element name="numeroArticulo" type="xs:int"/>
+<xs:element name="cantidad" type="xs:int"/>
+<xs:element name="precioUnitario" type="xs:decimal" minOccurs="0"/>
+<xs:element name="descuento" type="xs:decimal" minOccurs="0"/>
+<xs:element name="descripcionOferta" type="xs:string" minOccurs="0"/>
+<xs:element name="indicadorDeFacturacion" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="dataVencimiento" final="extension restriction">
+<xs:sequence>
+<xs:element name="fecha" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="importe" type="xs:decimal" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="mensajeError" final="extension restriction">
+<xs:sequence>
+<xs:element name="codigo" type="xs:int"/>
+<xs:element name="mensaje" type="xs:string" minOccurs="0"/>
+<xs:element name="valor" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getComprobantesEntreFechas">
+<xs:sequence>
+<xs:element name="usuario" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+<xs:element name="desde" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="hasta" type="xs:dateTime" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getComprobantesEntreFechasResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:resultGetComprobantes" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getComprobante">
+<xs:sequence>
+<xs:element name="usuario" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+<xs:element name="tipoCFE" type="xs:int"/>
+<xs:element name="serieCFE" type="xs:string" minOccurs="0"/>
+<xs:element name="nroCFE" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getComprobanteResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:resultGetComprobante" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="resultGetComprobante" final="extension restriction">
+<xs:sequence>
+<xs:element name="comprobante" type="tns:dataComprobante" minOccurs="0"/>
+<xs:element name="mensaje" type="tns:mensajeError" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getComprobantesDesdeNumero">
+<xs:sequence>
+<xs:element name="usuario" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+<xs:element name="tipoCFE" type="xs:int"/>
+<xs:element name="serieCFE" type="xs:string" minOccurs="0"/>
+<xs:element name="nroCFE" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getComprobantesDesdeNumeroResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:resultGetComprobantes" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:simpleType name="comprobanteFormaDePago">
+<xs:restriction base="xs:string">
+<xs:enumeration value="CONTADO"/>
+<xs:enumeration value="CREDITO"/>
+</xs:restriction>
+</xs:simpleType>
+</xs:schema>

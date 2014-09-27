@@ -30,12 +30,17 @@
             <br/>
 
             <form action="PreciosRecetas" method="POST">
-            <input type="submit" value="Precios Recetas (TimeOut)" name="botonOfertas" onclick="submit();"/>
+            <input type="submit" value="Precios Recetas" name="botonOfertas" onclick="submit();"/>
+            </form>
+            <br/>
+            
+            <form action="VerInfoProducto" method="POST">
+            <input type="submit" value="Ver Info Producto 77" name="botonStock" onclick="submit();"/>
             </form>
             <br/>
             
             <form action="PruebaStock" method="POST">
-            <input type="submit" value="Ver Stock (Lista Vacia!)" name="botonStock" onclick="submit();"/>
+            <input type="submit" value="Ver Stock Update(Lista Vacia!)" name="botonStockUpdate" onclick="submit();"/>
             </form>
             <br/>
             

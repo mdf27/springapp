@@ -65,7 +65,6 @@ public class ObtenerComprobantesFecha extends HttpServlet {
                      "    <thead>\n" +
                      "        <tr>\n" +
                      "            <th>CanLineas</th>\n" +
-                     "            <th>Serie</th>\n" +
                      "            <th>FechaComprobante</th>\n" +
                      "            <th>FechaEmision</th>\n" +
                      "            <th>FormaPago</th>\n" +
@@ -79,7 +78,8 @@ public class ObtenerComprobantesFecha extends HttpServlet {
                      "            <th>MontoTotalAPagar</th>\n" +
                      "            <th>MontoTributoIvaBasico</th>\n" +
                      "            <th>MontoTributoIvaMinimo</th>\n" +
-                     "            <th>Numero</th>\n" + 
+                     "            <th>Numero CFE</th>\n" + 
+                     "            <th>Numero Cliente</th>\n" + 
                      "            <th>OrdenCompra</th>\n" +
                      "            <th>Tipo</th>\n" +
                      "            <th>TotalIvaBasico</th>\n" +
@@ -93,7 +93,6 @@ public class ObtenerComprobantesFecha extends HttpServlet {
                         
                         out.println("<tr>\n" +
                         "<td>"+ comprobante.getCantidadLineas() + "</td>\n" +                      
-                        "<td>"+ comprobante.getSerie() +"</td>\n" +
                         //"<td>"+ comprobante.getDetalle() +"</td>\n" +
                         "<td>"+ comprobante.getFechaComprobante() +"</td>\n" +
                         "<td>"+ comprobante.getFechaEmision() +"</td>\n" +
@@ -108,9 +107,10 @@ public class ObtenerComprobantesFecha extends HttpServlet {
                         "<td>"+ comprobante.getMontoTotalAPagar() +"</td>\n" +          
                         "<td>"+ comprobante.getMontoTributoIvaBasico() +"</td>\n" +
                         "<td>"+ comprobante.getMontoTributoIvaMinimo() +"</td>\n" +       
-                        "<td>"+ comprobante.getNumero()+"</td>\n" +          
+                        "<td>"+ comprobante.getNumeroCFE()+"</td>\n" +   
+                        "<td>"+ comprobante.getNumeroCliente()+"</td>\n" +
                         "<td>"+ comprobante.getOrdenDeCompra() +"</td>\n" +
-                        "<td>"+ comprobante.getTipo() +"</td>\n" +          
+                        "<td>"+ comprobante.getTipoCFE() +"</td>\n" +          
                         "<td>"+ comprobante.getTotalIvaBasico() +"</td>\n" +
                         "<td>"+ comprobante.getTotalIvaMinimo() +"</td>\n" +  
                         //"<td>"+ comprobante.getVencimientos() +"</td>\n" +  

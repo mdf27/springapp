@@ -20,27 +20,23 @@ public class DatosCompletosMedProdVO {
     private double precioLista;
     private String habilitado;
     private int cantidad;
-    private List<String> vencimientos;
-    private List<String> codigos;
+    private String vencimientos;
+    private String codigos;
     private String tipoIVA;
     private String proveedor;
     private String receta;
     private String laboratorio;
-    private List<String> drogas;
-    private List<String> accion;
-    private List<String> presentacion;
+    private String drogas;
+    private String accion;
+    private String presentacion;
     private double descuentoReceta; 
     private double descuentoProducto;
     private double farmaDescuento; //precio lista + %receta
     private double costoReal;
-    private List<String> descDescuento;
-
+    private String descDescuento;
+    private double porcentajeIva;
+    
     public DatosCompletosMedProdVO() {
-        vencimientos = new LinkedList<>();
-        codigos = new LinkedList<>();
-        drogas = new LinkedList<>();
-        accion = new LinkedList<>();
-        presentacion = new LinkedList<>();
     }
 
     public int getIdProducto() {
@@ -91,20 +87,20 @@ public class DatosCompletosMedProdVO {
         this.cantidad = cantidad;
     }
 
-    public List<String> getVencimientos() {
+    public String getVencimientos() {
         return vencimientos;
     }
 
     public void setVencimientos(String vencimientoStock) {
-        this.vencimientos.add(vencimientoStock);
+        this.vencimientos = vencimientoStock;
     }
 
-    public List<String> getCodigos() {
+    public String getCodigos() {
         return codigos;
     }
 
     public void setCodigos(String codigoBarras) {
-        this.codigos.add(codigoBarras);
+        this.codigos=codigoBarras;
     }
 
     public String getTipoIVA() {
@@ -139,28 +135,28 @@ public class DatosCompletosMedProdVO {
         this.laboratorio = nombreLaboratorio;
     }
 
-    public List<String> getDrogas() {
+    public String getDrogas() {
         return drogas;
     }
 
     public void setDrogas(String nombreDroga) {
-        this.drogas.add(nombreDroga);
+        this.drogas = nombreDroga;
     }
 
-    public List<String> getAccion() {
+    public String getAccion() {
         return accion;
     }
 
     public void setAccion(String accionTerapeutica) {
-        this.accion.add(accionTerapeutica);
+        this.accion =accionTerapeutica;
     }
 
-    public List<String> getPresentacion() {
+    public String getPresentacion() {
         return presentacion;
     }
 
     public void setPresentacion(String presentacion) {
-        this.presentacion.add(presentacion);
+        this.presentacion =presentacion;
     }
 
     public double getDescuentoReceta() {
@@ -195,12 +191,12 @@ public class DatosCompletosMedProdVO {
         this.precioLista = precioLista;
     }
 
-    public List<String> getDescDescuento() {
+    public String getDescDescuento() {
         return descDescuento;
     }
 
     public void setDescDescuento(String descDescuento) {
-        this.descDescuento.add(descDescuento);
+        this.descDescuento = descDescuento;
     }
 
     public double getFarmaDescuento() {
@@ -210,6 +206,13 @@ public class DatosCompletosMedProdVO {
     public void setFarmaDescuento(double farmaDescuento) {
         this.farmaDescuento = farmaDescuento;
     }
-    
-    
+
+    public double getPorcentajeIva() {
+        return porcentajeIva;
+    }
+
+    public void setPorcentajeIva(double porcentajeIva) {
+        this.porcentajeIva = porcentajeIva;
+    }
+       
 }

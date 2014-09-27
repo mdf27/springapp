@@ -7,7 +7,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script src='Librerias/jquery.js' type='text/javascript'></script>
         <link href="CSS/contenedorPrincipal.css" rel="stylesheet">
-        <title>Inicio</title>
+        <title>Buscar Producto</title>
         <link href="CSS/bootstrap.css" rel="stylesheet">
         <link href="CSS/bootstrap-responsive.css" rel="stylesheet">
         <link href="CSS/menu.css" rel="�ndezstylesheet">

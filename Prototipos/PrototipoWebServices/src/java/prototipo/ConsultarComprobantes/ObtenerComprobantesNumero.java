@@ -43,113 +43,113 @@ public class ObtenerComprobantesNumero extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Comprobantes</title>");  
-            out.println("<script type=\"text/javascript\">\n" +
-    "            function infoComprobante(tipo,serie,numero){\n" +
-    "                var xmlhttp=new XMLHttpRequest();\n" +
-    "                xmlhttp.open(\"POST\",\"VerInfoComprobante\",true);// va una ruta ahi pa q atiendan la request\n" +
-    "                xmlhttp.setRequestHeader(\"Content-type\",\"application/x-www-form-urlencoded\");\n" +
-
-    "                var parametro='tipoCFE='+tipo+'&serieCFE='+serie+'&numeroCFE='+numero;  " +                    
-
-    "                xmlhttp.send(parametro);\n" +
-    "                \n" +
-    "               xmlhttp.onreadystatechange=function()\n" +
-    "                {\n" +
-    "                if (xmlhttp.readyState===4 && xmlhttp.status===200){\n" +
-    "                    document.getElementById(\"infoComprobante\").innerHTML=xmlhttp.responseText;\n" +
-    "                }//if\n" +
-    "                };            \n" +
-    "            }  // del onlick\n" +
-    "        </script> ");
-            out.println("</head>");
-            out.println("<body>");  
-            out.println("<div id=\"infoComprobante\"> \n \n </div>");
-            out.println("<h1>Lista de Comprobantes</h1>");
-            
-            WSConsultaComprobantesService servicio = new WSConsultaComprobantesService();
-            WSConsultaComprobantes consultaComprobantes = servicio.getWSConsultaComprobantesPort();
-            try {
-                // FALTA PONER UN VALOR REAL!
-                ResultGetComprobantes obtenerComprobantes = consultaComprobantes.getComprobantesDesdeNumero("PIS2014","uvM4-N39C-Jt01-mc9E-e95b", 0, null, 0);
-                List<DataComprobante> comprobantes = obtenerComprobantes.getComprobantes();
-                Iterator it = comprobantes.iterator();
-                DataComprobante comprobante;
-
-                out.println("<table border=\"2\">\n" +
-                 "    <thead>\n" +
-                 "        <tr>\n" +
-                 "            <th>CanLineas</th>\n" +
-                 "            <th>Serie</th>\n" +
-                 "            <th>FechaComprobante</th>\n" +
-                 "            <th>FechaEmision</th>\n" +
-                 "            <th>FormaPago</th>\n" +
-                 "            <th>MontoNetoGravadoIvaBasico</th>\n" +
-                 "            <th>MontoNetoGravadoIvaMinimo</th>\n" +
-                 "            <th>MontoNoFacturable</th>\n" +
-                 "            <th>MontoNoGravado</th>\n" +
-                 "            <th>MontoRetenidoIRAE</th>\n" +
-                 "            <th>MontoRetenidoIVA</th>\n" +
-                 "            <th>MontoTotal</th>\n" +    
-                 "            <th>MontoTotalAPagar</th>\n" +
-                 "            <th>MontoTributoIvaBasico</th>\n" +
-                 "            <th>MontoTributoIvaMinimo</th>\n" +
-                 "            <th>Numero</th>\n" + 
-                 "            <th>OrdenCompra</th>\n" +
-                 "            <th>Tipo</th>\n" +
-                 "            <th>TotalIvaBasico</th>\n" +
-                 "            <th>TotalIvaMinimo</th>\n" +        
-                 "        </tr>\n" +
-                 "    </thead>\n" +
-                 "    <tbody>\n");  
-
-                int tipo;
-                String serie;
-                
-                while(it.hasNext()){
-                    comprobante = (DataComprobante) it.next();
-                    tipo = comprobante.getTipo();
-                    serie = comprobante.getSerie(); 
-                    int numero = comprobante.getNumero();
-                    out.println("<tr> onclick=\"infoComprobante('" + tipo + "','" + serie + "','" + numero + "')\"\n" +
-                    "<td>"+ comprobante.getCantidadLineas() + "</td>\n" +                      
-                    "<td>"+ serie +"</td>\n" +
-                    //"<td>"+ comprobante.getDetalle() +"</td>\n" +
-                    "<td>"+ comprobante.getFechaComprobante() +"</td>\n" +
-                    "<td>"+ comprobante.getFechaEmision() +"</td>\n" +
-                    "<td>"+ comprobante.getFormaDePago() +"</td>\n" + // no se si funcionara
-                    "<td>"+ comprobante.getMontoNetoGravadoIvaBasico() + "</td>\n" +                      
-                    "<td>"+ comprobante.getMontoNetoGravadoIvaMinimo() +"</td>\n" +
-                    "<td>"+ comprobante.getMontoNoFacturable() +"</td>\n" +
-                    "<td>"+ comprobante.getMontoNoGravado() +"</td>\n" +
-                    "<td>"+ comprobante.getMontoRetenidoIRAE() +"</td>\n" +
-                    "<td>"+ comprobante.getMontoRetenidoIVA() +"</td>\n" +          
-                    "<td>"+ comprobante.getMontoTotal() +"</td>\n" +
-                    "<td>"+ comprobante.getMontoTotalAPagar() +"</td>\n" +          
-                    "<td>"+ comprobante.getMontoTributoIvaBasico() +"</td>\n" +
-                    "<td>"+ comprobante.getMontoTributoIvaMinimo() +"</td>\n" +       
-                    "<td>"+ numero +"</td>\n" +          
-                    "<td>"+ comprobante.getOrdenDeCompra() +"</td>\n" +
-                    "<td>"+ tipo +"</td>\n" +          
-                    "<td>"+ comprobante.getTotalIvaBasico() +"</td>\n" +
-                    "<td>"+ comprobante.getTotalIvaMinimo() +"</td>\n" +  
-                    //"<td>"+ comprobante.getVencimientos() +"</td>\n" +  
-                    "</tr>\n");         
-                }
-
-                out.println("</tbody>\n" +
-                "</table>");
-                out.println("<br/>");
-                    
-            } catch (Exception e) {
-                out.println("<h1>ERROR: " + e.getMessage() + "</h1>");
-            }
-        }
+//        try (PrintWriter out = response.getWriter()) {
+//            /* TODO output your page here. You may use following sample code. */
+//            out.println("<!DOCTYPE html>");
+//            out.println("<html>");
+//            out.println("<head>");
+//            out.println("<title>Comprobantes</title>");  
+//            out.println("<script type=\"text/javascript\">\n" +
+//    "            function infoComprobante(tipo,serie,numero){\n" +
+//    "                var xmlhttp=new XMLHttpRequest();\n" +
+//    "                xmlhttp.open(\"POST\",\"VerInfoComprobante\",true);// va una ruta ahi pa q atiendan la request\n" +
+//    "                xmlhttp.setRequestHeader(\"Content-type\",\"application/x-www-form-urlencoded\");\n" +
+//
+//    "                var parametro='tipoCFE='+tipo+'&serieCFE='+serie+'&numeroCFE='+numero;  " +                    
+//
+//    "                xmlhttp.send(parametro);\n" +
+//    "                \n" +
+//    "               xmlhttp.onreadystatechange=function()\n" +
+//    "                {\n" +
+//    "                if (xmlhttp.readyState===4 && xmlhttp.status===200){\n" +
+//    "                    document.getElementById(\"infoComprobante\").innerHTML=xmlhttp.responseText;\n" +
+//    "                }//if\n" +
+//    "                };            \n" +
+//    "            }  // del onlick\n" +
+//    "        </script> ");
+//            out.println("</head>");
+//            out.println("<body>");  
+//            out.println("<div id=\"infoComprobante\"> \n \n </div>");
+//            out.println("<h1>Lista de Comprobantes</h1>");
+//            
+//            WSConsultaComprobantesService servicio = new WSConsultaComprobantesService();
+//            WSConsultaComprobantes consultaComprobantes = servicio.getWSConsultaComprobantesPort();
+//            try {
+//                // FALTA PONER UN VALOR REAL!
+//                ResultGetComprobantes obtenerComprobantes = consultaComprobantes.getComprobantesDesdeNumero("PIS2014","uvM4-N39C-Jt01-mc9E-e95b", 0, null, 0);
+//                List<DataComprobante> comprobantes = obtenerComprobantes.getComprobantes();
+//                Iterator it = comprobantes.iterator();
+//                DataComprobante comprobante;
+//
+//                out.println("<table border=\"2\">\n" +
+//                 "    <thead>\n" +
+//                 "        <tr>\n" +
+//                 "            <th>CanLineas</th>\n" +
+//                 "            <th>Serie</th>\n" +
+//                 "            <th>FechaComprobante</th>\n" +
+//                 "            <th>FechaEmision</th>\n" +
+//                 "            <th>FormaPago</th>\n" +
+//                 "            <th>MontoNetoGravadoIvaBasico</th>\n" +
+//                 "            <th>MontoNetoGravadoIvaMinimo</th>\n" +
+//                 "            <th>MontoNoFacturable</th>\n" +
+//                 "            <th>MontoNoGravado</th>\n" +
+//                 "            <th>MontoRetenidoIRAE</th>\n" +
+//                 "            <th>MontoRetenidoIVA</th>\n" +
+//                 "            <th>MontoTotal</th>\n" +    
+//                 "            <th>MontoTotalAPagar</th>\n" +
+//                 "            <th>MontoTributoIvaBasico</th>\n" +
+//                 "            <th>MontoTributoIvaMinimo</th>\n" +
+//                 "            <th>Numero</th>\n" + 
+//                 "            <th>OrdenCompra</th>\n" +
+//                 "            <th>Tipo</th>\n" +
+//                 "            <th>TotalIvaBasico</th>\n" +
+//                 "            <th>TotalIvaMinimo</th>\n" +        
+//                 "        </tr>\n" +
+//                 "    </thead>\n" +
+//                 "    <tbody>\n");  
+//
+//                int tipo;
+//                String serie;
+//                
+//                while(it.hasNext()){
+//                    comprobante = (DataComprobante) it.next();
+//                    tipo = comprobante.getTipo();
+//                    serie = comprobante.getSerie(); 
+//                    int numero = comprobante.getNumero();
+//                    out.println("<tr> onclick=\"infoComprobante('" + tipo + "','" + serie + "','" + numero + "')\"\n" +
+//                    "<td>"+ comprobante.getCantidadLineas() + "</td>\n" +                      
+//                    "<td>"+ serie +"</td>\n" +
+//                    //"<td>"+ comprobante.getDetalle() +"</td>\n" +
+//                    "<td>"+ comprobante.getFechaComprobante() +"</td>\n" +
+//                    "<td>"+ comprobante.getFechaEmision() +"</td>\n" +
+//                    "<td>"+ comprobante.getFormaDePago() +"</td>\n" + // no se si funcionara
+//                    "<td>"+ comprobante.getMontoNetoGravadoIvaBasico() + "</td>\n" +                      
+//                    "<td>"+ comprobante.getMontoNetoGravadoIvaMinimo() +"</td>\n" +
+//                    "<td>"+ comprobante.getMontoNoFacturable() +"</td>\n" +
+//                    "<td>"+ comprobante.getMontoNoGravado() +"</td>\n" +
+//                    "<td>"+ comprobante.getMontoRetenidoIRAE() +"</td>\n" +
+//                    "<td>"+ comprobante.getMontoRetenidoIVA() +"</td>\n" +          
+//                    "<td>"+ comprobante.getMontoTotal() +"</td>\n" +
+//                    "<td>"+ comprobante.getMontoTotalAPagar() +"</td>\n" +          
+//                    "<td>"+ comprobante.getMontoTributoIvaBasico() +"</td>\n" +
+//                    "<td>"+ comprobante.getMontoTributoIvaMinimo() +"</td>\n" +       
+//                    "<td>"+ numero +"</td>\n" +          
+//                    "<td>"+ comprobante.getOrdenDeCompra() +"</td>\n" +
+//                    "<td>"+ tipo +"</td>\n" +          
+//                    "<td>"+ comprobante.getTotalIvaBasico() +"</td>\n" +
+//                    "<td>"+ comprobante.getTotalIvaMinimo() +"</td>\n" +  
+//                    //"<td>"+ comprobante.getVencimientos() +"</td>\n" +  
+//                    "</tr>\n");         
+//                }
+//
+//                out.println("</tbody>\n" +
+//                "</table>");
+//                out.println("<br/>");
+//                    
+//            } catch (Exception e) {
+//                out.println("<h1>ERROR: " + e.getMessage() + "</h1>");
+//            }
+//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

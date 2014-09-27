@@ -13,7 +13,7 @@
         });
 
         $('#stock').on('click', function() {
-            $('#leftColuma').html('<div id = "tituloLeftMenu">Productos</div><ul id="leftMenu"><li><a href="#"><i class="icon-search"></i>Productos</a></li><li><a href="#"><i class="icon-plus"></i>Alta producto</a></li><li><a href="#"><i class="icon-search"></i>Descuntos</a></li> <li><a href="#"><i class="icon-plus"></i>Alta descuento</a></li><li><a href="#"><i class="icon-search"></i>Proveedores</a></li><li><a href="#"><i class="icon-plus"></i>Alta proveedor</a></li><li><a href="actualizarProductosDUSA.html"><i class="icon-refresh"></i>Actualizar base de datos</a></li></ul>');
+            $('#leftColuma').html('<div id = "tituloLeftMenu">Productos</div><ul id="leftMenu"><li><a href="ajustarStock.htm"><i class="icon-search"></i>Productos</a></li><li><a href="#"><i class="icon-plus"></i>Alta producto</a></li><li><a href="#"><i class="icon-search"></i>Descuentos</a></li> <li><a href="#"><i class="icon-plus"></i>Alta descuento</a></li><li><a href="#"><i class="icon-search"></i>Proveedores</a></li><li><a href="#"><i class="icon-plus"></i>Alta proveedor</a></li><li><a href="actualizarProductosDUSA.html"><i class="icon-refresh"></i>Actualizar base de datos</a></li></ul>');
         });
     });
 </script>  
@@ -46,6 +46,3 @@
         </div>
     </div>
 </div>
-
-
-

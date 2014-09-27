@@ -62,4 +62,5 @@
             </tr>
         </tbody>
     </table>
+    <div align="center" data-bind="visible: ($root.lista().length<=0) && ($root.mostrarError)">No existen resultados para su búsqueda.</div>
 </div>

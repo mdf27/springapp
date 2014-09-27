@@ -52,6 +52,10 @@
         <servlet-name>crearPdf</servlet-name>
         <servlet-class>prototipo.ConsultaStock.crearPdf</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ObtenerStock</servlet-name>
+        <servlet-class>prototipo.ConsultaStock.ObtenerStock</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -95,6 +99,10 @@
     <servlet-mapping>
         <servlet-name>crearPdf</servlet-name>
         <url-pattern>/crearPdf</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ObtenerStock</servlet-name>
+        <url-pattern>/ObtenerStock</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

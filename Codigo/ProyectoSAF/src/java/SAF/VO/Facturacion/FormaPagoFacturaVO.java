@@ -3,25 +3,41 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package SAF.VO.Facturacion;
-import java.math.BigInteger;
+
+import java.util.Map;
 
 /**
  *
  * @author Fernanda
  */
 public class FormaPagoFacturaVO {
-    
-    
+
     private short idTipoFormaPago;
     private short idTipoFactura;
     private int idFactura;
     private int nroTarjeta;
     private int idCuenta;
-    private BigInteger idTransaccion;
+    private long idTransaccion;
 
     public FormaPagoFacturaVO() {
+    }
+
+    public FormaPagoFacturaVO(Map<String, Object> query) {
+
+        idFactura = (int) query.get("idFactura");
+        idTipoFactura = ((Integer) query.get("idTipoFactura")).shortValue();
+        idTipoFormaPago = ((Integer) query.get("idTipoFormaPago")).shortValue();
+        if (query.get("nroTarjeta") != null) {
+            nroTarjeta = (int) query.get("nroTarjeta");
+        }
+        if (query.get("idCuenta") != null) {
+            idCuenta = (int) query.get("idCuenta");
+        }
+        if (query.get("idTransaccion") != null) {
+            idTransaccion = ((Long) query.get("idTransaccion"));
+        }
+
     }
 
     public short getIdTipoFormaPago() {
@@ -64,13 +80,12 @@ public class FormaPagoFacturaVO {
         this.idCuenta = idCuenta;
     }
 
-    public BigInteger getIdTransaccion() {
+    public long getIdTransaccion() {
         return idTransaccion;
     }
 
-    public void setIdTransaccion(BigInteger idTransaccion) {
+    public void setIdTransaccion(long idTransaccion) {
         this.idTransaccion = idTransaccion;
     }
-    
-    
+
 }

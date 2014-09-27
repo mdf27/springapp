@@ -1,18 +1,3 @@
-// Para enter en buscar producto.
-ko.bindingHandlers.executeOnEnter = {
-    init: function(element, valueAccessor, allBindingsAccessor, viewModel) {
-        var allBindings = allBindingsAccessor();
-        $(element).keypress(function(event) {
-            var keyCode = (event.which ? event.which : event.keyCode);
-            if (keyCode === 13) {
-                allBindings.executeOnEnter.call(viewModel);
-                return false;
-            }
-            return true;
-        });
-    }
-};
-
 function ViewModel() {
     var self = this;
     self.lista = ko.observableArray();
@@ -273,10 +258,6 @@ function ViewModel() {
         self.filtro(prod.toString());
     };
 
-    self.montoNetoGravIva = ko.observable();
-    self.montoNetoGravIvaMin = ko.observable();
-    self.montoTotal = ko.observable();
-    self.montoTotalAPagar = ko.observable();
     self.productoSeleccionado = ko.observable();
     self.conRut = ko.observable();
     self.rSocial = ko.observable();
@@ -287,21 +268,20 @@ function ViewModel() {
     self.conReceta = ko.observable(false);
     self.cantProd = ko.observable(1);
     self.descuento = ko.observable(0);
-    self.total = ko.observable(0);
-//    self.total = ko.computed(function() {
-//        var largo = parseInt(self.renglonesFactura().length);
-//        var total = parseFloat(0);
-//        if (largo > 0) {
-//            for (i = 0; i < largo; i++) {
-//                var subtotal = parseFloat(self.renglonesFactura()[i].subtotal());
-//                total = total + subtotal;
-//            }
-//            ;
-//        }
-//        ;
-//
-//        return parseFloat(total).toFixed(2);
-//    }, this);
+    self.total = ko.computed(function() {
+        var largo = parseInt(self.renglonesFactura().length);
+        var total = parseFloat(0);
+        if (largo > 0) {
+            for (i = 0; i < largo; i++) {
+                var subtotal = parseFloat(self.renglonesFactura()[i].subtotal());
+                total = total + subtotal;
+            }
+            ;
+        }
+        ;
+
+        return parseFloat(total).toFixed(2);
+    }, this);
 
     self.guardarProducto = function(data) {
         self.productoSeleccionado(data);
@@ -323,7 +303,7 @@ function ViewModel() {
                 var cantAnterior = parseInt(renglon.cantidad());
                 var subtotalAnterior = parseFloat(renglon.subtotal());
                 self.renglonesFactura()[i].cantidad(cantAnterior + parseInt(self.cantProd()));
-                self.renglonesFactura()[i].subtotal(subtotalAnterior + (parseFloat(renglon.precioVenta())) * parseInt(self.cantProd()));
+                self.renglonesFactura()[i].subtotal(subtotalAnterior + (parseFloat(renglon.precioVenta()))*parseInt(self.cantProd()));
                 esta = true;
 
             }
@@ -337,20 +317,10 @@ function ViewModel() {
 
         if (self.cantProd() != null) {
             if (!self.estaProductoEnFactura(item)) {
-                //Dependiendo del descuento, el precioVenta puede cambiar.
-//                if(self.descuento() > item.descuento)
-//                    var descuento // cambia.
-                var descuento = (parseFloat(item.precioVenta) * parseFloat(self.descuento())) / 100;
-                var precioConDesc = parseFloat(parseFloat(item.precioVenta) - descuento).toFixed(2);
-                if (self.conReceta()) {
-                    if (item.farmaDescuento < precioConDesc)
-                        precioConDesc = item.farmaDescuento;
-                    self.descuento(item.descuentoReceta);
-                }
+                var descuento = (parseFloat(item.precioLista) * parseFloat(self.descuento())) / 100;
+                var precioVenta = parseFloat(parseFloat(item.precioLista) - descuento).toFixed(2);
 
-
-
-                self.precioVenta = ko.observable(precioConDesc);
+                self.precioVenta = ko.observable(precioVenta);
                 var subtotal = parseFloat(self.precioVenta()) * parseFloat(self.cantProd());
                 self.subtotal = ko.observable(parseFloat(subtotal).toFixed(2));
 
@@ -361,51 +331,25 @@ function ViewModel() {
                     subtotal: self.subtotal(),
                     descuento: self.descuento(),
                     precioVenta: self.precioVenta(),
-                    codigo: item.idProducto, // Nuevo
-                    tipoIVA: item.tipoIVA,
-                    porcentajeIVA: item.porcentaje
-                    
+                    codigo: item.idProducto // Nuevo
                 })
                         );
                 self.renglonesFacturaVO.push(new renglonFacturaVO({
-                    idTipoFactura: 0, // Falta integrar tipo factura.
+                    idTipoFactura: 0,
                     idFactura: 0,
                     idProducto: item.idProducto,
-                    precioProducto: item.precioLista,
+                    precioProducto: item.precioCompra,
                     precioVtaReal: self.precioVenta(),
                     descDescripcion: null,
                     descCantBonif: 0,
                     descPorcentBonif: self.descuento(),
                     idTransaccion: 0,
-                    idRenglonFactura: self.renglonesFacturaVO().length + 1,
+                    idRenglonFactura: 0,
                     cantidad: self.cantProd(),
                     conReceta: self.conReceta()
                 })
                         );
                 self.renglonesVacios.pop();
-
-                // Renglon recien insertado.
-                var renglon = self.renglonesFactura()[self.renglonesFactura().length - 1];
-                
-                // Actualizo montos.
-                var descIva = (parseFloat(renglon.precioVenta()) * parseFloat(renglon.porcentajeIVA())) / 100;
-                // Calculos montoIva
-                if (renglon.tipoIVA() === "basico") {
-                    var montoAnterior = parseFloat(self.montoNetoGravIva());
-                    self.montoNetoGravIva(montoAnterior + (descIva*renglon.cantidad()));
-
-                } else if (renglon.tipoIVA() === "minimo") {
-                    var montoAnterior = parseFloat(self.montoNetoGravIvaMin());
-                    self.montoNetoGravIvaMin(montoAnterior + descIva*renglon.cantidad());
-                }
-                // Calculo monto total sin iva.
-                var montoTotalAnterior = parseFloat(self.montoTotal());
-                self.montoTotal(montoTotalAnterior + (parseFloat(self.precioVenta()) - descIva)*renglon.cantidad());
-                // Calculo monto total con iva.
-                var subtotal = parseFloat(renglon.subtotal());
-                var totalAnterior = parseFloat(self.total());
-                self.total(totalAnterior + subtotal);
-
             }
             ;
             self.realizandoFactura(true);
@@ -420,9 +364,10 @@ function ViewModel() {
     self.realizarFactura = function() {
         var date = new Date();
         var timestamp = date.getTime();
-        //var renglonData = ko.toJSON(self.renglonesFacturaVO()[0]) // Ver que pasa cuando no hay rut y r social, que manda?
-        var data = ko.toJSON({idTipoFactura: 101, idFactura: 0, idCliente: 1, rut: self.nroRut(),
-            razonSocial: self.rSocial(), fecha: timestamp, descuento: 0, montoNetoTotal: self.total(), montoNetoGravIva: 100,
+        alert(timestamp);
+        //var renglonData = ko.toJSON(self.renglonesFacturaVO()[0])
+        var data = ko.toJSON({idTipoFactura: 101, idFactura: 0, idCliente: 1, rut: "ruyeordb",
+            razonSocial: "pepe", fecha: timestamp, descuento: 0, montoNetoTotal: 100, montoNetoGravIva: 100,
             montoNetoGravIvaMin: 100, montoTotal: 100, montoTotalAPagar: 100, idTransaccion: 100, renglones: self.renglonesFacturaVO});
         alert(data);
         $.ajax("ingresarFactura.htm", {
@@ -446,25 +391,22 @@ function renglonFactura(data) {
     this.precioVenta = ko.observable(data.precioVenta);
     this.descuento = ko.observable(data.descuento);
     this.codigo = ko.observable(data.codigo);
-    this.tipoIVA = ko.observable(data.tipoIVA);
-    this.porcentajeIVA = ko.observable(data.porcentajeIVA);
 }
 ;
 
 function renglonFacturaVO(data) {
     this.idTipoFactura = 101;
-    this.idFactura = 0;
-    this.idProducto = ko.observable(data.idProducto);
-    ;
-    this.precioProducto = ko.observable(data.precioProducto);
-    this.precioVtaReal = ko.observable(data.precioVtaReal);
-    this.descDescripcion = ko.observable("");
-    this.descCantBonif = ko.observable(0);
-    this.descPorcentBonif = ko.observable(data.descPorcentBonif);
+    this.idFactura = 25;
+    this.idProducto = 123;
+    this.precioProducto = 45.00;
+    this.precioVtaReal = 0;
+    this.descDescripcion = "producto idiota";
+    this.descCantBonif = 0;
+    this.descPorcentBonif = 0;
     this.idTransaccion = 0;
-    this.idRenglonFactura = ko.observable(data.idRenglonFactura);
-    this.cantidad = ko.observable(data.cantidad);
-    this.conReceta = ko.observable(data.conReceta);
+    this.idRenglonFactura = 0;
+    this.cantidad = 0;
+    this.conReceta = true;
 };
 
 var vm = new ViewModel();

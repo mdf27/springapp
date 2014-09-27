@@ -49,14 +49,13 @@ public class PreciosRecetas extends HttpServlet {
             WSConsultaStock consultaStock = servicio.getWSConsultaStockPort();
             try {
                 ResultGetPreciosRecetas ObtenerPreciosRecetas = consultaStock.getPreciosRecetas("PIS2014","uvM4-N39C-Jt01-mc9E-e95b");
-                List <DataPreciosReceta> listaPreciosReceta = ObtenerPreciosRecetas.getPreciosRecetas();
+                List <DataPrecioReceta> listaPreciosReceta = ObtenerPreciosRecetas.getPreciosRecetas();
                 Iterator it = listaPreciosReceta.iterator();
-                DataPreciosReceta preciosReceta;
+                DataPrecioReceta preciosReceta;
 
                 out.println("<table border=\"2\">\n" +
                 "    <thead>\n" +
                 "        <tr>\n" +
-                "            <th>Institucion</th>\n" +
                 "            <th>Descuento Receta</th>\n" +
                 "            <th>Numero Articulo</th>\n" +
                 "            <th>Precio Receta</th>\n" +
@@ -65,10 +64,9 @@ public class PreciosRecetas extends HttpServlet {
                 "    <tbody>\n");  
 
                 while(it.hasNext()){
-                    preciosReceta = (DataPreciosReceta) it.next();
+                    preciosReceta = (DataPrecioReceta) it.next();
 
                     out.println("<tr>\n" +
-                        "<td>"+ preciosReceta.getInstitucion() +"</td>\n" +
                         "<td>"+ preciosReceta.getDescuentoReceta() +"</td>\n" +
                         "<td>"+ preciosReceta.getNumeroArticulo() +"</td>\n" +
                         "<td>"+ preciosReceta.getPrecioReceta() +"</td>\n" + 

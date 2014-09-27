@@ -6,7 +6,8 @@
 package SAF.VO.Facturacion;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import java.math.BigInteger;
+import java.math.BigDecimal;
+import java.util.Map;
 
 /**
  *
@@ -26,10 +27,34 @@ public class RenglonFacturaVO {
     private int descCantBonif;
     private double descPorcentBonif;
     private double descMontoBonif;
-    private BigInteger idTransaccion;
+    private long idTransaccion;
     private int idRenglonFactura;
     private int cantidad;
     private boolean conReceta;
+
+    @JsonCreator
+    public RenglonFacturaVO() {
+    }
+
+    public RenglonFacturaVO(Map<String, Object> query) {
+
+        idTipoFactura = ((Integer) query.get("idTipoFactura")).shortValue();
+        idFactura = (int) query.get("idFactura");
+        idRenglonFactura = (int) query.get("idRenglonfactura");
+        idProducto = (int) query.get("idProducto");
+        cantidad = (int) query.get("cantidad");
+        conReceta = (boolean) query.get("conReceta");
+        precioProducto = ((BigDecimal) query.get("precioProducto")).doubleValue();
+        precioVtaReal = ((BigDecimal) query.get("precioVentaReal")).doubleValue();
+        descDescripcion = (String) query.get("descDescripcion");
+        descCantBonif = (int) query.get("descCantBonif");
+        descPorcentBonif = ((BigDecimal) query.get("descPorcentBonif")).doubleValue();
+        descMontoBonif = ((BigDecimal) query.get("descMontoBonif")).doubleValue();
+        if (query.get("idTransaccion") != null) {
+            idTransaccion = (long) query.get("idTransaccion");
+        }
+
+    }
 
     public int getIdRenglonFactura() {
         return idRenglonFactura;
@@ -53,11 +78,6 @@ public class RenglonFacturaVO {
 
     public void setConReceta(boolean conReceta) {
         this.conReceta = conReceta;
-    }
-
-    
-    @JsonCreator
-    public RenglonFacturaVO() {
     }
 
     public short getIdTipoFactura() {
@@ -132,11 +152,11 @@ public class RenglonFacturaVO {
         this.descMontoBonif = descMontoBonif;
     }
 
-    public BigInteger getIdTransaccion() {
+    public long getIdTransaccion() {
         return idTransaccion;
     }
 
-    public void setIdTransaccion(BigInteger idTransaccion) {
+    public void setIdTransaccion(long idTransaccion) {
         this.idTransaccion = idTransaccion;
     }
 

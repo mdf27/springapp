@@ -30,7 +30,6 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 /**
  *
@@ -116,7 +115,7 @@ public class LuceneDAO extends AbstractDAO{
     
     private String devolverPresentacionesMedicamento(DatosCompletosMedicamentoVO m){
         String resultado="";
-        List<String> presentaciones = m.getNombreDroga();
+        List<String> presentaciones = m.getPresentacion();
         ListIterator it = presentaciones.listIterator();
         int size= presentaciones.size();
         while (it.hasNext()){
@@ -162,7 +161,7 @@ public class LuceneDAO extends AbstractDAO{
         return resultado;
     }    
     
-    private void crearIndiceProductosLuecene (Map <Integer,DatosCompletosProductoVO> productos,Map <Integer,DatosCompletosMedicamentoVO> medicamentos ) throws ClassNotFoundException, SQLException, IOException, ParseException{       
+    public void crearIndiceProductosLuecene (Map <Integer,DatosCompletosProductoVO> productos,Map <Integer,DatosCompletosMedicamentoVO> medicamentos ) throws ClassNotFoundException, SQLException, IOException, ParseException{       
         //Lucene
         StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_40);            
         IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_40, analyzer);            
@@ -177,6 +176,7 @@ public class LuceneDAO extends AbstractDAO{
    
             d.add(new org.apache.lucene.document.TextField ("precioVenta", ""+rt.getPrecioVenta(), Field.Store.YES));
             d.add(new org.apache.lucene.document.TextField ("precioCompra", ""+rt.getPrecioCompra(), Field.Store.YES));
+            d.add(new org.apache.lucene.document.TextField ("porcentajeIva", ""+rt.getPorcentajeIva(), Field.Store.YES));
             if(rt.isHabilitado())
                 d.add(new org.apache.lucene.document.TextField ("habilitado", "true", Field.Store.YES));
             else
@@ -218,6 +218,10 @@ public class LuceneDAO extends AbstractDAO{
     public boolean indiceCargado(){
         return (indiceProductosLucene!=null);
     }
+
+    public void setIndiceProductosLucene(Directory indiceProductosLucene) {
+        this.indiceProductosLucene = indiceProductosLucene;
+    }
     
     public void cargarProductos(Map <Integer,DatosCompletosProductoVO> productos,Map <Integer,DatosCompletosMedicamentoVO> medicamentos)
                         throws ClassNotFoundException, SQLException, IOException, ParseException{  
@@ -246,7 +250,8 @@ public class LuceneDAO extends AbstractDAO{
             if (espacios)
                 querystr = querystr = "numero: "+ texto_buscar + " OR laboratorio: "+ texto_buscar + " OR descripcion: " + texto_buscar;
             else
-                querystr = "numero: "+ texto_buscar + "* OR laboratorio: "+ texto_buscar + "* OR descripcion: " + texto_buscar +"*";
+                //querystr = "numero: "+ texto_buscar + "* OR laboratorio: "+ texto_buscar + "* OR descripcion: " + texto_buscar +"*";
+                querystr = "descripcion:*";
         }else{
             if (espacios)
                 querystr = filtro+ ": " + texto_buscar;//+ " *";
@@ -296,6 +301,8 @@ public class LuceneDAO extends AbstractDAO{
                 precioVenta=Math.round(precioVenta*100.0)/100.0;
                 double precioLista = precioVenta;   
                 precioLista = Math.round(precioLista*100.0)/100.0;
+                double porcentajeIva = Double.valueOf(d.get("porcentajeIva"));
+                porcentajeIva = Math.round(porcentajeIva*100.0)/100.0;
                 double farmaDescuento =0;
                 
                 String descripcionesDescuentos = d.get("descipcionesDescuento");
@@ -329,6 +336,7 @@ public class LuceneDAO extends AbstractDAO{
                 double precioCompra = Double.valueOf(d.get("precioCompra"));
                 precioCompra= Math.round(precioCompra*100.0)/100.0;
                 productoMedicamento.setFarmaDescuento(farmaDescuento);
+                productoMedicamento.setPorcentajeIva(porcentajeIva);
                 productoMedicamento.setDescuentoProducto(descuentoProducto);                
                 productoMedicamento.setDescuentoReceta(descuentoReceta);          
                 productoMedicamento.setDescripcion(desc);

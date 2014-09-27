@@ -40,7 +40,7 @@
                         </thead>
                         <tbody data-bind="foreach: paginated">
                             <tr class="table table-hover">                            
-                                <td><li data-bind="click: $parent.guardarProducto ,executeOnEnter: $root.guardarProducto, css: { 'btn-info': ($parent.selectedResult() == $data)}"><a><p align="left" data-bind="text: descripcion"></p></a></li></td>
+                                <td><li data-bind="click: $parent.selecccionarProducto ,executeOnEnter: $parent.selecccionarProducto, css: { 'btn-info': ($parent.selectedResult() == $data)}"><a><p align="left" data-bind="text: descripcion"></p></a></li></td>
                                 <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: habilitado"></p></td>
                                 <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: cantidad"></p></td>
                                 <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: precioLista"></p></td>

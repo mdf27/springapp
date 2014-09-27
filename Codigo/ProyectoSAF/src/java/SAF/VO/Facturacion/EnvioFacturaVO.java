@@ -6,6 +6,10 @@
 
 package SAF.VO.Facturacion;
 
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.Map;
+
 /**
  *
  * @author Fernanda
@@ -14,11 +18,25 @@ public class EnvioFacturaVO {
     
     private int idFactura;
     private int idUsuarioDelivery;
-    private String Direccion;
-    private String Telefono;
-    private String Observaciones;
+    private String direccion;
+    private String telefono;
+    private String observaciones;
 
     public EnvioFacturaVO() {
+    }
+    
+        public EnvioFacturaVO(Map<String, Object> query) {
+
+        idFactura = (int) query.get("idFactura");
+        if (query.get("idUsuarioDelivery")!=null)
+            idUsuarioDelivery = (int) query.get("idUsuarioDelivery");
+        direccion = (String) query.get("Direccion");
+        if(query.get("Telefono")!=null)
+            telefono = (String) query.get("Telefono");
+        if (query.get("Observacion")!=null)
+             observaciones = (String) query.get("Observaciones");
+       
+
     }
 
     public int getIdFactura() {
@@ -38,27 +56,27 @@ public class EnvioFacturaVO {
     }
 
     public String getDireccion() {
-        return Direccion;
+        return direccion;
     }
 
     public void setDireccion(String Direccion) {
-        this.Direccion = Direccion;
+        this.direccion = Direccion;
     }
 
     public String getTelefono() {
-        return Telefono;
+        return telefono;
     }
 
     public void setTelefono(String Telefono) {
-        this.Telefono = Telefono;
+        this.telefono = Telefono;
     }
 
     public String getObservaciones() {
-        return Observaciones;
+        return observaciones;
     }
 
     public void setObservaciones(String Observaciones) {
-        this.Observaciones = Observaciones;
+        this.observaciones = Observaciones;
     }
 
     

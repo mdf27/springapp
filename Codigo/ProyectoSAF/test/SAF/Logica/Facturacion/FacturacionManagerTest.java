@@ -90,8 +90,8 @@ public class FacturacionManagerTest {
         renglon1.setDescCantBonif(12);
         renglon1.setDescDescripcion("10");
         renglon1.setDescPorcentBonif(1);
-        renglon1.setIdProducto(1);
-        renglon1.setIdTipoFactura((short) 101);
+        renglon1.setIdProducto(100001);
+        renglon1.setIdTipoFactura((short) 102);
         renglon1.setPrecioProducto(10.01);
         renglon1.setPrecioVtaReal(10.01);
 
@@ -102,7 +102,7 @@ public class FacturacionManagerTest {
         fvo.setDescuento(10.01);
         fvo.setFecha(new Timestamp(new Date().getTime()));
         fvo.setIdCliente(1);
-        fvo.setIdTipoFactura((short) 101);
+        fvo.setIdTipoFactura((short) 102);
         fvo.setMontoNetoGravIva(10.01);
         fvo.setMontoNetoGravIvaMin(10.01);
         fvo.setMontoNetoTotal(10.01);
@@ -113,7 +113,7 @@ public class FacturacionManagerTest {
         fvo.setRenglones(renglones);
         int idFactura = instance.ingresarFactura(fvo);
         fvo.setIdFactura(idFactura);
-        FacturaVO fvo2= instance.obtenerFactura(idFactura, (short)101);
+        FacturaVO fvo2= instance.obtenerFactura(idFactura, (short)102);
         // TODO review the generated test code and remove the default call to fail.
         assertTrue(compararFacturaVO(fvo,fvo2));
     }

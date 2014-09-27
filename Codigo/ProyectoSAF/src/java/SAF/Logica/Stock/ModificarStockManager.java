@@ -8,12 +8,15 @@ package SAF.Logica.Stock;
 import SAF.Datos.Stock.StockDAO;
 import SAF.Logica.Abstract.AbstractManejador;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Fernanda
  */
+
+@Service
 public class ModificarStockManager extends AbstractManejador {
 
     @Autowired

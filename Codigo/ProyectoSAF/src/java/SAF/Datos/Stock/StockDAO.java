@@ -7,8 +7,6 @@
 package SAF.Datos.Stock;
 
 import SAF.Datos.Abstract.AbstractDAO;
-import java.text.DecimalFormat;
-import java.util.Date;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -21,9 +19,10 @@ public class StockDAO extends AbstractDAO {
     public void actualizarCantidadStock(int idProducto, int cantidad) {
 
         //Genero sentencia SQL
-        String sql = "UPDATE Stock set cantidad" + cantidad +" where idProducto = " + idProducto;
+        String sql = "UPDATE Stock set cantidad = ? where idProducto = ?";
 
-        this.getJdbcTemplate().update(sql);
+        Object[] parametros = new Object[] {cantidad,idProducto};
+        this.getJdbcTemplate().update(sql, parametros);
     }
     
     public int getCantidadStock(int idProducto) {
@@ -32,6 +31,6 @@ public class StockDAO extends AbstractDAO {
         String sql = "SELECT cantidad FROM Stock where idProducto = ?" ;
 
         return (int)getJdbcTemplate().queryForObject(
-			sql, new Object[] { idProducto }, int.class);
+			sql, new Object[] { idProducto }, Integer.class);
     }
 }

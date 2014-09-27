@@ -20,7 +20,7 @@ public class LoginDAO extends AbstractDAO{
     public boolean validarUsuario(int codigo){
         
         //Genero sentencia SQL
-        String sql = "select nombre from Usuario where codigo=?";  
+        String sql = "SELECT nombre FROM Usuario WHERE codigo=?";  
         try{
                 String nombre = (String)getJdbcTemplate().queryForObject(
                 sql, new Object[] { codigo }, String.class);          

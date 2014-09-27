@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
-public class indexController {
+public class IndexController {
     @RequestMapping(value = "index")
     public ModelAndView redireccion(){
         ModelAndView mv = new ModelAndView();

@@ -60,12 +60,12 @@ public class BuscarProductoDAO extends AbstractDAO{
         String sql ="select distinct p.idProducto, p.descripcion, p.precioCompra, p.precioVenta, p.habilitado,\n" +
                         "c.codigo, s.cantidad, v.fecha, pv.nombre as 'proveedor', t.descripcion as 'tipoiva', o.porcentBonif as 'porcentajeDescuento', o.descripcion as 'descDescuento'\n" +
                     "from producto p,proveedor pv, codigoproducto c, stock s, tipoiva t, vencimientostock v, ofertadescuento o\n" +
-                    "where (exists (select * from productoproveedor pp where p.idProducto=pp.idProducto and pv.idProveedor=pp.idProveedor)) -- existe proveedor\n" +
-                    "and (p.idProducto=s.idProducto) -- stock\n" +
-                    "and (c.idProducto = p.idProducto) -- obtengo codigo de barras\n" +
-                    "and (p.idTipoIVA=t.idTipoIVA)\n" +
-                    "and (v.idProducto=p.idProducto)\n" +
-                    "and (o.idProducto=p.idProducto)\n" +
+                    "where (exists (select * from productoproveedor pp where p.idProducto=pp.idProducto and pv.idProveedor=pp.idProveedor)) \n" +
+                        "and (p.idProducto=s.idProducto)\n" +
+                        "and (c.idProducto = p.idProducto)\n" +
+                        "and (p.idTipoIVA=t.idTipoIVA)\n" +
+                        "and (v.idProducto=p.idProducto)\n" +
+                        "and (exists (select * from ofertadescuentoproducto odp where p.idProducto=odp.idProducto and o.idOfertaDescuento=odp.idOfertaDescuento))\n" +
                     "order by p.idProducto;";
 
         Map <Integer,DatosCompletosProductoVO> productos = new HashMap<Integer,DatosCompletosProductoVO>();

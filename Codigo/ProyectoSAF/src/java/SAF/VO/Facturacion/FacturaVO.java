@@ -1,6 +1,5 @@
 package SAF.VO.Facturacion;
 
-
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -18,13 +17,13 @@ import java.util.Map;
  * @author Fernanda
  */
 public class FacturaVO {
-    
+
     private short idTipoFactura;
     private int idFactura;
     private int idCliente;
     private String RUT;
     private String razonSocial;
-    @JsonDeserialize(using=ShortDateDeserializer.class)
+    @JsonDeserialize(using = ShortDateDeserializer.class)
     private Timestamp fecha;
     private double descuento;
     private double montoNetoTotal;
@@ -32,7 +31,7 @@ public class FacturaVO {
     private double montoNetoGravIvaMin;
     private double montoTotal;
     private double montoTotalAPagar;
-    private double idTransaccion;
+    private long idTransaccion;
     private List<RenglonFacturaVO> renglones;
 
     public List<RenglonFacturaVO> getRenglones() {
@@ -46,27 +45,34 @@ public class FacturaVO {
     public FacturaVO() {
         renglones = new LinkedList<>();
     }
-    
-    public FacturaVO(Map<String,Object> query){
-        
-        idTipoFactura = ((Integer)query.get("idTipoFactura")).shortValue();
+
+    public FacturaVO(Map<String, Object> query) {
+
+        idTipoFactura = ((Integer) query.get("idTipoFactura")).shortValue();
         idFactura = (int) query.get("idFactura");
-        idCliente = (int) query.get("idCliente");
-        RUT = (String) query.get("RUT");
-        razonSocial = (String) query.get("RazonSocial");
+        if (query.get("idCliente") != null) {
+            idCliente = (int) query.get("idCliente");
+        }
+        if (query.get("RUT") != null) {
+            RUT = (String) query.get("RUT");
+        }
+        if (query.get("RazonSocial") != null) {
+            razonSocial = (String) query.get("RazonSocial");
+        }
         fecha = (Timestamp) query.get("fecha");
-        descuento = ((BigDecimal) query.get("descuento")).doubleValue();
+        if (query.get("descuento") != null) {
+            descuento = ((BigDecimal) query.get("descuento")).doubleValue();
+        }
         montoNetoTotal = ((BigDecimal) query.get("montoNetoTotal")).doubleValue();
         montoNetoGravIva = ((BigDecimal) query.get("montoNetoGralIva")).doubleValue();
         montoNetoGravIvaMin = ((BigDecimal) query.get("montoNetoGralIvaMin")).doubleValue();
         montoTotal = ((BigDecimal) query.get("montoTotal")).doubleValue();
         montoTotalAPagar = ((BigDecimal) query.get("montoTotalAPagar")).doubleValue();
-        idTransaccion = ((Long) query.get("idTransaccion")).doubleValue();
-        
-        
-        
+        if (query.get("idTransaccion") != null) {
+            idTransaccion = ((Long) query.get("idTransaccion"));
+        }
+
     }
-    
 
     public short getIdTipoFactura() {
         return idTipoFactura;
@@ -164,12 +170,12 @@ public class FacturaVO {
         this.montoTotalAPagar = montoTotalAPagar;
     }
 
-    public double getIdTransaccion() {
+    public long getIdTransaccion() {
         return idTransaccion;
     }
 
-    public void setIdTransaccion(double idTransaccion) {
+    public void setIdTransaccion(long idTransaccion) {
         this.idTransaccion = idTransaccion;
     }
-    
+
 }

@@ -10,6 +10,7 @@ import SAF.VO.Facturacion.RenglonFacturaVO;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.BeforeClass;
@@ -38,6 +39,45 @@ public class FacturacionManagerTest {
     /**
      * Test of ingresarFactura method, of class FacturacionManager.
      */
+    public boolean compararRenglones(List<RenglonFacturaVO> renglones1, List<RenglonFacturaVO> renglones2){
+       
+        boolean result = renglones1.size() == renglones2.size();
+        
+        for (int i = 0; i < renglones1.size() && result; i++){
+            
+            result = result && compararRenglonFacturaVO(renglones1.get(i), renglones2.get(i));
+        }
+        
+        return result;
+    }
+    
+    public boolean compararRenglonFacturaVO(RenglonFacturaVO f1,RenglonFacturaVO f2){
+        boolean result = f1.getIdFactura() == f2.getIdFactura() && f1.getIdTipoFactura() == f2.getIdTipoFactura();
+        result = result && f1.getCantidad() == f2.getCantidad() && f1.getDescCantBonif() == f2.getDescCantBonif();
+        result = result && f1.getDescDescripcion().equals(f2.getDescDescripcion())&& f1.getIdTransaccion() == f2.getIdTransaccion();
+        result = result && f1.getDescPorcentBonif()== f2.getDescPorcentBonif();
+        result = result && f1.getIdProducto()== f2.getIdProducto();
+       // result = result && f1.getIdRenglonFactura()== f2.getIdRenglonFactura(); //el idrenglonfactura es ai, mal!
+        result = result && f1.getPrecioProducto()== f2.getPrecioProducto();
+        result = result && f1.getPrecioVtaReal()== f2.getPrecioVtaReal();
+        return result;
+    }
+    
+    public boolean compararFacturaVO(FacturaVO f1, FacturaVO f2){
+        boolean result = f1.getIdFactura() == f2.getIdFactura() && f1.getIdTipoFactura() == f2.getIdTipoFactura();
+        result = result && f1.getIdCliente() == f2.getIdCliente();
+        result = result && f1.getDescuento() == f2.getDescuento() && f1.getIdTransaccion() == f2.getIdTransaccion();
+        result = result && f1.getMontoNetoGravIva() == f2.getMontoNetoGravIva();
+        result = result && f1.getMontoNetoGravIvaMin() == f2.getMontoNetoGravIvaMin();
+        result = result && f1.getMontoNetoTotal() == f2.getMontoTotal();
+        result = result && f1.getMontoTotal() == f2.getMontoTotal();
+        result = result && f1.getMontoTotalAPagar()== f2.getMontoTotalAPagar();
+        result = result && f1.getRUT().equals(f2.getRUT()) && f1.getRazonSocial().equals(f2.getRazonSocial());
+        result = result && compararRenglones(f1.getRenglones(),f2.getRenglones());
+        
+        return result;
+    }
+    
     @Test
     public void testIngresarFactura() {
         System.out.println("ingresarFactura");
@@ -71,9 +111,11 @@ public class FacturacionManagerTest {
         fvo.setRUT("rut");
         fvo.setRazonSocial("razo social");
         fvo.setRenglones(renglones);
-        instance.ingresarFactura(fvo);
+        int idFactura = instance.ingresarFactura(fvo);
+        fvo.setIdFactura(idFactura);
+        FacturaVO fvo2= instance.obtenerFactura(idFactura, (short)101);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(compararFacturaVO(fvo,fvo2));
     }
 
 }

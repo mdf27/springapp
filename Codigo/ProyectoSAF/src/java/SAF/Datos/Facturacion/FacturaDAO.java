@@ -7,7 +7,6 @@ package SAF.Datos.Facturacion;
 
 import SAF.Datos.Abstract.AbstractDAO;
 import SAF.VO.Facturacion.FacturaVO;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Repository;
@@ -25,14 +24,14 @@ public class FacturaDAO extends AbstractDAO {
 
         //Genero sentencia SQL
         String sql = "INSERT INTO Factura (idTipoFactura,  idCliente, RUT, razonSocial, fecha, descuento, montoNetoTotal, montoNetoGralIva,"
-                + " montoNetoGralIvaMin, montoTotal, montoTotalAPagar, idTransaccion) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + " montoNetoGralIvaMin, montoTotal, montoTotalAPagar) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         Object[] parametros = new Object[]{factura.getIdTipoFactura(), factura.getIdCliente(), factura.getRUT(), factura.getRazonSocial(), factura.getFecha(), factura.getDescuento(), factura.getMontoNetoTotal(), factura.getMontoNetoGravIva(), factura.getMontoNetoGravIvaMin(), factura.getMontoTotal(),
-            factura.getMontoTotalAPagar(), factura.getIdTransaccion()};
+            factura.getMontoTotalAPagar()};
 
         getJdbcTemplate().update(sql, parametros);
         
-        return (int)super.getLastID();
+        return super.getLastID().intValue();
     }
 
     public FacturaVO getFactura(int idFactura, short idTipoFactura) {

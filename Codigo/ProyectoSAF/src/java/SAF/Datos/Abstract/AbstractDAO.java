@@ -23,9 +23,9 @@ public abstract class AbstractDAO extends JdbcDaoSupport{
     }
     
     @Transactional
-    protected long getLastID(){
+    protected Long getLastID(){
         String sql = "SELECT LAST_INSERT_ID()";
         
-        return getJdbcTemplate().queryForObject(sql, long.class);
+        return getJdbcTemplate().queryForObject(sql, Long.class);
     }
 }

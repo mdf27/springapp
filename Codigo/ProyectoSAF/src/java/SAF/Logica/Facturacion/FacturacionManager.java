@@ -27,8 +27,11 @@ public class FacturacionManager extends AbstractManejador{
     
     @Autowired
     private FacturaDAO facturaDAO;
+    @Autowired
     private RenglonFacturaDAO renglonFacturaDAO;
+    @Autowired
     private TipoFacturaDAO tipoFacturaDAO;
+    @Autowired
     private TipoFormaPagoDAO tipoFormaPago;
     
     @Transactional(rollbackFor = Exception.class)
@@ -53,5 +56,13 @@ public class FacturacionManager extends AbstractManejador{
     
         return tipoFormaPago.obtenerTiposFormaPago();
         
+    };
+    
+    public FacturaVO obtenerFactura(int idFactura, short idTipoFactura){
+        
+        FacturaVO result = facturaDAO.getFactura(idFactura, idTipoFactura);
+        List<RenglonFacturaVO> renglones = renglonFacturaDAO.getRenglonesDeFactura(idFactura,idTipoFactura);
+        result.setRenglones(renglones);
+        return result;
     }
 }

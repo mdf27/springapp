@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class realizarFacturaController { //implements Controller{
+public class RealizarFacturaController { //implements Controller{
 
     @Autowired
     FacadeFacturacion facadeFacturacion;

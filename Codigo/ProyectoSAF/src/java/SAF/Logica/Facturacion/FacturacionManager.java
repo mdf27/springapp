@@ -11,6 +11,7 @@ import SAF.Datos.Facturacion.RenglonFacturaDAO;
 import SAF.Datos.Facturacion.TipoFacturaDAO;
 import SAF.Datos.Facturacion.TipoFormaPagoDAO;
 import SAF.Logica.Abstract.AbstractManejador;
+import SAF.Logica.Stock.ModificarStockManager;
 import SAF.VO.Facturacion.FacturaVO;
 import SAF.VO.Facturacion.RenglonFacturaVO;
 import SAF.VO.Facturacion.TipoFormaPagoVO;import java.util.List;import java.util.Map;
@@ -33,6 +34,8 @@ public class FacturacionManager extends AbstractManejador{
     private TipoFacturaDAO tipoFacturaDAO;
     @Autowired
     private TipoFormaPagoDAO tipoFormaPago;
+     @Autowired
+    private ModificarStockManager modifStock;
     
     @Transactional(rollbackFor = Exception.class)
     public int ingresarFactura(FacturaVO factura){
@@ -46,7 +49,15 @@ public class FacturacionManager extends AbstractManejador{
             
             renglon.setIdFactura(idFactura);
             renglonFacturaDAO.insertarRenglonFactura(renglon);
+            
+            if(renglon.getIdTipoFactura() == 101) //resto stock
+                modifStock.actualizarCantidadProducto(-renglon.getCantidad(), renglon.getIdProducto());
+            else
+                modifStock.actualizarCantidadProducto(renglon.getCantidad(), renglon.getIdProducto());
+            
         }
+        
+        
  
         return idFactura;
     

@@ -5,6 +5,7 @@
  */
 package SAF.Logica.Facturacion;
 
+import SAF.Datos.Stock.StockDAO;
 import SAF.VO.Facturacion.FacturaVO;
 import SAF.VO.Facturacion.RenglonFacturaVO;
 import java.sql.Timestamp;
@@ -25,6 +26,7 @@ public class FacturacionManagerTest {
 
 
     private static FacturacionManager instance;
+    private static StockDAO stockDao;
     private static ApplicationContext context;
 
     public FacturacionManagerTest() {
@@ -34,6 +36,7 @@ public class FacturacionManagerTest {
     public static void setUpClass() {
         context = new FileSystemXmlApplicationContext("file:web/WEB-INF/dispatcher-servlet.xml");
         instance = (FacturacionManager) context.getBean(FacturacionManager.class);
+        stockDao = (StockDAO) context.getBean(StockDAO.class);
     }
 
     /**
@@ -79,6 +82,7 @@ public class FacturacionManagerTest {
     }
     
     @Test
+     //NOTA DE CREDITO
     public void testIngresarFactura() {
         System.out.println("ingresarFactura");
         FacturaVO factura = null;
@@ -95,6 +99,7 @@ public class FacturacionManagerTest {
         renglon1.setPrecioProducto(10.01);
         renglon1.setPrecioVtaReal(10.01);
 
+        int cantidadPrevia = stockDao.getCantidadStock(100001);
         ArrayList<RenglonFacturaVO> renglones = new ArrayList<RenglonFacturaVO>();
         renglones.add(renglon1);
 
@@ -116,6 +121,50 @@ public class FacturacionManagerTest {
         FacturaVO fvo2= instance.obtenerFactura(idFactura, (short)102);
         // TODO review the generated test code and remove the default call to fail.
         assertTrue(compararFacturaVO(fvo,fvo2));
+        assertEquals(stockDao.getCantidadStock(100001) - 2, cantidadPrevia);
     }
 
+    
+        @Test
+     //FACTURA
+    public void testIngresarFactura2() {
+        System.out.println("ingresarFactura");
+        FacturaVO factura = null;
+        //renglon 1
+
+        RenglonFacturaVO renglon1 = new RenglonFacturaVO();
+        renglon1.setCantidad(2);
+        renglon1.setConReceta(false);
+        renglon1.setDescCantBonif(12);
+        renglon1.setDescDescripcion("10");
+        renglon1.setDescPorcentBonif(1);
+        renglon1.setIdProducto(100001);
+        renglon1.setIdTipoFactura((short) 101);
+        renglon1.setPrecioProducto(10.01);
+        renglon1.setPrecioVtaReal(10.01);
+
+        int cantidadPrevia = stockDao.getCantidadStock(100001);
+        ArrayList<RenglonFacturaVO> renglones = new ArrayList<RenglonFacturaVO>();
+        renglones.add(renglon1);
+
+        FacturaVO fvo = new FacturaVO();
+        fvo.setDescuento(10.01);
+        fvo.setFecha(new Timestamp(new Date().getTime()));
+        fvo.setIdCliente(1);
+        fvo.setIdTipoFactura((short) 101);
+        fvo.setMontoNetoGravIva(10.01);
+        fvo.setMontoNetoGravIvaMin(10.01);
+        fvo.setMontoNetoTotal(10.01);
+        fvo.setMontoTotal(10.01);
+        fvo.setMontoTotalAPagar(10.01);
+        fvo.setRUT("rut");
+        fvo.setRazonSocial("razo social");
+        fvo.setRenglones(renglones);
+        int idFactura = instance.ingresarFactura(fvo);
+        fvo.setIdFactura(idFactura);
+        FacturaVO fvo2= instance.obtenerFactura(idFactura, (short)101);
+        // TODO review the generated test code and remove the default call to fail.
+        assertTrue(compararFacturaVO(fvo,fvo2));
+        assertEquals(stockDao.getCantidadStock(100001) + 2, cantidadPrevia);
+    }
 }

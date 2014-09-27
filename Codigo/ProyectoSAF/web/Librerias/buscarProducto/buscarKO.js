@@ -17,7 +17,7 @@ function ViewModel() {
     var self = this;
     self.lista = ko.observableArray();
     self.filtro = ko.observable();
-
+    self.mostrarError = ko.observable(false);
     //paginado
     self.pageNumber = ko.observable(1);
     self.rowPerPage = 5;
@@ -50,7 +50,11 @@ function ViewModel() {
                     Accept: "application/json",
                     "Access-Control-Allow-Origin": "*"
                 },
-                success: self.cargarLista
+                success: self.cargarLista,
+                error: function (jqXHR, textStatus, errorThrown) {
+                    self.mostrarError(true);
+                }
+                
             });
         } else {
             self.lista.removeAll();
@@ -94,6 +98,7 @@ function ViewModel() {
     self.actualizarLista = function(d) {
         self.timerID = window.clearTimeout(self.timerID);
         self.timerID = window.setTimeout(function() {
+            self.mostrarError(false);
             self.buscar();
         }
         , 100);
@@ -101,6 +106,7 @@ function ViewModel() {
     };
 
     self.cargarLista = function(d) {
+        self.mostrarError(false);
         self.lista.removeAll();
         for (var i = 0; i < d.length; i++) {
             self.lista.push(d[i]);
@@ -416,8 +422,7 @@ function renglonFacturaVO(data) {
     this.idRenglonFactura = 0;
     this.cantidad = 0;
     this.conReceta = true;
-}
-;
+};
 
 var vm = new ViewModel();
 ko.applyBindings(vm);

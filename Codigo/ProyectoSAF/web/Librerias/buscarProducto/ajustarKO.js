@@ -1,6 +1,6 @@
 function ViewModel() {
     var self = this;
-    self.lista = ko.observableArray();
+    self.lista = ko.observableArray([]);
     self.filtro = ko.observable();
     self.mostrarError = ko.observable(false);
     //paginado
@@ -126,13 +126,7 @@ function ViewModel() {
         }
         self.ordenar();
     };
-
-
-
-
-
-
-
+    
     //paginado
     self.topePaginado = self.rowPerPage;
     self.totalPages = ko.computed(function() {
@@ -252,6 +246,18 @@ function ViewModel() {
         self.selectedResult(self.lista()[index]);
         self.indicePaginado(index);
         self.guardarProducto(self.lista()[index]);
+    };
+    
+    //editar
+    self.editingItem = ko.observable();
+    self.isItemEditing = function(itemToTest) {
+        return itemToTest== self.editingItem();
+    };
+    self.editItem = function (fruit) {
+        if (self.editingItem() == null) {           
+            // shows the edit fields
+            self.editingItem(fruit);
+        }
     };
 
 };

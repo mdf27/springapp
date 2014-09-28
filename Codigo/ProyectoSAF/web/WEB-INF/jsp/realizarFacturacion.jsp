@@ -140,18 +140,19 @@
                             <%-- Tabla productos--%>
                             <td colspan="5">
 
-                                <table class="table table-bordered">
+                                <div align="center">
+                                  <table class="table table-bordered">
                                     <thead>
-                                    <th>Cantidad</th>
-                                    <th>Nombre</th>
-                                    <th>Precio</th>
-                                    <th>Descuento</th>
-                                    <th>Receta</th>
-                                    <th>Precio venta</th>
-                                    <th>Subtotal</th>
-                                    </thead>
-                                    <tbody data-bind="foreach: renglonesFactura">
-                                        <tr>
+                                      <th>Cantidad</th>
+                                        <th>Nombre</th>
+                                        <th>Precio</th>
+                                        <th>Descuento</th>
+                                        <th>Receta</th>
+                                        <th>Precio venta</th>
+                                        <th>Subtotal</th>
+                                        </thead>
+                                      <tbody data-bind="foreach: renglonesFactura">
+                                          <tr>
                                             <td ><strong data-bind="text: cantidad" /></td> <%--Cantidad --%>
                                             <td ><strong data-bind="text: descripcion" /></td> <%--Nombre --%>
                                             <td ><strong data-bind="text: precio" /></td> <%--Precio --%>
@@ -159,23 +160,23 @@
                                             <td ><strong data-bind="text: receta" /></td> <%--Receta --%>
                                             <td ><strong data-bind="text: precioVenta" /></td> <%--Precio venta --%>
                                             <td ><strong data-bind="text: subtotal" /></td> <%--Subtotal --%>
-
-                                        </tr>  
-                                    </tbody>
+                                            
+                                          </tr>  
+                                      </tbody>
                                     <tbody data-bind="foreach: renglonesVacios">
-                                        <tr>
-                                            <td >&nbsp</td> <%--Cantidad --%>
-                                            <td >&nbsp</td> <%--Nombre --%>
-                                            <td >&nbsp</td> <%--Precio --%>
-                                            <td >&nbsp</td> <%--Descuento --%>
-                                            <td >&nbsp</td> <%--Receta --%>
-                                            <td >&nbsp</td> <%--Precio venta --%>
-                                            <td >&nbsp</td> <%--Subtotal --%>
+                                      <tr>
+                                        <td >&nbsp</td> <%--Cantidad --%>
+                                        <td >&nbsp</td> <%--Nombre --%>
+                                        <td >&nbsp</td> <%--Precio --%>
+                                        <td >&nbsp</td> <%--Descuento --%>
+                                        <td >&nbsp</td> <%--Receta --%>
+                                        <td >&nbsp</td> <%--Precio venta --%>
+                                        <td >&nbsp</td> <%--Subtotal --%>
                                         </tr>
-                                    </tbody>
-
-                                </table>
-                            </td>
+                                      </tbody>
+                                    
+                                    </table>
+                        </div></td>
 
                             <%--Total--%>
                             <td colspan="1">

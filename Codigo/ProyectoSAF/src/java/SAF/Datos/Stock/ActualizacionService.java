@@ -35,7 +35,7 @@ public class ActualizacionService {
         DataInfoProductoVO prod3 = new DataInfoProductoVO();
         DataInfoProductoVO prod4 = new DataInfoProductoVO();
 
-        prod.setNumeroArticulo(77);
+        prod.setNumeroArticulo(55);
         prod.setDescripcion("Ahora soy yo");
         prod.setTipoIVA("basico");
         BigDecimal num = new BigDecimal(255);
@@ -46,7 +46,7 @@ public class ActualizacionService {
         prod.setCodigoBarra("manu");
         productosDUSA.add(prod);
 
-        prod1.setNumeroArticulo(777);
+        prod1.setNumeroArticulo(555);
         prod1.setDescripcion("Ahora soy yo");
         prod1.setTipoIVA("basico");
         num = new BigDecimal(255);
@@ -57,7 +57,7 @@ public class ActualizacionService {
         prod1.setCodigoBarra("Estera");
         productosDUSA.add(prod1);
 
-        prod2.setNumeroArticulo(77777);
+        prod2.setNumeroArticulo(5555);
         prod2.setDescripcion("Ahora soy yo 2");
         prod2.setTipoIVA("basico");
         num = new BigDecimal(355);
@@ -68,7 +68,7 @@ public class ActualizacionService {
         prod2.setCodigoBarra("manu");
         productosDUSA.add(prod2);
 
-        prod3.setNumeroArticulo(77777);
+        prod3.setNumeroArticulo(55555);
         prod3.setDescripcion("Ahora soy yo 3");
         prod3.setTipoIVA("basico");
         num = new BigDecimal(655);
@@ -79,7 +79,7 @@ public class ActualizacionService {
         prod3.setCodigoBarra("manu");
         productosDUSA.add(prod3);
 
-        prod4.setNumeroArticulo(777777);
+        prod4.setNumeroArticulo(555555);
         prod4.setDescripcion("Ahora soy yo 20");
         prod4.setTipoIVA("basico");
         num = new BigDecimal(755);

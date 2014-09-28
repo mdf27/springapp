@@ -51,10 +51,10 @@ function ViewModel() {
                     "Access-Control-Allow-Origin": "*"
                 },
                 success: self.cargarLista,
-                error: function (jqXHR, textStatus, errorThrown) {
+                error: function(jqXHR, textStatus, errorThrown) {
                     self.mostrarError(true);
                 }
-                
+
             });
         } else {
             self.lista.removeAll();
@@ -255,7 +255,7 @@ function ViewModel() {
     };
 
     // Traer del controlador.
-    self.formasPago = [{formaPago: "Contado"}, {formaPago: "Credito"}];
+    self.formasPago = [{formaPago: "Contado"}];
     self.formaPago = ko.observable();
 
     self.vendedor = ko.observable();
@@ -271,6 +271,7 @@ function ViewModel() {
         self.buscarProd(!buscando);
         var prod = self.textoProducto();
         self.filtro(prod.toString());
+        self.actualizarLista();
     };
 
     self.montoNetoGravIva = ko.observable(0);
@@ -287,27 +288,14 @@ function ViewModel() {
     self.conReceta = ko.observable(false);
     self.cantProd = ko.observable(1);
     self.descuento = ko.observable(0);
-    self.total = ko.observable(0);
-//    self.total = ko.computed(function() {
-//        var largo = parseInt(self.renglonesFactura().length);
-//        var total = parseFloat(0);
-//        if (largo > 0) {
-//            for (i = 0; i < largo; i++) {
-//                var subtotal = parseFloat(self.renglonesFactura()[i].subtotal());
-//                total = total + subtotal;
-//            }
-//            ;
-//        }
-//        ;
-//
-//        return parseFloat(total).toFixed(2);
-//    }, this);
-
+    self.total = ko.observable(parseFloat(0).toFixed(2));
+    var f = new Date();
+    self.fecha = ko.observable(f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear());
     self.guardarProducto = function(data) {
         self.productoSeleccionado(data);
 
     };
-    // Nuevo
+
     self.estaProductoEnFactura = function(item) {
         var largo = parseInt(self.renglonesFactura().length);
         var esta = false;
@@ -315,9 +303,14 @@ function ViewModel() {
             var renglon = self.renglonesFactura()[i];
             // Es el mismo producto si tiene el mismo descuento, mismo codigo y ambos tienen o no receta.
             //var id = parseInt(renglon.codigo());
-
+            var descuento = self.descuento();
+            if(self.conReceta()){
+                if(item.descuentoReceta > descuento){
+                    descuento = item.descuentoReceta;
+                }
+            }
             if ((parseInt(renglon.codigo()) === item.idProducto) &&
-                    (renglon.descuento() === self.descuento()) &&
+                    (renglon.descuento() === descuento) &&
                     (renglon.receta() === self.conReceta())) {
                 // Parsear a entero porque javascript toma el + como concatenacion.
                 var cantAnterior = parseInt(renglon.cantidad());
@@ -327,15 +320,24 @@ function ViewModel() {
                 esta = true;
 
             }
-            return esta;
-        }
-        ;
+            
+        };
+        return esta;
 
     };
+
+    // Cuando se seleccionar con click, primero se guardan los datos y despues se selecciona.
+    self.selecccionarProductoClick = function(data) {
+        self.guardarProducto(data);
+        self.selecccionarProducto();
+    };
+
     self.selecccionarProducto = function() {
         var item = self.productoSeleccionado();
+        //var algo = self.descuento().match(/[0-9]+/);
+        if ((self.descuento().length !== 0) && (self.descuento().length !== 0)
+                && (self.descuento() <= 100) && (self.descuento() >= 0) && (self.cantProd() >= 0)) {
 
-        if (self.cantProd() != null) {
             if (!self.estaProductoEnFactura(item)) {
                 //Dependiendo del descuento, el precioVenta puede cambiar.
 //                if(self.descuento() > item.descuento)
@@ -364,10 +366,10 @@ function ViewModel() {
                     codigo: item.idProducto, // Nuevo
                     tipoIVA: item.tipoIVA,
                     porcentajeIVA: item.porcentajeIva
-                    
-                    
+
+
                 })
-                        
+
                         );
                 self.renglonesFacturaVO.push(new renglonFacturaVO({
                     idTipoFactura: 0, // Falta integrar tipo factura.
@@ -388,23 +390,22 @@ function ViewModel() {
 
                 // Renglon recien insertado.
                 var renglon = self.renglonesFactura()[self.renglonesFactura().length - 1];
-                
+
                 // Actualizo montos.
-                var precioListaSinIva =  (parseFloat(renglon.precio()) * 100) / (parseFloat(100+parseFloat(renglon.porcentajeIVA())));
+                var precioListaSinIva = (parseFloat(renglon.precio()) * 100) / (parseFloat(100 + parseFloat(renglon.porcentajeIVA())));
                 var descIva = parseFloat(renglon.precio()) - precioListaSinIva;
                 // Calculos montoIva
                 if (renglon.tipoIVA() === "basico") {
                     var montoAnterior = parseFloat(self.montoNetoGravIva());
-                    alert(descIva);
-                    self.montoNetoGravIva(montoAnterior + (descIva*parseInt(renglon.cantidad())));
+                    self.montoNetoGravIva(montoAnterior + (descIva * parseInt(renglon.cantidad())));
 
                 } else if (renglon.tipoIVA() === "minimo") {
                     var montoAnterior = parseFloat(self.montoNetoGravIvaMin());
-                    self.montoNetoGravIvaMin(montoAnterior + descIva*parseInt(renglon.cantidad()));
+                    self.montoNetoGravIvaMin(montoAnterior + descIva * parseInt(renglon.cantidad()));
                 }
                 // Calculo monto total sin iva.
                 var montoTotalAnterior = parseFloat(self.montoTotal());
-                self.montoTotal(montoTotalAnterior + parseFloat(renglon.precioVenta()-descIva)*parseInt(renglon.cantidad()));
+                self.montoTotal(montoTotalAnterior + parseFloat(renglon.precioVenta() - descIva) * parseInt(renglon.cantidad()));
                 // Calculo monto total con iva.
                 var subtotal = parseFloat(renglon.subtotal());
                 var totalAnterior = parseFloat(self.total());
@@ -414,19 +415,21 @@ function ViewModel() {
             ;
             self.realizandoFactura(true);
             self.buscarProd(false);
+
+            // Seteo variables a valores por defecto
+            self.cantProd(1);
+            self.descuento(0);
         }
-        // Seteo variables a valores por defecto
-        self.cantProd(1);
-        self.descuento(0);
+
+
     };
 
 //    // Enviar la factura
     self.realizarFactura = function() {
         var date = new Date();
         var timestamp = date.getTime();
-        alert("montoNGI: "+self.montoNetoGravIva()+" montoNGIM: "+self.montoNetoGravIvaMin()+"montoTotal sin iva: "+self.montoTotal());
-        
-               
+
+
         //var renglonData = ko.toJSON(self.renglonesFacturaVO()[0]) // Ver que pasa cuando no hay rut y r social, que manda?
         var data = ko.toJSON({idTipoFactura: 101, idFactura: 0, idCliente: 1, rut: self.nroRut(),
             razonSocial: self.rSocial(), fecha: timestamp, descuento: 0, montoNetoGravIva: self.montoNetoGravIva(),
@@ -472,7 +475,8 @@ function renglonFacturaVO(data) {
     this.idRenglonFactura = ko.observable(data.idRenglonFactura);
     this.cantidad = ko.observable(data.cantidad);
     this.conReceta = ko.observable(data.conReceta);
-};
+}
+;
 
 var vm = new ViewModel();
 ko.applyBindings(vm);

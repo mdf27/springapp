@@ -3,13 +3,23 @@
 <link href="CSS/menu.css" rel="stylesheet">
 <script src="Librerias/jquery.js"></script>
 <script src="Librerias/bootstrap/bootstrap-dropdown.js"></script>
+<script type="text/javascript" language="javascript" src="Librerias/shortcut.js"></script>
 
-
+<script type="text/javascript">
+    // Definicion de shortcuts
+    shortcut.add("Ctrl+F",
+            function() {
+                window.location.href = "realizarFacturacion.html";
+            },
+            {'type': 'keydown', 'propagate': true, 'target': document}
+    );
+</script>
 
 <script type="text/javascript">
     $(document).ready(function() {
         $('#facturacion').on('click', function() {
             $('#leftColuma').html('<div id = "tituloLeftMenu">Facturacion</div> <ul id="leftMenu"> <li><a href="realizarFacturacion.html"><i class="icon-plus"></i>Realizar factura</a></li><li><a href="#"><i class="icon-plus"></i>Crear nota de crédito</a></li> <li><a href="#"><i class="icon-search"></i>Facturas</a></li> <li class="divider"></li> <li><a href="#"><i class="icon-inbox"></i>Cerrar caja</a></li></ul>');
+            window.location.href = "realizarFacturacion.html";
         });
 
         $('#stock').on('click', function() {

@@ -27,7 +27,7 @@ public class ModificarProductoManager extends AbstractManejador {
     
     @Transactional(rollbackFor = Exception.class)
     public Map <String, List<ProductoVO>> actualizarProductosDUSA () {
-        return productoDAO.actualizarProductosDUSA(servicio.actualizarProductosDUSA());
+        return productoDAO.actualizarProductosDUSA(servicio.obtenerActualizacionDUSA(),servicio.obtenerLaboratoriosDUSA());
 //        productoDAO.actualizarProductosDUSA (productos);
     }
 }

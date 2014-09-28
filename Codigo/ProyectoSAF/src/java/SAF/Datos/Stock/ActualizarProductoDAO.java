@@ -153,16 +153,25 @@ public class ActualizarProductoDAO extends AbstractDAO {
     }
      
     
-     public void agregarLaboratorio (String nombreLab, List<DataLaboratorio> laboratorios){
+     public void agregarLaboratorio (String idLab, List<DataLaboratorio> laboratorios){
          boolean encontrado=false;
          
          // busco si existe el Laboratorio
         String sql = "SELECT idLaboratorio FROM Laboratorio"
                     + "WHERE nombre = ?";
-        Object [] params = new Object[] {nombreLab};
         
+        
+        Iterator it = laboratorios.iterator();
+        encontrado=false;
+        DataLaboratorio dl = null;
+        while(it.hasNext() && !encontrado){
+            dl=(DataLaboratorio)it.next();
+            if(dl.getIdLaboratorio().equals(idLab))
+                encontrado=true;
+        }
+        Object [] params = new Object[] {dl.getNombre()};  
         try{
-            String idLaboratorio=(String)this.getJdbcTemplate().queryForObject(sql, String.class);
+            this.getJdbcTemplate().queryForObject(sql, params, Integer.class);
             encontrado=true;
         } catch (Exception e) {
             encontrado = false;                      
@@ -172,15 +181,7 @@ public class ActualizarProductoDAO extends AbstractDAO {
           sql = "INSERT INTO Laboratorio (nombre, direccion, departamento, "
                   + "localidad,telefono)  VALUES (?,?,?,?,?)";
         //idTransaccion = super.getLastID();
-          Iterator it = laboratorios.iterator();
-          encontrado=false;
-          DataLaboratorio dl = null;
-          while(it.hasNext() && !encontrado){
-              dl=(DataLaboratorio)it.next();
-              if(dl.getNombre().equals(nombreLab))
-                  encontrado=true;
-          }
-          
+         
          // We take only first phone number 
         Object[] parametros = new Object[]{dl.getNombre(), dl.getDireccion(), dl.getDepartamento(),
         dl.getLocalidad(), dl.getTelefonos().get(0)};

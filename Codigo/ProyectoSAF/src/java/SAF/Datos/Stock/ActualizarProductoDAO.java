@@ -103,6 +103,7 @@ public class ActualizarProductoDAO extends AbstractDAO {
                 String codBarra = prodDUSA.getCodigoBarra();
                 agregarCodigoProducto(idProd, codBarra);
                 
+                agregarProductoProveedor ( idProd);
                 productosAgregados.add(getProducto(idProd));
             }   
         }
@@ -132,6 +133,14 @@ public class ActualizarProductoDAO extends AbstractDAO {
         this.getJdbcTemplate().update(sql, parametros);
     }
     
+     public void agregarProductoProveedor (int idProd){
+        String sql = "SELECT idProveedor FROM Proveedor WHERE nombre = \"DUSA\" ";
+        int idProveedor=(int)this.getJdbcTemplate().queryForObject(sql, Integer.class);
+        sql = "INSERT INTO ProductoProveedor (idProducto, idProveedor)  VALUES (?,?)";
+        //idTransaccion = super.getLastID();
+        Object[] parametros = new Object[]{idProd,idProveedor};
+        this.getJdbcTemplate().update(sql, parametros);
+    }
     public ProductoVO getProducto(int idProd){
         String sql = "SELECT * FROM Producto WHERE idProducto = ?";
         Object[] params = {idProd};

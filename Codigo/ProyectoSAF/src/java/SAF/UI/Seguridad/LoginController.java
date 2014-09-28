@@ -25,7 +25,7 @@ public class LoginController {
         if (cAcceso.controlDeLogin(session))
           mv.setViewName("inicio");
         else
-            mv.setViewName("index");
+          mv.setViewName("index");
         return (mv);
     }
 

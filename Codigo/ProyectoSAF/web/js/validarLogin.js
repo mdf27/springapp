@@ -30,4 +30,9 @@ $(document).ready(function () { //Verificamos que el documento este listo
         }
     });
     
+    
+    
 });//fin ready
+
+
+

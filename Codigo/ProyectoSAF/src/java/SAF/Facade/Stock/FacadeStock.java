@@ -5,6 +5,7 @@
  */
 package SAF.Facade.Stock;
 
+import SAF.Logica.Stock.AjustarStockManager;
 import SAF.Logica.Stock.BuscarProductoManager;
 import SAF.Logica.Stock.ModificarProductoManager;
 import SAF.VO.Stock.DatosCompletosMedProdVO;
@@ -25,12 +26,18 @@ import org.springframework.stereotype.Service;
 public class FacadeStock {
     @Autowired
     BuscarProductoManager bpm;
-    
+
+    @Autowired
+    AjustarStockManager atm;
 //    @Autowired
 //    ModificarProductoManager mpm;
     
     public List<DatosCompletosMedProdVO> buscarProducto(String texto_buscar, String filtro) throws ClassNotFoundException, ParseException, SQLException, IOException, java.text.ParseException{
         return bpm.buscarProducto(texto_buscar, filtro);
+    }
+
+    public List<DatosCompletosMedProdVO> ajustarStock() throws ClassNotFoundException, ParseException, SQLException, IOException, java.text.ParseException{
+        return atm.ajustarStock();
     }
     
     @Autowired
@@ -40,3 +47,4 @@ public class FacadeStock {
         return mpm.actualizarProductosDUSA();
     }     
 }
+

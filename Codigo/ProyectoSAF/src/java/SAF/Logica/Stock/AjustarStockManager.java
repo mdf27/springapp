@@ -1,0 +1,49 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package SAF.Logica.Stock;
+
+import SAF.Datos.Stock.BuscarProductoDAO;
+import SAF.Datos.Stock.LuceneDAO;
+import SAF.VO.Stock.DatosCompletosMedProdVO;
+import SAF.VO.Stock.DatosCompletosMedicamentoVO;
+import SAF.VO.Stock.DatosCompletosProductoVO;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+ *
+ * @author majo
+ */
+@Service
+public class AjustarStockManager {
+    @Autowired
+    private BuscarProductoDAO buscarDao;    
+    
+    public Map <Integer,DatosCompletosProductoVO> buscarProductos() throws java.text.ParseException{
+        return buscarDao.obtenerDatosCompletosProducto();
+    }
+    
+    public Map <Integer,DatosCompletosMedicamentoVO> buscarMedicamentos(){
+        return buscarDao.obtenerDatosCompletosMedicamento();
+    }
+    
+    @Transactional(rollbackFor=Exception.class)
+    public List<DatosCompletosMedProdVO> ajustarStock () throws ClassNotFoundException, ParseException, SQLException, IOException, java.text.ParseException{
+        LuceneDAO ldao = LuceneDAO.getInstance();
+        if (!ldao.indiceCargado()){//indiceCargado?
+            ldao.cargarProductos(buscarProductos(),buscarMedicamentos());
+        }          
+    
+        List<DatosCompletosMedProdVO> salida = ldao.obtenerTodosLosProductos();
+        return salida;
+    } 
+}

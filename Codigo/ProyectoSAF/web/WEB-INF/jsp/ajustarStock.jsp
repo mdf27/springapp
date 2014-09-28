@@ -30,7 +30,7 @@
         <!-- %request.getSession().setAttribute("menuBuscar","false");%-->
         <jsp:include page="include/menu.jsp"/>  
         <div id="contenedor">
-            <div id ="contenedorPrincipal" align="center"> data-bind="visible: $root.mostrarBuscar"> <jsp:directive.include file="include/ajustarStock.jsp"/>  </div> 
+            <div id ="contenedorPrincipal" align="center"> <jsp:directive.include file="include/ajustarStock.jsp"/>  </div> 
         </div>   
         <script id="buscarScript" type="text/javascript" language="javascript" charset="utf-8" src="Librerias/buscarProducto/ajustarKO.js"></script>
 

@@ -46,8 +46,10 @@ public class ActualizarProductoDAO extends AbstractDAO {
             prodDUSA = (DataInfoProductoVO) it.next();
             idProd = prodDUSA.getNumeroArticulo();
             descripcion = prodDUSA.getDescripcion();
+            // ver como funcionan los precios!  no es asi
             precioCompraNuevo = prodDUSA.getPrecioVenta();
             precioVentaNuevo = prodDUSA.getPrecioPublico();
+            // Investigar como funciona el habilitado! no es asi
             habilitadoNuevo = (prodDUSA.getHabilitado() == 1);  
             tipoIva = prodDUSA.getTipoIVA();
             
@@ -93,18 +95,13 @@ public class ActualizarProductoDAO extends AbstractDAO {
                 idTipoIva = (int)getJdbcTemplate().queryForObject(
 			sql, new Object[] { prodDUSA.getTipoIVA() }, Integer.class); 
                 
-                // agrego a producto
-                sql = "INSERT INTO producto (idProducto, idTipoIVA, descripcion, precioCompra, "
-                        + "precioVenta, habilitado)  VALUES (?,?,?,?,?,?)";
-                //idTransaccion = super.getLastID();
-                Object[] parametros = new Object[]{idProd, idTipoIva, descripcion, 
-                        precioCompraNuevo, precioVentaNuevo, habilitadoNuevo};
-                this.getJdbcTemplate().update(sql, parametros);
+                // agrego a producto               
+                agregarProducto(idProd,idTipoIva,descripcion,
+                        precioCompraNuevo,precioVentaNuevo,habilitadoNuevo);
                 
-                 sql = "INSERT INTO CodigoProducto (idProducto, codigo)  VALUES (?,?)";
-                //idTransaccion = super.getLastID();
-                parametros = new Object[]{idProd, prodDUSA.getCodigoBarra()};
-                this.getJdbcTemplate().update(sql, parametros);
+                // agrego a codigoProducto
+                String codBarra = prodDUSA.getCodigoBarra();
+                agregarCodigoProducto(idProd, codBarra);
                 
                 productosAgregados.add(getProducto(idProd));
             }   
@@ -116,6 +113,23 @@ public class ActualizarProductoDAO extends AbstractDAO {
         productosActualizados.put("habilitaron", productosHabilitados);
         productosActualizados.put("deshabilitaron", productosDeshabilitados);
         return productosActualizados;
+    }
+    
+    public void agregarProducto (int idProd, int idTipoIva, String descripcion, 
+            BigDecimal precioCompraNuevo, BigDecimal precioVentaNuevo, boolean habilitadoNuevo){
+        String sql = "INSERT INTO producto (idProducto, idTipoIVA, descripcion, precioCompra, "
+                + "precioVenta, habilitado)  VALUES (?,?,?,?,?,?)";
+        //idTransaccion = super.getLastID();
+        Object[] parametros = new Object[]{idProd, idTipoIva, descripcion, 
+                precioCompraNuevo, precioVentaNuevo, habilitadoNuevo};
+        this.getJdbcTemplate().update(sql, parametros);
+    } 
+    
+    public void agregarCodigoProducto (int idProd, String codBarra){
+        String sql = "INSERT INTO CodigoProducto (idProducto, codigo)  VALUES (?,?)";
+        //idTransaccion = super.getLastID();
+        Object[] parametros = new Object[]{idProd, codBarra};
+        this.getJdbcTemplate().update(sql, parametros);
     }
     
     public ProductoVO getProducto(int idProd){

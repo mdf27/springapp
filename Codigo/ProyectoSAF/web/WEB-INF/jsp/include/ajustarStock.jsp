@@ -6,10 +6,12 @@
 <div> 
     <table width="796" border="0">
         <tr>
-            <td colspan="6"><div align="left" style="font-family: Arial; font-size: 25px; font-weight: bold">Productos:</div></td>
+            <td colspan="5"><div align="left" style="font-family: Arial; font-size: 25px; font-weight: bold">Productos:</div></td>
+            <td><button type="button" class="btn btn-primary">Ajustar Stock</button>
+            <div align="right"></div></td>
         </tr>
         <tr>
-            <td height="46" colspan="6">&nbsp;</td>
+            <td height="46" colspan="6"><div align="right"></div></td>
         </tr>
         <tr>
             <td width="157"><span class="container body-content">
@@ -50,12 +52,12 @@
 
     <div class="container body-content" ></div>
     <p></p>
-    <table width="94%" class="table" style ="width: 95% !important" data-bind="visible: $root.lista().length>0 ">
+    <table width="80%" height="48" class="table" style ="width: 95% !important" data-bind="visible: $root.lista().length>0 ">
         <thead>
             
-            <tr><th width="20%"><div align="center">Nombre</div></th><th width="16%"><div align="center">Laboratorio</div></th><th width="10%"><div align="center">Estado</div></th><th width="11%"><div align="center">Cantidad</div></th><th width="15%"><div align="center">Precio Lista</div></th><th width="13%"><div align="center">Farmadescuento</div></th><th width="15%"><div align="center">Precio Venta</div></th></tr>
+            <tr><th width="20%"><div align="center">Nombre</div></th><th width="11%"><div align="center">Laboratorio</div></th><th width="11%"><div align="center">Estado</div></th><th width="8%"><div align="center">Cantidad</div></th><th width="10%"><div align="center">Precio Lista</div></th><th width="10%"><div align="center">Farmadescuento</div></th><th width="10%"><div align="center">Precio Venta</div></th></tr>
         </thead>
-        <tbody data-bind="foreach: paginated">
+        <tbody data-bind="foreach: cargadoInicial">
             <tr>                            
                 <td><li data-bind="click: $parent.selectResult"><a><p align="left" data-bind="text: descripcion"></p></a></li></td>
                 <td><p align="center" data-bind="text: laboratorio"></p></td>
@@ -67,6 +69,6 @@
             </tr>
         </tbody>
     </table>
-    <div align="center" data-bind="visible: ($root.lista().length<=0) && ($root.mostrarError)">No existen resultados para su búsqueda.</div>
+  <div align="center" data-bind="visible: ($root.lista().length<=0) && ($root.mostrarError)">No existen resultados para su búsqueda.</div>
 </div>
 

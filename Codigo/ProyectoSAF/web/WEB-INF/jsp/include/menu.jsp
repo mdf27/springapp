@@ -25,6 +25,10 @@
         $('#stock').on('click', function() {
             $('#leftColuma').html('<div id = "tituloLeftMenu">Productos</div><ul id="leftMenu"><li><a href="ajustarStock.htm"><i class="icon-search"></i>Productos</a></li><li><a href="#"><i class="icon-plus"></i>Alta producto</a></li><li><a href="#"><i class="icon-search"></i>Descuentos</a></li> <li><a href="#"><i class="icon-plus"></i>Alta descuento</a></li><li><a href="#"><i class="icon-search"></i>Proveedores</a></li><li><a href="#"><i class="icon-plus"></i>Alta proveedor</a></li><li><a href="actualizarProductosDUSA.html"><i class="icon-refresh"></i>Actualizar base de datos</a></li></ul>');
         });
+        
+        $('#clientes').on('click', function() {
+            $('#leftColuma').html('<div id = "tituloLeftMenu">Clientes</div><ul id="leftMenu"><li><a href="registrarCliente"><i class="icon-plus"></i>Clientes</a></li><li><a href="#"><i class="icon-eye-open"></i>Ver Cliente</a></li></ul>');
+        });
     });
 </script>  
 
@@ -40,7 +44,7 @@
                     <li><a href="#" id="stock" style="color:#FFF">Stock</a></li> 
 
                     <li><a href="#" style="color:#FFF">Compras</a></li> 
-                    <li><a href="#" style="color:#FFF">Clientes</a></li>   
+                    <li><a href="#" id="clientes" style="color:#FFF">Clientes</a></li>   
 
                     <li><a href="#" style="color:#FFF">Reponer Stock</a></li> 
                     <li class="dropdown">

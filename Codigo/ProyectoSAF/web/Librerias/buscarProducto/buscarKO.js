@@ -28,12 +28,12 @@ function ViewModel() {
         if (self.filtro() && self.filtro().length > 2) {
             var buscar = "";
             if (self.selectedOptionValueFiltro() == "Código:") {
-                buscar = "numero"
+                buscar = "codigos"
             } else if (self.selectedOptionValueFiltro() == "Laboratorio:") {
                 buscar = "laboratorio"
             } else if (self.selectedOptionValueFiltro() == "Droga:") {
-                buscar = "Droga"
-            } else if (self.selectedOptionValueFiltro() == "Presentacion:") {
+                buscar = "drogas"
+            } else if (self.selectedOptionValueFiltro() == "Presentación:") {
                 buscar = "presentacion"
             } else if (self.selectedOptionValueFiltro() == "Todo:") {
                 buscar = "all"
@@ -75,21 +75,37 @@ function ViewModel() {
                     self.lista.sort(function(a, b) {
                         return a.descripcion < b.descripcion ? -1 : 1;
                     });
-                } else if (self.selectedOptionValue() == "Precio descendente") {
+                } else if (self.selectedOptionValue() == "Precio Lista descendente") {
                     self.lista.sort(function(a, b) {
-                        return a.precio > b.precio ? -1 : 1;
+                        return a.precioLista > b.precioLista ? -1 : 1;
                     });
-                } else if (self.selectedOptionValue() == "Precio ascendente") {
+                } else if (self.selectedOptionValue() == "Precio Lista ascendente") {
                     self.lista.sort(function(a, b) {
-                        return a.precio < b.precio ? -1 : 1;
+                        return a.precioLista < b.precioLista ? -1 : 1;
                     });
+                } else if (self.selectedOptionValue() == "Precio Venta descendente") {
+                    self.lista.sort(function(a, b) {
+                        return a.precioVenta > b.precioVenta ? -1 : 1;
+                    });
+                } else if (self.selectedOptionValue() == "Farmadescuento descendente") {
+                    self.lista.sort(function(a, b) {
+                        return a.precioLista > b.precioLista ? -1 : 1;
+                    });
+                } else if (self.selectedOptionValue() == "Farmadescuento ascendente") {
+                    self.lista.sort(function(a, b) {
+                        return a.precioLista < b.precioLista ? -1 : 1;
+                    });    
+                } else if (self.selectedOptionValue() == "Precio Venta ascendente") {
+                    self.lista.sort(function(a, b) {
+                        return a.precioLista < b.precioLista ? -1 : 1;
+                    });    
                 } else if (self.selectedOptionValue() == "Laboratorio descendente") {
                     self.lista.sort(function(a, b) {
-                        return a.lab > b.lab ? -1 : 1;
+                        return a.laboratorio > b.laboratorio ? -1 : 1;
                     });
                 } else if (self.selectedOptionValue() == "Laboratorio ascendente") {
                     self.lista.sort(function(a, b) {
-                        return a.lab < b.lab ? -1 : 1;
+                        return a.laboratorio < b.laboratorio ? -1 : 1;
                     });
                 }
                 ;
@@ -175,7 +191,7 @@ function ViewModel() {
         this.hiddenSelected(true)
     };
     //ordenar                    
-    self.optionValues = ["Nombre descendente", "Nombre ascendente", "Precio descendente", "Precio ascendente", "Laboratorio descendente", "Laboratorio ascendente"],
+    self.optionValues = ["Nombre descendente", "Nombre ascendente", "Laboratorio descendente","Laboratorio ascendente", "Precio Lista descendente", "Precio Lista ascendente", "Precio Venta descendente", "Precio Venta ascendente", "Farmadescuento descendente", "Farmadescuento ascendente"],
             //self.selectedChoice = ko.observable();
             self.selectionChanged = function(event) {
                 self.ordenar();

@@ -171,7 +171,8 @@ public class LuceneDAO extends AbstractDAO{
         while(it.hasNext()){
             DatosCompletosProductoVO rt = (DatosCompletosProductoVO)productos.get(it.next());
             Document d = new Document();
-            d.add(new org.apache.lucene.document.TextField ("idProducto", ""+rt.getIdProducto(), Field.Store.YES));
+            int idProducto = rt.getIdProducto();
+            d.add(new org.apache.lucene.document.TextField ("idProducto", ""+idProducto, Field.Store.YES));
             d.add(new org.apache.lucene.document.TextField ("descripcion", rt.getDescripcion(), Field.Store.YES));
    
             d.add(new org.apache.lucene.document.TextField ("precioVenta", ""+rt.getPrecioVenta(), Field.Store.YES));
@@ -189,9 +190,10 @@ public class LuceneDAO extends AbstractDAO{
             d.add(new org.apache.lucene.document.TextField ("descuentos",""+devolverDescuentos(rt), Field.Store.YES));
             d.add(new org.apache.lucene.document.TextField ("descipcionesDescuento",devolverDescripcionDescuentos(rt), Field.Store.YES));
             
-            Iterator it1 = medicamentos.keySet().iterator();
-            while (it1.hasNext()){
-                DatosCompletosMedicamentoVO m = (DatosCompletosMedicamentoVO)medicamentos.get(it1.next());
+            //Iterator it1 = medicamentos.keySet().iterator();
+            //while (it1.hasNext()){
+            DatosCompletosMedicamentoVO m = (DatosCompletosMedicamentoVO)medicamentos.get(idProducto);
+            if (m!=null){
                 if (m.isRequiereReceta())
                     d.add(new org.apache.lucene.document.TextField ("requiereReceta","Si", Field.Store.YES));
                 else
@@ -249,15 +251,21 @@ public class LuceneDAO extends AbstractDAO{
             String codigos = d.get("codigos");
             String proveedor =d.get("proveedor");
             String tipoIva = d.get("tipoIva");
-            String receta="";
-            if (d.get("requiereReceta").equals("Si"))
-                receta+="Si";
-            else
-                receta+="No";
-            String drogas =  d.get("drogas");
-            String laboratorio =  d.get("laboratorio");
-            String accion = d.get("accion");
-            String presentacion=  d.get("presentacion");
+            String receta="-";
+            String drogas="-";
+            String laboratorio="-";
+            String accion="-";
+            String presentacion="-";
+            if (d.get("requiereReceta")!=null){
+                if (d.get("requiereReceta").equals("Si"))
+                    receta+="Si";
+                else
+                    receta+="No";
+                drogas =  d.get("drogas");
+                laboratorio =  d.get("laboratorio");
+                accion = d.get("accion");
+                presentacion=  d.get("presentacion");
+            }
             double descuentoReceta = 0;
             double descuentoProducto = 0;
             double precioVenta = Double.valueOf(d.get("precioVenta"));
@@ -321,6 +329,7 @@ public class LuceneDAO extends AbstractDAO{
 
             productos.add(productoMedicamento);
     }
+    
     public List<DatosCompletosMedProdVO> buscarProducto(String texto_buscar, String filtro) throws IOException, ParseException, java.text.ParseException{
         StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_40); 
         
@@ -335,9 +344,9 @@ public class LuceneDAO extends AbstractDAO{
         
         if (filtro.equals("all")){
             if (espacios)
-                querystr = querystr = "numero: "+ texto_buscar + " OR laboratorio: "+ texto_buscar + " OR descripcion: " + texto_buscar;
+                querystr = querystr = "codigos: "+ texto_buscar + " OR laboratorio: "+ texto_buscar + " OR descripcion: " + texto_buscar+ " OR drogas: " + texto_buscar+ " OR presentacion: " + texto_buscar;
             else
-                querystr = "numero: "+ texto_buscar + "* OR laboratorio: "+ texto_buscar + "* OR descripcion: " + texto_buscar +"*";
+                querystr = "codigos: "+ texto_buscar + "* OR laboratorio: "+ texto_buscar + "* OR descripcion: " + texto_buscar +"* OR presentacion: " + texto_buscar +"* OR drogas: " + texto_buscar +"*";
                 
         }else{
             if (espacios)
@@ -347,7 +356,7 @@ public class LuceneDAO extends AbstractDAO{
         }
         Query q = new QueryParser(Version.LUCENE_40,"", analyzer).parse(querystr);
         
-        IndexReader reader = DirectoryReader.open(this.getIndiceProductosLucene());
+        IndexReader reader = DirectoryReader.open(this.indiceProductosLucene);
         IndexSearcher searcher = new IndexSearcher(reader);
         TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, true);
         searcher.search(q, collector);

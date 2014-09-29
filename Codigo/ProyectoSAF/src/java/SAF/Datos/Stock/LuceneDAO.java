@@ -258,9 +258,9 @@ public class LuceneDAO extends AbstractDAO{
             String presentacion="-";
             if (d.get("requiereReceta")!=null){
                 if (d.get("requiereReceta").equals("Si"))
-                    receta+="Si";
+                    receta="Si";
                 else
-                    receta+="No";
+                    receta="No";
                 drogas =  d.get("drogas");
                 laboratorio =  d.get("laboratorio");
                 accion = d.get("accion");

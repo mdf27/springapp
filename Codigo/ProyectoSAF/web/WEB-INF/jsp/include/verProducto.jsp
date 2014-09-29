@@ -49,6 +49,11 @@
       <td>&nbsp;</td>
     </tr>
     <tr>
+      <td style="font-weight: bold;">Presentación:</td>
+      <td><span data-bind="text: $root.selectedResult().presentacion"></span></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
       <td style="font-weight: bold;">Vencimientos:</td>
       <td><span data-bind="text: $root.selectedResult().vencimientos"></span> </td>
       <td>&nbsp;</td>

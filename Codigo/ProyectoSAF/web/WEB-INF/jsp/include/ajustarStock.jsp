@@ -1,3 +1,4 @@
+
 <%-- 
     Document   : ajustarStock
     Created on : 27-sep-2014, 15:51:30
@@ -7,8 +8,7 @@
     <table width="796" border="0">
         <tr>
             <td colspan="5"><div align="left" style="font-family: Arial; font-size: 25px; font-weight: bold">Productos:</div></td>
-            <td><button type="button" class="btn btn-primary">Ajustar Stock</button>
-            <div align="right"></div></td>
+            <td><div align="right"></div></td>
         </tr>
         <tr>
             <td height="46" colspan="6"><div align="right"></div></td>
@@ -55,17 +55,25 @@
     <table width="80%" height="48" class="table" style ="width: 95% !important" data-bind="visible: $root.lista().length>0 ">
         <thead>
             
-            <tr><th width="20%"><div align="center">Nombre</div></th><th width="11%"><div align="center">Laboratorio</div></th><th width="11%"><div align="center">Estado</div></th><th width="8%"><div align="center">Cantidad</div></th><th width="10%"><div align="center">Precio Lista</div></th><th width="10%"><div align="center">Farmadescuento</div></th><th width="10%"><div align="center">Precio Venta</div></th></tr>
+            <tr><th width="20%"><div align="center">Nombre</div></th><th width="11%"><div align="center">Laboratorio</div></th><th width="11%"><div align="center">Estado</div></th><th width="8%"><div align="center">Cantidad</div></th><th width="10%"><div align="center">Precio Lista</div></th><th width="10%"><div align="center">Farmadescuento</div></th><th width="10%"><div align="center">Precio Venta</div></th>
+              <th width="10%">&nbsp;</th>
+            </tr>
         </thead>
         <tbody data-bind="foreach: cargadoInicial">
             <tr>                            
-                <td><li data-bind="click: $parent.selectResult"><a><p align="left" data-bind="text: descripcion"></p></a></li></td>
+                <td><a><p align="left" data-bind="text: descripcion, click: $parent.selectResult"></p></a></td>
                 <td><p align="center" data-bind="text: laboratorio"></p></td>
                 <td><p align="center" data-bind="text: habilitado"></p></td>
-                <td><p align="center" data-bind="text: cantidad"></p></td>
+                <td><div align="center">
+                  <input type="text" class="edit" size="5" maxlength="5" align="left" data-bind="value: cantidad, visible: $root.isItemEditing($data)" >
+                  <label class="read" data-bind="text: cantidad, visible: !$root.isItemEditing($data)" />
+                  </div>
+                </td>
                 <td><p style="color: #d43f3a;" align="center" data-bind="text: '$ '+ precioLista"></p></td>
                 <td><p style="color: #d43f3a;" align="center" data-bind="text: '$ '+ farmaDescuento" ></p></td>
-                <td><p style="color: #d43f3a;" align="center" data-bind="text: '$ '+ precioVenta"></p></td>                
+                <td><p style="color: #d43f3a;" align="center" data-bind="text: '$ '+ precioVenta"></p></td>
+                <td><button data-bind="click: $root.editItem.bind($root), visible: !$root.isItemEditing($data)" type="button" class="btn btn-primary">Ajustar</button><button data-bind="click: $root.applyFruit.bind($root), visible: $root.isItemEditing($data)" type="button" class="btn btn-primary">Aplicar</button></td>                
+                
             </tr>
         </tbody>
     </table>

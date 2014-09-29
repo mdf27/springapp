@@ -52,7 +52,7 @@
         </thead>
         <tbody data-bind="foreach: paginated">
             <tr>                            
-                <td><li data-bind="click: $parent.selectResult"><a><p align="left" data-bind="text: descripcion"></p></a></li></td>
+                <td><a><p align="left" data-bind="text: descripcion, click: $parent.selectResult"></p></a></td>
                 <td><p align="center" data-bind="text: laboratorio"></p></td>
                 <td><p align="center" data-bind="text: habilitado"></p></td>
                 <td><p align="center" data-bind="text: cantidad"></p></td>

@@ -13,6 +13,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Repository;
+import uy.com.dusa.ws.DataInfoProducto;
+import uy.com.dusa.ws.DataLaboratorio;
 
 /**
  *
@@ -21,17 +23,17 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ActualizarProductoDAO extends AbstractDAO {
-    public Map <String, List<ProductoVO>> actualizarProductosDUSA(List<DataInfoProductoVO> productos) {
+    public Map <String, List<ProductoVO>> actualizarProductosDUSA(List<DataInfoProducto> productos, 
+        List<DataLaboratorio> laboratorios) {
         List <ProductoVO> productosAgregados = new ArrayList<>();
         List <ProductoVO> productosAumentaron = new ArrayList<>();
         List <ProductoVO> productosDisminuyeron = new ArrayList<>();
         List <ProductoVO> productosHabilitados = new ArrayList<>();
         List <ProductoVO> productosDeshabilitados = new ArrayList<>();
         String sql;
-        int idTipoIva = 0;
+        int idTipoIva;
         int idProd;
         String descripcion;
-        String tipoIva;
         BigDecimal precioCompraNuevo;
         BigDecimal precioVentaNuevo = null;
         BigDecimal precioVentaActual = null;
@@ -40,10 +42,10 @@ public class ActualizarProductoDAO extends AbstractDAO {
         boolean encontrado;
         //long idTransaccion;
         Iterator it = productos.iterator();
-        DataInfoProductoVO prodDUSA;
+        DataInfoProducto prodDUSA;
         Object[] params;
         while(it.hasNext()){
-            prodDUSA = (DataInfoProductoVO) it.next();
+            prodDUSA = (DataInfoProducto) it.next();
             idProd = prodDUSA.getNumeroArticulo();
             descripcion = prodDUSA.getDescripcion();
             // ver como funcionan los precios!  no es asi
@@ -51,17 +53,15 @@ public class ActualizarProductoDAO extends AbstractDAO {
             precioVentaNuevo = prodDUSA.getPrecioPublico();
             // Investigar como funciona el habilitado! no es asi
             habilitadoNuevo = (prodDUSA.getHabilitado() == 1);  
-            tipoIva = prodDUSA.getTipoIVA();
+            idTipoIva = Integer.parseInt(prodDUSA.getTipoIVA());
             
             // busco si existe el producto y obtengo el idTipoIVA
-            sql = "SELECT p.precioVenta, p.habilitado, p.idTipoIva FROM Producto p, tipoiva ti  "
-                    + "WHERE p.idProducto = ? AND ti.descripcion = ? AND p.idTipoIva = ti.idTipoIva";
-            params = new Object[] {idProd, tipoIva};
+            sql = "SELECT precioVenta, habilitado FROM Producto WHERE idProducto = ?";
+            params = new Object[] {idProd};
             try {
                 Map<String, Object> resultQuery = getJdbcTemplate().queryForMap(sql, params);
                 precioVentaActual = (BigDecimal) resultQuery.get("precioVenta");
                 habilitadoActual = (boolean) resultQuery.get("habilitado");
-                idTipoIva = (int) resultQuery.get("idTipoIva");
                 encontrado = true;
             } catch (Exception e) {
                 encontrado = false;                      
@@ -72,10 +72,10 @@ public class ActualizarProductoDAO extends AbstractDAO {
                 sql = "UPDATE Producto SET precioCompra =" + "?" +", precioVenta =" 
                         + "?" + ", descripcion =" + "?" +
                         ", habilitado = " + "?" + 
-                        " WHERE idProducto = " + "?" 
-                        + " AND idTipoIva = " + "?";
+                        ", idTipoIva = " + "?" + 
+                        " WHERE idProducto = " + "?";
                 params = new Object [] { precioCompraNuevo.doubleValue(), precioVentaNuevo.doubleValue(), 
-                    descripcion, habilitadoNuevo, idProd, idTipoIva};
+                    descripcion, habilitadoNuevo, idTipoIva, idProd};
                 this.getJdbcTemplate().update(sql,params);
                 // si precioNuevo < precioActual lo agrego a la lista de aumentaron
                 if (precioVentaNuevo.compareTo(precioVentaActual) < 0) 
@@ -91,9 +91,17 @@ public class ActualizarProductoDAO extends AbstractDAO {
             
             // si no existia producto entonces debo agregarlo
             } else { 
-                sql = "SELECT idTipoIva FROM tipoiva WHERE descripcion = ?";
-                idTipoIva = (int)getJdbcTemplate().queryForObject(
-			sql, new Object[] { prodDUSA.getTipoIVA() }, Integer.class); 
+//                sql = "SELECT idTipoIva FROM tipoiva WHERE descripcion = ?";
+//                String iva;
+//                if (prodDUSA.getTipoIVA().length() < 10) {
+//                    iva = prodDUSA.getTipoIVA();
+//                } else {
+//                    iva = prodDUSA.getTipoIVA().substring(0,10);
+//                }
+//                idTipoIva = (int)getJdbcTemplate().queryForObject(
+//			sql, new Object[] { iva }, Integer.class); 
+//              
+                agregarLaboratorio(prodDUSA.getIdLaboratorio(),laboratorios);
                 
                 // agrego a producto               
                 agregarProducto(idProd,idTipoIva,descripcion,
@@ -103,6 +111,10 @@ public class ActualizarProductoDAO extends AbstractDAO {
                 String codBarra = prodDUSA.getCodigoBarra();
                 agregarCodigoProducto(idProd, codBarra);
                 
+                // aregar productoProveedor
+                agregarProductoProveedor ( idProd);
+                
+                agregarLaboratorio(prodDUSA.getIdLaboratorio(),laboratorios);
                 productosAgregados.add(getProducto(idProd));
             }   
         }
@@ -116,7 +128,7 @@ public class ActualizarProductoDAO extends AbstractDAO {
     }
     
     public void agregarProducto (int idProd, int idTipoIva, String descripcion, 
-            BigDecimal precioCompraNuevo, BigDecimal precioVentaNuevo, boolean habilitadoNuevo){
+        BigDecimal precioCompraNuevo, BigDecimal precioVentaNuevo, boolean habilitadoNuevo){
         String sql = "INSERT INTO producto (idProducto, idTipoIVA, descripcion, precioCompra, "
                 + "precioVenta, habilitado)  VALUES (?,?,?,?,?,?)";
         //idTransaccion = super.getLastID();
@@ -132,6 +144,59 @@ public class ActualizarProductoDAO extends AbstractDAO {
         this.getJdbcTemplate().update(sql, parametros);
     }
     
+     public void agregarProductoProveedor (int idProd){
+        String sql = "SELECT idProveedor FROM Proveedor WHERE nombre = \"DUSA\" ";
+        int idProveedor=(int)this.getJdbcTemplate().queryForObject(sql, Integer.class);
+        sql = "INSERT INTO ProductoProveedor (idProducto, idProveedor)  VALUES (?,?)";
+        //idTransaccion = super.getLastID();
+        Object[] parametros = new Object[]{idProd,idProveedor};
+        this.getJdbcTemplate().update(sql, parametros);
+    }
+     
+    
+     public void agregarLaboratorio (String idLab, List<DataLaboratorio> laboratorios){
+         boolean encontrado=false;
+         
+         // busco si existe el Laboratorio - como es todo en una misma transacción 
+         // no encuentra que ya esta y lo agrega  todas las veces que apareza el nuevo
+         // al ppio deberiamos ya tener cargados todos los laboratorios
+         // que nos da DUSA en su lista.  
+         String sql = "SELECT idLaboratorio FROM Laboratorio"
+                    + " WHERE nombre = ?";
+        
+        
+        Iterator it = laboratorios.iterator();
+        encontrado=false;
+        DataLaboratorio dl = null;
+        while(it.hasNext() && !encontrado){
+            dl=(DataLaboratorio)it.next();
+            if(dl.getIdLaboratorio().equals(idLab))
+                encontrado=true;
+        }
+        Object [] params = new Object[] {dl.getNombre()};  
+        try{
+            int id = (int) this.getJdbcTemplate().queryForObject(sql, params, Integer.class);
+            encontrado=true;
+        } catch (Exception e) {
+            encontrado = false;                      
+        }  
+        
+        if(!encontrado){
+          sql = "INSERT INTO Laboratorio (nombre, direccion, departamento, "
+                  + "localidad,telefono)  VALUES (?,?,?,?,?)";
+        //idTransaccion = super.getLastID();
+         String telefono = "";
+         if (!dl.getTelefonos().isEmpty())
+             telefono = dl.getTelefonos().get(0);
+         // We take only first phone number 
+        Object[] parametros = new Object[]{dl.getNombre(), dl.getDireccion(), dl.getDepartamento(),
+        dl.getLocalidad(), telefono};
+        this.getJdbcTemplate().update(sql, parametros);   
+        }
+        
+       
+    }
+     
     public ProductoVO getProducto(int idProd){
         String sql = "SELECT * FROM Producto WHERE idProducto = ?";
         Object[] params = {idProd};

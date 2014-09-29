@@ -31,10 +31,9 @@ public class ActualizarProductoDAO extends AbstractDAO {
         List <ProductoVO> productosHabilitados = new ArrayList<>();
         List <ProductoVO> productosDeshabilitados = new ArrayList<>();
         String sql;
-        int idTipoIva = 0;
+        int idTipoIva;
         int idProd;
         String descripcion;
-        int tipoIva;
         BigDecimal precioCompraNuevo;
         BigDecimal precioVentaNuevo = null;
         BigDecimal precioVentaActual = null;
@@ -54,7 +53,7 @@ public class ActualizarProductoDAO extends AbstractDAO {
             precioVentaNuevo = prodDUSA.getPrecioPublico();
             // Investigar como funciona el habilitado! no es asi
             habilitadoNuevo = (prodDUSA.getHabilitado() == 1);  
-            tipoIva = Integer.parseInt(prodDUSA.getTipoIVA());
+            idTipoIva = Integer.parseInt(prodDUSA.getTipoIVA());
             
             // busco si existe el producto y obtengo el idTipoIVA
             sql = "SELECT precioVenta, habilitado FROM Producto WHERE idProducto = ?";
@@ -101,7 +100,9 @@ public class ActualizarProductoDAO extends AbstractDAO {
 //                }
 //                idTipoIva = (int)getJdbcTemplate().queryForObject(
 //			sql, new Object[] { iva }, Integer.class); 
-//                
+//              
+                agregarLaboratorio(prodDUSA.getIdLaboratorio(),laboratorios);
+                
                 // agrego a producto               
                 agregarProducto(idProd,idTipoIva,descripcion,
                         precioCompraNuevo,precioVentaNuevo,habilitadoNuevo);
@@ -127,7 +128,7 @@ public class ActualizarProductoDAO extends AbstractDAO {
     }
     
     public void agregarProducto (int idProd, int idTipoIva, String descripcion, 
-            BigDecimal precioCompraNuevo, BigDecimal precioVentaNuevo, boolean habilitadoNuevo){
+        BigDecimal precioCompraNuevo, BigDecimal precioVentaNuevo, boolean habilitadoNuevo){
         String sql = "INSERT INTO producto (idProducto, idTipoIVA, descripcion, precioCompra, "
                 + "precioVenta, habilitado)  VALUES (?,?,?,?,?,?)";
         //idTransaccion = super.getLastID();
@@ -156,9 +157,12 @@ public class ActualizarProductoDAO extends AbstractDAO {
      public void agregarLaboratorio (String idLab, List<DataLaboratorio> laboratorios){
          boolean encontrado=false;
          
-         // busco si existe el Laboratorio
-        String sql = "SELECT idLaboratorio FROM Laboratorio"
-                    + "WHERE nombre = ?";
+         // busco si existe el Laboratorio - como es todo en una misma transacción 
+         // no encuentra que ya esta y lo agrega  todas las veces que apareza el nuevo
+         // al ppio deberiamos ya tener cargados todos los laboratorios
+         // que nos da DUSA en su lista.  
+         String sql = "SELECT idLaboratorio FROM Laboratorio"
+                    + " WHERE nombre = ?";
         
         
         Iterator it = laboratorios.iterator();
@@ -171,7 +175,7 @@ public class ActualizarProductoDAO extends AbstractDAO {
         }
         Object [] params = new Object[] {dl.getNombre()};  
         try{
-            this.getJdbcTemplate().queryForObject(sql, params, Integer.class);
+            int id = (int) this.getJdbcTemplate().queryForObject(sql, params, Integer.class);
             encontrado=true;
         } catch (Exception e) {
             encontrado = false;                      
@@ -181,10 +185,12 @@ public class ActualizarProductoDAO extends AbstractDAO {
           sql = "INSERT INTO Laboratorio (nombre, direccion, departamento, "
                   + "localidad,telefono)  VALUES (?,?,?,?,?)";
         //idTransaccion = super.getLastID();
-         
+         String telefono = "";
+         if (!dl.getTelefonos().isEmpty())
+             telefono = dl.getTelefonos().get(0);
          // We take only first phone number 
         Object[] parametros = new Object[]{dl.getNombre(), dl.getDireccion(), dl.getDepartamento(),
-        dl.getLocalidad(), dl.getTelefonos().get(0)};
+        dl.getLocalidad(), telefono};
         this.getJdbcTemplate().update(sql, parametros);   
         }
         

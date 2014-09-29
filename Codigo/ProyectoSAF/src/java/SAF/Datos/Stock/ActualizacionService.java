@@ -21,17 +21,13 @@ import uy.com.dusa.ws.WSConsultaStockService;
 @Service
 public class ActualizacionService {
     
-    public List <DataInfoProducto> obtenerActualizacionDUSA(){
+    public List <DataInfoProducto> obtenerActualizacionDUSA(XMLGregorianCalendar fecha){
         WSConsultaStockService servicio = new WSConsultaStockService();
         WSConsultaStock consultaStock = servicio.getWSConsultaStockPort();
-        GregorianCalendar gcal = new GregorianCalendar();
-        gcal.setTime(new Date(114,8,20));
-        XMLGregorianCalendar xgcal;
-        try {
-            xgcal = DatatypeFactory.newInstance().newXMLGregorianCalendar(gcal);
-            ResultGetStockUpdates obtenerStockUpdates= consultaStock.getStockUpdates("PIS2014","uvM4-N39C-Jt01-mc9E-e95b",xgcal);
+        try { 
+            ResultGetStockUpdates obtenerStockUpdates= consultaStock.getStockUpdates("PIS2014","uvM4-N39C-Jt01-mc9E-e95b",fecha);
             return obtenerStockUpdates.getProductos();
-        } catch (DatatypeConfigurationException ex) {
+        } catch (Exception e) {    
             return null;
         }
         

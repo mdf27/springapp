@@ -6,14 +6,12 @@
 
 package SAF.Datos.Stock;
 
+import java.util.Iterator;
 import java.util.List;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import uy.com.dusa.ws.DataInfoProducto;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 import uy.com.dusa.ws.DataLaboratorio;
 
 /**
@@ -22,23 +20,16 @@ import uy.com.dusa.ws.DataLaboratorio;
  */
 public class ActualizacionServiceTest {
     
-    public ActualizacionServiceTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
+    private ActualizarProductoDAO productoDao;    
+    private ApplicationContext context;
+    private ActualizacionService service;
+
     @Before
-    public void setUp() {
-    }
+    public void setUp() throws Exception {
+        context = new FileSystemXmlApplicationContext("file:web/WEB-INF/dispatcher-servlet.xml");
+        productoDao = (ActualizarProductoDAO) context.getBean(ActualizarProductoDAO.class);
+        service = (ActualizacionService) context.getBean(ActualizacionService.class);
     
-    @After
-    public void tearDown() {
     }
 
     /**
@@ -46,9 +37,21 @@ public class ActualizacionServiceTest {
      */
     @Test
     public void testObtenerActualizacionDUSA() {
-        String iva = "I.V.A. 22con Imesi";
-        String subIva = iva.substring(0,10);
-        assertEquals("I.V.A. 22c",subIva);
+        List <DataLaboratorio> labs = service.obtenerLaboratoriosDUSA();
+        Iterator it = labs.iterator();
+        DataLaboratorio lab;
+//        int no = 969;
+//        while(it.hasNext() && no < 1362) {
+//            it.next();
+//            no ++;
+//        }
+        // contando desde 50 me falto agregar el 443: FUP
+        // FUPI(FABRICA URUGUAYA DE PROTECCIONES INDUSTRIALES)
+        // porque el nombre era muy largo!!!
+        while (it.hasNext()){
+            lab = (DataLaboratorio) it.next();
+            productoDao.agregarLaboratorio(lab.getIdLaboratorio(),labs);
+        }
     }
 
     

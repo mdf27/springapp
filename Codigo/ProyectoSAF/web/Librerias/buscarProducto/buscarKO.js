@@ -169,10 +169,15 @@ function ViewModel() {
     });
 
     self.isSelected = ko.observable(true);
+    self.recetaSelected = ko.observable(false);
     self.hiddenSelected = ko.observable(false);
-    self.setIsSelected = function() {
-        this.isSelected(false);
-        this.hiddenSelected(true)
+    self.setIsSelected = function(data) {
+        this.isSelected(data);
+        //this.hiddenSelected(true)
+    };
+    self.setSelectedReceta = function(data) {
+        this.recetaSelected(data);
+        //this.hiddenSelected(true)
     };
     //ordenar                    
     self.optionValues = ["Nombre descendente", "Nombre ascendente", "Precio descendente", "Precio ascendente", "Laboratorio descendente", "Laboratorio ascendente"],
@@ -257,6 +262,26 @@ function ViewModel() {
     // Traer del controlador.
     self.formasPago = [{formaPago: "Contado"}];
     self.formaPago = ko.observable();
+//    self.formasPago = ko.computed(function() {
+//        $.ajax({
+//            url: "obtenerFormasPago.htm",
+//            type: 'GET',
+//            dataType: 'json',
+//            responseType: "application/json",
+//            headers: {
+//                Accept: "application/json",
+//                "Access-Control-Allow-Origin": "*"
+//            },
+//            success: function(result) {
+//
+//                alert(result);
+//                return result;
+//            }
+//
+//
+//        });
+//        
+//    });
 
     self.vendedor = ko.observable();
     //mostrar facturacion
@@ -272,13 +297,14 @@ function ViewModel() {
         var prod = self.textoProducto();
         self.filtro(prod.toString());
         self.actualizarLista();
+        self.setIsSelected(true);
     };
 
     self.montoNetoGravIva = ko.observable(0);
     self.montoNetoGravIvaMin = ko.observable(0);
     self.montoTotal = ko.observable(0);
     self.montoTotalAPagar = ko.observable(0);
-    self.productoSeleccionado = ko.observable();
+    self.productoSeleccionado = ko.observable(null);
     self.conRut = ko.observable();
     self.rSocial = ko.observable();
     self.nroRut = ko.observable();
@@ -304,8 +330,8 @@ function ViewModel() {
             // Es el mismo producto si tiene el mismo descuento, mismo codigo y ambos tienen o no receta.
             //var id = parseInt(renglon.codigo());
             var descuento = self.descuento();
-            if(self.conReceta()){
-                if(item.descuentoReceta > descuento){
+            if (self.conReceta()) {
+                if (item.descuentoReceta > descuento) {
                     descuento = item.descuentoReceta;
                 }
             }
@@ -314,14 +340,15 @@ function ViewModel() {
                     (renglon.receta() === self.conReceta())) {
                 // Parsear a entero porque javascript toma el + como concatenacion.
                 var cantAnterior = parseInt(renglon.cantidad());
-                var subtotalAnterior = parseFloat(renglon.subtotal());
+                var subtotalAnterior = parseFloat(renglon.subtotal()).toFixed(2);
                 self.renglonesFactura()[i].cantidad(cantAnterior + parseInt(self.cantProd()));
-                self.renglonesFactura()[i].subtotal(subtotalAnterior + (parseFloat(renglon.precioVenta())) * parseInt(self.cantProd()));
+                self.renglonesFactura()[i].subtotal(subtotalAnterior + (parseFloat(renglon.precioVenta())).toFixed(2) * parseInt(self.cantProd()));
                 esta = true;
 
             }
-            
-        };
+
+        }
+        ;
         return esta;
 
     };
@@ -333,9 +360,10 @@ function ViewModel() {
     };
 
     self.selecccionarProducto = function() {
+
         var item = self.productoSeleccionado();
         //var algo = self.descuento().match(/[0-9]+/);
-        if ((self.descuento().length !== 0) && (self.descuento().length !== 0)
+        if ((self.descuento().length !== 0) && (self.cantProd().length !== 0)
                 && (self.descuento() <= 100) && (self.descuento() >= 0) && (self.cantProd() >= 0)) {
 
             if (!self.estaProductoEnFactura(item)) {
@@ -421,7 +449,7 @@ function ViewModel() {
             self.descuento(0);
         }
 
-
+        self.productoSeleccionado(null);
     };
 
 //    // Enviar la factura
@@ -483,13 +511,19 @@ ko.applyBindings(vm);
 
 $(window).keyup(function(evt) {
     if (evt.keyCode == 38) { //arriba
-        vm.setIsSelected();
+        vm.setIsSelected(false);
+        vm.setSelectedReceta(true);
         vm.selectPrevious();
+        
     } else if (evt.keyCode == 40) { //abajo
-        vm.setIsSelected();
+        vm.setIsSelected(false);
+        vm.setSelectedReceta(true);
         vm.selectNext();
     } else if (evt.keyCode == 13) { //enter
-
+        if(vm.productoSeleccionado()!== null){
+            vm.selecccionarProducto();
+        }
+        
     }
 });
 

@@ -63,7 +63,7 @@ public class FacturacionManager extends AbstractManejador{
     
     };
     
-    public Map<Short,TipoFormaPagoVO> consultarFormasDePago(){
+    public List<TipoFormaPagoVO> consultarFormasDePago(){
     
         return tipoFormaPago.obtenerTiposFormaPago();
         

@@ -13,7 +13,7 @@
         <script type="text/javascript" language="javascript" src="Librerias/buscarProducto/knockout-3.0.0.js"></script>
         <script type="text/javascript" language="javascript" src="Librerias/buscarProducto/jquery-1.11.1.min.js"></script>
         <!-- /menu -->
-        <jsp:include page="include/menu.jsp"/>   
+        <jsp:directive.include file="include/menu.jsp"/>   
     </head>
     <body>
         <%-- 
@@ -30,7 +30,7 @@
         <div id="contenedor">
 
             <div id = "leftColuma">  
-                <jsp:include page="include/menuFacturacion.jsp"/>  
+                <jsp:directive.include file="include/menuFacturacion.jsp"/>  
             </div>
 
             <script type="text/javascript">

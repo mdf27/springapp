@@ -8,7 +8,7 @@
             </tr>
             <tr>
                 <td colspan="1"><span class="container body-content">
-                        <select style="width:110px" name="select" class="form-control"  data-bind="options: optionValueFiltros, value: selectedOptionValueFiltro, event: { change: filtroSelectionChanged }" ></select>
+                        <select id="filtrosBusqueda" style="width:110px" name="select" class="form-control"  data-bind="options: optionValueFiltros, value: selectedOptionValueFiltro, event: { change: filtroSelectionChanged }" ></select>
                     </span>
                 </td>
                 <td colspan="2"><span style="font-size:14px; font-family:Arial">
@@ -65,7 +65,7 @@
     </td>
     <td colspan="1">
         <strong>Receta</strong>
-        <input type="checkbox" data-bind="checked: conReceta" />
+        <input type="checkbox" data-bind="hasFocus: recetaSelected, checked: conReceta" />
 
     </td>
     <td colspan="1">

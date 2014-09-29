@@ -21,6 +21,8 @@ public class FormaPagoFacturaVO {
     private long idTransaccion;
 
     public FormaPagoFacturaVO() {
+        idCuenta = -1;
+              
     }
 
     public FormaPagoFacturaVO(Map<String, Object> query) {
@@ -34,6 +36,9 @@ public class FormaPagoFacturaVO {
         if (query.get("idCuenta") != null) {
             idCuenta = (int) query.get("idCuenta");
         }
+        else
+            idCuenta = -1;
+        
         if (query.get("idTransaccion") != null) {
             idTransaccion = ((Long) query.get("idTransaccion"));
         }

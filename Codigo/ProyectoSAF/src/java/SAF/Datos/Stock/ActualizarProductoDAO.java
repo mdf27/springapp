@@ -35,9 +35,9 @@ public class ActualizarProductoDAO extends AbstractDAO {
         int idTipoIva;
         int idProd;
         String descripcion;
-        BigDecimal precioCompraNuevo;
-        BigDecimal precioVentaNuevo = null;
-        BigDecimal precioVentaActual = null;
+        double precioCompraNuevo;
+        double precioVentaNuevo = 0;
+        double precioVentaActual = 0;
         boolean habilitadoNuevo = false;
         boolean habilitadoActual = false;
         boolean encontrado;
@@ -50,8 +50,8 @@ public class ActualizarProductoDAO extends AbstractDAO {
             idProd = prodDUSA.getNumeroArticulo();
             descripcion = prodDUSA.getDescripcion();
             // ver como funcionan los precios!  no es asi
-            precioCompraNuevo = prodDUSA.getPrecioVenta();
-            precioVentaNuevo = prodDUSA.getPrecioPublico();
+            precioCompraNuevo = Math.round(prodDUSA.getPrecioVenta().doubleValue()*100.0)/100.0;
+            precioVentaNuevo = Math.round(prodDUSA.getPrecioPublico().doubleValue()*100.0)/100.0;
             // Investigar como funciona el habilitado! no es asi
             habilitadoNuevo = (prodDUSA.getHabilitado() == 1);  
             idTipoIva = Integer.parseInt(prodDUSA.getTipoIVA());
@@ -61,7 +61,7 @@ public class ActualizarProductoDAO extends AbstractDAO {
             params = new Object[] {idProd};
             try {
                 Map<String, Object> resultQuery = getJdbcTemplate().queryForMap(sql, params);
-                precioVentaActual = (BigDecimal) resultQuery.get("precioVenta");
+                precioVentaActual = Double.valueOf(resultQuery.get("precioVenta").toString());
                 habilitadoActual = (boolean) resultQuery.get("habilitado");
                 encontrado = true;
             } catch (Exception e) {
@@ -75,14 +75,14 @@ public class ActualizarProductoDAO extends AbstractDAO {
                         ", habilitado = " + "?" + 
                         ", idTipoIva = " + "?" + 
                         " WHERE idProducto = " + "?";
-                params = new Object [] { precioCompraNuevo.doubleValue(), precioVentaNuevo.doubleValue(), 
+                params = new Object [] { precioCompraNuevo, precioVentaNuevo, 
                     descripcion, habilitadoNuevo, idTipoIva, idProd};
                 this.getJdbcTemplate().update(sql,params);
-                // si precioNuevo < precioActual lo agrego a la lista de aumentaron
-                if (precioVentaNuevo.compareTo(precioVentaActual) < 0) 
+                // si precioNuevo < precioActual lo agrego a la lista de disminuyeron
+                if (precioVentaNuevo < precioVentaActual) 
                     productosDisminuyeron.add(getProducto(idProd));
                 // si precioNuevo > precioActual lo agrego a la lista de aumentaron
-                if (precioVentaNuevo.compareTo(precioVentaActual) > 0) 
+                if (precioVentaNuevo > precioVentaActual)  
                     productosAumentaron.add(getProducto(idProd));
                 if (habilitadoActual != habilitadoNuevo)
                     if (habilitadoNuevo)
@@ -128,16 +128,17 @@ public class ActualizarProductoDAO extends AbstractDAO {
             }   
         }
         Map<String,List<ProductoVO>> productosActualizados = new HashMap<>();
-        productosActualizados.put("agregados", productosAgregados);
-        productosActualizados.put("aumentaron", productosAumentaron);
-        productosActualizados.put("disminuyeron", productosDisminuyeron);
-        productosActualizados.put("habilitaron", productosHabilitados);
         productosActualizados.put("deshabilitaron", productosDeshabilitados);
+        productosActualizados.put("habilitaron", productosHabilitados);
+        productosActualizados.put("disminuyeron", productosDisminuyeron);
+        productosActualizados.put("aumentaron", productosAumentaron);
+        productosActualizados.put("agregados", productosAgregados);
+        
         return productosActualizados;
     }
     
     public void agregarProducto (int idProd, int idTipoIva, String descripcion, 
-        BigDecimal precioCompraNuevo, BigDecimal precioVentaNuevo, boolean habilitadoNuevo){
+        double precioCompraNuevo, double precioVentaNuevo, boolean habilitadoNuevo){
         String sql = "INSERT INTO producto (idProducto, idTipoIVA, descripcion, precioCompra, "
                 + "precioVenta, habilitado)  VALUES (?,?,?,?,?,?)";
         //idTransaccion = super.getLastID();

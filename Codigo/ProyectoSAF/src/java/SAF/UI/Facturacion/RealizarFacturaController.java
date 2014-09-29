@@ -2,9 +2,10 @@ package SAF.UI.Facturacion;
 
 import SAF.Facade.Facturacion.FacadeFacturacion;
 import SAF.VO.Facturacion.FacturaVO;
+import SAF.VO.Facturacion.TipoFormaPagoVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import SAF.VO.Facturacion.TipoFormaPagoVO;
+import java.util.List;
 import java.util.Map;
 
 
@@ -46,10 +47,12 @@ public class RealizarFacturaController { //implements Controller{
         return (mv); 
     }
     
-//    @RequestMapping(value = "obtenerFormasPago.htm",method = RequestMethod.GET)      
-//    public Map<TipoFormaPagoVO> obtenerFormasPago (){
-//        
-//        return facadeFacturacion.obtenerFormasDePago();
-//    }
+    @RequestMapping(value = "obtenerFormasPago.htm",method = RequestMethod.GET)      
+    public @ResponseBody List<TipoFormaPagoVO> obtenerFormasPago (){
+        
+        List<TipoFormaPagoVO> formasPago = facadeFacturacion.obtenerFormasDePago();
+        return formasPago;
+        
+    }
     
 }

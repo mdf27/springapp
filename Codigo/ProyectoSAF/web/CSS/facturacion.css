@@ -78,6 +78,10 @@ tableF {
     background-color: red !important;
 }
 
+.btn-error {
+    color: red !important;
+}
+
 tableF {
   max-width: 100%;
   background-color: transparent;

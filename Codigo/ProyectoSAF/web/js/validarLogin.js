@@ -1,4 +1,4 @@
-var exprNombre = /^[a-zA-Z0-9\.]*$/;
+var exprNombre = /^[0-9\.]*$/;
 
 $(document).ready(function () { //Verificamos que el documento este listo
     
@@ -30,4 +30,9 @@ $(document).ready(function () { //Verificamos que el documento este listo
         }
     });
     
+    
+    
 });//fin ready
+
+
+

@@ -134,3 +134,14 @@ input {
     position: absolute;
     top: 15px;
 }
+
+.botonLogin{
+    background-color: #84A5DA;
+    color: #FFF;
+    display: block;
+    margin: 0px auto;
+    padding: 4px 0px;
+    width: 100px !important;
+}
+
+

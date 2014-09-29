@@ -270,9 +270,15 @@ function ViewModel() {
     };
     self.editItem = function (fruit) {
         if (self.editingItem() == null) {           
-            // shows the edit fields
             self.editingItem(fruit);
         }
+    };
+    self.applyFruit = function (fruit) {
+        self.editingItem(null);
+        $.ajax({
+            url: "ajustar.htm",
+            type: 'POST'
+        });        
     };
 
 };

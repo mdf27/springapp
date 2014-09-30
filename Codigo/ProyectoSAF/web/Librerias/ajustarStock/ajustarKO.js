@@ -16,6 +16,9 @@ function ViewModel() {
     self.filtroCantidad = ko.observable();
     self.cantidad = ko.observableArray([]);
     
+    self.mostrarCross = ko.observable(false);
+    self.mostrarTick = ko.observable(false);
+    
     self.cargaRealizada = ko.observable(false);
     self.cargarProductos= function (){
         if (!self.cargaRealizada()){
@@ -35,8 +38,12 @@ function ViewModel() {
             });
         }
     };
-    //
+    
+    
     self.buscar = function() {
+        self.lista.removeAll();
+        self.mostrarCross(false);
+        self.mostrarTick(false);
         if (self.filtro() && self.filtro().length > 2) {
             var buscar = "";
             if (self.selectedOptionValueFiltro() == "Código:") {
@@ -115,14 +122,6 @@ function ViewModel() {
             self.lista.sort(function(a, b) {
                 return a.precioLista < b.precioLista ? -1 : 1;
             });    
-        } else if (self.selectedOptionValue() == "Laboratorio descendente") {
-            self.lista.sort(function(a, b) {
-                return a.laboratorio > b.laboratorio ? -1 : 1;
-            });
-        } else if (self.selectedOptionValue() == "Laboratorio ascendente") {
-            self.lista.sort(function(a, b) {
-                return a.laboratorio < b.laboratorio ? -1 : 1;
-            });
         };
     };
     
@@ -145,7 +144,7 @@ function ViewModel() {
             self.lista.push(d[i]);
             self.cantidad.push(d[i].cantidad);
         }
-        self.ordenar();
+       // self.ordenar();
     };
     
     //paginado
@@ -222,7 +221,7 @@ function ViewModel() {
         this.hiddenSelected(true)
     };
     //ordenar                    
-    self.optionValues = ["Nombre descendente", "Nombre ascendente", "Laboratorio descendente","Laboratorio ascendente", "Precio Lista descendente", "Precio Lista ascendente", "Precio Venta descendente", "Precio Venta ascendente", "Farmadescuento descendente", "Farmadescuento ascendente"],
+    self.optionValues = ["Nombre descendente", "Nombre ascendente", "Precio Lista descendente", "Precio Lista ascendente", "Precio Venta descendente", "Precio Venta ascendente", "Farmadescuento descendente", "Farmadescuento ascendente"],
     //self.selectedChoice = ko.observable();
     self.selectionChanged = function(event) {
         self.ordenar();
@@ -270,6 +269,20 @@ function ViewModel() {
     };
     
     //editar
+    self.habilitarTick = function(){
+        self.mostrarTick(true);
+        self.mostrarCross(false);        
+        
+    };
+    
+    self.habilitarCross = function(cant){
+        self.mostrarTick(false);
+        self.mostrarCross(true);        
+        self.cantidad.replace(self.cantidad()[self.indice()],cant);
+    };
+    
+    
+    
     self.indice = ko.observable();
     
     self.select = function(item) {
@@ -284,6 +297,8 @@ function ViewModel() {
     };
     self.editando = ko.observable(false);
     self.editar= function (i,item) {     
+        self.mostrarCross(false);
+        self.mostrarTick(false);
         if (self.editando()==false){
             self.editando(true);
             self.indice(i);
@@ -293,16 +308,29 @@ function ViewModel() {
             }
         }
     };
+    self.cancelar = function (){
+        self.mostrarTick(false);
+        self.mostrarCross(false);          
+        self.filtroCantidad("");
+        self.editingItem(null);
+        self.editando(false);
+    };   
     
     self.ajustar = function (item,i) { 
         if (self.editando()==true){
             var cant = self.filtroCantidad();
             var id = self.lista()[self.indice()].idProducto;
+            var cantOK = self.cantidad()[self.indice()];
             self.cantidad.replace(self.cantidad()[self.indice()],cant);
             $.ajax({
                 url: "ajustarCantidadStock.htm",
                 type: 'POST',
-                data: {"cant": cant, "id": id}
+                delay: 20,
+                data: {"cant": cant, "id": id},
+                succes: self.habilitarTick(),
+                error: function (){
+                    self.habilitarCross(cantOK);
+                }
             });
             self.filtroCantidad("");
             self.editingItem(null);
@@ -310,13 +338,14 @@ function ViewModel() {
         }
     };
     
-    /*self.devolverCantidades = function (i){
-        if (self.cantidad().length>0)
-            if (self.cantidad()[i]!=self.lista()[i].cantidad)
-                return self.cantidad()[i];
-            else return self.lista()[i].cantidad;
-    };*/
-
+    self.isTickMoment = function (i){
+        return (i==self.indice()) && self.mostrarTick();
+    }
+    
+    self.isCrossMoment = function (i){
+        return (i==self.indice()) && self.mostrarCross();
+    }
+    
 };
 
 var vm = new ViewModel();

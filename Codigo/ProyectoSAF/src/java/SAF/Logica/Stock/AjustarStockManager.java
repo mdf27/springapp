@@ -32,8 +32,6 @@ public class AjustarStockManager extends AbstractManejador{
     @Autowired
     private BuscarProductoDAO buscarDao;    
     @Autowired
-    private LuceneProductosDAO luceneDao;   
-    @Autowired
     private AjustarStockDAO ajustarDAO;    
     
     public Map <Integer,DatosCompletosProductoVO> buscarProductos() throws java.text.ParseException{
@@ -60,10 +58,10 @@ public class AjustarStockManager extends AbstractManejador{
     public void ajustarCantidadStock (StockVO stock) throws java.text.ParseException, ClassNotFoundException, SQLException, IOException, ParseException{
         //solicito id de transaccion
         //long idTransaccion = super.getIDTransaccion();
+        LuceneProductosDAO luceneDao = LuceneProductosDAO.getInstance();
         BigInteger idTransaccion = BigInteger.valueOf(0);
         stock.setIdTransaccion(idTransaccion);
         ajustarDAO.ajustarCantidadStock(stock);        
-        //se tiene que hacer una vez
-        luceneDao.actualizarIndiceProductosLucene(buscarDao.obtenerDatosCompletosProducto(), buscarDao.obtenerDatosCompletosMedicamento());
+        luceneDao.setActualizarIndice(true);        
     }     
 }

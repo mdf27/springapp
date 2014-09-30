@@ -9,8 +9,12 @@ function ViewModel() {
     self.indicePaginado = ko.observable(-1);
     
     self.busquedaActivada=ko.observable(false);        
+    self.selectedResult = ko.observable();
     self.timerID;
-    //
+    
+    //cantidad
+    self.filtroCantidad = ko.observable();
+    self.cantidad = ko.observableArray([]);
     
     self.cargaRealizada = ko.observable(false);
     self.cargarProductos= function (){
@@ -136,8 +140,10 @@ function ViewModel() {
     self.cargarLista = function(d) {
         self.mostrarError(false);
         self.lista.removeAll();
+        self.cantidad.removeAll();
         for (var i = 0; i < d.length; i++) {
             self.lista.push(d[i]);
+            self.cantidad.push(d[i].cantidad);
         }
         self.ordenar();
     };
@@ -248,7 +254,7 @@ function ViewModel() {
 
     };
 
-
+    
     self.selectNext = function() {
         var index = self.indicePaginado() + 1;
         if (index >= self.topePaginado) {
@@ -264,22 +270,52 @@ function ViewModel() {
     };
     
     //editar
+    self.indice = ko.observable();
+    
+    self.select = function(item) {
+        self.selected(item);
+    };
+
+    self.selected = ko.observable(self.lista()[0]);
+    
     self.editingItem = ko.observable();
     self.isItemEditing = function(itemToTest) {
         return itemToTest== self.editingItem();
     };
-    self.editItem = function (fruit) {
-        if (self.editingItem() == null) {           
-            self.editingItem(fruit);
+    self.editando = ko.observable(false);
+    self.editar= function (i,item) {     
+        if (self.editando()==false){
+            self.editando(true);
+            self.indice(i);
+            self.filtroCantidad(self.cantidad()[self.indice()]);
+            if (self.editingItem() == null) {           
+                self.editingItem(item);
+            }
         }
     };
-    self.applyFruit = function (fruit) {
-        self.editingItem(null);
-        $.ajax({
-            url: "ajustar.htm",
-            type: 'POST'
-        });        
+    
+    self.ajustar = function (item,i) { 
+        if (self.editando()==true){
+            var cant = self.filtroCantidad();
+            var id = self.lista()[self.indice()].idProducto;
+            self.cantidad.replace(self.cantidad()[self.indice()],cant);
+            $.ajax({
+                url: "ajustarCantidadStock.htm",
+                type: 'POST',
+                data: {"cant": cant, "id": id}
+            });
+            self.filtroCantidad("");
+            self.editingItem(null);
+            self.editando(false);
+        }
     };
+    
+    /*self.devolverCantidades = function (i){
+        if (self.cantidad().length>0)
+            if (self.cantidad()[i]!=self.lista()[i].cantidad)
+                return self.cantidad()[i];
+            else return self.lista()[i].cantidad;
+    };*/
 
 };
 

@@ -26,7 +26,7 @@
         });
         
         $('#clientes').on('click', function() {
-            $('#leftColuma').html('<div id = "tituloLeftMenu">Clientes</div><ul id="leftMenu"><li><a href="registrarCliente"><i class="icon-plus"></i>Clientes</a></li><li><a href="#"><i class="icon-eye-open"></i>Ver Cliente</a></li></ul>');
+            $('#leftColuma').html('<div id = "tituloLeftMenu">Clientes</div><ul id="leftMenu"><li><a href="registrarCliente.html"><i class="icon-plus"></i>Clientes</a></li><li><a href="#"><i class="icon-eye-open"></i>Ver Cliente</a></li></ul>');
         });
     });
 </script>  

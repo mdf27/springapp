@@ -48,9 +48,5 @@ public class BuscarProductoController {
         return bpm.ajustarStock();
     }
     
-    @RequestMapping(value ="search.htm",method = RequestMethod.POST)      
-    public @ResponseBody void setProductoBuscar (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String buscar= (String) request.getParameter("search");
-        request.getSession().setAttribute("search", buscar); 
-    }
+
 }

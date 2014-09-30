@@ -525,9 +525,11 @@ function ViewModel() {
 
 
         //var renglonData = ko.toJSON(self.renglonesFacturaVO()[0]) // Ver que pasa cuando no hay rut y r social, que manda?
-        var data = ko.toJSON({idTipoFactura: 101, idFactura: 0, idCliente: 1, rut: self.nroRut(),
+         var data = ko.toJSON({idTipoFactura: 101, idFactura: 0, idCliente: 1, rut: self.nroRut(),
             razonSocial: self.rSocial(), fecha: timestamp, descuento: 0, montoNetoGravIva: self.montoNetoGravIva(),
-            montoNetoGravIvaMin: self.montoNetoGravIvaMin(), montoTotal: self.montoTotal(), montoTotalAPagar: self.total(), idTransaccion: 100, renglones: self.renglonesFacturaVO});
+            montoNetoGravIvaMin: self.montoNetoGravIvaMin(), montoTotal: self.montoTotal(), montoTotalAPagar: self.total(), idTransaccion: 100,
+            renglones: self.renglonesFacturaVO, formaDePago: {idTipoFormaPago: 101, idTipoFactura: 101, 
+                idFactura: -1, nroTarjeta: -1, idCuenta: -1/* no me lo tenes que pasar*/, idTransaccion: -1}});
         alert(data);
         $.ajax("ingresarFactura.htm", {
             data: "json=" + data,

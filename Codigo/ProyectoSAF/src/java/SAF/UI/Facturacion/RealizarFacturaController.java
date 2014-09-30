@@ -47,7 +47,7 @@ public class RealizarFacturaController { //implements Controller{
         return (mv); 
     }
     
-    @RequestMapping(value = "obtenerFormasPago.htm",method = RequestMethod.GET)      
+    @RequestMapping(value = "obtenerFormasPago.json",method = RequestMethod.GET)      
     public @ResponseBody List<TipoFormaPagoVO> obtenerFormasPago (){
         
         List<TipoFormaPagoVO> formasPago = facadeFacturacion.obtenerFormasDePago();

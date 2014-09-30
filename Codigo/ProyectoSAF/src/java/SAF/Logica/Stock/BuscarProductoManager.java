@@ -6,7 +6,7 @@
 package SAF.Logica.Stock;
 
 import SAF.Datos.Stock.BuscarProductoDAO;
-import SAF.Datos.Stock.LuceneDAO;
+import SAF.Datos.Stock.LuceneProductosDAO;
 import SAF.VO.Stock.DatosCompletosMedProdVO;
 import SAF.VO.Stock.DatosCompletosMedicamentoVO;
 import SAF.VO.Stock.DatosCompletosProductoVO;
@@ -38,7 +38,7 @@ public class BuscarProductoManager {
     
     @Transactional(rollbackFor=Exception.class)
     public List<DatosCompletosMedProdVO> buscarProducto(String texto_buscar, String filtro) throws ClassNotFoundException, ParseException, SQLException, IOException, java.text.ParseException{
-        LuceneDAO ldao = LuceneDAO.getInstance();
+        LuceneProductosDAO ldao = LuceneProductosDAO.getInstance();
         if (!ldao.indiceCargado()){//indiceCargado?
             ldao.cargarProductos(buscarProductos(),buscarMedicamentos());
         }          

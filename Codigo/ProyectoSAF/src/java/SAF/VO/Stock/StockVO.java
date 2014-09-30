@@ -5,6 +5,8 @@
  */
 package SAF.VO.Stock;
 
+import java.math.BigInteger;
+
 /**
  *
  * @author majo
@@ -12,6 +14,7 @@ package SAF.VO.Stock;
 public class StockVO {
     private int idProducto;
     private int cantidad;
+    private BigInteger idTransaccion;
 
     public StockVO() {
     }
@@ -30,6 +33,14 @@ public class StockVO {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public BigInteger getIdTransaccion() {
+        return idTransaccion;
+    }
+
+    public void setIdTransaccion(BigInteger idTransaccion) {
+        this.idTransaccion = idTransaccion;
     }
     
 }

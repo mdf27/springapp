@@ -42,6 +42,8 @@ public class FacturacionManager extends AbstractManejador{
         
         int idFactura = facturaDAO.insertarFactura(factura);
                 
+        FormaPagoFacturaVO pago = factura.getFormaDePago();
+        pago.setIdFactura(idFactura);
         formaPagoFactura.insertarFormaPagoFactura(factura.getFormaDePago());
 
         List<RenglonFacturaVO> renglones = factura.getRenglones();

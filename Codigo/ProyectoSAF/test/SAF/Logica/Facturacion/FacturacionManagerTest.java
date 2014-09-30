@@ -67,6 +67,14 @@ public class FacturacionManagerTest {
         return result;
     }
     
+     public boolean compararFormaPagoFacturaVO(FormaPagoFacturaVO f1,FormaPagoFacturaVO f2){
+        boolean result = f1.getIdFactura() == f2.getIdFactura() && f1.getIdTipoFactura() == f2.getIdTipoFactura();
+        result = result && f1.getIdCuenta() == f2.getIdCuenta();
+        result = result && f1.getIdTipoFormaPago() == f2.getIdTipoFormaPago();
+        result = result && f1.getNroTarjeta() == f2.getNroTarjeta();
+        return result;
+    }
+    
     public boolean compararFacturaVO(FacturaVO f1, FacturaVO f2){
         boolean result = f1.getIdFactura() == f2.getIdFactura() && f1.getIdTipoFactura() == f2.getIdTipoFactura();
         result = result && f1.getIdCliente() == f2.getIdCliente();
@@ -126,8 +134,10 @@ public class FacturacionManagerTest {
         fvo.setFormaDePago(pago);
         int idFactura = instance.ingresarFactura(fvo);
         fvo.setIdFactura(idFactura);
+        pago.setIdFactura(idFactura);
         FacturaVO fvo2= instance.obtenerFactura(idFactura, (short)102);
         // TODO review the generated test code and remove the default call to fail.
+        assertTrue(compararFormaPagoFacturaVO(fvo.getFormaDePago(), fvo2.getFormaDePago()));
         assertTrue(compararFacturaVO(fvo,fvo2));
         assertEquals(stockDao.getCantidadStock(100001) - 2, cantidadPrevia);
     }
@@ -178,10 +188,12 @@ public class FacturacionManagerTest {
         fvo.setFormaDePago(pago);
         int idFactura = instance.ingresarFactura(fvo);
         fvo.setIdFactura(idFactura);
+        pago.setIdFactura(idFactura);
         
         FacturaVO fvo2= instance.obtenerFactura(idFactura, (short)101);
         // TODO review the generated test code and remove the default call to fail.
         assertTrue(compararFacturaVO(fvo,fvo2));
+        assertTrue(compararFormaPagoFacturaVO(fvo.getFormaDePago(), fvo2.getFormaDePago()));
         assertEquals(stockDao.getCantidadStock(100001) + 2, cantidadPrevia);
     }
 }

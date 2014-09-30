@@ -36,6 +36,8 @@ public class FacturacionManager extends AbstractManejador{
     private TipoFormaPagoDAO tipoFormaPago;
      @Autowired
     private ModificarStockManager modifStock;
+     @Autowired
+     private FormaPagoFacturaDAO formaPago;
     
     @Transactional(rollbackFor = Exception.class)
     public int ingresarFactura(FacturaVO factura){
@@ -76,6 +78,8 @@ public class FacturacionManager extends AbstractManejador{
         
         FacturaVO result = facturaDAO.getFactura(idFactura, idTipoFactura);
         List<RenglonFacturaVO> renglones = renglonFacturaDAO.getRenglonesDeFactura(idFactura,idTipoFactura);
+        FormaPagoFacturaVO pago = formaPago.getFormaPagoFactura(idFactura, idTipoFactura);
+        result.setFormaDePago(pago);
         result.setRenglones(renglones);
         return result;
     }

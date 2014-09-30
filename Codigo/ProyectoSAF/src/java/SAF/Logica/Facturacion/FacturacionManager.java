@@ -7,15 +7,15 @@
 package SAF.Logica.Facturacion;
 
 import SAF.Datos.Facturacion.FacturaDAO;
+import SAF.Datos.Facturacion.FormaPagoFacturaDAO;
 import SAF.Datos.Facturacion.RenglonFacturaDAO;
-import SAF.Datos.Facturacion.TipoFacturaDAO;
 import SAF.Datos.Facturacion.TipoFormaPagoDAO;
 import SAF.Logica.Abstract.AbstractManejador;
 import SAF.Logica.Stock.ModificarStockManager;
 import SAF.VO.Facturacion.FacturaVO;
+import SAF.VO.Facturacion.FormaPagoFacturaVO;
 import SAF.VO.Facturacion.RenglonFacturaVO;
-import SAF.VO.Facturacion.TipoFormaPagoVO;import java.util.List;import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
+import SAF.VO.Facturacion.TipoFormaPagoVO;import java.util.List;import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +31,7 @@ public class FacturacionManager extends AbstractManejador{
     @Autowired
     private RenglonFacturaDAO renglonFacturaDAO;
     @Autowired
-    private TipoFacturaDAO tipoFacturaDAO;
+    private FormaPagoFacturaDAO formaPagoFactura;
     @Autowired
     private TipoFormaPagoDAO tipoFormaPago;
      @Autowired
@@ -41,7 +41,8 @@ public class FacturacionManager extends AbstractManejador{
     public int ingresarFactura(FacturaVO factura){
         
         int idFactura = facturaDAO.insertarFactura(factura);
-        
+                
+        formaPagoFactura.insertarFormaPagoFactura(factura.getFormaDePago());
 
         List<RenglonFacturaVO> renglones = factura.getRenglones();
         

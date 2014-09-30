@@ -276,28 +276,28 @@ function ViewModel() {
     };
 
     // Traer del controlador.
-    self.formasPago = [{formaPago: "Contado"}];
+    //self.formasPago = [{formaPago: "Contado"}];
     self.formaPago = ko.observable();
-//    self.formasPago = ko.computed(function() {
-//        $.ajax({
-//            url: "obtenerFormasPago.htm",
-//            type: 'GET',
-//            dataType: 'json',
-//            responseType: "application/json",
-//            headers: {
-//                Accept: "application/json",
-//                "Access-Control-Allow-Origin": "*"
-//            },
-//            success: function(result) {
-//
-//                alert(result);
-//                return result;
-//            }
-//
-//
-//        });
-//        
-//    });
+    self.formasPago = ko.computed(function() {
+        $.ajax({
+            url: "obtenerFormasPago.json",
+            type: 'GET',
+            dataType: 'json',
+            responseType: "application/json",
+            headers: {
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "*"
+            },
+            success: function(result) {
+
+                alert(result);
+                return result;
+            }
+
+
+        });
+        
+    });
 
     self.vendedor = ko.observable();
     //mostrar facturacion
@@ -477,7 +477,9 @@ function ViewModel() {
         //var renglonData = ko.toJSON(self.renglonesFacturaVO()[0]) // Ver que pasa cuando no hay rut y r social, que manda?
         var data = ko.toJSON({idTipoFactura: 101, idFactura: 0, idCliente: 1, rut: self.nroRut(),
             razonSocial: self.rSocial(), fecha: timestamp, descuento: 0, montoNetoGravIva: self.montoNetoGravIva(),
-            montoNetoGravIvaMin: self.montoNetoGravIvaMin(), montoTotal: self.montoTotal(), montoTotalAPagar: self.total(), idTransaccion: 100, renglones: self.renglonesFacturaVO});
+            montoNetoGravIvaMin: self.montoNetoGravIvaMin(), montoTotal: self.montoTotal(), montoTotalAPagar: self.total(), idTransaccion: 100,
+            renglones: self.renglonesFacturaVO, formaDePago: {idTipoFormaPago: 101, idTipoFactura: 101, 
+                idFactura: -1, nroTarjeta: -1, idCuenta: -1/* no me lo tenes que pasar*/, idTransaccion: -1}});
         alert(data);
         $.ajax("ingresarFactura.htm", {
             data: "json=" + data,

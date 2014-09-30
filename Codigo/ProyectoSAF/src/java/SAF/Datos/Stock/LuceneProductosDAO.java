@@ -37,11 +37,11 @@ import org.springframework.stereotype.Repository;
  */
 //@Service
 @Repository
-public class LuceneDAO extends AbstractDAO{
+public class LuceneProductosDAO extends AbstractDAO{
         
-    private static LuceneDAO instance;
+    private static LuceneProductosDAO instance;
     
-    private Directory indiceProductosLucene = null; //new RAMDirectory();  
+    private Directory indiceProductosLucene = null; 
     
     public Directory getIndiceProductosLucene(){
         return this.indiceProductosLucene;
@@ -208,10 +208,10 @@ public class LuceneDAO extends AbstractDAO{
         writer.close();        
     }       
           
-    public static LuceneDAO getInstance() 
+    public static LuceneProductosDAO getInstance() 
             throws ClassNotFoundException, SQLException, IOException, ParseException{
        if(instance == null){
-            LuceneDAO bs = new LuceneDAO();
+            LuceneProductosDAO bs = new LuceneProductosDAO();
             instance = bs;
         }
         return instance;
@@ -231,8 +231,18 @@ public class LuceneDAO extends AbstractDAO{
         crearIndiceProductosLuecene(productos,medicamentos);        
     }
     
+    private void  eliminarIndice () throws IOException{
+        StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_40);            
+        IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_40, analyzer);            
+        IndexWriter writer = new IndexWriter(indiceProductosLucene, config);        
+        writer.deleteAll();
+        writer.close();
+        this.indiceProductosLucene= new RAMDirectory();
+    }
+    
     public void actualizarIndiceProductosLucene (Map <Integer,DatosCompletosProductoVO> productos,Map <Integer,DatosCompletosMedicamentoVO> medicamentos)
             throws ClassNotFoundException, SQLException, IOException, ParseException{
+        eliminarIndice();
         crearIndiceProductosLuecene(productos,medicamentos);
     }    
     

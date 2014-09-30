@@ -10,6 +10,7 @@ import SAF.Logica.Stock.BuscarProductoManager;
 import SAF.Logica.Stock.ModificarProductoManager;
 import SAF.VO.Stock.DatosCompletosMedProdVO;
 import SAF.VO.Stock.ProductoVO;
+import SAF.VO.Stock.StockVO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -38,6 +39,13 @@ public class FacadeStock {
 
     public List<DatosCompletosMedProdVO> ajustarStock() throws ClassNotFoundException, ParseException, SQLException, IOException, java.text.ParseException{
         return atm.ajustarStock();
+    }
+    
+    public void ajustarCantidadStock (int idProducto, int cantidad) throws java.text.ParseException, ClassNotFoundException, SQLException, IOException, ParseException{
+        StockVO stock = new StockVO();
+        stock.setCantidad(cantidad);
+        stock.setIdProducto(idProducto);
+        atm.ajustarCantidadStock(stock);
     }
     
     @Autowired

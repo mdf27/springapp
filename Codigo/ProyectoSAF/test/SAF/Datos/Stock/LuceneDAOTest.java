@@ -33,7 +33,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
  * @author majo
  */
 public class LuceneDAOTest {
-    private LuceneDAO luceneDao;
+    private LuceneProductosDAO luceneDao;
     private ApplicationContext context;
     
     public LuceneDAOTest() {
@@ -50,7 +50,7 @@ public class LuceneDAOTest {
     @Before
     public void setUp() throws ClassNotFoundException, SQLException, IOException, ParseException {
         context = new FileSystemXmlApplicationContext("file:web/WEB-INF/dispatcher-servlet.xml");
-        luceneDao = (LuceneDAO)context.getBean(LuceneDAO.class);
+        luceneDao = (LuceneProductosDAO)context.getBean(LuceneProductosDAO.class);
        
         Map<Integer, DatosCompletosProductoVO> productos = new HashMap<Integer,DatosCompletosProductoVO>();
         DatosCompletosProductoVO p = new DatosCompletosProductoVO();
@@ -115,12 +115,12 @@ public class LuceneDAOTest {
     }
 
     /**
-     * Test of getIndiceProductosLucene method, of class LuceneDAO.
+     * Test of getIndiceProductosLucene method, of class LuceneProductosDAO.
      */
     @Test
     public void testGetIndiceProductosLucene() {
         System.out.println("getIndiceProductosLucene");
-        LuceneDAO instance = new LuceneDAO();
+        LuceneProductosDAO instance = new LuceneProductosDAO();
         
         Directory expResult = null;
         Directory result = instance.getIndiceProductosLucene();
@@ -128,25 +128,25 @@ public class LuceneDAOTest {
     }
 
     /**
-     * Test of getInstance method, of class LuceneDAO.
+     * Test of getInstance method, of class LuceneProductosDAO.
      */
     @Test
     public void testGetInstance() throws Exception {
         System.out.println("getInstance");
-        LuceneDAO expResult = null;
-        LuceneDAO result = LuceneDAO.getInstance();
+        LuceneProductosDAO expResult = null;
+        LuceneProductosDAO result = LuceneProductosDAO.getInstance();
         assertNotNull(result);        
-        assertEquals(result, LuceneDAO.getInstance());
+        assertEquals(result, LuceneProductosDAO.getInstance());
     }
 
     /**
-     * Test of indiceCargado method, of class LuceneDAO.
+     * Test of indiceCargado method, of class LuceneProductosDAO.
      */
     @Test
     public void testIndiceCargado() {
         System.out.println("indiceCargado");
         
-        LuceneDAO instance = new LuceneDAO();
+        LuceneProductosDAO instance = new LuceneProductosDAO();
         boolean expResult = false;
         boolean result = instance.indiceCargado();
         assertEquals(expResult, result);
@@ -159,7 +159,7 @@ public class LuceneDAOTest {
     }
 
     /**
-     * Test of cargarProductos method, of class LuceneDAO.
+     * Test of cargarProductos method, of class LuceneProductosDAO.
      */
     @Test
     public void testCargarProductos() throws Exception {
@@ -219,10 +219,10 @@ public class LuceneDAOTest {
         m1.setPresentacion("drogaVoltaren");
         medicamentos.put(3, m1);  
         
-        LuceneDAO instance = new LuceneDAO();
+        LuceneProductosDAO instance = new LuceneProductosDAO();
         instance.cargarProductos(productos, medicamentos);
         
-        LuceneDAO instance1 = LuceneDAO.getInstance();
+        LuceneProductosDAO instance1 = LuceneProductosDAO.getInstance();
         instance1.setIndiceProductosLucene(new RAMDirectory());
         instance1.crearIndiceProductosLuecene(productos, medicamentos);
         int expResult = instance1.getIndiceProductosLucene().listAll().length;
@@ -232,7 +232,7 @@ public class LuceneDAOTest {
     }
 
     /**
-     * Test of actualizarIndiceProductosLucene method, of class LuceneDAO.
+     * Test of actualizarIndiceProductosLucene method, of class LuceneProductosDAO.
      */
     @Test
     public void testActualizarIndiceProductosLucene() throws Exception {
@@ -291,11 +291,11 @@ public class LuceneDAOTest {
         m1.setPresentacion("drogaVoltaren");
         medicamentos.put(3, m1);  
         
-        LuceneDAO instance = new LuceneDAO();
+        LuceneProductosDAO instance = new LuceneProductosDAO();
         instance.setIndiceProductosLucene(new RAMDirectory());
         instance.actualizarIndiceProductosLucene(productos, medicamentos);
         
-        LuceneDAO instance1 = LuceneDAO.getInstance();
+        LuceneProductosDAO instance1 = LuceneProductosDAO.getInstance();
         instance1.setIndiceProductosLucene(new RAMDirectory());
         instance1.crearIndiceProductosLuecene(productos, medicamentos);
         int expResult = instance1.getIndiceProductosLucene().listAll().length;
@@ -304,7 +304,7 @@ public class LuceneDAOTest {
     }
 
     /**
-     * Test of buscarProducto method, of class LuceneDAO.
+     * Test of buscarProducto method, of class LuceneProductosDAO.
      */
     @Test
     public void testBuscarProducto() throws Exception {

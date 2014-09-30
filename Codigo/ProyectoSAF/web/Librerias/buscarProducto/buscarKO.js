@@ -280,28 +280,28 @@ function ViewModel() {
     };
 
     // Traer del controlador.
-    //self.formasPago = [{formaPago: "Contado"}];
+    self.formasPago = [{formaPago: "Contado"}];
     self.formaPago = ko.observable();
-    self.formasPago = ko.computed(function() {
-        $.ajax({
-            url: "obtenerFormasPago.json",
-            type: 'GET',
-            dataType: 'json',
-            responseType: "application/json",
-            headers: {
-                Accept: "application/json",
-                "Access-Control-Allow-Origin": "*"
-            },
-            success: function(result) {
-
-                alert(result);
-                return result;
-            }
-
-
-        });
-        
-    });
+//    self.formasPago = ko.computed(function() {
+//        $.ajax({
+//            url: "obtenerFormasPago.htm",
+//            type: 'GET',
+//            dataType: 'json',
+//            responseType: "application/json",
+//            headers: {
+//                Accept: "application/json",
+//                "Access-Control-Allow-Origin": "*"
+//            },
+//            success: function(result) {
+//
+//                alert(result);
+//                return result;
+//            }
+//
+//
+//        });
+//        
+//    });
 
     self.vendedor = ko.observable();
     //mostrar facturacion

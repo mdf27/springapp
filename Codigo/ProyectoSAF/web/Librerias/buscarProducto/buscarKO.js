@@ -287,6 +287,7 @@ function ViewModel() {
         
     ]);
      self.mySelectedGuid =  ko.observable();
+     ////
 
     // Traer del controlador.
     self.formasPago = [{formaPago: "Contado"}];

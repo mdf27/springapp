@@ -1,17 +1,23 @@
-<%-- 
-    Document   : registrarCliente
-    Created on : Sep 28, 2014, 12:19:36 AM
-    Author     : Juanes
---%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+	<title>Registrar Cliente</title>
+        <link rel='stylesheet' href='CSS/contenedorPrincipal.css'>
+        <link href="CSS/bootstrap.css" rel="stylesheet">
+        <link href="CSS/bootstrap-responsive.css" rel="stylesheet">
+        <jsp:include page="include/menu.jsp"/>   
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <div id="contenedor">
+            <div id = "leftColuma">
+                <jsp:include page="include/menuClientes.jsp"/>  
+            </div>
+            <div id ="contenedorPrincipal" align="center"> 
+                
+           </div>
+       </div>
     </body>
 </html>

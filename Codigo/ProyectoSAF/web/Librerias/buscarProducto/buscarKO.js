@@ -274,10 +274,19 @@ function ViewModel() {
         {nombreVendedor: "Daniel"}
 
     ];
-    //Nuevo
+    //Manejo de clientes
     // Para posterior registro de clientes.
     self.registrarCliente = function() {
     };
+    // Autcomplete de clientes
+     self.myPeople =  ko.observableArray([
+        new Cliente(1, "Maria Fernanda", "Toledo", "direccion", "telefono", "cedula", "razonSocial", "rut", "saldo", "tope"),
+        new Cliente(1, "Maria Jose", "Rabza", "direccion", "telefono", "cedula", "razonSocial", "rut", "saldo", "tope"),
+        new Cliente(1, "Maria Berta", "Bertez", "direccion", "telefono", "cedula", "razonSocial", "rut", "saldo", "tope"),
+        new Cliente(1, "Maria Daniela", "Fagundez un apellido largo", "direccion", "telefono", "cedula", "razonSocial", "rut", "saldo", "tope")
+        
+    ]);
+     self.mySelectedGuid =  ko.observable();
 
     // Traer del controlador.
     self.formasPago = [{formaPago: "Contado"}];
@@ -562,6 +571,23 @@ function renglonFacturaVO(data) {
     this.conReceta = ko.observable(data.conReceta);
 }
 ;
+
+function Cliente(idCliente, nombres, apellidos, direccion, telefono, cedula, razonSocial, rut, saldo, tope) {
+    this.idCliente = ko.observable(idCliente);
+    this.nombres = ko.observable(nombres);
+    this.apellidos = ko.observable(apellidos);
+    this.direccion = ko.observable(direccion);
+    this.telefono = ko.observable(telefono);
+    this.cedula = ko.observable(cedula);
+    this.razonSocial = ko.observable(razonSocial);
+    this.rut = ko.observable(rut);
+    this.saldo = ko.observable(saldo);
+    this.tope = ko.observable(tope);
+    
+    this.displayName = ko.dependentObservable(function() {
+       return this.nombres() +" "+ this.apellidos();
+   }, this);
+};
 
 var vm = new ViewModel();
 ko.applyBindings(vm);

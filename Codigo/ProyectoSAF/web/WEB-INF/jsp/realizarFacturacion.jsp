@@ -10,10 +10,15 @@
         <title>Facturación</title>
         <link href="CSS/contenedorPrincipal.css" rel="stylesheet">
         <link href="CSS/facturacion.css" rel="stylesheet">
+        <link href="CSS/jquery-ui.css" rel="stylesheet">
         <script type="text/javascript" language="javascript" src="Librerias/buscarProducto/knockout-3.0.0.js"></script>
         <script type="text/javascript" language="javascript" src="Librerias/buscarProducto/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" language="javascript" src="Librerias/facturacion/autocomplete.js"></script>
+        <script src="Librerias/facturacion/jquery-ui.js"></script>
+        
+        
         <!-- /menu -->
-        <jsp:directive.include file="include/menu.jsp"/>   
+        <jsp:directive.include file="include/menu.jsp"/>
     </head>
     <body>
         <%-- 
@@ -34,7 +39,7 @@
             </div>
 
             <script type="text/javascript">
-               
+
                 function getAway() {
                     // Replace current site with another benign site
                     window.location.replace('index.html');
@@ -88,8 +93,11 @@
                             <td align ="left" colspan="1">
                                 <i class="icon-user"></i>&nbsp <strong>Cliente :</strong>
                             </td>  
+                            <%-- <td colspan="1">
+                                 <input type="text" autofocus list="browsers" name="buscar" autocomplete="off" class="input-large" >
+                             </td> --%>
                             <td colspan="1">
-                                <input type="text" autofocus list="browsers" name="buscar" autocomplete="off" class="input-large" >
+                                <input type="text" class="input-large" data-bind="jqAuto: { autoFocus: true }, jqAutoSource: myPeople, jqAutoValue: mySelectedGuid, jqAutoSourceLabel: 'displayName', jqAutoSourceInputValue: 'name', jqAutoSourceValue: 'guid'" />
                             </td>
                             <td colspan="2">
                                 <strong>&nbsp RUT&nbsp </strong>
@@ -148,7 +156,7 @@
                                         <th>Receta</th>
                                         <th>Precio venta</th>
                                         <th>Subtotal</th>
-                                        <%--<th>Algooooo</th>--%>
+                                            <%--<th>Algooooo</th>--%>
                                         </thead>
                                         <tbody data-bind="foreach: renglonesFactura">
                                             <tr>

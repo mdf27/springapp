@@ -18,8 +18,7 @@ public class AjustarStockDAO extends AbstractDAO{
     public void ajustarCantidadStock (StockVO stock){
         String sql = "UPDATE stock set cantidad=?, idTransaccion=? where idProducto=?";
         Object[] parametros = new Object[]{stock.getCantidad(),stock.getIdTransaccion(),stock.getIdProducto()};
-        getJdbcTemplate().update(sql, parametros);    
-        
+        getJdbcTemplate().update(sql, parametros);            
     }
     
 }

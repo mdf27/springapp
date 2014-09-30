@@ -41,7 +41,10 @@ public class BuscarProductoManager {
         LuceneProductosDAO ldao = LuceneProductosDAO.getInstance();
         if (!ldao.indiceCargado()){//indiceCargado?
             ldao.cargarProductos(buscarProductos(),buscarMedicamentos());
-        }          
+        }else if (ldao.isActualizarIndice()){
+            ldao.actualizarIndiceProductosLucene(buscarDao.obtenerDatosCompletosProducto(), buscarDao.obtenerDatosCompletosMedicamento());
+            ldao.setActualizarIndice(false);
+        }
     
         List<DatosCompletosMedProdVO> salida = ldao.buscarProducto(texto_buscar, filtro);
         return salida;

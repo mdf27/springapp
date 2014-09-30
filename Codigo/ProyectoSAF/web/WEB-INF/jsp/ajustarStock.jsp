@@ -32,7 +32,7 @@
         <div id="contenedor">
             <div id ="contenedorPrincipal" align="center"> <jsp:directive.include file="include/ajustarStock.jsp"/>  </div> 
         </div>   
-        <script id="buscarScript" type="text/javascript" language="javascript" charset="utf-8" src="Librerias/buscarProducto/ajustarKO.js"></script>
+        <script id="buscarScript" type="text/javascript" language="javascript" charset="utf-8" src="Librerias/ajustarStock/ajustarKO.js"></script>
 
     </body>
 </html>

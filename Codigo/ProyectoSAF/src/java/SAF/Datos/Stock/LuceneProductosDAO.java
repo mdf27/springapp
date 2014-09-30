@@ -3,6 +3,7 @@ import SAF.Datos.Abstract.AbstractDAO;
 import SAF.VO.Stock.DatosCompletosMedProdVO;
 import SAF.VO.Stock.DatosCompletosMedicamentoVO;
 import SAF.VO.Stock.DatosCompletosProductoVO;
+import SAF.VO.Stock.StockVO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -47,7 +48,8 @@ public class LuceneProductosDAO extends AbstractDAO{
         return this.indiceProductosLucene;
     }
     
-  
+    private boolean actualizarIndice = false;
+    
     private String devolverCodigosBarraProducto(DatosCompletosProductoVO p){
         String resultado="";
         List<String> codigos = p.getCodigoBarras();
@@ -246,7 +248,6 @@ public class LuceneProductosDAO extends AbstractDAO{
         crearIndiceProductosLuecene(productos,medicamentos);
     }    
     
-    
     private void cargarListaProductos(Document d, List<DatosCompletosMedProdVO> productos) throws java.text.ParseException{
             DatosCompletosMedProdVO productoMedicamento=new DatosCompletosMedProdVO();
             int idProducto = Integer.valueOf(d.get("idProducto"));
@@ -401,4 +402,13 @@ public class LuceneProductosDAO extends AbstractDAO{
             
      return productos;   
     }
+
+    public boolean isActualizarIndice() {
+        return actualizarIndice;
+    }
+
+    public void setActualizarIndice(boolean actualizarIndice) {
+        this.actualizarIndice = actualizarIndice;
+    }
+    
 }

@@ -33,7 +33,16 @@ public class FacturaVO {
     private double montoTotalAPagar;
     private long idTransaccion;
     private List<RenglonFacturaVO> renglones;
+    private FormaPagoFacturaVO formaDePago;
 
+    public FormaPagoFacturaVO getFormaDePago() {
+        return formaDePago;
+    }
+
+    public void setFormaDePago(FormaPagoFacturaVO formaDePago) {
+        this.formaDePago = formaDePago;
+    }
+    
     public List<RenglonFacturaVO> getRenglones() {
         return renglones;
     }
@@ -44,6 +53,7 @@ public class FacturaVO {
 
     public FacturaVO() {
         renglones = new LinkedList<>();
+        idCliente = -1;
     }
 
     public FacturaVO(Map<String, Object> query) {

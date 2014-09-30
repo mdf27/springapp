@@ -26,12 +26,19 @@ public class FacturaDAO extends AbstractDAO {
         String sql = "INSERT INTO Factura (idTipoFactura,  idCliente, RUT, razonSocial, fecha, descuento, montoNetoTotal, montoNetoGralIva,"
                 + " montoNetoGralIvaMin, montoTotal, montoTotalAPagar) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        Object[] parametros = new Object[]{factura.getIdTipoFactura(), factura.getIdCliente(), factura.getRUT(), factura.getRazonSocial(), factura.getFecha(), factura.getDescuento(), factura.getMontoNetoTotal(), factura.getMontoNetoGravIva(), factura.getMontoNetoGravIvaMin(), factura.getMontoTotal(),
-            factura.getMontoTotalAPagar()};
+        if (factura.getIdCliente() != -1) {
+            Object[] parametros = new Object[]{factura.getIdTipoFactura(), factura.getIdCliente(), factura.getRUT(), factura.getRazonSocial(), factura.getFecha(), factura.getDescuento(), factura.getMontoNetoTotal(), factura.getMontoNetoGravIva(), factura.getMontoNetoGravIvaMin(), factura.getMontoTotal(),
+                factura.getMontoTotalAPagar()};
 
-        getJdbcTemplate().update(sql, parametros);
-        
+            getJdbcTemplate().update(sql, parametros);
+        } else {
+            Object[] parametros = new Object[]{factura.getIdTipoFactura(), null, factura.getRUT(), factura.getRazonSocial(), factura.getFecha(), factura.getDescuento(), factura.getMontoNetoTotal(), factura.getMontoNetoGravIva(), factura.getMontoNetoGravIvaMin(), factura.getMontoTotal(),
+                factura.getMontoTotalAPagar()};
+
+            getJdbcTemplate().update(sql, parametros);
+        }
         return super.getLastID().intValue();
+
     }
 
     public FacturaVO getFactura(int idFactura, short idTipoFactura) {

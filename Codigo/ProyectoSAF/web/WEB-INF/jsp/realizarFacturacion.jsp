@@ -13,7 +13,7 @@
         <script type="text/javascript" language="javascript" src="Librerias/buscarProducto/knockout-3.0.0.js"></script>
         <script type="text/javascript" language="javascript" src="Librerias/buscarProducto/jquery-1.11.1.min.js"></script>
         <!-- /menu -->
-        <jsp:include page="include/menu.jsp"/>   
+        <jsp:directive.include file="include/menu.jsp"/>   
     </head>
     <body>
         <%-- 
@@ -30,7 +30,7 @@
         <div id="contenedor">
 
             <div id = "leftColuma">  
-                <jsp:include page="include/menuFacturacion.jsp"/>  
+                <jsp:directive.include file="include/menuFacturacion.jsp"/>  
             </div>
 
             <script type="text/javascript">
@@ -120,8 +120,8 @@
                                 <div >
                                     <form >
 
-                                        <input type="text" autofocus list="browsers" name="buscar" autocomplete="off" class="input-large" 
-                                               data-bind="value: textoProducto, valueUpdate: 'input', executeOnEnter: buscarProducto" 
+                                        <input type="text" class="input-large" 
+                                               data-bind="value: textoProducto, valueUpdate: 'input', executeOnEnter: buscarProducto, hasFocus: agregandoProducto" 
                                                placeholder="Ingrese nombre o codigo del producto">
                                     </form>
                                 </div> 
@@ -148,6 +148,7 @@
                                         <th>Receta</th>
                                         <th>Precio venta</th>
                                         <th>Subtotal</th>
+                                        <%--<th>Algooooo</th>--%>
                                         </thead>
                                         <tbody data-bind="foreach: renglonesFactura">
                                             <tr>
@@ -158,7 +159,7 @@
                                                 <td ><strong data-bind="text: receta" /></td> <%--Receta --%>
                                                 <td ><strong data-bind="text: precioVenta" /></td> <%--Precio venta --%>
                                                 <td ><strong data-bind="text: subtotal" /></td> <%--Subtotal --%>
-
+                                                <%--<td><a href="#" data-bind="click: $parent.removeTask" >Eliminar</a></td>--%>
                                             </tr>  
                                         </tbody>
                                         <tbody data-bind="foreach: renglonesVacios">
@@ -170,6 +171,7 @@
                                                 <td >&nbsp</td> <%--Receta --%>
                                                 <td >&nbsp</td> <%--Precio venta --%>
                                                 <td >&nbsp</td> <%--Subtotal --%>
+                                                <%--<td >&nbsp</td> <%--Subtotal --%>
                                             </tr>
                                         </tbody>
 

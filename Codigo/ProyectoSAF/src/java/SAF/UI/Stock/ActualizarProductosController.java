@@ -27,6 +27,13 @@ public class ActualizarProductosController {
 //            
 //        }
         Map <String, List<ProductoVO>>  productosActualizados = fs.actualizarProductosDUSA(); 
+
+//        productosActualizados.put("agregados", productosAgregados);
+//        productosActualizados.put("aumentaron", productosAumentaron);
+//        productosActualizados.put("disminuyeron", productosDisminuyeron);
+//        productosActualizados.put("habilitaron", productosHabilitados);
+//        productosActualizados.put("deshabilitaron", productosDeshabilitados);
+        
         return (new ModelAndView("actualizarProductosDUSA",
                 "productosActualizados", productosActualizados));
     }

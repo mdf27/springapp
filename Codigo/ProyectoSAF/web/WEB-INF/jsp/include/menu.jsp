@@ -1,7 +1,6 @@
 <link href="CSS/bootstrap.css" rel="stylesheet">
 <link href="CSS/bootstrap-responsive.css" rel="stylesheet">
 <link href="CSS/menu.css" rel="stylesheet">
-<script src="Librerias/jquery.js"></script>
 <script src="Librerias/bootstrap/bootstrap-dropdown.js"></script>
 <script type="text/javascript" language="javascript" src="Librerias/shortcut.js"></script>
 

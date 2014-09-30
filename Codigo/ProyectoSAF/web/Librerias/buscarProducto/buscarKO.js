@@ -94,11 +94,11 @@ function ViewModel() {
                 } else if (self.selectedOptionValue() == "Farmadescuento ascendente") {
                     self.lista.sort(function(a, b) {
                         return a.precioLista < b.precioLista ? -1 : 1;
-                    });    
+                    });
                 } else if (self.selectedOptionValue() == "Precio Venta ascendente") {
                     self.lista.sort(function(a, b) {
                         return a.precioLista < b.precioLista ? -1 : 1;
-                    });    
+                    });
                 } else if (self.selectedOptionValue() == "Laboratorio descendente") {
                     self.lista.sort(function(a, b) {
                         return a.laboratorio > b.laboratorio ? -1 : 1;
@@ -184,19 +184,23 @@ function ViewModel() {
         return self.lista.slice(first, first + self.rowPerPage);
     });
 
+    // Para seleccion y focus de los campos.
     self.isSelected = ko.observable(true);
     self.recetaSelected = ko.observable(false);
     self.hiddenSelected = ko.observable(false);
+    self.agregandoProducto = ko.observable(false);
     self.setIsSelected = function(data) {
         this.isSelected(data);
-        //this.hiddenSelected(true)
     };
     self.setSelectedReceta = function(data) {
         this.recetaSelected(data);
-        //this.hiddenSelected(true)
+    };
+
+    self.setSelectedProducto = function(data) {
+        this.agregandoProducto(data);
     };
     //ordenar                    
-    self.optionValues = ["Nombre descendente", "Nombre ascendente", "Laboratorio descendente","Laboratorio ascendente", "Precio Lista descendente", "Precio Lista ascendente", "Precio Venta descendente", "Precio Venta ascendente", "Farmadescuento descendente", "Farmadescuento ascendente"],
+    self.optionValues = ["Nombre descendente", "Nombre ascendente", "Laboratorio descendente", "Laboratorio ascendente", "Precio Lista descendente", "Precio Lista ascendente", "Precio Venta descendente", "Precio Venta ascendente", "Farmadescuento descendente", "Farmadescuento ascendente"],
             //self.selectedChoice = ko.observable();
             self.selectionChanged = function(event) {
                 self.ordenar();
@@ -330,9 +334,22 @@ function ViewModel() {
     self.conReceta = ko.observable(false);
     self.cantProd = ko.observable(1);
     self.descuento = ko.observable(0);
-    self.total = ko.observable(parseFloat(0).toFixed(2));
+    //self.total = ko.observable(parseFloat(0).toFixed(2));
     var f = new Date();
     self.fecha = ko.observable(f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear());
+
+    self.total = ko.computed(function() {
+        var largo = parseInt(self.renglonesFactura().length);
+        var total = parseFloat(0);
+        for (i = 0; i < largo; i++) {
+            var subtotal = parseFloat(self.renglonesFactura()[i].subtotal());
+            total = total + subtotal;
+        }
+        ;
+        return parseFloat(total).toFixed(2);
+
+    }, this);
+
     self.guardarProducto = function(data) {
         self.productoSeleccionado(data);
 
@@ -356,9 +373,9 @@ function ViewModel() {
                     (renglon.receta() === self.conReceta())) {
                 // Parsear a entero porque javascript toma el + como concatenacion.
                 var cantAnterior = parseInt(renglon.cantidad());
-                var subtotalAnterior = parseFloat(renglon.subtotal()).toFixed(2);
+                var subtotalAnterior = parseFloat(renglon.subtotal());
                 self.renglonesFactura()[i].cantidad(cantAnterior + parseInt(self.cantProd()));
-                self.renglonesFactura()[i].subtotal(subtotalAnterior + (parseFloat(renglon.precioVenta())).toFixed(2) * parseInt(self.cantProd()));
+                self.renglonesFactura()[i].subtotal(parseFloat(subtotalAnterior + (parseFloat(renglon.precioVenta())) * parseInt(self.cantProd())).toFixed(2));
                 esta = true;
 
             }
@@ -389,9 +406,10 @@ function ViewModel() {
                 var descuento = (parseFloat(item.precioVenta) * parseFloat(self.descuento())) / 100;
                 var precioConDesc = parseFloat(parseFloat(item.precioVenta) - descuento).toFixed(2);
                 if (self.conReceta()) {
-                    if (item.farmaDescuento < precioConDesc)
+                    if (item.farmaDescuento < precioConDesc){
                         precioConDesc = item.farmaDescuento;
-                    self.descuento(item.descuentoReceta);
+                        self.descuento(item.descuentoReceta);
+                    }
                 }
 
 
@@ -452,8 +470,6 @@ function ViewModel() {
                 self.montoTotal(montoTotalAnterior + parseFloat(renglon.precioVenta() - descIva) * parseInt(renglon.cantidad()));
                 // Calculo monto total con iva.
                 var subtotal = parseFloat(renglon.subtotal());
-                var totalAnterior = parseFloat(self.total());
-                self.total(parseFloat(totalAnterior + subtotal).toFixed(2));
 
             }
             ;
@@ -464,8 +480,33 @@ function ViewModel() {
             self.cantProd(1);
             self.descuento(0);
         }
-
+        self.setSelectedProducto(true);
         self.productoSeleccionado(null);
+
+    };
+
+    self.removeTask = function(task) {
+        self.renglonesFacturaVO.remove(function(item) {
+            return ((item.idProducto() === task.codigo())
+                    && (item.descPorcentBonif() === task.descuento())
+                    && (item.conReceta() === task.receta()))
+        });
+
+        self.renglonesFactura.remove(function(item) {
+            return ((item.codigo() === task.codigo())
+                    && (item.descuento() === task.descuento())
+                    && (item.receta() === task.receta()))
+        });
+
+        self.renglonesVacios.push(1);
+    };
+
+    self.removeTask2 = function(task) {
+        self.renglonesFactura.remove(function(item) {
+            alert(item.codigo());
+            alert(task.codigo());
+            return (item.codigo() === task.codigo())
+        });
     };
 
 //    // Enviar la factura
@@ -475,7 +516,7 @@ function ViewModel() {
 
 
         //var renglonData = ko.toJSON(self.renglonesFacturaVO()[0]) // Ver que pasa cuando no hay rut y r social, que manda?
-        var data = ko.toJSON({idTipoFactura: 101, idFactura: 0, idCliente: 1, rut: self.nroRut(),
+         var data = ko.toJSON({idTipoFactura: 101, idFactura: 0, idCliente: 1, rut: self.nroRut(),
             razonSocial: self.rSocial(), fecha: timestamp, descuento: 0, montoNetoGravIva: self.montoNetoGravIva(),
             montoNetoGravIvaMin: self.montoNetoGravIvaMin(), montoTotal: self.montoTotal(), montoTotalAPagar: self.total(), idTransaccion: 100,
             renglones: self.renglonesFacturaVO, formaDePago: {idTipoFormaPago: 101, idTipoFactura: 101, 
@@ -532,16 +573,16 @@ $(window).keyup(function(evt) {
         vm.setIsSelected(false);
         vm.setSelectedReceta(true);
         vm.selectPrevious();
-        
+
     } else if (evt.keyCode == 40) { //abajo
         vm.setIsSelected(false);
         vm.setSelectedReceta(true);
         vm.selectNext();
     } else if (evt.keyCode == 13) { //enter
-        if(vm.productoSeleccionado()!== null){
+        if (vm.productoSeleccionado() !== null) {
             vm.selecccionarProducto();
         }
-        
+
     }
 });
 

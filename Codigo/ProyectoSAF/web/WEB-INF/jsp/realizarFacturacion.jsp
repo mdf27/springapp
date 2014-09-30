@@ -120,8 +120,8 @@
                                 <div >
                                     <form >
 
-                                        <input type="text" autofocus list="browsers" name="buscar" autocomplete="off" class="input-large" 
-                                               data-bind="value: textoProducto, valueUpdate: 'input', executeOnEnter: buscarProducto" 
+                                        <input type="text" class="input-large" 
+                                               data-bind="value: textoProducto, valueUpdate: 'input', executeOnEnter: buscarProducto, hasFocus: agregandoProducto" 
                                                placeholder="Ingrese nombre o codigo del producto">
                                     </form>
                                 </div> 
@@ -148,6 +148,7 @@
                                         <th>Receta</th>
                                         <th>Precio venta</th>
                                         <th>Subtotal</th>
+                                        <%--<th>Algooooo</th>--%>
                                         </thead>
                                         <tbody data-bind="foreach: renglonesFactura">
                                             <tr>
@@ -158,7 +159,7 @@
                                                 <td ><strong data-bind="text: receta" /></td> <%--Receta --%>
                                                 <td ><strong data-bind="text: precioVenta" /></td> <%--Precio venta --%>
                                                 <td ><strong data-bind="text: subtotal" /></td> <%--Subtotal --%>
-
+                                                <%--<td><a href="#" data-bind="click: $parent.removeTask" >Eliminar</a></td>--%>
                                             </tr>  
                                         </tbody>
                                         <tbody data-bind="foreach: renglonesVacios">
@@ -170,6 +171,7 @@
                                                 <td >&nbsp</td> <%--Receta --%>
                                                 <td >&nbsp</td> <%--Precio venta --%>
                                                 <td >&nbsp</td> <%--Subtotal --%>
+                                                <%--<td >&nbsp</td> <%--Subtotal --%>
                                             </tr>
                                         </tbody>
 

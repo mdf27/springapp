@@ -7,6 +7,7 @@ package SAF.Logica.Facturacion;
 
 import SAF.Datos.Stock.StockDAO;
 import SAF.VO.Facturacion.FacturaVO;
+import SAF.VO.Facturacion.FormaPagoFacturaVO;
 import SAF.VO.Facturacion.RenglonFacturaVO;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -102,6 +103,12 @@ public class FacturacionManagerTest {
         int cantidadPrevia = stockDao.getCantidadStock(100001);
         ArrayList<RenglonFacturaVO> renglones = new ArrayList<RenglonFacturaVO>();
         renglones.add(renglon1);
+        
+        
+        FormaPagoFacturaVO pago = new FormaPagoFacturaVO();
+        pago.setIdTipoFormaPago((short)1);
+        pago.setIdTipoFactura((short)102);
+        
 
         FacturaVO fvo = new FacturaVO();
         fvo.setDescuento(10.01);
@@ -116,6 +123,7 @@ public class FacturacionManagerTest {
         fvo.setRUT("rut");
         fvo.setRazonSocial("razo social");
         fvo.setRenglones(renglones);
+        fvo.setFormaDePago(pago);
         int idFactura = instance.ingresarFactura(fvo);
         fvo.setIdFactura(idFactura);
         FacturaVO fvo2= instance.obtenerFactura(idFactura, (short)102);
@@ -130,8 +138,15 @@ public class FacturacionManagerTest {
     public void testIngresarFactura2() {
         System.out.println("ingresarFactura");
         FacturaVO factura = null;
+        
+        FormaPagoFacturaVO pago = new FormaPagoFacturaVO();
+        pago.setIdTipoFormaPago((short)1);
+        pago.setIdTipoFactura((short)101);
+        
         //renglon 1
 
+        
+        
         RenglonFacturaVO renglon1 = new RenglonFacturaVO();
         renglon1.setCantidad(2);
         renglon1.setConReceta(false);
@@ -160,8 +175,10 @@ public class FacturacionManagerTest {
         fvo.setRUT("rut");
         fvo.setRazonSocial("razo social");
         fvo.setRenglones(renglones);
+        fvo.setFormaDePago(pago);
         int idFactura = instance.ingresarFactura(fvo);
         fvo.setIdFactura(idFactura);
+        
         FacturaVO fvo2= instance.obtenerFactura(idFactura, (short)101);
         // TODO review the generated test code and remove the default call to fail.
         assertTrue(compararFacturaVO(fvo,fvo2));

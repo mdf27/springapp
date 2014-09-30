@@ -26,7 +26,7 @@
                             //out.print("<form action=\"inicio.html\" method=\"POST\">");
                             out.print("<form>");
                             out.print("<fieldset>");
-                            out.print("<p id=\"exitoLogin\">Se a logeado de forma correcta.</p>");
+                            out.print("<p id=\"exitoLogin\">Inicio de sesión exitoso.</p>");
                             //out.print("<p><input type=\"submit\" value=\"Continuar\" id=\"botonLogin\" ></p>");
                             out.print("<input type=\"button\" class=\"botonLogin\" value=\"Continuar\" id=\"botonLogin\" onClick=\"location.href = 'inicio.html'\">");
                             out.print("</fieldset>");

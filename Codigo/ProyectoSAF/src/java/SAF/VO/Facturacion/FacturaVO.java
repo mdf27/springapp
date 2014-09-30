@@ -44,6 +44,7 @@ public class FacturaVO {
 
     public FacturaVO() {
         renglones = new LinkedList<>();
+        idCliente = -1;
     }
 
     public FacturaVO(Map<String, Object> query) {

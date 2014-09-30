@@ -234,7 +234,7 @@
             </div>
         </div>
 
-        <script id="buscarScript" type="text/javascript" language="javascript" charset="utf-8" src="Librerias/buscarProducto/buscarKO.js"></script>
+        <script id="buscarScript" type="text/javascript" language="javascript" charset="utf-8" src="Librerias/facturacion/facturacionKO.js"></script>
     </body>
 
 

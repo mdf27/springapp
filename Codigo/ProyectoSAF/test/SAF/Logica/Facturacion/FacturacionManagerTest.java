@@ -7,6 +7,7 @@ package SAF.Logica.Facturacion;
 
 import SAF.Datos.Stock.StockDAO;
 import SAF.VO.Facturacion.FacturaVO;
+import SAF.VO.Facturacion.FormaPagoFacturaVO;
 import SAF.VO.Facturacion.RenglonFacturaVO;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -66,6 +67,14 @@ public class FacturacionManagerTest {
         return result;
     }
     
+     public boolean compararFormaPagoFacturaVO(FormaPagoFacturaVO f1,FormaPagoFacturaVO f2){
+        boolean result = f1.getIdFactura() == f2.getIdFactura() && f1.getIdTipoFactura() == f2.getIdTipoFactura();
+        result = result && f1.getIdCuenta() == f2.getIdCuenta();
+        result = result && f1.getIdTipoFormaPago() == f2.getIdTipoFormaPago();
+        result = result && f1.getNroTarjeta() == f2.getNroTarjeta();
+        return result;
+    }
+    
     public boolean compararFacturaVO(FacturaVO f1, FacturaVO f2){
         boolean result = f1.getIdFactura() == f2.getIdFactura() && f1.getIdTipoFactura() == f2.getIdTipoFactura();
         result = result && f1.getIdCliente() == f2.getIdCliente();
@@ -102,6 +111,12 @@ public class FacturacionManagerTest {
         int cantidadPrevia = stockDao.getCantidadStock(100001);
         ArrayList<RenglonFacturaVO> renglones = new ArrayList<RenglonFacturaVO>();
         renglones.add(renglon1);
+        
+        
+        FormaPagoFacturaVO pago = new FormaPagoFacturaVO();
+        pago.setIdTipoFormaPago((short)1);
+        pago.setIdTipoFactura((short)102);
+        
 
         FacturaVO fvo = new FacturaVO();
         fvo.setDescuento(10.01);
@@ -116,10 +131,13 @@ public class FacturacionManagerTest {
         fvo.setRUT("rut");
         fvo.setRazonSocial("razo social");
         fvo.setRenglones(renglones);
+        fvo.setFormaDePago(pago);
         int idFactura = instance.ingresarFactura(fvo);
         fvo.setIdFactura(idFactura);
+        pago.setIdFactura(idFactura);
         FacturaVO fvo2= instance.obtenerFactura(idFactura, (short)102);
         // TODO review the generated test code and remove the default call to fail.
+        assertTrue(compararFormaPagoFacturaVO(fvo.getFormaDePago(), fvo2.getFormaDePago()));
         assertTrue(compararFacturaVO(fvo,fvo2));
         assertEquals(stockDao.getCantidadStock(100001) - 2, cantidadPrevia);
     }
@@ -130,8 +148,15 @@ public class FacturacionManagerTest {
     public void testIngresarFactura2() {
         System.out.println("ingresarFactura");
         FacturaVO factura = null;
+        
+        FormaPagoFacturaVO pago = new FormaPagoFacturaVO();
+        pago.setIdTipoFormaPago((short)1);
+        pago.setIdTipoFactura((short)101);
+        
         //renglon 1
 
+        
+        
         RenglonFacturaVO renglon1 = new RenglonFacturaVO();
         renglon1.setCantidad(2);
         renglon1.setConReceta(false);
@@ -160,11 +185,15 @@ public class FacturacionManagerTest {
         fvo.setRUT("rut");
         fvo.setRazonSocial("razo social");
         fvo.setRenglones(renglones);
+        fvo.setFormaDePago(pago);
         int idFactura = instance.ingresarFactura(fvo);
         fvo.setIdFactura(idFactura);
+        pago.setIdFactura(idFactura);
+        
         FacturaVO fvo2= instance.obtenerFactura(idFactura, (short)101);
         // TODO review the generated test code and remove the default call to fail.
         assertTrue(compararFacturaVO(fvo,fvo2));
+        assertTrue(compararFormaPagoFacturaVO(fvo.getFormaDePago(), fvo2.getFormaDePago()));
         assertEquals(stockDao.getCantidadStock(100001) + 2, cantidadPrevia);
     }
 }

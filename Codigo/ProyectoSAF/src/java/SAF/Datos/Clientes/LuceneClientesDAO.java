@@ -100,8 +100,8 @@ public class LuceneClientesDAO extends AbstractDAO{
         return (indiceClientesLucene!=null);
     }
 
-    public void setIndiceProductosLucene(Directory indiceProductosLucene) {
-        this.indiceClientesLucene = indiceProductosLucene;
+    public void setIndiceClientesLucene(Directory indiceClientesLucene) {
+        this.indiceClientesLucene = indiceClientesLucene;
     }
     
     public void cargarClientes(Map <Integer,DatosCompletosClienteVO>clientes)
@@ -165,7 +165,7 @@ public class LuceneClientesDAO extends AbstractDAO{
             clientes.add(cliente);
     }
     
-    public List<DatosCompletosClienteVO> buscarProducto(String texto_buscar, String filtro) throws IOException, ParseException, java.text.ParseException, org.apache.lucene.queryparser.classic.ParseException{
+    public List<DatosCompletosClienteVO> buscarCliente(String texto_buscar, String filtro) throws IOException, ParseException, java.text.ParseException, org.apache.lucene.queryparser.classic.ParseException{
         StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_40); 
         
         //busqueda

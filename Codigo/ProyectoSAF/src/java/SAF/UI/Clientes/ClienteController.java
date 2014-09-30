@@ -5,8 +5,18 @@
  */
 package SAF.UI.Clientes;
 
+import SAF.Facade.Clientes.FacadeBuscarCliente;
+import SAF.VO.Clientes.DatosCompletosClienteVO;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -16,11 +26,20 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ClienteController {
+    
+    @Autowired
+    FacadeBuscarCliente buscarClienteFacade;
+    
     @RequestMapping(value = "registrarCliente")
     public ModelAndView redireccion(){
         ModelAndView mv = new ModelAndView();
         mv.setViewName("registrarCliente");
         return (mv);
+    }
+    
+     @RequestMapping(value = "buscarCliente.json",method = RequestMethod.GET)      
+    public @ResponseBody List<DatosCompletosClienteVO> buscarProducto (@RequestParam(value="buscar") String texto_buscar, @RequestParam(value="filtro") String filtro) throws ClassNotFoundException, SQLException, IOException, ParseException, java.text.ParseException{
+        return buscarClienteFacade.buscarCliente(texto_buscar, filtro);
     }
     
     

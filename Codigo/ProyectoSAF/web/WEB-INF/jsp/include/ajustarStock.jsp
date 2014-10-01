@@ -18,17 +18,16 @@
                             </span>
             </td>
             <td width="16">&nbsp;</td>
-            <td width="316"><span style="font-size:14px; font-family:Arial">
-                                
-                    <input class="form-control" type="text" data-bind="value: filtro, valueUpdate: 'afterkeydown', event: { keyup: actualizarLista}">
-                            </span>
+            <td width="316"><span style="font-size:14px; font-family:Arial">                   
+                    <input class="form-control" type="text" data-bind="hasfocus:inputSelected, click: seleccionarInput(),value: filtro, valueUpdate: 'afterkeydown', event: { keyup: actualizarLista}">
+                    </span>
             </td>
             <td width="26">&nbsp;</td>
             <td width="62" data-bind="visible: lista().length>0"><span style="font-size:14px; font-family:Arial">Ordenar:</span></td>
             <td width="193">
                 <div align="left">
                     <div align="left"><span class="container body-content">
-                            <select name="select2" class="form-control" style="width: 100% !important" data-bind="options: optionValues, value: selectedOptionValue,visible: hayResultado, event: { change: selectionChanged}"></select>
+                            <select name="select2" class="form-control" style="width: 100% !important" data-bind="hasfocus:ordenarSelected,options: optionValues, value: selectedOptionValue,visible: hayResultado, event: { change: selectionChanged}"></select>
                         </span>
                     </div>
                 </div>
@@ -39,7 +38,7 @@
                 <div class="pager">   
                     <div align="center">
                         <ul class="pager">
-                           <li><a href="#" data-bind="click: previous, visible: hasPrevious">&laquo;</a><span class="pages" data-bind="text: $root.paginado() ,selee: lista().length >0"></span><a href="#" data-bind="click: next, visible: hasNext">&raquo;</a></li>
+                            <li data-bind="visible: paginadoActivo"><a href="#" data-bind="click: previous, visible: hasPrevious">&laquo;</a><span class="pages" data-bind="text: $root.paginado() ,selee: lista().length >0"></span><a href="#" data-bind="click: next, visible: hasNext">&raquo;</a></li>
                         </ul>
                     </div>
                     <p align="center"></p>
@@ -63,7 +62,7 @@
                 <td><p align="left" data-bind="text: descripcion"></p></td>
                 <td><p align="center" data-bind="text: habilitado"></p></td>
                 <td><div align="center">
-                  <input type="text"  data-bind="value: $root.filtroCantidad,valueUpdate: 'afterkeydown', visible: $root.isItemEditing($data)" >
+                        <input type="text" data-bind="value: $root.filtroCantidad,valueUpdate: 'afterkeydown', visible: $root.isItemEditing($data),hasfocus:$root.isItemEditing($data)" >
                   <p class="read" data-bind="text: cantidad2, visible: !$root.isItemEditing($data)"></p>
                   </div>
                 </td>

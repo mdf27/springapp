@@ -52,6 +52,7 @@ function ViewModel() {
         self.mostrarTick(false);
         if (self.filtro() && self.filtro().length > 2) {
             var buscar = "";
+            self.paginadoActivo(true);
             if (self.selectedOptionValueFiltro() == "Código:") {
                 buscar = "codigos"
             } else if (self.selectedOptionValueFiltro() == "Laboratorio:") {
@@ -94,6 +95,7 @@ function ViewModel() {
 
 
     //ordenar
+    self.ordenarSelected=ko.observable(false);
     self.selectedOptionValue = ko.observable("Nombre ascendente"),
     self.ordenar = function() {
         if (self.selectedOptionValue() == "Nombre descendente") {
@@ -153,14 +155,15 @@ function ViewModel() {
     };
     
     //paginado
+    self.paginadoActivo = ko.observable(false);
     self.topePaginado = self.rowPerPage;
     self.totalPages = ko.computed(function() {
         var div = Math.floor(self.lista().length / self.rowPerPage);
         div += self.lista().length % self.rowPerPage > 0 ? 1 : 0;
-        if (div !== 0)
+        /*if (div !== 0)
             div -= 1;
         else
-            div += 1;
+            div += 1;*/
         return div;
     });
 
@@ -186,14 +189,16 @@ function ViewModel() {
             if (self.indicePaginado < 0)
                 self.indicePaginado = 0;
             self.topePaginado += self.rowPerPage;
+            self.selectedResult(null);
         }
     };
 
     self.previous = function() {
-        if (self.pageNumber() !== 0) {
+        if (self.pageNumber() >1) {
             self.pageNumber(self.pageNumber() - 1);
             self.indicePaginado(self.topePaginado - 2 * self.rowPerPage - 1);
             self.topePaginado -= self.rowPerPage;
+            self.selectedResult(null);
         }
     };
 
@@ -227,7 +232,7 @@ function ViewModel() {
     };
     //ordenar                    
     self.optionValues = ["Nombre descendente", "Nombre ascendente", "Precio Lista descendente", "Precio Lista ascendente", "Precio Venta descendente", "Precio Venta ascendente", "Farmadescuento descendente", "Farmadescuento ascendente"],
-    //self.selectedChoice = ko.observable();
+    
     self.selectionChanged = function(event) {
         self.ordenar();
     };//evento ordenar 
@@ -274,7 +279,6 @@ function ViewModel() {
             index = (self.topePaginado - self.rowPerPage);
         self.selectedResult(self.lista()[index]);
         self.indicePaginado(index);
-        //self.guardarProducto(self.lista()[index]);
     };
     
     //editar
@@ -287,9 +291,7 @@ function ViewModel() {
     self.habilitarCross = function(cant){
         self.mostrarTick(false);
         self.mostrarCross(true);        
-    };
-    
-    
+    };    
     
     self.indice = ko.observable();
     
@@ -306,7 +308,12 @@ function ViewModel() {
     self.editando = ko.observable(false);
     self.ajustando = ko.observable(false);
     
+    //self.editarInput=ko.observable(false);
+    self.inputSelected=ko.observable(true);
+    
     self.editar= function (i,item) {     
+        //self.editarInput(true);
+        self.inputSelected(false);
         self.mostrarCross(false);
         self.mostrarTick(false);
         self.ajustando(false);
@@ -326,7 +333,6 @@ function ViewModel() {
         self.editingItem(null);
         self.editando(false);
     };   
-    
     
     self.ajustar = function (item,i) { 
         if (self.editando()==true){
@@ -358,35 +364,67 @@ function ViewModel() {
         return (i==self.indice()) && self.mostrarCross();
     };
     
-    self.enter = function (){
-        if (self.editando())
-            self.ajustar(self.selectedResult(),self.indicePaginado());     
-        else
-            self.editar(self.indicePaginado(),self.selectedResult());      
-        
-    };
-    
     self.escape = function(){
         if (!self.ajustando())
             self.cancelar();
     };
+    
+    
+    self.seleccionarInput = function (){
+        self.selectedResult(null);
+        self.inputSelected(true);
+    };
+    
+    self.enter = function(){
+        if (self.inputSelected()){
+            self.inputSelected(false);
+        }else if (self.ordenarSelected()){    
+            self.ordenarSelected(false);
+        }else{
+            if (self.editando())
+                self.ajustar(self.selectedResult(),self.indicePaginado());     
+            else
+                self.editar(self.indicePaginado(),self.selectedResult());      
+        }        
+    };
+    
+    self.tab = function (){
+        self.selectedResult(null);
+        self.inputSelected(false);
+        self.ordenarSelected(true);
+    };    
 };
+
 
 var vm = new ViewModel();
 ko.applyBindings(vm);
 
-$(window).keyup(function(evt) {
+$(window).keydown(function(evt) {
     if (evt.keyCode == 38) { //arriba
-        vm.setIsSelected();
-        vm.selectPrevious();
+        if ((!vm.ordenarSelected()) && (!vm.editando()) &&(!vm.inputSelected())){
+            vm.selectPrevious();
+        }
     } else if (evt.keyCode == 40) { //abajo
-        vm.setIsSelected();
-        vm.selectNext();
+        if ((!vm.ordenarSelected()) && (!vm.editando()) &&(!vm.inputSelected())){
+            vm.selectNext();
+        }
     }else if (evt.keyCode == 13) { //enter
-        vm.setIsSelected();
         vm.enter();
-    }else if (evt.keyCode == 27) { //escape
-        vm.escape();
-    }
+    }else if (evt.keyCode == 9){ //tab
+        if (vm.inputSelected()){
+            if(evt.preventDefault) {
+                evt.preventDefault();
+            }
+            vm.tab();
+        }
+    }else if (evt.keyCode == 27) { //esc
+        vm.cancelar();
+    }else if ((evt.altKey)&&(evt.keyCode == 66)) { //ctrl-b
+        vm.inputSelected(true);
+    }else if (evt.keyCode == 37) { //left 
+        vm.previous();
+    }else if (evt.keyCode == 39) { //right
+        vm.next();
+    };
 });
 

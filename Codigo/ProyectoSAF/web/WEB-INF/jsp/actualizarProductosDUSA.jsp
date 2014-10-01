@@ -7,6 +7,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script src='Librerias/jquery.js' type='text/javascript'></script>
         <link href="CSS/contenedorPrincipal.css" rel="stylesheet">
+        <script src="Librerias/jquery.js"></script>
+        <script type="text/javascript" language="javascript" charset="utf-8" src="Librerias/buscarProducto/knockout-3.0.0.js"></script>
+        <script type="text/javascript" language="javascript" src="Librerias/buscarProducto/jquery-1.11.1.min.js"></script>
         <title>Actualizar Productos DUSA</title>
         <script type="text/javascript">            
            $(document).ready(function() {
@@ -32,51 +35,15 @@
               <!-- /container -->
             <!-- <div id ="contenedorPrincipal" align="center">   --> 
             <div id ="contenedorPrincipal"> 
-                <h1 class="text-info">Productos Actualizados con EXITO!</h1><br>
+                <h3> Actualizar base de datos </h3> <button data-bind="click: $root.actualizar()">Actualizar</button>
                 
-                <h3> <u>Última actualización</u> </h3>
+                <h5> <u>Última actualización</u> </h5>
                 
-                <p>Fecha </p> 
+                Fecha: <p data-bind="text: $root.fechaActualizar"></p> 
                 
-                <p>Reporte de Actualización: </p>
-                
-                <c:forEach items="${productosActualizados}" var="map">
-                    
-                    <c:if test="${map.key == 'agregados'}">
-                    <c:forEach items="${map.value}" var="prod">
-                        Se agregó un nuevo producto, ${prod.getDescripcion()}.
-                        <br/>
-                    </c:forEach>
-                    </c:if>  
-                        
-                    <c:if test="${map.key == 'aumentaron'}">
-                    <c:forEach items="${map.value}" var="prod">
-                        ${prod.getDescripcion()} aumentó algo.
-                        <br/>
-                    </c:forEach>
-                    </c:if>  
-                        
-                    <c:if test="${map.key == 'disminuyeron'}">
-                    <c:forEach items="${map.value}" var="prod">
-                        ${prod.getDescripcion()} disminuyó algo.
-                        <br/>
-                    </c:forEach>  
-                    </c:if>   
-                     
-                    <c:if test="${map.key == 'habilitaron'}">
-                    <c:forEach items="${map.value}" var="prod">
-                        ${prod.getDescripcion()} se habilitó
-                        <br/>
-                    </c:forEach>
-                    </c:if>  
-                        
-                    <c:if test="${map.key == 'deshabilitaron'}">
-                    <c:forEach items="${map.value}" var="prod">
-                        ${prod.getDescripcion()} se deshabilitó
-                        <br/>
-                    </c:forEach>  
-                    </c:if>     
-                </c:forEach>
+                <div  data-bind="visible: $root.mostrarVerActualizacion"> <jsp:directive.include file="include/verActualizacionDUSA.jsp"/> </div>
+                <script id="actualizarScript" type="text/javascript" language="javascript" charset="utf-8" src="Librerias/actualizarProductos/actualizarKO.js"></script>
+       
             </div>
         
         </div>

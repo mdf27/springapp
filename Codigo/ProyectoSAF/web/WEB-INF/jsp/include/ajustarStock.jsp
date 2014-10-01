@@ -1,4 +1,3 @@
-
 <%-- 
     Document   : ajustarStock
     Created on : 27-sep-2014, 15:51:30
@@ -65,7 +64,7 @@
                 <td><p align="center" data-bind="text: habilitado"></p></td>
                 <td data-bind="click: $parent.select"><div align="center">
                   <input type="text"  data-bind="value: $root.filtroCantidad,valueUpdate: 'afterkeydown', visible: $root.isItemEditing($data)" >
-                  <p class="read" data-bind="text: $root.cantidad()[$index()], visible: !$root.isItemEditing($data)"></p>
+                  <p class="read" data-bind="text: cantidad2, visible: !$root.isItemEditing($data)"></p>
                   </div>
                 </td>
                 <td><p style="color: #d43f3a;" align="center" data-bind="text: '$ '+ precioLista"></p></td>

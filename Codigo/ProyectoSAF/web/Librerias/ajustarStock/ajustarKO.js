@@ -1,4 +1,5 @@
 function ViewModel() {
+    
     var self = this;
     self.lista = ko.observableArray([]);
     self.filtro = ko.observable();
@@ -14,7 +15,6 @@ function ViewModel() {
     
     //cantidad
     self.filtroCantidad = ko.observable();
-    self.cantidad = ko.observableArray([]);
     
     self.mostrarCross = ko.observable(false);
     self.mostrarTick = ko.observable(false);
@@ -39,6 +39,12 @@ function ViewModel() {
         }
     };
     
+    /*self.scrolled= function(data, event) {
+        var elem = event.target;
+        if (elem.scrollTop > (elem.scrollHeight - elem.offsetHeight - 200)) {
+            getItems(1);
+        }
+    };*/
     
     self.buscar = function() {
         self.lista.removeAll();
@@ -139,12 +145,11 @@ function ViewModel() {
     self.cargarLista = function(d) {
         self.mostrarError(false);
         self.lista.removeAll();
-        self.cantidad.removeAll();
         for (var i = 0; i < d.length; i++) {
+            d[i].cantidad2=ko.observable(d[i].cantidad);
             self.lista.push(d[i]);
-            self.cantidad.push(d[i].cantidad);
         }
-       // self.ordenar();
+       self.ordenar();
     };
     
     //paginado
@@ -278,7 +283,6 @@ function ViewModel() {
     self.habilitarCross = function(cant){
         self.mostrarTick(false);
         self.mostrarCross(true);        
-        self.cantidad.replace(self.cantidad()[self.indice()],cant);
     };
     
     
@@ -302,7 +306,7 @@ function ViewModel() {
         if (self.editando()==false){
             self.editando(true);
             self.indice(i);
-            self.filtroCantidad(self.cantidad()[self.indice()]);
+            self.filtroCantidad(self.lista()[self.indice()].cantidad2);
             if (self.editingItem() == null) {           
                 self.editingItem(item);
             }
@@ -320,8 +324,7 @@ function ViewModel() {
         if (self.editando()==true){
             var cant = self.filtroCantidad();
             var id = self.lista()[self.indice()].idProducto;
-            var cantOK = self.cantidad()[self.indice()];
-            self.cantidad.replace(self.cantidad()[self.indice()],cant);
+            self.lista()[self.indice()].cantidad2(cant);//.replace(self.cantidad()[self.indice()],cant);
             $.ajax({
                 url: "ajustarCantidadStock.htm",
                 type: 'POST',

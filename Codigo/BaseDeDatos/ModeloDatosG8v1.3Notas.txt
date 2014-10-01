@@ -1,0 +1,33 @@
+TransaccionUsuario:
+	-cambio PK, se saca idUsuario, idFuncionalidad
+	
+CuentaCliente:
+	-se saco campo idCuentaCliente
+	-ahora la PK es solo la FK a Cliente
+
+PagoCuentaCliente:
+	-se cambia FK, ahora es idCliente
+
+Factura:
+	-se cambia la columna idFactura por nroFactura
+	-se agrega columna serie
+	-se cambia PK por idTipo, serie y nroFactura
+	
+EnvioFactura:
+	-la PK se cambia por idTipo, serie y nroFactura
+	
+FormaPagoFactura
+	-la PK se cambia por idTipo, serie y nroFactura
+	-el cambio idCuenta cambia por idCuentaCliente
+	
+Laboratorio:
+	-se ajustan largo de varchar para los campos
+		-telefono
+		-localidad
+		-nombre
+		-departamento
+	-se agrega campo nombreCorto, para desplegar en el buscarProductos
+	
+
+
+	

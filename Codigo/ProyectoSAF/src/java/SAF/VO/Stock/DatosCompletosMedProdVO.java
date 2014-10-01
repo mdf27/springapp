@@ -26,6 +26,7 @@ public class DatosCompletosMedProdVO {
     private String proveedor;
     private String receta;
     private String laboratorio;
+    private String nombreCorto;
     private String drogas;
     private String accion;
     private String presentacion;
@@ -214,5 +215,14 @@ public class DatosCompletosMedProdVO {
     public void setPorcentajeIva(double porcentajeIva) {
         this.porcentajeIva = porcentajeIva;
     }
+
+    public String getNombreCorto() {
+        return nombreCorto;
+    }
+
+    public void setNombreCorto(String nombreCorto) {
+        this.nombreCorto = nombreCorto;
+    }
        
+    
 }

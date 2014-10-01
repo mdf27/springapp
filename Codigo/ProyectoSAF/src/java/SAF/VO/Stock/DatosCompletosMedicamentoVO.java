@@ -16,6 +16,7 @@ public class DatosCompletosMedicamentoVO {
     private int idProducto;
     private boolean requiereReceta;
     private String nombreLaboratorio;
+    private String nombreCorto;
     private List<String> nombreDroga;
     private List<String> accionTerapeutica;
     private List<String> presentacion;
@@ -72,6 +73,14 @@ public class DatosCompletosMedicamentoVO {
 
     public void setPresentacion(String presentacion) {
         this.presentacion.add(presentacion);
+    }
+
+    public String getNombreCorto() {
+        return nombreCorto;
+    }
+
+    public void setNombreCorto(String nombreCorto) {
+        this.nombreCorto = nombreCorto;
     }
     
 }

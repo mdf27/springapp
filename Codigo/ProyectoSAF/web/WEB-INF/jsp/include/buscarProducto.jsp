@@ -52,8 +52,8 @@
         </thead>
         <tbody data-bind="foreach: paginated">
             <tr data-bind="css: { 'btn-infobuscar': ($parent.selectedResult() == $data)}, click: $parent.selectResult">                            
-                <td><a><p align="left" data-bind="text: descripcion"></p></a></td>
-                <td><p align="center" data-bind="text: laboratorio"></p></td>
+                <td><a data-bind="click: $root.link"><p align="left" data-bind="text: descripcion"></p></a></td>
+                <td><p align="center" data-bind="text: nombreCorto"></p></td>
                 <td><p align="center" data-bind="text: habilitado"></p></td>
                 <td><p align="center" data-bind="text: cantidad"></p></td>
                 <td><p style="color: #d43f3a;" align="center" data-bind="text: '$ '+ precioLista"></p></td>

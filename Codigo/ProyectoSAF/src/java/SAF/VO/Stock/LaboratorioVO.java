@@ -14,6 +14,7 @@ import java.math.BigInteger;
 public class LaboratorioVO {
     private int idLaboratorio;
     private String nombre;
+    private String nombreCorto;
     private String direccion;
     private String departamento;
     private String localidad;
@@ -86,6 +87,14 @@ public class LaboratorioVO {
 
     public void setIdTransaccion(BigInteger idTransaccion) {
         this.idTransaccion = idTransaccion;
+    }
+
+    public String getNombreCorto() {
+        return nombreCorto;
+    }
+
+    public void setNombreCorto(String nombreCorto) {
+        this.nombreCorto = nombreCorto;
     }
     
 }

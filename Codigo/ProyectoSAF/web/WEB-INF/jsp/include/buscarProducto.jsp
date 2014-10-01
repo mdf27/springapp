@@ -51,8 +51,8 @@
             <tr><th width="20%"><div align="center">Nombre</div></th><th width="16%"><div align="center">Laboratorio</div></th><th width="10%"><div align="center">Estado</div></th><th width="11%"><div align="center">Cantidad</div></th><th width="15%"><div align="center">Precio Lista</div></th><th width="13%"><div align="center">Farmadescuento</div></th><th width="15%"><div align="center">Precio Venta</div></th></tr>
         </thead>
         <tbody data-bind="foreach: paginated">
-            <tr>                            
-                <td><a><p align="left" data-bind="text: descripcion, click: $parent.selectResult"></p></a></td>
+            <tr data-bind="css: { 'btn-infobuscar': ($parent.selectedResult() == $data)}, click: $parent.selectResult">                            
+                <td><a><p align="left" data-bind="text: descripcion"></p></a></td>
                 <td><p align="center" data-bind="text: laboratorio"></p></td>
                 <td><p align="center" data-bind="text: habilitado"></p></td>
                 <td><p align="center" data-bind="text: cantidad"></p></td>

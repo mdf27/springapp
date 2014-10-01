@@ -59,10 +59,10 @@
             </tr>
         </thead>
         <tbody data-bind="foreach: cargadoInicial">
-            <tr>                            
+            <tr data-bind="css: { 'btn-infobuscar': $parent.selectedResult() === $data},click: $parent.select">                            
                 <td><p align="left" data-bind="text: descripcion"></p></td>
                 <td><p align="center" data-bind="text: habilitado"></p></td>
-                <td data-bind="click: $parent.select"><div align="center">
+                <td><div align="center">
                   <input type="text"  data-bind="value: $root.filtroCantidad,valueUpdate: 'afterkeydown', visible: $root.isItemEditing($data)" >
                   <p class="read" data-bind="text: cantidad2, visible: !$root.isItemEditing($data)"></p>
                   </div>

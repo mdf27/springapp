@@ -243,9 +243,14 @@ function ViewModel() {
     //teclado
     self.selectPrevious = function() {
         var index = self.indicePaginado() - 1;
-        if (index < 0)
-            index = self.topePaginado - 1;
-        else if (index < (self.topePaginado - self.rowPerPage)) {
+        if (index < 0){
+            if (!self.busquedaActivada())
+                index = self.lista().length - 1;
+            else if (self.lista().length<self.topePaginado)
+                index = self.lista().length - 1;
+            else
+                index = self.topePaginado - 1;
+        }else if ((self.busquedaActivada())&&(index < (self.topePaginado - self.rowPerPage))) {
             var dif = self.topePaginado - self.lista().length;
             if ((dif < self.rowPerPage) && (dif > 0))
                 index = self.topePaginado - (self.topePaginado - self.lista().length) - 1;//self.rowPerPage;
@@ -254,14 +259,13 @@ function ViewModel() {
         }
         self.selectedResult(self.lista()[index]);
         self.indicePaginado(index);
-        self.guardarProducto(self.lista()[index]);
-
     };
 
     
     self.selectNext = function() {
         var index = self.indicePaginado() + 1;
-        if (index >= self.topePaginado) {
+        
+        if ((self.busquedaActivada())&&(index >= self.topePaginado)) {
             index = (self.topePaginado - self.rowPerPage);
             if (index < 0)
                 index = index * (-1);
@@ -270,7 +274,7 @@ function ViewModel() {
             index = (self.topePaginado - self.rowPerPage);
         self.selectedResult(self.lista()[index]);
         self.indicePaginado(index);
-        self.guardarProducto(self.lista()[index]);
+        //self.guardarProducto(self.lista()[index]);
     };
     
     //editar
@@ -300,13 +304,16 @@ function ViewModel() {
         return itemToTest== self.editingItem();
     };
     self.editando = ko.observable(false);
+    self.ajustando = ko.observable(false);
+    
     self.editar= function (i,item) {     
         self.mostrarCross(false);
         self.mostrarTick(false);
+        self.ajustando(false);
         if (self.editando()==false){
             self.editando(true);
             self.indice(i);
-            self.filtroCantidad(self.lista()[self.indice()].cantidad2);
+            self.filtroCantidad(self.lista()[self.indice()].cantidad2());
             if (self.editingItem() == null) {           
                 self.editingItem(item);
             }
@@ -320,8 +327,10 @@ function ViewModel() {
         self.editando(false);
     };   
     
+    
     self.ajustar = function (item,i) { 
         if (self.editando()==true){
+            self.ajustando(true);
             var cant = self.filtroCantidad();
             var id = self.lista()[self.indice()].idProducto;
             self.lista()[self.indice()].cantidad2(cant);//.replace(self.cantidad()[self.indice()],cant);
@@ -343,12 +352,24 @@ function ViewModel() {
     
     self.isTickMoment = function (i){
         return (i==self.indice()) && self.mostrarTick();
-    }
+    };
     
     self.isCrossMoment = function (i){
         return (i==self.indice()) && self.mostrarCross();
-    }
+    };
     
+    self.enter = function (){
+        if (self.editando())
+            self.ajustar(self.selectedResult(),self.indicePaginado());     
+        else
+            self.editar(self.indicePaginado(),self.selectedResult());      
+        
+    };
+    
+    self.escape = function(){
+        if (!self.ajustando())
+            self.cancelar();
+    };
 };
 
 var vm = new ViewModel();
@@ -361,8 +382,11 @@ $(window).keyup(function(evt) {
     } else if (evt.keyCode == 40) { //abajo
         vm.setIsSelected();
         vm.selectNext();
-    } else if (evt.keyCode == 13) { //enter
-
+    }else if (evt.keyCode == 13) { //enter
+        vm.setIsSelected();
+        vm.enter();
+    }else if (evt.keyCode == 27) { //escape
+        vm.escape();
     }
 });
 

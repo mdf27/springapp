@@ -9,6 +9,7 @@
         <link href="CSS/contenedorPrincipal.css" rel="stylesheet">
         <title>Buscar Producto</title>
         <link href="CSS/bootstrap.css" rel="stylesheet">
+        <link href="CSS/style.css" rel="stylesheet">
         <link href="CSS/bootstrap-responsive.css" rel="stylesheet">
         <link href="CSS/menu.css" rel="�ndezstylesheet">
         <script src="Librerias/jquery.js"></script>

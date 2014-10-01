@@ -1,8 +1,12 @@
 function ViewModel() {
     var self = this;
+    
     self.lista = ko.observableArray();
     self.filtro = ko.observable();
+    
+    //mostrar error utilizado para cuando no hay resultados en la busqueda
     self.mostrarError = ko.observable(false);
+    
     //paginado
     self.pageNumber = ko.observable(1);
     self.rowPerPage = 5;
@@ -51,50 +55,50 @@ function ViewModel() {
 
     //ordenar
     self.selectedOptionValue = ko.observable("Nombre ascendente"),
-            self.ordenar = function() {
-                if (self.selectedOptionValue() == "Nombre descendente") {
-                    self.lista.sort(function(a, b) {
-                        return a.descripcion > b.descripcion ? -1 : 1;
-                    });
-                } else if (self.selectedOptionValue() == "Nombre ascendente") {
-                    self.lista.sort(function(a, b) {
-                        return a.descripcion < b.descripcion ? -1 : 1;
-                    });
-                } else if (self.selectedOptionValue() == "Precio Lista descendente") {
-                    self.lista.sort(function(a, b) {
-                        return a.precioLista > b.precioLista ? -1 : 1;
-                    });
-                } else if (self.selectedOptionValue() == "Precio Lista ascendente") {
-                    self.lista.sort(function(a, b) {
-                        return a.precioLista < b.precioLista ? -1 : 1;
-                    });
-                } else if (self.selectedOptionValue() == "Precio Venta descendente") {
-                    self.lista.sort(function(a, b) {
-                        return a.precioVenta > b.precioVenta ? -1 : 1;
-                    });
-                } else if (self.selectedOptionValue() == "Farmadescuento descendente") {
-                    self.lista.sort(function(a, b) {
-                        return a.precioLista > b.precioLista ? -1 : 1;
-                    });
-                } else if (self.selectedOptionValue() == "Farmadescuento ascendente") {
-                    self.lista.sort(function(a, b) {
-                        return a.precioLista < b.precioLista ? -1 : 1;
-                    });
-                } else if (self.selectedOptionValue() == "Precio Venta ascendente") {
-                    self.lista.sort(function(a, b) {
-                        return a.precioLista < b.precioLista ? -1 : 1;
-                    });
-                } else if (self.selectedOptionValue() == "Laboratorio descendente") {
-                    self.lista.sort(function(a, b) {
-                        return a.laboratorio > b.laboratorio ? -1 : 1;
-                    });
-                } else if (self.selectedOptionValue() == "Laboratorio ascendente") {
-                    self.lista.sort(function(a, b) {
-                        return a.laboratorio < b.laboratorio ? -1 : 1;
-                    });
-                }
-                ;
-            };
+    self.ordenar = function() {
+        if (self.selectedOptionValue() == "Nombre descendente") {
+            self.lista.sort(function(a, b) {
+                return a.descripcion > b.descripcion ? -1 : 1;
+            });
+        } else if (self.selectedOptionValue() == "Nombre ascendente") {
+            self.lista.sort(function(a, b) {
+                return a.descripcion < b.descripcion ? -1 : 1;
+            });
+        } else if (self.selectedOptionValue() == "Precio Lista descendente") {
+            self.lista.sort(function(a, b) {
+                return a.precioLista > b.precioLista ? -1 : 1;
+            });
+        } else if (self.selectedOptionValue() == "Precio Lista ascendente") {
+            self.lista.sort(function(a, b) {
+                return a.precioLista < b.precioLista ? -1 : 1;
+            });
+        } else if (self.selectedOptionValue() == "Precio Venta descendente") {
+            self.lista.sort(function(a, b) {
+                return a.precioVenta > b.precioVenta ? -1 : 1;
+            });
+        } else if (self.selectedOptionValue() == "Farmadescuento descendente") {
+            self.lista.sort(function(a, b) {
+                return a.precioLista > b.precioLista ? -1 : 1;
+            });
+        } else if (self.selectedOptionValue() == "Farmadescuento ascendente") {
+            self.lista.sort(function(a, b) {
+                return a.precioLista < b.precioLista ? -1 : 1;
+            });
+        } else if (self.selectedOptionValue() == "Precio Venta ascendente") {
+            self.lista.sort(function(a, b) {
+                return a.precioLista < b.precioLista ? -1 : 1;
+            });
+        } else if (self.selectedOptionValue() == "Laboratorio descendente") {
+            self.lista.sort(function(a, b) {
+                return a.laboratorio > b.laboratorio ? -1 : 1;
+            });
+        } else if (self.selectedOptionValue() == "Laboratorio ascendente") {
+            self.lista.sort(function(a, b) {
+                return a.laboratorio < b.laboratorio ? -1 : 1;
+            });
+        }
+        ;
+    };
 
     self.actualizarLista = function(d) {
         self.timerID = window.clearTimeout(self.timerID);
@@ -169,7 +173,7 @@ function ViewModel() {
         return self.lista.slice(first, first + self.rowPerPage);
     });
 
-    // Para seleccion y focus de los campos.
+    /* Para seleccion y focus de los campos.
     self.isSelected = ko.observable(true);
     self.recetaSelected = ko.observable(false);
     self.hiddenSelected = ko.observable(false);
@@ -183,7 +187,8 @@ function ViewModel() {
 
     self.setSelectedProducto = function(data) {
         this.agregandoProducto(data);
-    };
+    };*/
+
     //ordenar                    
     self.optionValues = ["Nombre descendente", "Nombre ascendente", "Laboratorio descendente", "Laboratorio ascendente", "Precio Lista descendente", "Precio Lista ascendente", "Precio Venta descendente", "Precio Venta ascendente", "Farmadescuento descendente", "Farmadescuento ascendente"],
             //self.selectedChoice = ko.observable();
@@ -214,10 +219,61 @@ function ViewModel() {
         self.mostrarVer(false);
         self.mostrarBuscar(true);
     };
+    
+    //seleccion con teclado
+    self.selectResult = function (item) {
+        self.selectedResult(item);
+        self.indicePaginado(self.lista().indexOf(self.selectedResult()));
+    };
+    self.selectedResult = ko.observable();                                       
+
+self.selectPrevious = function() {
+        var index = self.indicePaginado() - 1;
+        if (index < 0){
+            if (self.lista().length<self.topePaginado)
+                index = self.lista().length - 1;
+            else
+                index = self.topePaginado - 1;
+        }else if(index < (self.topePaginado - self.rowPerPage)) {
+            var dif = self.topePaginado - self.lista().length;
+            if ((dif < self.rowPerPage) && (dif > 0))
+                index = self.topePaginado - (self.topePaginado - self.lista().length) - 1;//self.rowPerPage;
+            else
+                index = self.topePaginado - 1;//self.rowPerPage;
+        }
+        self.selectedResult(self.lista()[index]);
+        self.indicePaginado(index);
+    };
+
+
+    self.selectNext = function () {                                           
+        var index = self.indicePaginado()+1;
+        if (index>=self.topePaginado){
+            index = (self.topePaginado-self.rowPerPage);
+            if (index<0)
+                index=index*(-1);
+        }
+        else if (index >= self.lista().length) 
+            index = (self.topePaginado-self.rowPerPage);                       
+        self.selectedResult(self.lista()[index]);
+        self.indicePaginado(index);
+    };
+
+    //seleccion del elemento ENTER
+    
 
 }
 
 var vm = new ViewModel();
 ko.applyBindings(vm);
 
+//eventos del teclado
+$(window).keyup(function (evt) {
+    if (evt.keyCode == 38) { //arriba
+        vm.selectPrevious();
+    } else if (evt.keyCode == 40) { //abajo
+        vm.selectNext();
+    } else if (evt.keyCode == 13){ //enter
 
+    }
+}); 

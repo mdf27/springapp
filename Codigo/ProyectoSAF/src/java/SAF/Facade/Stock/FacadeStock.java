@@ -13,6 +13,7 @@ import SAF.VO.Stock.ProductoVO;
 import SAF.VO.Stock.StockVO;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.apache.lucene.queryparser.classic.ParseException;
@@ -51,8 +52,8 @@ public class FacadeStock {
     @Autowired
     ModificarProductoManager mpm;
     
-    public Map <String, List<ProductoVO>> actualizarProductosDUSA() {
-        return mpm.actualizarProductosDUSA();
+    public Map <String, List<ProductoVO>> actualizarProductosDUSA(Date fecha) {
+        return mpm.actualizarProductosDUSA(fecha);
     }     
 }
 

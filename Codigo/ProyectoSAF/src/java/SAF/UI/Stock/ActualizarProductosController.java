@@ -2,11 +2,18 @@ package SAF.UI.Stock;
 
 import SAF.Facade.Stock.FacadeStock;
 import SAF.VO.Stock.ProductoVO;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -16,25 +23,20 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ActualizarProductosController {
+    
+    @RequestMapping(value = "actualizarProductosDUSA")
+    public ModelAndView redireccion(){
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("actualizarProductosDUSA");
+        return (mv);
+    }
+    
     @Autowired
     private FacadeStock fs;
     
-    @RequestMapping(value = "actualizarProductosDUSA")
-    public ModelAndView redireccion(){ 
-    // Ahora lo mapeo a producto 
-//        ProductoVO productos = new ProductoVO();
-//        for (DataInfoProductoVO prodActual : productosDUSA) {
-//            
-//        }
-        Map <String, List<ProductoVO>>  productosActualizados = fs.actualizarProductosDUSA(); 
-
-//        productosActualizados.put("agregados", productosAgregados);
-//        productosActualizados.put("aumentaron", productosAumentaron);
-//        productosActualizados.put("disminuyeron", productosDisminuyeron);
-//        productosActualizados.put("habilitaron", productosHabilitados);
-//        productosActualizados.put("deshabilitaron", productosDeshabilitados);
-        
-        return (new ModelAndView("actualizarProductosDUSA",
-                "productosActualizados", productosActualizados));
-    }
+    @RequestMapping(value = "actualizar.json",method = RequestMethod.GET)    
+    public @ResponseBody  Map <String, List<ProductoVO>> buscarProducto (@RequestParam(value="fecha") Date fecha) throws ClassNotFoundException, SQLException, IOException, ParseException, java.text.ParseException{
+       Map <String, List<ProductoVO>>  productosActualizados = fs.actualizarProductosDUSA(fecha); 
+       return productosActualizados;
+   }
 }

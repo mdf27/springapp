@@ -279,21 +279,65 @@ function ViewModel() {
     self.registrarCliente = function() {
     };
     // Autcomplete de clientes
-     self.myPeople =  ko.observableArray([
-        new Cliente(1, "Maria Fernanda", "Toledo", "direccion", "telefono", "cedula", "razonSocial", "rut", "saldo", "tope"),
-        new Cliente(1, "Maria Jose", "Rabza", "direccion", "telefono", "cedula", "razonSocial", "rut", "saldo", "tope"),
-        new Cliente(1, "Maria Berta", "Bertez", "direccion", "telefono", "cedula", "razonSocial", "rut", "saldo", "tope"),
-        new Cliente(1, "Maria Daniela", "Fagundez un apellido largo", "direccion", "telefono", "cedula", "razonSocial", "rut", "saldo", "tope")
-        
-    ]);
+//     self.clientes =  ko.observableArray([
+//        new Cliente(1, "Maria Fernanda", "Toledo", "direccion", "telefono", "cedula", "razonSocial", "rut", "saldo", "tope"),
+//        new Cliente(1, "Maria Jose", "Rabza", "direccion", "telefono", "cedula", "razonSocial", "rut", "saldo", "tope"),
+//        new Cliente(1, "Maria Berta", "Bertez", "direccion", "telefono", "cedula", "razonSocial", "rut", "saldo", "tope"),
+//        new Cliente(1, "Maria Daniela", "Fagundez un apellido largo", "direccion", "telefono", "cedula", "razonSocial", "rut", "saldo", "tope")
+//        
+//    ]);
      self.mySelectedGuid =  ko.observable();
-     ////
+     self.timerID;
+     self.traerClientes = function(data) {
+        self.timerID = window.clearTimeout(self.timerID);
+        self.timerID = window.setTimeout(function() {
+            self.buscarCliente();
+        }
+        , 100);
+        return true;
+    };
+     self.buscarCliente = function(){
+         
+         $.ajax({
+                url: "buscarCliente.json",
+                type: 'GET',
+                dataType: 'json',
+                data: "buscar=" + self.clienteABuscar() + "&filtro=" + "",
+                responseType: "application/json",
+                headers: {
+                    Accept: "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                },
+                success: function(result){ 
+                    alert("Llego");
+                    for (var i = 0; i < result.length; i++) {
+                        self.clientes.push(new Cliente({idCliente: result[i].idCliente,
+                                                       nombre: result[i].nombres, 
+                                                       apellido: result[i].apellidos, 
+                                                       direccion: result[i].direccion, 
+                                                       telefono: result[i].telefono, 
+                                                       cedula: result[i].cedula, 
+                                                       razonSocial: result[i].razonSocial, 
+                                                       rut: result[i].rut, 
+                                                       saldo: result[i].saldo, 
+                                                       tope: result[i].tope,
+                                                       descuento: result[i].descuento
+                                                       })
+                                            );
+                    }
+                ;
+            }
+                
+
+            });
+     };
+     
+     
 
     // Traer del controlador.
-    //self.formasPago = [{formaPago: "Contado"}];
     self.formasPago = ko.observableArray();
     self.formaPago = ko.observable();
-    self.cargarFormasPago = function() {
+    self.cargarFormasPago = ko.computed(function() {
         $.ajax({
             url: "obtenerFormasPago.json",
             type: 'GET',
@@ -305,12 +349,11 @@ function ViewModel() {
             },
             success: function(result){ 
                 for (var i = 0; i < result.length; i++) {
-                    self.formasPago.push({formaPago: result[i].toString()});
-                    alert(result[i]);
+                    self.formasPago.push(new formaPago({nombre: result[i].nombre, idTFP: result[i].idTipoFormaPago}));
                 };
             }
         });
-    };
+    }, this);
 
     self.vendedor = ko.observable();
     //mostrar facturacion
@@ -334,6 +377,7 @@ function ViewModel() {
     self.montoTotal = ko.observable(0);
     self.montoTotalAPagar = ko.observable(0);
     self.productoSeleccionado = ko.observable(null);
+    self.clienteABuscar = ko.observable();
     self.conRut = ko.observable();
     self.rSocial = ko.observable();
     self.nroRut = ko.observable();
@@ -512,7 +556,6 @@ function ViewModel() {
 
 //    // Enviar la factura
     self.realizarFactura = function() {
-        self.cargarFormasPago();
         var date = new Date();
         var timestamp = date.getTime();
 
@@ -521,7 +564,7 @@ function ViewModel() {
          var data = ko.toJSON({idTipoFactura: 101, idFactura: 0, idCliente: 1, rut: self.nroRut(),
             razonSocial: self.rSocial(), fecha: timestamp, descuento: 0, montoNetoGravIva: self.montoNetoGravIva(),
             montoNetoGravIvaMin: self.montoNetoGravIvaMin(), montoTotal: self.montoTotal(), montoTotalAPagar: self.total(), idTransaccion: 100,
-            renglones: self.renglonesFacturaVO, formaDePago: {idTipoFormaPago: 101, idTipoFactura: 101, 
+            renglones: self.renglonesFacturaVO, formaDePago: {idTipoFormaPago: self.formaPago().idTFP(), idTipoFactura: 101, 
                 idFactura: -1, nroTarjeta: -1, idCuenta: -1/* no me lo tenes que pasar*/, idTransaccion: -1}});
         alert(data);
         $.ajax("ingresarFactura.htm", {
@@ -535,6 +578,8 @@ function ViewModel() {
     };
 }
 ;
+
+// Constructores //
 
 function renglonFactura(data) {
     this.descripcion = ko.observable(data.descripcion);
@@ -567,22 +612,30 @@ function renglonFacturaVO(data) {
 }
 ;
 
-function Cliente(idCliente, nombres, apellidos, direccion, telefono, cedula, razonSocial, rut, saldo, tope) {
-    this.idCliente = ko.observable(idCliente);
-    this.nombres = ko.observable(nombres);
-    this.apellidos = ko.observable(apellidos);
-    this.direccion = ko.observable(direccion);
-    this.telefono = ko.observable(telefono);
-    this.cedula = ko.observable(cedula);
-    this.razonSocial = ko.observable(razonSocial);
-    this.rut = ko.observable(rut);
-    this.saldo = ko.observable(saldo);
-    this.tope = ko.observable(tope);
+function Cliente(data) {
+    this.idCliente = ko.observable(data.idCliente);
+    this.nombres = ko.observable(data.nombres);
+    this.apellidos = ko.observable(data.apellidos);
+    this.direccion = ko.observable(data.direccion);
+    this.telefono = ko.observable(data.telefono);
+    this.cedula = ko.observable(data.cedula);
+    this.razonSocial = ko.observable(data.razonSocial);
+    this.rut = ko.observable(data.rut);
+    this.saldo = ko.observable(data.saldo);
+    this.tope = ko.observable(data.tope);
+    this.descuento = ko.observable(data.descuento);
     
     this.displayName = ko.dependentObservable(function() {
        return this.nombres() +" "+ this.apellidos();
    }, this);
 };
+
+function formaPago(data) {
+    this.idTFP = ko.observable(data.idTFP);
+    this.nombre = ko.observable(data.nombre);
+}
+;
+
 
 var vm = new ViewModel();
 ko.applyBindings(vm);

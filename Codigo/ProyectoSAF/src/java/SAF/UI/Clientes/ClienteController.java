@@ -38,7 +38,7 @@ public class ClienteController {
     }
     
      @RequestMapping(value = "buscarCliente.json",method = RequestMethod.GET)      
-    public @ResponseBody List<DatosCompletosClienteVO> buscarProducto (@RequestParam(value="buscar") String texto_buscar, @RequestParam(value="filtro") String filtro) throws ClassNotFoundException, SQLException, IOException, ParseException, java.text.ParseException{
+    public @ResponseBody List<DatosCompletosClienteVO> buscarCliente (@RequestParam(value="buscar") String texto_buscar, @RequestParam(value="filtro") String filtro) throws ClassNotFoundException, SQLException, IOException, ParseException, java.text.ParseException{
         return buscarClienteFacade.buscarCliente(texto_buscar, filtro);
     }
     

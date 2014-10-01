@@ -210,11 +210,14 @@ function ViewModel() {
     self.selectedResult = ko.observable();
     self.selectResult = function(item) {
         self.selectedResult(item);
-        self.mostrarVer(true);
-        self.mostrarBuscar(false);
         self.indicePaginado(self.lista().indexOf(self.selectedResult()));
     };
 
+    self.link = function (){
+        self.mostrarVer(true);
+        self.mostrarBuscar(false);
+    };
+    
     self.atras = function() {
         self.mostrarVer(false);
         self.mostrarBuscar(true);

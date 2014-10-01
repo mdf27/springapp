@@ -24,13 +24,14 @@ import org.springframework.stereotype.Repository;
 public class BuscarProductoDAO extends AbstractDAO{
     
     public Map <Integer, DatosCompletosMedicamentoVO> obtenerDatosCompletosMedicamento(){ //ver
-        String sql = "select distinct p.idProducto, m.requiereReceta, l.nombre as 'laboratorio' , d.nombre as 'droga', act.descripcion as 'accionter', pr.descripcion as 'presentacion'\n" +
-                 "from producto p, medicamento m, laboratorio l, droga d, accionterapeutica act, presentacion pr\n" +
-                 "where (exists (select * from medicamento m, producto p where m.idProducto=p.idProducto))\n" +
-                 " and (m.idProducto = p.idProducto and m.idLaboratorio = l.idLaboratorio)\n" +
-                 " and (exists (select * from drogamedicamento dm where dm.idProducto=m.idProducto and dm.idDroga=d.idDroga))\n" +
-                 " and (exists (select * from accionterapeuticamedicamento atm where m.idProducto=atm.idProducto and atm.idAccionTerapeutica=act.idAccionTerapeutica))\n"+
-                 "and (pr.idPresentacion=m.idPresentacion)";
+        String sql = "select distinct p.idProducto, m.requiereReceta, l.nombre as 'laboratorio', l.nombreCorto , d.nombre as 'droga', \n" +
+                        "act.descripcion as 'accionter', pr.descripcion as 'presentacion' \n" +
+                    "from Producto p, Medicamento m, Laboratorio l, Droga d, AccionTerapeutica act, Presentacion pr \n" +
+                    "where (exists (select * from Medicamento m, Producto p where m.idProducto=p.idProducto)) \n" +
+                        "and (m.idProducto = p.idProducto and m.idLaboratorio = l.idLaboratorio) \n" +
+                        "and (exists (select * from DrogaMedicamento dm where dm.idProducto=m.idProducto and dm.idDroga=d.idDroga)) \n" +
+                        "and (exists (select * from AccionTerapeuticaMedicamento atm where m.idProducto=atm.idProducto and atm.idAccionTerapeutica=act.idAccionTerapeutica))\n" +
+                        "and (pr.idPresentacion=m.idPresentacion)";
 
         Map <Integer, DatosCompletosMedicamentoVO> medicamentos = new HashMap<Integer,DatosCompletosMedicamentoVO>();
                 
@@ -45,6 +46,7 @@ public class BuscarProductoDAO extends AbstractDAO{
                 medCompleto.setNombreLaboratorio((String)row.get("laboratorio"));
                 medCompleto.setRequiereReceta((boolean)row.get("requiereReceta"));
                 medCompleto.setPresentacion((String)row.get("presentacion"));
+                medCompleto.setNombreCorto((String)row.get("nombreCorto"));
                 medicamentos.put((int)row.get("idProducto"),medCompleto);
             }else{
                 DatosCompletosMedicamentoVO m=medicamentos.get(idProducto);
@@ -58,14 +60,14 @@ public class BuscarProductoDAO extends AbstractDAO{
     
     public Map <Integer,DatosCompletosProductoVO> obtenerDatosCompletosProducto() throws ParseException{ //ver
         String sql ="select distinct p.idProducto, p.descripcion, p.precioCompra, p.precioVenta, p.habilitado,\n" +
-                        "c.codigo, s.cantidad, v.fecha, pv.nombre as 'proveedor', t.descripcion as 'tipoiva',t.porcentaje as 'porcentajeIva', o.porcentBonif as 'porcentajeDescuento', o.descripcion as 'descDescuento'\n" +
-                    "from producto p,proveedor pv, codigoproducto c, stock s, tipoiva t, vencimientostock v, ofertadescuento o\n" +
-                    "where (exists (select * from productoproveedor pp where p.idProducto=pp.idProducto and pv.idProveedor=pp.idProveedor)) \n" +
-                        "and (p.idProducto=s.idProducto)\n" +
-                        "and (c.idProducto = p.idProducto)\n" +
+                        "c.codigo, s.cantidad, v.fecha, pv.nombre as 'proveedor', t.descripcion as 'tipoiva',\n"+
+                        "t.porcentaje as 'porcentajeIva', o.porcentBonif as 'porcentajeDescuento', o.descripcion as 'descDescuento'\n" +
+                    "from Producto p,Proveedor pv, CodigoProducto c, Stock s, TipoIVA t, VencimientoStock v, ofertadescuento o\n" +
+                    "where (exists (select * from ProductoProveedor pp where p.idProducto=pp.idProducto and pv.idProveedor=pp.idProveedor)) -- existe proveedor\n" +
+                        "and (p.idProducto=s.idProducto) -- stock\n" +
+                        "and (c.idProducto = p.idProducto) -- obtengo codigo de barras\n" +
                         "and (p.idTipoIVA=t.idTipoIVA)\n" +
                         "and (v.idProducto=p.idProducto)\n" +
-                        "and (exists (select * from ofertadescuentoproducto odp where p.idProducto=odp.idProducto and o.idOfertaDescuento=odp.idOfertaDescuento))\n" +
                     "order by p.idProducto;";
 
         Map <Integer,DatosCompletosProductoVO> productos = new HashMap<Integer,DatosCompletosProductoVO>();

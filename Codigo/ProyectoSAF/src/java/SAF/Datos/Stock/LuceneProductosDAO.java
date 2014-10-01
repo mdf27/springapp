@@ -3,7 +3,6 @@ import SAF.Datos.Abstract.AbstractDAO;
 import SAF.VO.Stock.DatosCompletosMedProdVO;
 import SAF.VO.Stock.DatosCompletosMedicamentoVO;
 import SAF.VO.Stock.DatosCompletosProductoVO;
-import SAF.VO.Stock.StockVO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -201,6 +200,7 @@ public class LuceneProductosDAO extends AbstractDAO{
                 else
                     d.add(new org.apache.lucene.document.TextField ("requiereReceta","No", Field.Store.YES));
                 d.add(new org.apache.lucene.document.TextField ("laboratorio",m.getNombreLaboratorio(), Field.Store.YES));
+                d.add(new org.apache.lucene.document.TextField ("nombreCorto",m.getNombreCorto(), Field.Store.YES));
                 d.add(new org.apache.lucene.document.TextField ("drogas",devolverDrogasMedicamento(m), Field.Store.YES));
                 d.add(new org.apache.lucene.document.TextField ("accion",devolverATMedicamento(m), Field.Store.YES));
                 d.add(new org.apache.lucene.document.TextField ("presentacion",devolverPresentacionesMedicamento(m), Field.Store.YES));
@@ -265,6 +265,7 @@ public class LuceneProductosDAO extends AbstractDAO{
             String receta="-";
             String drogas="-";
             String laboratorio="-";
+            String nombreCorto="-";
             String accion="-";
             String presentacion="-";
             if (d.get("requiereReceta")!=null){
@@ -274,6 +275,7 @@ public class LuceneProductosDAO extends AbstractDAO{
                     receta="No";
                 drogas =  d.get("drogas");
                 laboratorio =  d.get("laboratorio");
+                nombreCorto = d.get("nombreCorto");
                 accion = d.get("accion");
                 presentacion=  d.get("presentacion");
             }
@@ -297,7 +299,7 @@ public class LuceneProductosDAO extends AbstractDAO{
             descuentos=descuentos.replace("\n","");
             String [] listaDescuentos = descuentos.split(" ");
 
-            int size= listaDescripcionDescuentos.length;                
+            int size= listaDescuentos.length;                
             DecimalFormat df = new DecimalFormat("#.##");  
             Number numero;
             for (int j=0;j<size;j++){
@@ -329,6 +331,7 @@ public class LuceneProductosDAO extends AbstractDAO{
             productoMedicamento.setIdProducto(idProducto);
             productoMedicamento.setDrogas(drogas);
             productoMedicamento.setLaboratorio(laboratorio);
+            productoMedicamento.setNombreCorto(nombreCorto);
             productoMedicamento.setPrecioCompra(precioCompra);
             productoMedicamento.setPrecioVenta(precioVenta);
             productoMedicamento.setPrecioLista(precioLista);

@@ -4,35 +4,35 @@ function ViewModel() {
     self.fechaActualizar = ko.observable(f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear());
     self.agregados = ko.observableArray();
     self.aumentaron = ko.observableArray();
-//    self.disminuyeron = ko.observableArray();
-//    self.habilitaron = ko.observableArray();
-//    self.deshabilitaron = ko.observableArray();
+    self.disminuyeron = ko.observableArray();
+    self.habilitaron = ko.observableArray();
+    self.deshabilitaron = ko.observableArray();
 //    self.mostrarError = ko.observable(false);
 //
     self.primeraVez = ko.observable(true);
     self.mostrarVerActualizacion = ko.observable(false);
    // self.selectedActualizacion = ko.observable(false);
     self.actualizar = function() {
-        $.ajax({
-            url: "actualizar.json",
-            type: 'GET',
-            dataType: 'json',
-            data: "fecha="+ self.fechaActualizar(),
-            responseType: "application/json",
-            headers: {
-                Accept: "application/json",
-                "Access-Control-Allow-Origin": "*"
-            },
-            success: function(d) {
-                if (self.primeraVez()){
-                    self.primeraVez(false);
-                } else {
-                    self.cargarListas(d);
+        if (self.primeraVez()){
+            self.primeraVez(false);
+        } else {
+            $.ajax({
+                url: "actualizar.json",
+                type: 'GET',
+                dataType: 'json',
+                data: "fecha="+ self.fechaActualizar(),
+                responseType: "application/json",
+                headers: {
+                    Accept: "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                },
+                success: function(d) {
+                    self.cargarListas(d);  
                     self.setFecha();
                     self.mostrarVerActualizacion(true);  
-                } 
-            }
-        });
+                }
+            });
+        }    
     };
     
     
@@ -46,13 +46,27 @@ function ViewModel() {
     
     
     self.cargarListas = function(d) {
+        // despues borrar el if este!!!!!!!!!!!!!!!!!!!!
+        //if (d.agregados.length !== 0)
         self.agregados.removeAll();
         self.aumentaron.removeAll();
+        self.disminuyeron.removeAll();
+        self.habilitaron.removeAll();
+        self.deshabilitaron.removeAll();
         for (var i = 0; i < d.agregados.length; i++) {
             self.agregados.push(d.agregados[i]);
         }
         for (var i = 0; i < d.aumentaron.length; i++) {
             self.aumentaron.push(d.aumentaron[i]);
+        }
+        for (var i = 0; i < d.disminuyeron.length; i++) {
+            self.disminuyeron.push(d.disminuyeron[i]);
+        }
+        for (var i = 0; i < d.habilitaron.length; i++) {
+            self.habilitaron.push(d.habilitaron[i]);
+        }
+        for (var i = 0; i < d.deshabilitaron.length; i++) {
+            self.deshabilitaron.push(d.deshabilitaron[i]);
         }
     };
 //    

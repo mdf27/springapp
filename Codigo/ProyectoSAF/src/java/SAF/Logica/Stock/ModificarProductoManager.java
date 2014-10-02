@@ -6,6 +6,7 @@ import SAF.Logica.Abstract.AbstractManejador;
 import SAF.VO.Stock.ProductoVO;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -43,6 +44,5 @@ public class ModificarProductoManager extends AbstractManejador {
         }
         Map <String, List<ProductoVO>> ret = productoDAO.actualizarProductosDUSA(servicio.obtenerActualizacionDUSA(xgcal),servicio.obtenerLaboratoriosDUSA());
         return  ret;
-//        productoDAO.actualizarProductosDUSA (productos);
     }
 }

@@ -121,7 +121,7 @@ public class ActualizarProductoDAO extends AbstractDAO {
 //                agregarTipoOfertaDescuento( prodDUSA.getOfertas());
                 
                 agregarMedicamento (idProd,prodDUSA.getPrecioReceta(),idLab);
-                        
+
                 productosAgregados.add(getProducto(idProd));
                 
                

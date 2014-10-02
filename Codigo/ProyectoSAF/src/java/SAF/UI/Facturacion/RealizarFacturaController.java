@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,13 +40,18 @@ public class RealizarFacturaController { //implements Controller{
      * @return 
      */
     @RequestMapping(value = "ingresarFactura.htm", method = RequestMethod.POST)
-    public ModelAndView ingresarFactura(String json) throws IOException {
+    public String ingresarFactura(String json) throws IOException {
 
-        FacturaVO factura = new ObjectMapper().readValue(json, FacturaVO.class);
-        facadeFacturacion.registrarFactura(factura);
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("index");
-        return (mv); 
+        String result = "";
+        try {
+            FacturaVO factura = new ObjectMapper().readValue(json, FacturaVO.class);
+            facadeFacturacion.registrarFactura(factura);
+        } catch (Exception ex) {
+            Logger.getLogger(RealizarFacturaController.class.getName()).log(Level.SEVERE, null, ex);
+            result = ex.getMessage();
+        }
+        return result;
+        
     }
     
     @RequestMapping(value = "obtenerFormasPago.json",method = RequestMethod.GET)      

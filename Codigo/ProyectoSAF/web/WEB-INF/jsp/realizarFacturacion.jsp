@@ -97,7 +97,9 @@
                                  <input type="text" autofocus list="browsers" name="buscar" autocomplete="off" class="input-large" >
                              </td> --%>
                             <td colspan="1">
-                                <input type="text" class="input-large" data-bind="jqAuto: { autoFocus: true }, jqAutoSource: myPeople, jqAutoValue: mySelectedGuid, jqAutoSourceLabel: 'displayName', jqAutoSourceInputValue: 'name', jqAutoSourceValue: 'guid'" />
+                                <input class="form-control" type="text" class="input-large" data-bind=" value: clienteABuscar, <%--valueUpdate: 'afterkeydown', event: { keyup: traerClientes}, --%>
+                                                                                   jqAuto: { autoFocus: true }, jqAutoSource: clientes, jqAutoValue: mySelectedGuid, 
+                                                                                   jqAutoSourceLabel: 'displayName', jqAutoSourceInputValue: 'name', jqAutoSourceValue: 'guid'" />
                             </td>
                             <td colspan="2">
                                 <strong>&nbsp RUT&nbsp </strong>
@@ -108,7 +110,7 @@
                             </td>
 
                             <td colspan="2" align="right">
-                                <a href="#" data-bind="click: $root.registrarCliente">Registrar cliente</a>
+                                <a href="#" data-bind="click: $root.buscarCliente">Buscar cliente</a>
                             </td>
                         </tr>
                         <tr>
@@ -199,8 +201,8 @@
                                             <td align="right"><strong>Forma de pago</strong></td>
                                         </tr>
                                         <tr>
-                                            <td align="right">
-                                                <select style="width:110px; height:30px" data-bind="options: $root.formasPago, value: formaPago, optionsText: 'formaPago'"></select>
+                                            <td align="right" >
+                                                <select style="width:110px; height:30px" data-bind="options: $root.formasPago, optionsText: 'nombre', value: formaPago"></select>
                                             </td>
                                         </tr>
                                         <tr>

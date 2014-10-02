@@ -15,7 +15,8 @@ public class FormaPagoFacturaVO {
 
     private short idTipoFormaPago;
     private short idTipoFactura;
-    private int idFactura;
+    private int nroFactura;
+    private String nroSerie;
     private int nroTarjeta;
     private int idCuenta;
     private long idTransaccion;
@@ -27,7 +28,8 @@ public class FormaPagoFacturaVO {
 
     public FormaPagoFacturaVO(Map<String, Object> query) {
 
-        idFactura = (int) query.get("idFactura");
+        nroFactura = (int) query.get("nroFactura");
+        nroSerie = (String) query.get("nroSerie");
         idTipoFactura = ((Integer) query.get("idTipoFactura")).shortValue();
         idTipoFormaPago = ((Integer) query.get("idTipoFormaPago")).shortValue();
         if (query.get("nroTarjeta") != null) {
@@ -61,13 +63,23 @@ public class FormaPagoFacturaVO {
         this.idTipoFactura = idTipoFactura;
     }
 
-    public int getIdFactura() {
-        return idFactura;
+    public int getNroFactura() {
+        return nroFactura;
     }
 
-    public void setIdFactura(int idFactura) {
-        this.idFactura = idFactura;
+    public void setNroFactura(int nroFactura) {
+        this.nroFactura = nroFactura;
     }
+
+    public String getNroSerie() {
+        return nroSerie;
+    }
+
+    public void setNroSerie(String nroSerie) {
+        this.nroSerie = nroSerie;
+    }
+
+    
 
     public int getNroTarjeta() {
         return nroTarjeta;

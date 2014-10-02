@@ -23,9 +23,9 @@ public class DatosCompletosClienteVO {
     int rut;
     double descuento;
     Date fCreacion;
+    boolean tieneCuenta;
     
     //info cuenta cliente
-    int idCuenta;
     double saldo;
     double tope;
     Date fCreacionCuenta;
@@ -33,6 +33,16 @@ public class DatosCompletosClienteVO {
     public DatosCompletosClienteVO() {
     }
 
+    public boolean isTieneCuenta() {
+        return tieneCuenta;
+    }
+
+    public void setTieneCuenta(boolean tieneCuenta) {
+        this.tieneCuenta = tieneCuenta;
+    }
+    
+    
+    
     public int getIdCliente() {
         return idCliente;
     }
@@ -119,14 +129,6 @@ public class DatosCompletosClienteVO {
 
     public void setfCreacion(Date fCreacion) {
         this.fCreacion = fCreacion;
-    }
-
-    public int getIdCuenta() {
-        return idCuenta;
-    }
-
-    public void setIdCuenta(int idCuenta) {
-        this.idCuenta = idCuenta;
     }
 
     public double getSaldo() {

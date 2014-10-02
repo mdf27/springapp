@@ -6,7 +6,10 @@
 package SAF.UI.Clientes;
 
 import SAF.Facade.Clientes.FacadeBuscarCliente;
+import SAF.Facade.Clientes.FacadeClientes;
+import SAF.VO.Clientes.ClienteVO;
 import SAF.VO.Clientes.DatosCompletosClienteVO;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -30,6 +33,9 @@ public class ClienteController {
     @Autowired
     FacadeBuscarCliente buscarClienteFacade;
     
+    @Autowired
+    FacadeClientes facadeCliente;
+    
     @RequestMapping(value = "registrarCliente")
     public ModelAndView redireccion(){
         ModelAndView mv = new ModelAndView();
@@ -40,6 +46,21 @@ public class ClienteController {
      @RequestMapping(value = "buscarCliente.json",method = RequestMethod.GET)      
     public @ResponseBody List<DatosCompletosClienteVO> buscarProducto (@RequestParam(value="buscar") String texto_buscar, @RequestParam(value="filtro") String filtro) throws ClassNotFoundException, SQLException, IOException, ParseException, java.text.ParseException{
         return buscarClienteFacade.buscarCliente(texto_buscar, filtro);
+    }
+    
+    /**
+     *
+     * @param json
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "guardarCliente.htm", method = RequestMethod.POST)
+    public ModelAndView guardarCliente(String json) throws IOException {
+        ClienteVO cliente = new ObjectMapper().readValue(json, ClienteVO.class);
+        facadeCliente.registrarCliente(cliente);
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("index");
+        return (mv); 
     }
     
     

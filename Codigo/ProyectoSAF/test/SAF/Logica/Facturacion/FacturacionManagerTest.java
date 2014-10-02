@@ -6,6 +6,7 @@
 package SAF.Logica.Facturacion;
 
 import SAF.Datos.Stock.StockDAO;
+import SAF.VO.Facturacion.EnvioFacturaVO;
 import SAF.VO.Facturacion.FacturaVO;
 import SAF.VO.Facturacion.FormaPagoFacturaVO;
 import SAF.VO.Facturacion.IdFacturaVO;
@@ -69,6 +70,16 @@ public class FacturacionManagerTest {
         return result;
     }
     
+    public boolean compararEnvioFacturaVO(EnvioFacturaVO f1,EnvioFacturaVO f2){
+        boolean result = f1.getNroFactura() == f2.getNroFactura() && f1.getIdTipoFactura() == f2.getIdTipoFactura();
+        result = result && f1.getNroSerie().equals(f2.getNroSerie());
+        result = result && f1.getDireccion().equals(f2.getDireccion());
+        result = result && f1.getIdUsuarioDelivery() == f2.getIdUsuarioDelivery();
+        result = result && f1.getTelefono().equals(f2.getTelefono());
+        result = result && f1.getObservaciones().equals(f2.getObservaciones());
+        return result;
+    }
+    
      public boolean compararFormaPagoFacturaVO(FormaPagoFacturaVO f1,FormaPagoFacturaVO f2){
         boolean result = f1.getNroFactura() == f2.getNroFactura() && f1.getIdTipoFactura() == f2.getIdTipoFactura();
         result = result && f1.getNroSerie().equals(f2.getNroSerie());
@@ -121,6 +132,13 @@ public class FacturacionManagerTest {
         pago.setIdTipoFormaPago((short)1);
         pago.setIdTipoFactura((short)102);
         
+        EnvioFacturaVO envio = new EnvioFacturaVO();
+        envio.setDireccion("Uruguay123");
+        envio.setIdTipoFactura((short)102);
+        envio.setIdUsuarioDelivery(0);
+        envio.setObservaciones("precisa 4 recetas");
+        envio.setTelefono("12345698");
+        
 
         FacturaVO fvo = new FacturaVO();
         fvo.setDescuento(10.01);
@@ -136,7 +154,11 @@ public class FacturacionManagerTest {
         fvo.setRazonSocial("razo social");
         fvo.setRenglones(renglones);
         fvo.setFormaDePago(pago);
+        fvo.setDatosEnvio(envio);
         IdFacturaVO idFactura = instance.ingresarFactura(fvo);
+        
+        envio.setNroFactura(idFactura.getNroFactura());
+        envio.setNroSerie(idFactura.getNroSerie());
         fvo.setNroFactura(idFactura.getNroFactura());
         pago.setNroFactura(idFactura.getNroFactura());
         fvo.setNroSerieFactura(idFactura.getNroSerie());
@@ -145,6 +167,7 @@ public class FacturacionManagerTest {
         // TODO review the generated test code and remove the default call to fail.
         assertTrue(compararFormaPagoFacturaVO(fvo.getFormaDePago(), fvo2.getFormaDePago()));
         assertTrue(compararFacturaVO(fvo,fvo2));
+        assertTrue(compararEnvioFacturaVO(fvo.getDatosEnvio(), fvo2.getDatosEnvio()));
         assertEquals(stockDao.getCantidadStock(100001) - 2, cantidadPrevia);
     }
 

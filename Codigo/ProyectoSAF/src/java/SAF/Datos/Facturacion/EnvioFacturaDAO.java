@@ -23,8 +23,9 @@ public class EnvioFacturaDAO extends AbstractDAO {
 
         //Genero sentencia SQL
         //fernanda--> el idUsuarioDelivery deberia ser idUsuario;
-        String sql = "INSERT INTO (nroFactura,idTipoFactura, nroSerie idUsuarioDelivery , Direccion, Telefono, Observaciones) "
-                + "EnvioFactura VALUES(? ,?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO EnvioFactura (nroFactura,idTipoFactura, nroSerie, idUsuarioDelivery, "
+                + "Direccion, Telefono, Observaciones) "
+                + " VALUES(? ,?, ?, ?, ?, ?, ?)";
 
         Object[] parametros ={envioFactura.getNroFactura(), envioFactura.getIdTipoFactura(), envioFactura.getNroSerie(),
             envioFactura.getIdUsuarioDelivery(), envioFactura.getDireccion(), envioFactura.getTelefono(), 
@@ -36,7 +37,7 @@ public class EnvioFacturaDAO extends AbstractDAO {
     public EnvioFacturaVO getEnvioFactura(String nroSerie, int nroFactura,short idTipoFactura){
         
          String sql = "select * from EnvioFactura "
-                 + "where envio.nroFactura = ? AND envio.nroSerie AND envio.idTipoFactura = ?";
+                 + "where nroFactura = ? AND nroSerie = ? AND idTipoFactura = ?";
 
         Object[] params = {nroFactura, nroSerie, idTipoFactura};
         

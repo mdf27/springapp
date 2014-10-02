@@ -23,21 +23,22 @@ public class EnvioFacturaDAO extends AbstractDAO {
 
         //Genero sentencia SQL
         //fernanda--> el idUsuarioDelivery deberia ser idUsuario;
-        String sql = "INSERT INTO (idFactura, idUsuarioDelivery , Direccion, Telefono, Observaciones) EnvioFactura VALUES(? ,?, ?, ?, ?)";
+        String sql = "INSERT INTO (nroFactura,idTipoFactura, nroSerie idUsuarioDelivery , Direccion, Telefono, Observaciones) "
+                + "EnvioFactura VALUES(? ,?, ?, ?, ?, ?, ?)";
 
-        Object[] parametros ={envioFactura.getIdFactura(), 
+        Object[] parametros ={envioFactura.getNroFactura(), envioFactura.getIdTipoFactura(), envioFactura.getNroSerie(),
             envioFactura.getIdUsuarioDelivery(), envioFactura.getDireccion(), envioFactura.getTelefono(), 
             envioFactura.getObservaciones()};
         
         this.getJdbcTemplate().update(sql, parametros);
     }
     
-    public EnvioFacturaVO getEnvioFactura(int idTipoFormaPago, int idFactura,short idTipoFactura){
+    public EnvioFacturaVO getEnvioFactura(String nroSerie, int nroFactura,short idTipoFactura){
         
-         String sql = "select envio.idFactura, envio.idUsuarioDelivery, envio.Direccion,envio.Telefono, envio.Observaciones "
-                 + "where envio.idFactura = ?";
+         String sql = "select * from EnvioFactura "
+                 + "where envio.nroFactura = ? AND envio.nroSerie AND envio.idTipoFactura = ?";
 
-        Object[] params = {idFactura};
+        Object[] params = {nroFactura, nroSerie, idTipoFactura};
         
         List<Map<String, Object>> resultQuery = getJdbcTemplate().queryForList(sql, params);
 

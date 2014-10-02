@@ -8,6 +8,7 @@ package SAF.Logica.Facturacion;
 import SAF.Datos.Stock.StockDAO;
 import SAF.VO.Facturacion.FacturaVO;
 import SAF.VO.Facturacion.FormaPagoFacturaVO;
+import SAF.VO.Facturacion.IdFacturaVO;
 import SAF.VO.Facturacion.RenglonFacturaVO;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -56,7 +57,8 @@ public class FacturacionManagerTest {
     }
     
     public boolean compararRenglonFacturaVO(RenglonFacturaVO f1,RenglonFacturaVO f2){
-        boolean result = f1.getIdFactura() == f2.getIdFactura() && f1.getIdTipoFactura() == f2.getIdTipoFactura();
+        boolean result = f1.getNroFactura() == f2.getNroFactura() && f1.getIdTipoFactura() == f2.getIdTipoFactura();
+        result = result && f1.getNroSerie().equals(f2.getNroSerie());
         result = result && f1.getCantidad() == f2.getCantidad() && f1.getDescCantBonif() == f2.getDescCantBonif();
         result = result && f1.getDescDescripcion().equals(f2.getDescDescripcion())&& f1.getIdTransaccion() == f2.getIdTransaccion();
         result = result && f1.getDescPorcentBonif()== f2.getDescPorcentBonif();
@@ -68,7 +70,8 @@ public class FacturacionManagerTest {
     }
     
      public boolean compararFormaPagoFacturaVO(FormaPagoFacturaVO f1,FormaPagoFacturaVO f2){
-        boolean result = f1.getIdFactura() == f2.getIdFactura() && f1.getIdTipoFactura() == f2.getIdTipoFactura();
+        boolean result = f1.getNroFactura() == f2.getNroFactura() && f1.getIdTipoFactura() == f2.getIdTipoFactura();
+        result = result && f1.getNroSerie().equals(f2.getNroSerie());
         result = result && f1.getIdCuenta() == f2.getIdCuenta();
         result = result && f1.getIdTipoFormaPago() == f2.getIdTipoFormaPago();
         result = result && f1.getNroTarjeta() == f2.getNroTarjeta();
@@ -76,7 +79,8 @@ public class FacturacionManagerTest {
     }
     
     public boolean compararFacturaVO(FacturaVO f1, FacturaVO f2){
-        boolean result = f1.getIdFactura() == f2.getIdFactura() && f1.getIdTipoFactura() == f2.getIdTipoFactura();
+        boolean result = f1.getNroFactura() == f2.getNroFactura() && f1.getIdTipoFactura() == f2.getIdTipoFactura();
+        result = result && f1.getNroSerieFactura().equals(f2.getNroSerieFactura());
         result = result && f1.getIdCliente() == f2.getIdCliente();
         result = result && f1.getDescuento() == f2.getDescuento() && f1.getIdTransaccion() == f2.getIdTransaccion();
         result = result && f1.getMontoNetoGravIva() == f2.getMontoNetoGravIva();
@@ -92,7 +96,7 @@ public class FacturacionManagerTest {
     
     @Test
      //NOTA DE CREDITO
-    public void testIngresarFactura() {
+    public void testIngresarFactura() throws Exception {
         System.out.println("ingresarFactura");
         FacturaVO factura = null;
         //renglon 1
@@ -132,10 +136,12 @@ public class FacturacionManagerTest {
         fvo.setRazonSocial("razo social");
         fvo.setRenglones(renglones);
         fvo.setFormaDePago(pago);
-        int idFactura = instance.ingresarFactura(fvo);
-        fvo.setIdFactura(idFactura);
-        pago.setIdFactura(idFactura);
-        FacturaVO fvo2= instance.obtenerFactura(idFactura, (short)102);
+        IdFacturaVO idFactura = instance.ingresarFactura(fvo);
+        fvo.setNroFactura(idFactura.getNroFactura());
+        pago.setNroFactura(idFactura.getNroFactura());
+        fvo.setNroSerieFactura(idFactura.getNroSerie());
+        pago.setNroSerie(idFactura.getNroSerie());
+        FacturaVO fvo2= instance.obtenerFactura(idFactura.getNroFactura(),idFactura.getNroSerie(),(short)102);
         // TODO review the generated test code and remove the default call to fail.
         assertTrue(compararFormaPagoFacturaVO(fvo.getFormaDePago(), fvo2.getFormaDePago()));
         assertTrue(compararFacturaVO(fvo,fvo2));
@@ -145,18 +151,11 @@ public class FacturacionManagerTest {
     
         @Test
      //FACTURA
-    public void testIngresarFactura2() {
-        System.out.println("ingresarFactura");
+    public void testIngresarFactura2() throws Exception {
+       System.out.println("ingresarFactura");
         FacturaVO factura = null;
-        
-        FormaPagoFacturaVO pago = new FormaPagoFacturaVO();
-        pago.setIdTipoFormaPago((short)1);
-        pago.setIdTipoFactura((short)101);
-        
         //renglon 1
 
-        
-        
         RenglonFacturaVO renglon1 = new RenglonFacturaVO();
         renglon1.setCantidad(2);
         renglon1.setConReceta(false);
@@ -171,6 +170,12 @@ public class FacturacionManagerTest {
         int cantidadPrevia = stockDao.getCantidadStock(100001);
         ArrayList<RenglonFacturaVO> renglones = new ArrayList<RenglonFacturaVO>();
         renglones.add(renglon1);
+        
+        
+        FormaPagoFacturaVO pago = new FormaPagoFacturaVO();
+        pago.setIdTipoFormaPago((short)1);
+        pago.setIdTipoFactura((short)101);
+        
 
         FacturaVO fvo = new FacturaVO();
         fvo.setDescuento(10.01);
@@ -186,14 +191,22 @@ public class FacturacionManagerTest {
         fvo.setRazonSocial("razo social");
         fvo.setRenglones(renglones);
         fvo.setFormaDePago(pago);
-        int idFactura = instance.ingresarFactura(fvo);
-        fvo.setIdFactura(idFactura);
-        pago.setIdFactura(idFactura);
-        
-        FacturaVO fvo2= instance.obtenerFactura(idFactura, (short)101);
+        IdFacturaVO idFactura = instance.ingresarFactura(fvo);
+        fvo.setNroFactura(idFactura.getNroFactura());
+        pago.setNroFactura(idFactura.getNroFactura());
+        fvo.setNroSerieFactura(idFactura.getNroSerie());
+        pago.setNroSerie(idFactura.getNroSerie());
+        FacturaVO fvo2= instance.obtenerFactura(idFactura.getNroFactura(),idFactura.getNroSerie(),(short)101);
         // TODO review the generated test code and remove the default call to fail.
-        assertTrue(compararFacturaVO(fvo,fvo2));
         assertTrue(compararFormaPagoFacturaVO(fvo.getFormaDePago(), fvo2.getFormaDePago()));
+        assertTrue(compararFacturaVO(fvo,fvo2));
         assertEquals(stockDao.getCantidadStock(100001) + 2, cantidadPrevia);
+    }
+    
+        @Test
+     //FACTURA
+    public void hola() {
+        char pepe = 'A';
+        assertEquals(pepe + 1,'B');
     }
 }

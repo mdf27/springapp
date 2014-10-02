@@ -44,16 +44,19 @@ public class FormaPagoFacturaDAOTest {
         FormaPagoFacturaVO pago = new FormaPagoFacturaVO();
         //pago.setIdCuenta(null);
         int idFactura = 15;
+        String serie = "AAZ";
         short idTipoFactura = (short)102;
-        pago.setIdFactura(idFactura);
+        pago.setNroFactura(idFactura);
+        pago.setNroSerie(serie);
         pago.setIdTipoFactura(idTipoFactura);
         pago.setIdTipoFormaPago((short)1);
         pago.setNroTarjeta(1051455);
         formaPago.insertarFormaPagoFactura(pago);
         
-        FormaPagoFacturaVO pagoObtenido = formaPago.getFormaPagoFactura(idFactura, idTipoFactura);
+        FormaPagoFacturaVO pagoObtenido = formaPago.getFormaPagoFactura(idFactura,serie, idTipoFactura);
         
-        assertEquals(pagoObtenido.getIdFactura(), pago.getIdFactura());
+        assertEquals(pagoObtenido.getNroFactura(), pago.getNroFactura());
+        assertEquals(pagoObtenido.getNroSerie(), pago.getNroSerie());
         assertEquals(pagoObtenido.getIdCuenta(), pago.getIdCuenta());
         assertEquals(pagoObtenido.getIdTipoFactura(),pago.getIdTipoFactura());
         assertEquals(pagoObtenido.getIdTipoFormaPago(),pago.getIdTipoFormaPago());

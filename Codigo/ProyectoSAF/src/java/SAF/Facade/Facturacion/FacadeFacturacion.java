@@ -22,7 +22,7 @@ public class FacadeFacturacion {
     @Autowired
     FacturacionManager facturacionManager;
     
-    public void registrarFactura(FacturaVO fvo){
+    public void registrarFactura(FacturaVO fvo) throws Exception{
         
         facturacionManager.ingresarFactura(fvo);
     }

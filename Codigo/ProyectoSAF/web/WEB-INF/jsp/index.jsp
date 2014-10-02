@@ -12,7 +12,6 @@
         <div id="contenedor">
             <div id = "leftColuma"></div>
             <div id ="contenedorPrincipal" align="center">
-
            <jsp:directive.include file="include/login.jsp"/>  
            </div>
        </div>

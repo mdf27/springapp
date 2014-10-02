@@ -45,7 +45,7 @@
                             out.print("</form>");
                         }
                     }
-                    else {
+                    else if (user != null && resLogin != null){
                             out.print("<form action=\"controlLogin.html\" method=\"POST\">");
                             out.print("<fieldset>");
                             out.print("<p id=\"exitoLogin\">Usted no tiene permiso para entrar aqui.</p>");

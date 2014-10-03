@@ -33,7 +33,7 @@
                           <tr>
                             <td><div align="center"><strong>Cedula</strong></div></td>
                             <td>
-                                <input type="text" required="required" maxlength="8" pattern="[d ]{12,}" class="input-large" data-bind="value:cedula"/>                            </td>
+                                <input type="text" required="required" maxlength="8" pattern="[d ]{8,}" class="input-large" data-bind="value:cedula"/>                            </td>
                           </tr>
                           <tr>
                             <td><div align="center"><strong>Direccion</strong></div></td>

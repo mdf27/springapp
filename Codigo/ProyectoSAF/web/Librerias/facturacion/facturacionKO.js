@@ -573,6 +573,9 @@ function ViewModel() {
             headers: {
                 "Access-Control-Allow-Origin": "*",
             },
+            success: function (data) {
+                var message = data.Message;
+            }
         });
 
     };

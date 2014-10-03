@@ -17,12 +17,15 @@ function ViewModel() {
          telefono: self.telefono(),email: self.email(), cedula: self.cedula(),razon_social: self.razon_social(), 
          rut: self.rut(),descuento: self.descuento(),fcreacion: f,idTransaccion: 0});
     
-        $.ajax("guardarCliente.htm", {
+        $.ajax("registrarCliente.html", {
             data: "json=" + data,
             type: "post",
             headers: {
                 "Access-Control-Allow-Origin": "*",
             },
+                        success: function (data) {
+                var message = data.Message;
+            }
         });
         
      

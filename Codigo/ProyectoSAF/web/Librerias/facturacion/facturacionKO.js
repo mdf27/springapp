@@ -528,6 +528,7 @@ function ViewModel() {
             ;
             self.realizandoFactura(true);
             self.buscarProd(false);
+            
 
             // Seteo variables a valores por defecto
             self.cantProd(1);
@@ -573,9 +574,6 @@ function ViewModel() {
             headers: {
                 "Access-Control-Allow-Origin": "*",
             },
-            success: function (data) {
-                var message = data.Message;
-            }
         });
 
     };

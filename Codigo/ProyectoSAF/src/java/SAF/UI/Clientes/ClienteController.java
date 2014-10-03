@@ -54,10 +54,13 @@ public class ClienteController {
      * @return
      * @throws IOException
      */
-    @RequestMapping(value = "guardarCliente.htm", method = RequestMethod.POST)
-    public @ResponseBody void guardarCliente(String json) throws IOException {
+    @RequestMapping(value = "registrarCliente.html", method = RequestMethod.POST)
+    public ModelAndView guardarCliente(String json) throws IOException {
         ClienteVO cliente = new ObjectMapper().readValue(json, ClienteVO.class);
         facadeCliente.registrarCliente(cliente);
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("registrarCliente"); 
+        return(mv);
     }
     
     

@@ -18,7 +18,7 @@
                 <jsp:include page="include/menuClientes.jsp"/> 
             </div>
             <div id ="contenedorPrincipal" >    
-                <form   method = "POST">
+                <form >
                     <table width="264" >
                            <tr>
                             <td colspan="2"> <blockquote><h4 style="font-weight: bold;">REGISTRAR CLIENTE</h4></blockquote></td>

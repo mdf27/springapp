@@ -5,6 +5,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel='stylesheet' href='CSS/login.css'>
         <script src='Librerias/jquery.js' type='text/javascript'></script>
         <link href="CSS/contenedorPrincipal.css" rel="stylesheet">
         <script src="Librerias/jquery.js"></script>
@@ -32,14 +33,15 @@
         
         <div id="contenedor">
             
-              <!-- /container -->
-            <!-- <div id ="contenedorPrincipal" align="center">   --> 
+            <div id = "leftColuma"> <jsp:directive.include file="include/menuProductos.jsp"/>  </div>
+            
             <div id ="contenedorPrincipal"> 
-                <h3> Actualizar base de datos </h3> <button data-bind="click: $root.actualizar()">Actualizar</button>
-                
-                <h5> <u>Última actualización</u> </h5>
-                
-                Fecha: <p data-bind="text: $root.fechaActualizar"></p> 
+                <strong style="font-size: 1.5em"> Actualizar base de datos </strong> &nbsp;&nbsp;&nbsp;&nbsp; <button style="width:100px; height:30px" class="btn btn-primary" data-bind="click: $root.actualizar()">Actualizar</button>
+                <br>
+                <br>
+                <h4> <u>Última actualización</u> </h4>
+                <br>
+                Fecha: <span data-bind="text: $root.fechaActualizar"></span>  
                 
                 <div  data-bind="visible: $root.mostrarVerActualizacion"> <jsp:directive.include file="include/verActualizacionDUSA.jsp"/> </div>
                 <script id="actualizarScript" type="text/javascript" language="javascript" charset="utf-8" src="Librerias/actualizarProductos/actualizarKO.js"></script>

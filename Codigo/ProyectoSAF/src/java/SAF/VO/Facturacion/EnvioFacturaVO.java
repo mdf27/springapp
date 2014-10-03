@@ -31,13 +31,13 @@ public class EnvioFacturaVO {
 
         nroFactura = (int) query.get("nroFactura");
         nroSerie = (String) query.get("nroSerie");
-        idTipoFactura = (short) query.get("idTipoFactura");
+        idTipoFactura = ((Integer) query.get("idTipoFactura")).shortValue();
         if (query.get("idUsuarioDelivery")!=null)
             idUsuarioDelivery = (int) query.get("idUsuarioDelivery");
         direccion = (String) query.get("Direccion");
         if(query.get("Telefono")!=null)
             telefono = (String) query.get("Telefono");
-        if (query.get("Observacion")!=null)
+        if (query.get("Observaciones")!=null)
              observaciones = (String) query.get("Observaciones");
        
 

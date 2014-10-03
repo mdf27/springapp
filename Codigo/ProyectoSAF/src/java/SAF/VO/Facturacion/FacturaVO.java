@@ -35,6 +35,7 @@ public class FacturaVO {
     private long idTransaccion;
     private List<RenglonFacturaVO> renglones;
     private FormaPagoFacturaVO formaDePago;
+    private EnvioFacturaVO datosEnvio;
 
     public FormaPagoFacturaVO getFormaDePago() {
         return formaDePago;
@@ -51,6 +52,16 @@ public class FacturaVO {
     public void setRenglones(List<RenglonFacturaVO> renglones) {
         this.renglones = renglones;
     }
+
+    public EnvioFacturaVO getDatosEnvio() {
+        return datosEnvio;
+    }
+
+    public void setDatosEnvio(EnvioFacturaVO datosEnvio) {
+        this.datosEnvio = datosEnvio;
+    }
+    
+    
 
     public FacturaVO() {
         renglones = new LinkedList<>();

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class ActualizarProductosController {
     
     @RequestMapping(value = "actualizar.json",method = RequestMethod.GET)    
     public @ResponseBody  Map <String, List<ProductoVO>> buscarProducto (@RequestParam(value="fecha") Date fecha) throws ClassNotFoundException, SQLException, IOException, ParseException, java.text.ParseException{
-       Map <String, List<ProductoVO>>  productosActualizados = fs.actualizarProductosDUSA(fecha); 
+        Map <String, List<ProductoVO>>  productosActualizados = fs.actualizarProductosDUSA(fecha); 
        return productosActualizados;
    }
 }

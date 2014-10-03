@@ -24,18 +24,18 @@ public class FormaPagoFacturaDAO extends AbstractDAO {
     public void insertarFormaPagoFactura(FormaPagoFacturaVO formaPago) {
 
         //Genero sentencia SQL
-        String sql = "INSERT INTO FormaPagoFactura (idFactura, idTipoFactura,idTipoFormaPago,nroTarjeta,idCuenta) VALUES(? ,?, ?, ?, ?)";
+        String sql = "INSERT INTO FormaPagoFactura (nroFactura, idTipoFactura,nroSerie,idTipoFormaPago,nroTarjeta,idCuentaCliente) VALUES(?, ? ,?, ?, ?, ?)";
         
         
         if (formaPago.getIdCuenta() != -1){
-            Object[] parametros ={formaPago.getIdFactura(), 
-            formaPago.getIdTipoFactura(), formaPago.getIdTipoFormaPago(), formaPago.getNroTarjeta(), 
+            Object[] parametros ={formaPago.getNroFactura(), 
+            formaPago.getIdTipoFactura(), formaPago.getNroSerie(),formaPago.getIdTipoFormaPago(), formaPago.getNroTarjeta(), 
             formaPago.getIdCuenta()};
             
             this.getJdbcTemplate().update(sql, parametros);
         }else{
-            Object[] parametros ={formaPago.getIdFactura(), 
-            formaPago.getIdTipoFactura(), formaPago.getIdTipoFormaPago(), formaPago.getNroTarjeta(), 
+            Object[] parametros ={formaPago.getNroFactura(), 
+            formaPago.getIdTipoFactura(),formaPago.getNroSerie(),formaPago.getIdTipoFormaPago(), formaPago.getNroTarjeta(), 
             null};
             
             this.getJdbcTemplate().update(sql, parametros);
@@ -44,13 +44,13 @@ public class FormaPagoFacturaDAO extends AbstractDAO {
         
     }
     
-    public FormaPagoFacturaVO getFormaPagoFactura(int idFactura,short idTipoFactura){
+    public FormaPagoFacturaVO getFormaPagoFactura(int nroFactura,String serie,short idTipoFactura){
         
-         String sql = "select fpf.idFactura, fpf.idTipoFactura, fpf.idTipoFormaPago, fpf.nroTarjeta,"
-                 + "fpf.idCuenta, fpf.idTransaccion from FormaPagoFactura fpf where fpf.idFactura = ? "
-                 + "and fpf.idTipoFactura = ?";
+         String sql = "select fpf.nroFactura, fpf.nroSerie, fpf.idTipoFactura, fpf.idTipoFormaPago, fpf.nroTarjeta,"
+                 + "fpf.idCuentaCliente, fpf.idTransaccion from FormaPagoFactura fpf where fpf.nroFactura = ? "
+                 + "and fpf.idTipoFactura = ? and fpf.nroSerie = ?";
 
-        Object[] params = {idFactura, idTipoFactura};
+        Object[] params = {nroFactura, idTipoFactura, serie};
         
         List<Map<String, Object>> resultQuery = getJdbcTemplate().queryForList(sql, params);
 

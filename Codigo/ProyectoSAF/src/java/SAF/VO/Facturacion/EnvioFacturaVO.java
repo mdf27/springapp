@@ -16,7 +16,9 @@ import java.util.Map;
  */
 public class EnvioFacturaVO {
     
-    private int idFactura;
+    private int nroFactura;
+    private String nroSerie;
+    private short idTipoFactura;
     private int idUsuarioDelivery;
     private String direccion;
     private String telefono;
@@ -27,7 +29,9 @@ public class EnvioFacturaVO {
     
         public EnvioFacturaVO(Map<String, Object> query) {
 
-        idFactura = (int) query.get("idFactura");
+        nroFactura = (int) query.get("nroFactura");
+        nroSerie = (String) query.get("nroSerie");
+        idTipoFactura = (short) query.get("idTipoFactura");
         if (query.get("idUsuarioDelivery")!=null)
             idUsuarioDelivery = (int) query.get("idUsuarioDelivery");
         direccion = (String) query.get("Direccion");
@@ -39,13 +43,31 @@ public class EnvioFacturaVO {
 
     }
 
-    public int getIdFactura() {
-        return idFactura;
+    public int getNroFactura() {
+        return nroFactura;
     }
 
-    public void setIdFactura(int idFactura) {
-        this.idFactura = idFactura;
+    public void setNroFactura(int nroFactura) {
+        this.nroFactura = nroFactura;
     }
+
+    public String getNroSerie() {
+        return nroSerie;
+    }
+
+    public void setNroSerie(String nroSerie) {
+        this.nroSerie = nroSerie;
+    }
+
+    public short getIdTipoFactura() {
+        return idTipoFactura;
+    }
+
+    public void setIdTipoFactura(short idTipoFactura) {
+        this.idTipoFactura = idTipoFactura;
+    }
+
+    
 
     public int getIdUsuarioDelivery() {
         return idUsuarioDelivery;

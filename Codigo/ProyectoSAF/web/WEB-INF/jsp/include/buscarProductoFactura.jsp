@@ -39,15 +39,15 @@
                             <tr><th ><div align="center">Nombre</div></th><th ><div align="center">Estado</div></th><th ><div align="center">Cantidad</div></th><th ><div align="center">Precio Lista</div></th><th ><div align="center">Farmadescuento</div></th><th ><div align="center">Precio Venta</div></th></tr>
             </thead>
         <tbody data-bind="foreach: paginated">
-            <tr class="table table-hover">                            
-                <td><a><p align="left" data-bind="text: descripcion, click: $parent.selecccionarProductoClick ,executeOnEnter: $parent.selecccionarProducto, css: { 'btn-info': ($parent.selectedResult() == $data)}"></p></a></li></td>
-        <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: habilitado"></p></td>
-        <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: cantidad"></p></td>
-        <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: precioLista"></p></td>
-        <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: farmaDescuento"></p></td>
-        <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: precioVenta"></p></td>
+            <tr data-bind="click: $parent.selecccionarProductoClick ,executeOnEnter: $parent.selecccionarProducto, css: { 'btn-infobuscar': ($parent.selectedResult() == $data)}">                            
+                <td><a><p align="left" data-bind="text: descripcion"></p></a></li></td>
+                <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: habilitado"></p></td>
+                <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: cantidad"></p></td>
+                <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: precioLista"></p></td>
+                <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: farmaDescuento"></p></td>
+                <td><p style="color: #d43f3a; font-weight: bold" align="center" data-bind="text: precioVenta"></p></td>
 
-        </tr>
+            </tr>
         </tbody>
     </table>
 </td>
@@ -76,7 +76,7 @@
     <td colspan="1">
         <strong data-bind=" css: { 'btn-error': ((descuento().length == 0)||(descuento() > 100) || (descuento()<0)) }">Descuento (%)</strong>
         <input type="number" class="input-mini" data-bind="hasFocus: descuento().length == 0 ,value: descuento" max="100" size="100"/>
-       
+
     </td>
 
 

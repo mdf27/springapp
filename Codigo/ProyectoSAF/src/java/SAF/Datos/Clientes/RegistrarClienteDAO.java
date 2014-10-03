@@ -21,7 +21,7 @@ public class RegistrarClienteDAO extends AbstractDAO{
         
         //Genero sentencia SQL
         String sql = "INSERT INTO Cliente (nombres, apellidos, direccion, telefono, email,"
-                + " cedula, razon_social, rut, descuento, fcreacion, idTransaccion  "
+                + " cedula, razon_social, rut, descuento, fcreacion, idTransaccion)  "
                 + "VALUES(?,?,?,?,?,?,?,?,?,?,?)";  
         Object[] parametros = new Object[]{cli.getNombres(),cli.getApellidos(),cli.getDireccion(),cli.getTelefono(),
         cli.getEmail(),cli.getCedula(),cli.getRazon_social(),cli.getRut(),cli.getDescuento(),cli.getFcreacion(),cli.getIdTransaccion()};

@@ -19,7 +19,8 @@ import java.util.Map;
 public class FacturaVO {
 
     private short idTipoFactura;
-    private int idFactura;
+    private int nroFactura;
+    private String nroSerieFactura;
     private int idCliente;
     private String RUT;
     private String razonSocial;
@@ -59,7 +60,8 @@ public class FacturaVO {
     public FacturaVO(Map<String, Object> query) {
 
         idTipoFactura = ((Integer) query.get("idTipoFactura")).shortValue();
-        idFactura = (int) query.get("idFactura");
+        nroFactura = (int) query.get("nroFactura");
+        nroSerieFactura = (String) query.get("nroSerie");
         if (query.get("idCliente") != null) {
             idCliente = (int) query.get("idCliente");
         }
@@ -84,20 +86,31 @@ public class FacturaVO {
 
     }
 
+    public String getNroSerieFactura() {
+        return nroSerieFactura;
+    }
+
+    public void setNroSerieFactura(String nroSerieFactura) {
+        this.nroSerieFactura = nroSerieFactura;
+    }
+
+    
+    
     public short getIdTipoFactura() {
         return idTipoFactura;
     }
+   
 
     public void setIdTipoFactura(short idTipoFactura) {
         this.idTipoFactura = idTipoFactura;
     }
 
-    public int getIdFactura() {
-        return idFactura;
+    public int getNroFactura() {
+        return nroFactura;
     }
 
-    public void setIdFactura(int idFactura) {
-        this.idFactura = idFactura;
+    public void setNroFactura(int idFactura) {
+        this.nroFactura = idFactura;
     }
 
     public int getIdCliente() {

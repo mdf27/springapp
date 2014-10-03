@@ -16,7 +16,8 @@ import java.util.Map;
 public class RenglonFacturaVO {
 
     private short idTipoFactura;
-    private int idFactura;
+    private int nroFactura;
+    private String nroSerie;
     private int idProducto;
     private double precioProducto;
     private double precioVtaReal;
@@ -39,7 +40,8 @@ public class RenglonFacturaVO {
     public RenglonFacturaVO(Map<String, Object> query) {
 
         idTipoFactura = ((Integer) query.get("idTipoFactura")).shortValue();
-        idFactura = (int) query.get("idFactura");
+        nroFactura = (int) query.get("nroFactura");
+        nroSerie = (String) query.get("nroSerie");
         idRenglonFactura = (int) query.get("idRenglonfactura");
         idProducto = (int) query.get("idProducto");
         cantidad = (int) query.get("cantidad");
@@ -88,13 +90,23 @@ public class RenglonFacturaVO {
         this.idTipoFactura = idTipoFactura;
     }
 
-    public int getIdFactura() {
-        return idFactura;
+    public int getNroFactura() {
+        return nroFactura;
     }
 
-    public void setIdFactura(int idFactura) {
-        this.idFactura = idFactura;
+    public void setNroFactura(int nroFactura) {
+        this.nroFactura = nroFactura;
     }
+
+    public String getNroSerie() {
+        return nroSerie;
+    }
+
+    public void setNroSerie(String nroSerie) {
+        this.nroSerie = nroSerie;
+    }
+
+    
 
     public int getIdProducto() {
         return idProducto;

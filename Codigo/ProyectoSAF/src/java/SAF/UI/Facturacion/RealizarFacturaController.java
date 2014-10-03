@@ -38,7 +38,7 @@ public class RealizarFacturaController { //implements Controller{
      * @return 
      */
     @RequestMapping(value = "ingresarFactura.htm", method = RequestMethod.POST)
-    public ModelAndView ingresarFactura(String json) throws IOException {
+    public ModelAndView ingresarFactura(String json) throws IOException, Exception {
 
         FacturaVO factura = new ObjectMapper().readValue(json, FacturaVO.class);
         facadeFacturacion.registrarFactura(factura);

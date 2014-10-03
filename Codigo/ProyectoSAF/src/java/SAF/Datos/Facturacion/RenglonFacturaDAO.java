@@ -23,23 +23,23 @@ public class RenglonFacturaDAO extends AbstractDAO {
     public void insertarRenglonFactura(RenglonFacturaVO renglon) {
 
         //Genero sentencia SQL
-        String sql = "INSERT INTO RenglonFactura (idTipoFactura, idFactura,idProducto,cantidad,conReceta,"
+        String sql = "INSERT INTO RenglonFactura (idTipoFactura, nroFactura, nroSerie, idProducto,cantidad,conReceta,"
                 + "precioProducto,precioVentaReal, descDescripcion, descCantBonif, descPorcentBonif,descMontoBonif)"
-                + "VALUES(? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + "VALUES(? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         Object[] parametros ={renglon.getIdTipoFactura(), 
-            renglon.getIdFactura(), renglon.getIdProducto(), renglon.getCantidad(), renglon.isConReceta(),
+            renglon.getNroFactura(), renglon.getNroSerie(), renglon.getIdProducto(), renglon.getCantidad(), renglon.isConReceta(),
             renglon.getPrecioProducto(), renglon.getPrecioVtaReal(), renglon.getDescDescripcion(), 
             renglon.getDescCantBonif(), renglon.getDescPorcentBonif(), renglon.getDescMontoBonif()};
         
         this.getJdbcTemplate().update(sql, parametros);
     }
     
-    public List<RenglonFacturaVO> getRenglonesDeFactura(int idFactura,short idTipoFactura){
+    public List<RenglonFacturaVO> getRenglonesDeFactura(int nroFactura, String nroSerie, short idTipoFactura){
         
-         String sql = "SELECT * FROM renglonfactura where idFactura = ? AND idTipoFactura = ?";
+         String sql = "SELECT * FROM renglonfactura where nroFactura = ? AND idTipoFactura = ? AND nroSerie = ?";
 
-        Object[] params = {idFactura, idTipoFactura};
+        Object[] params = {nroFactura, idTipoFactura, nroSerie};
         
         List<Map<String, Object>> resultQuery = getJdbcTemplate().queryForList(sql, params);
 

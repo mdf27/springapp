@@ -15,6 +15,26 @@
 </script>
 
 <script type="text/javascript">
+    // Definicion de shortcuts
+    shortcut.add("Ctrl+A",
+            function() {
+                window.location.href = "ajustarStock.html";
+            },
+            {'type': 'keydown', 'propagate': true, 'target': document}
+    );
+</script>
+
+<script type="text/javascript">
+    // Definicion de shortcuts
+    shortcut.add("Ctrl+B",
+            function() {
+                window.location.href = "buscarVerProducto.html";
+            },
+            {'type': 'keydown', 'propagate': true, 'target': document}
+    );
+</script>
+
+<script type="text/javascript">
     $(document).ready(function() {
         $('#facturacion').on('click', function() {
             $('#leftColuma').html('<div id = "tituloLeftMenu">Facturacion</div> <ul id="leftMenu"> <li><a href="realizarFacturacion.html"><i class="icon-plus"></i>Realizar factura</a></li><li><a href="#"><i class="icon-plus"></i>Crear nota de crédito</a></li> <li><a href="#"><i class="icon-search"></i>Facturas</a></li> <li class="divider"></li> <li><a href="#"><i class="icon-inbox"></i>Cerrar caja</a></li></ul>');

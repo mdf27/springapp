@@ -14,6 +14,7 @@ import SAF.Logica.Abstract.AbstractManejador;
 import SAF.Logica.Stock.ModificarStockManager;
 import SAF.VO.Facturacion.FacturaVO;
 import SAF.VO.Facturacion.FormaPagoFacturaVO;
+import SAF.VO.Facturacion.IdFacturaVO;
 import SAF.VO.Facturacion.RenglonFacturaVO;
 import SAF.VO.Facturacion.TipoFormaPagoVO;import java.util.List;import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,19 +41,21 @@ public class FacturacionManager extends AbstractManejador{
      private FormaPagoFacturaDAO formaPago;
     
     @Transactional(rollbackFor = Exception.class)
-    public int ingresarFactura(FacturaVO factura){
+    public IdFacturaVO ingresarFactura(FacturaVO factura) throws Exception{
         
-        int idFactura = facturaDAO.insertarFactura(factura);
+        IdFacturaVO idFactura = facturaDAO.insertarFactura(factura);
                 
         FormaPagoFacturaVO pago = factura.getFormaDePago();
-        pago.setIdFactura(idFactura);
-        formaPagoFactura.insertarFormaPagoFactura(factura.getFormaDePago());
+        pago.setNroFactura(idFactura.getNroFactura());
+        pago.setNroSerie(idFactura.getNroSerie());
+        formaPagoFactura.insertarFormaPagoFactura(pago);
 
         List<RenglonFacturaVO> renglones = factura.getRenglones();
         
         for(RenglonFacturaVO renglon : renglones){
             
-            renglon.setIdFactura(idFactura);
+            renglon.setNroFactura(idFactura.getNroFactura());
+            renglon.setNroSerie(idFactura.getNroSerie());
             renglonFacturaDAO.insertarRenglonFactura(renglon);
             
             if(renglon.getIdTipoFactura() == 101) //resto stock
@@ -74,11 +77,11 @@ public class FacturacionManager extends AbstractManejador{
         
     };
     
-    public FacturaVO obtenerFactura(int idFactura, short idTipoFactura){
+    public FacturaVO obtenerFactura(int idFactura, String nroSerie, short idTipoFactura){
         
-        FacturaVO result = facturaDAO.getFactura(idFactura, idTipoFactura);
-        List<RenglonFacturaVO> renglones = renglonFacturaDAO.getRenglonesDeFactura(idFactura,idTipoFactura);
-        FormaPagoFacturaVO pago = formaPago.getFormaPagoFactura(idFactura, idTipoFactura);
+        FacturaVO result = facturaDAO.getFactura(idFactura,nroSerie, idTipoFactura);
+        List<RenglonFacturaVO> renglones = renglonFacturaDAO.getRenglonesDeFactura(idFactura,nroSerie,idTipoFactura);
+        FormaPagoFacturaVO pago = formaPago.getFormaPagoFactura(idFactura,nroSerie, idTipoFactura);
         result.setFormaDePago(pago);
         result.setRenglones(renglones);
         return result;

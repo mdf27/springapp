@@ -18,66 +18,59 @@
                 <jsp:include page="include/menuClientes.jsp"/> 
             </div>
             <div id ="contenedorPrincipal" >    
-                <form data-bind="submit:$root.registrarCliente()" method = "POST">
+                <form  method = "POST">
                     <table width="264" >
                           <tr>
-                            <td width="108"><div align="center">Nombres</div></td>
+                            <td width="108"><div align="center"><strong>Nombres</strong></div></td>
                             <td width="144">                             
-                                <input data-bind="textInput:nombre"/>
+                                <input title = "Debe ingresar al menos un nombre" required class="input-large" data-bind="value:nombres"/>                            </td>
+                          </tr>
+                           <tr>
+                            <td><div align="center"><strong>Apellidos</strong></div></td>
+                            <td><input class="input-large" name="apellidos" data-bind="value:apellidos"/>
                             </td>
                           </tr>
                           <tr>
-                            <td><div align="center">Apellidos</div></td>
+                            <td><div align="center"><strong>Cedula</strong></div></td>
                             <td>
-                                <input name="apellidos" data-bind="textInput:apellidos"/>
-                            </td>
+                                <input type="text" required="required" maxlength="8" pattern="[d ]{12,}" class="input-large" data-bind="value:cedula"/>                            </td>
                           </tr>
                           <tr>
-                            <td><div align="center">Cedula</div></td>
-                            <td>
-                                <input name="cedula" data-bind="textInput:cedula"/>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td><div align="center">Direccion</div></td>
+                            <td><div align="center"><strong>Direccion</strong></div></td>
                             <td>          
-                                <input name="direccion" data-bind="textInput:direccion"/>
-                            </td>
+                                <input class="input-large" data-bind="value:direccion"/>                            </td>
                           </tr>
                           <tr>
-                            <td><div align="center">Telefono</div></td>
+                            <td><div align="center"><strong>Telefono</strong></div></td>
                             <td>
-                                <input name="telefono" data-bind="textInput:telefono"/>
-                            </td>
+                                <input class="input-large" data-bind="value:telefono"/>                            </td>
                           </tr>
                           <tr>
-                            <td><div align="center">E-mail</div></td>
+                              <td><div align="center"><strong>E-mail</strong></div></td>
                             <td>
-                                <input name="email" data-bind="textInput:email"/>
-                            </td>
+                                <input type="email" placeholder="name@example.com" required="required" class="input-large" data-bind="value:email"/>                            </td>
                           </tr>
                           <tr>
-                            <td><div align="center">Raz&oacute;n Social</div>
+                            <td><div align="center"><strong>Raz&oacute;n Social</strong></div>
                                <div align="center"></div></td>
                             <td>
-                                <input name="razon_social" data-bind="textInput:razon_social"/>
-                            </td>
+                                <input class="input-large" data-bind="value:razon_social"/>                            </td>
                           </tr>
                           <tr>
-                            <td><div align="center">RUT</div></td>
+                            <td><div align="center"><strong>RUT</strong></div></td>
                             <td>
-                                <input name="rut" data-bind="textInput:rut"/>
-                            </td>
+                                <input class="input-large" data-bind="value:rut"/>                            </td>
                           </tr>
                           <tr>
-                            <td><div align="center">Descuento</div></td>
+                            <td><div align="center"><strong>Descuento</strong></div></td>
                             <td>
-                                <input name="descuento" data-bind="textInput:descuento"/>
-                            </td>
+                                <input class="input-large" data-bind="value:descuento"/>                            </td>
                           </tr>
-                    </table> 
+                    </table>                   
+
+                        <div align="center"></div>
                         <div align="center">
-                          <button type="submit" class="btn btn-primary" >Ingresar</button>
+                          <button type="submit" class="btn btn-primary" data-bind="click:altaCliente">Ingresar</button>
                         </div>
                 </form>   
 
